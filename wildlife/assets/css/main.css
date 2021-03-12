@@ -1,2 +1,12 @@
 @import "./modern-normalize.css";
 @import "./fonts.css";
+
+:root {
+  --color-orange-main:  #cd6326;
+  --color-orange-light: #e39128;
+  --color-orange-dark:  #8f5613;
+
+  --color-font-gray:  #666;
+  --color-font-light: #f7f7f7;
+  --color-font-dark:  #333;
+}
