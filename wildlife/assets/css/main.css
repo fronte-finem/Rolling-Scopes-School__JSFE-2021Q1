@@ -9,4 +9,8 @@
   --color-font-gray:  #666;
   --color-font-light: #f7f7f7;
   --color-font-dark:  #333;
+  --color-font-ui:    #c4c4c4;
+
+  --color-bg-main: #e5e5e5;
+  --color-bg-scnd: #02160b;
 }
