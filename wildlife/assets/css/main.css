@@ -11,6 +11,73 @@
   --color-font-dark:  #333;
   --color-font-ui:    #c4c4c4;
 
-  --color-bg-main: #e5e5e5;
-  --color-bg-scnd: #02160b;
+  --color-bg-main:   #ccc;
+  --color-bg-header: #02160b;
+  --color-bg-footer: #181617;
+}
+
+
+/*******************************************************************************
+  Layout
+*******************************************************************************/
+
+.page {
+  --w-page:   1440px;
+  --h-header: 780px;
+  --h-footer: 360px;
+
+  display: grid;
+  grid-template-rows:
+    var(--h-header)
+    minmax(calc(100vh - var(--h-header) - var(--h-footer)), auto)
+    var(--h-footer);
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+}
+
+.page-main   { grid-area: main; }
+.page-header { grid-area: header; }
+.page-footer { grid-area: footer; }
+
+.page-wrapper {
+  width: var(--w-page);
+  margin: 0 auto;
+  padding: 0 120px;
+}
+
+/*******************************************************************************
+  Backgrounds
+*******************************************************************************/
+
+.page {
+  --img-bg-header: url(../img/bg-page-header.jpg);
+  --img-bg-footer: url(../img/bg-page-footer.jpg);
+}
+
+.page-main {
+  background-color: var(--color-bg-main);
+}
+
+.page-header {
+  background-color: var(--color-bg-header);
+  background-image:
+    var(--img-bg-header),
+    linear-gradient(to left, var(--color-bg-header), transparent, var(--color-bg-header)),
+    var(--img-bg-header);
+}
+
+.page-footer {
+  background-color: var(--color-bg-footer);
+  background-image:
+    var(--img-bg-footer),
+    linear-gradient(to left, var(--color-bg-footer), transparent, var(--color-bg-footer)),
+    var(--img-bg-footer);
+}
+
+.page-facade {
+  background-size: contain, auto, cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
