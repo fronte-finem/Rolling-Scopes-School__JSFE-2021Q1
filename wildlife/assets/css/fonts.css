@@ -53,12 +53,12 @@ h4 {
 
 .font-logo, .font-ui {
   font-family: var(--font-scnd);
-  text-transform: uppercase;
 }
 
 .font-logo {
   font-size: 32px;
   line-height: var(--font-lh-big2);
+  text-transform: uppercase;
 }
 
 .font-ui-menu {
