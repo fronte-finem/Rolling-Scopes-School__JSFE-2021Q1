@@ -17,3 +17,65 @@
        url('../fonts/roboto-v20-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
        url('../fonts/roboto-v20-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
+
+
+:root {
+  --font-main: 'Open Sans', sans-serif;
+  --font-scnd: 'Roboto', sans-serif;
+
+  --font-lh-big1: 72px;
+  --font-lh-big2: 60px;
+  --font-lh-mid1: 40px;
+  --font-lh-mid2: 36px;
+  --font-lh-norm: 27px;
+}
+
+body {
+  font-family: var(--font-main);
+  font-size: 18px;
+  line-height: var(--font-lh-norm);
+}
+
+h1, h2 {
+  font-size: 48px;
+  line-height: var(--font-lh-big1);
+}
+
+h3 {
+  font-size: 27px;
+  line-height: var(--font-lh-mid1);
+}
+
+h4 {
+  font-size: 22px;
+  line-height: var(--font-lh-mid2);
+}
+
+.font-logo, .font-ui {
+  font-family: var(--font-scnd);
+}
+
+.font-logo {
+  font-size: 32px;
+  line-height: var(--font-lh-big2);
+}
+
+.font-ui-menu {
+  font-size: 23px;
+  line-height: var(--font-lh-mid2);
+}
+
+.font-ui {
+  font-size: 23px;
+  line-height: var(--font-lh-norm);
+}
+
+.font-sub-h2 {
+  font-size: 24px;
+  line-height: var(--font-lh-mid2);
+}
+
+.font-small {
+  font-size: 17px;
+}
+
