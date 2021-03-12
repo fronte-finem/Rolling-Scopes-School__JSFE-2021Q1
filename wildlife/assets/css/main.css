@@ -47,6 +47,7 @@
   padding: 0 120px;
 }
 
+
 /*******************************************************************************
   Backgrounds
 *******************************************************************************/
@@ -80,4 +81,31 @@
   background-size: contain, auto, cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+
+/*******************************************************************************
+  Block: Header
+*******************************************************************************/
+
+.page-header header {
+  --w-logo: 70px;
+  --h-logo: 60px;
+
+  padding-top: 19px;
+}
+
+.page-header .logo {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.page-header h1 {
+  color: var(--color-font-light);
+  margin: 0;
+  padding-left: calc(var(--w-logo) + 15px);
+  background-image: url(../img/logo.svg);
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-size: var(--w-logo) var(--h-logo);
 }

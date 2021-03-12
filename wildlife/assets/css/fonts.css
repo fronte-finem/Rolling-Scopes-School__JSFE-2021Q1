@@ -53,6 +53,7 @@ h4 {
 
 .font-logo, .font-ui {
   font-family: var(--font-scnd);
+  text-transform: uppercase;
 }
 
 .font-logo {
