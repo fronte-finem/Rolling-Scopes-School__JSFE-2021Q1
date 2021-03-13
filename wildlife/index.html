@@ -45,8 +45,42 @@
     -->
     <section class="layout-main">
       <div class="layout-wrapper">
-        <main class="latest-articles"></main>
-        <section class="get-notified"></section>
+        <main class="main layout-box">
+          <div class="main__title">
+            <h2>Latest articles</h2>
+            <h3 class="font-sub-h2">Breaking news from the wild</h3>
+          </div>
+          <div class="carousel">
+            <ul class="carousel__list">
+              <li class="control control-prev carousel__item"><button class="btn btn-prev"></button></li>
+              <li class="control control-next carousel__item"><button class="btn btn-next"></button></li>
+              <li class="card carousel__item">
+                <img class="card-bg" src="./assets/img/bg-card-deer.jpeg" alt="Deer" width="300" height="360">
+                <section class="card-description">
+                  <h4 class="card-title">Deer</h4>
+                  <p class="card-text font-small">Naturalist investigation</p>
+                </section>
+              </li>
+              <li class="card carousel__item">
+                <img class="card-bg" src="./assets/img/bg-card-squirrel.jpeg" alt="Squirrel" width="300" height="360">
+                <section class="card-description">
+                  <h4 class="card-title">Squirrel</h4>
+                  <p class="card-text font-small">Kamikaze squirrels</p>
+                </section>
+              </li>
+              <li class="card carousel__item">
+                <img class="card-bg" src="./assets/img/bg-card-bird.jpeg" alt="Bird" width="300" height="360">
+                <section class="card-description">
+                  <h4 class="card-title">Bird</h4>
+                  <p class="card-text font-small">Birds Fight club</p>
+                </section>
+              </li>
+            </ul>
+          </div>
+        </main>
+        <section class="main-notify layout-box">
+
+        </section>
       </div>
     </section>
     <!-- end section [layout-main] -->
