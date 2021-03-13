@@ -1,111 +1,17 @@
-@import "./modern-normalize.css";
-@import "./fonts.css";
-@import "./colors.css";
+@import url(./colors.css);
+@import url(./fonts.css);
+@import url(./modern-normalize.css);
 
+@import url(./layout.css);
 
-button, input[type="submit"] { cursor: pointer; }
+@import url(./buttons.css);
+@import url(./logo.css);
 
-
-/*******************************************************************************
-  Layout
-*******************************************************************************/
-
-.page {
-  --w-page:   1440px;
-  --h-header: 780px;
-  --h-footer: 360px;
-
-  display: grid;
-  grid-template-rows:
-    var(--h-header)
-    minmax(calc(100vh - var(--h-header) - var(--h-footer)), auto)
-    var(--h-footer);
-  grid-template-areas:
-    "head"
-    "main"
-    "foot";
-}
-
-.layout-head { grid-area: head; }
-.layout-main { grid-area: main; }
-.layout-foot { grid-area: foot; }
-
-.layout-wrapper {
-  width: var(--w-page);
-  height: 100%;
-  margin: 0 auto;
-  padding: 0 120px;
-}
-
-
-/*******************************************************************************
-  Backgrounds
-*******************************************************************************/
-
-.page {
-  --img-bg-header: url(../img/bg-page-header.jpg);
-  --img-bg-footer: url(../img/bg-page-footer.jpg);
-}
-
-.layout-main {
-  background-color: var(--color-bg-main);
-}
-
-.layout-head {
-  background-color: var(--color-bg-header);
-  background-image:
-    var(--img-bg-header),
-    linear-gradient(to left, var(--color-bg-header), transparent, var(--color-bg-header)),
-    var(--img-bg-header);
-}
-
-.layout-foot {
-  background-color: var(--color-bg-footer);
-  background-image:
-    var(--img-bg-footer),
-    linear-gradient(to left, var(--color-bg-footer), transparent, var(--color-bg-footer)),
-    var(--img-bg-footer);
-}
-
-.layout-bg {
-  background-size: contain, auto, cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-
-/*******************************************************************************
-  Logo
-*******************************************************************************/
-
-.logo {
-  --w-logo: 240px;
-  --h-logo: 60px;
-  --w-logo-img: 70px;
-  display: inline-block;
-  text-decoration: none;
-}
-
-.logo__box {
-  display: block;
-  width: var(--w-logo);
-  margin: 0;
-  padding-left: calc(var(--w-logo-img) + 15px);
-  background-image: url(../img/logo.svg);
-  background-position: left top;
-  background-repeat: no-repeat;
-  background-size: var(--w-logo-img) var(--h-logo);
-  color: var(--color-font-light);
-}
 
 
 /*******************************************************************************
   section [layout-head]
 *******************************************************************************/
-
-.layout-head .layout-wrapper {
-  padding-top: 19px;
-}
 
 /* block {Header} */
 
@@ -125,37 +31,15 @@ button, input[type="submit"] { cursor: pointer; }
 }
 
 .header__menu a {
+  padding-right: 5px;
   color: var(--color-font-light);
   text-decoration: none;
-}
-
-.header__menu button {
-  padding: 0;
-  color: var(--color-font-light);
-  background-color: transparent;
-}
-
-.header__menu .btn-search {
-  width: 32px;
-  height: 32px;
-  border: none;
-  background-image: url(../img/icon-search.svg);
-  background-repeat: no-repeat;
-  background-position: 75% 75%;
-}
-
-.header__menu .btn-sign-in {
-  width: 120px;
-  height: 50px;
-  border: 2px solid var(--color-orange-main);
-  border-radius: 5px;
 }
 
 /* block {Survival} */
 
 .header__article {
   --w-text: 274px;
-  padding-top: 120px;
   width: var(--w-text);
   display: flex;
   flex-direction: column;
@@ -170,16 +54,6 @@ button, input[type="submit"] { cursor: pointer; }
 
 .header__article p {
   margin: 0;
-  color: var(--color-font-light);
-}
-
-.header__article .btn-donate {
-  width: 160px;
-  height: 60px;
-  padding: 0;
-  border: none;
-  border-radius: 5px;
-  background-color: var(--color-orange-main);
   color: var(--color-font-light);
 }
 
@@ -233,13 +107,6 @@ button, input[type="submit"] { cursor: pointer; }
   section [layout-main]
 *******************************************************************************/
 
-.layout-main .layout-wrapper {
-  padding-top: 120px;
-}
-
-.layout-main .layout-box {
-  padding-bottom: 240px;
-}
 
 /* block {Latest articles}*/
 
@@ -267,8 +134,6 @@ button, input[type="submit"] { cursor: pointer; }
 .carousel {
   --h-item: 360px;
   --w-item: 300px;
-  --h-btn: 70px;
-  --w-btn: 30px;
 }
 
 .carousel .carousel__list {
@@ -291,19 +156,8 @@ button, input[type="submit"] { cursor: pointer; }
   padding: calc((var(--h-item) - var(--h-btn)) / 2) 0;
 }
 
-.carousel .btn {
-  width: var(--w-btn);
-  height: var(--h-btn);
-  padding: 0;
-  border: none;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  background-position: 2px 18px;
-  background-size: 26px 39px;
-}
-
-.carousel .btn-prev { background-image: url(../img/icon-control-arrow-left.svg); }
-.carousel .btn-next { background-image: url(../img/icon-control-arrow-right.svg); }
+.carousel .carousel-btn-prev { background-image: url(../img/icon-control-arrow-left.svg); }
+.carousel .carousel-btn-next { background-image: url(../img/icon-control-arrow-right.svg); }
 
 .carousel .card {
   position: relative;
@@ -328,7 +182,7 @@ button, input[type="submit"] { cursor: pointer; }
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  row-gap: 12px;
+  row-gap: 10px;
   padding: 40px;
 }
 
@@ -343,7 +197,6 @@ button, input[type="submit"] { cursor: pointer; }
 
 .contol__email {
   --w-input: 540px;
-  --w-btn:   122px;
 
   display: flex;
   justify-content: center;
@@ -352,6 +205,7 @@ button, input[type="submit"] { cursor: pointer; }
 .contol__email input {
   height: 60px;
   margin: 0;
+  padding: 0;
   border: none;
   outline: none;
 }
@@ -359,7 +213,7 @@ button, input[type="submit"] { cursor: pointer; }
 .contol__email .email-input {
   width: calc(var(--w-input) + var(--w-btn));
   padding-left: 15px;
-  padding-right: 15px + var(--w-btn);
+  padding-right: calc(15px + var(--w-btn));
   border-radius: 2px 5px 2px 2px;
   background-color: transparent;
   box-shadow: 0px 0px 0px 1px var(--color-font-gray);
@@ -369,9 +223,6 @@ button, input[type="submit"] { cursor: pointer; }
 }
 
 .contol__email .btn-submit {
-  width: var(--w-btn);
   margin-left: calc(-1 * var(--w-btn));
   border-radius: 2px 5px 2px 5px;
-  background-color: var(--color-orange-main);
-  color: var(--color-font-light);
 }

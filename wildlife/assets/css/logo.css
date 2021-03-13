@@ -1,0 +1,21 @@
+@import url(./colors.css);
+
+.logo {
+  --w-logo: 240px;
+  --h-logo: 60px;
+  --w-logo-img: 70px;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.logo__box {
+  display: block;
+  width: var(--w-logo);
+  margin: 0;
+  padding-left: calc(var(--w-logo-img) + 15px);
+  background-image: url(../img/logo.svg);
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-size: var(--w-logo-img) var(--h-logo);
+  color: var(--color-font-light);
+}

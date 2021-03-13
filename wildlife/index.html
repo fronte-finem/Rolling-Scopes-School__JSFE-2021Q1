@@ -16,7 +16,8 @@
     -->
     <section class="layout-head layout-bg">
       <div class="layout-wrapper">
-        <header class="header">
+        <!-- block {Header} -->
+        <header class="header layout-box">
           <a class="logo" href="#home">
             <h1 class="logo__box font-logo">Wildlife</h1>
           </a>
@@ -29,6 +30,7 @@
             </ul>
           </nav>
         </header>
+        <!-- block {Survival} -->
         <article class="header__article">
             <h2>Survival</h2>
             <p>What this means is that we exist to help protect our environment and do in numbers of ways. You can save the planet by donation.</p>
@@ -45,6 +47,7 @@
     -->
     <section class="layout-main">
       <div class="layout-wrapper">
+        <!-- block {Latest articles} -->
         <main class="main layout-box">
           <div class="main__title">
             <h2>Latest articles</h2>
@@ -52,8 +55,8 @@
           </div>
           <div class="carousel">
             <ul class="carousel__list">
-              <li class="control control-prev carousel__item"><button class="btn btn-prev"></button></li>
-              <li class="control control-next carousel__item"><button class="btn btn-next"></button></li>
+              <li class="control control-prev carousel__item"><button class="carousel-btn carousel-btn-prev"></button></li>
+              <li class="control control-next carousel__item"><button class="carousel-btn carousel-btn-next"></button></li>
               <li class="card carousel__item">
                 <img class="card-bg" src="./assets/img/bg-card-deer.jpeg" alt="Deer" width="300" height="360">
                 <section class="card-description">
@@ -78,16 +81,15 @@
             </ul>
           </div>
         </main>
-        <section class="main-notify layout-box">
-          <div class="notify">
-            <h3 class="notify__title">Get notified about new amazing articles</h3>
-            <form action="#send-email" method="get" onsubmit="return false">
-              <div class="notify__contol contol__email font-ui">
-                <input class="email-input" type="email" name="email" placeholder="Email">
-                <input class="btn-submit" type="submit" value="Send">
-              </div>
-            </form>
-          </div>
+        <!-- block {Get notified} -->
+        <section class="notify layout-box">
+          <h3 class="notify__title">Get notified about new amazing articles</h3>
+          <form action="#send-email" method="get" onsubmit="return false">
+            <div class="notify__contol contol__email font-ui">
+              <input class="email-input" type="email" name="email" placeholder="Email">
+              <input class="btn-submit" type="submit" value="Send">
+            </div>
+          </form>
         </section>
       </div>
     </section>
@@ -99,6 +101,7 @@
     -->
     <section class="layout-foot layout-bg">
       <div class="layout-wrapper">
+        <!-- block {Footer} -->
         <footer class="footer">
           <a class="logo" href="#home">
             <span class="logo__box font-logo">Wildlife</span>

@@ -1,0 +1,70 @@
+@import url(./colors.css);
+@import url(./fonts.css);
+
+button,
+input[type="submit"] {
+  cursor: pointer;
+  padding: 0;
+  border: none;
+}
+
+.btn-search {
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  background-image: url(../img/icon-search.svg);
+  background-repeat: no-repeat;
+  background-position: 3px 7px;
+  background-size: 24px 24px;
+}
+
+.btn-sign-in {
+  width: 120px;
+  height: 50px;
+  border: 2px solid var(--color-orange-main);
+  border-radius: 5px;
+  background-color: transparent;
+  color: var(--color-font-light);
+}
+
+.btn-donate {
+  width: 160px;
+  height: 60px;
+  border-radius: 5px;
+  background-color: var(--color-orange-main);
+  color: var(--color-font-light);
+}
+
+.carousel {
+  --h-btn: 70px;
+  --w-btn: 30px;
+  --l-off: 2px;
+  --r-off: 2px;
+  --t-off: 18px;
+  --b-off: 13px;
+  --w-img: calc(var(--w-btn) - var(--l-off) - var(--r-off));
+  --h-img: calc(var(--h-btn) - var(--t-off) - var(--b-off));
+}
+
+.carousel-btn {
+  width: var(--w-btn);
+  height: var(--h-btn);
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: var(--l-off) var(--t-off);
+  background-size: var(--w-img) var(--h-img);
+}
+
+.carousel-btn-prev { background-image: url(../img/icon-control-arrow-left.svg); }
+.carousel-btn-next { background-image: url(../img/icon-control-arrow-right.svg); }
+
+
+.contol__email {
+  --w-btn: 122px;
+}
+
+.contol__email .btn-submit {
+  width: var(--w-btn);
+  background-color: var(--color-orange-main);
+  color: var(--color-font-light);
+}

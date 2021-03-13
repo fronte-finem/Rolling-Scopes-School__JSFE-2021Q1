@@ -1,0 +1,73 @@
+@import "./colors.css";
+
+/*******************************************************************************
+  Layout
+*******************************************************************************/
+
+.page {
+  --w-page:   1440px;
+  --h-header: 780px;
+  --h-footer: 360px;
+
+  display: grid;
+  grid-template-rows:
+    var(--h-header)
+    minmax(calc(100vh - var(--h-header) - var(--h-footer)), auto)
+    var(--h-footer);
+  grid-template-areas:
+    "head"
+    "main"
+    "foot";
+}
+
+.layout-head { grid-area: head; }
+.layout-main { grid-area: main; }
+.layout-foot { grid-area: foot; }
+
+.layout-wrapper {
+  width: var(--w-page);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 120px;
+}
+
+.layout-head .layout-wrapper { padding-top: 19px; }
+.layout-head .layout-box { padding-bottom: 120px; }
+
+.layout-main .layout-wrapper { padding-top: 120px; }
+.layout-main .layout-box { padding-bottom: 240px; }
+
+/*******************************************************************************
+  Backgrounds
+*******************************************************************************/
+
+.page {
+  --img-bg-header: url(../img/bg-page-header.jpg);
+  --img-bg-footer: url(../img/bg-page-footer.jpg);
+}
+
+.layout-main {
+  background-color: var(--color-bg-main);
+}
+
+.layout-head {
+  background-color: var(--color-bg-header);
+  background-image:
+    var(--img-bg-header),
+    linear-gradient(to left, var(--color-bg-header), transparent, var(--color-bg-header)),
+    var(--img-bg-header);
+}
+
+.layout-foot {
+  background-color: var(--color-bg-footer);
+  background-image:
+    var(--img-bg-footer),
+    linear-gradient(to left, var(--color-bg-footer), transparent, var(--color-bg-footer)),
+    var(--img-bg-footer);
+}
+
+.layout-bg {
+  background-size: contain, auto, cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
