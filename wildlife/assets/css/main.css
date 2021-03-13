@@ -1,20 +1,9 @@
 @import "./modern-normalize.css";
 @import "./fonts.css";
+@import "./colors.css";
 
-:root {
-  --color-orange-main:  #cd6326;
-  --color-orange-light: #e39128;
-  --color-orange-dark:  #8f5613;
 
-  --color-font-gray:  #666;
-  --color-font-light: #f7f7f7;
-  --color-font-dark:  #333;
-  --color-font-ui:    #c4c4c4;
-
-  --color-bg-main:   #ccc;
-  --color-bg-header: #02160b;
-  --color-bg-footer: #181617;
-}
+button { cursor: pointer; }
 
 
 /*******************************************************************************
@@ -32,16 +21,16 @@
     minmax(calc(100vh - var(--h-header) - var(--h-footer)), auto)
     var(--h-footer);
   grid-template-areas:
-    "header"
+    "head"
     "main"
-    "footer";
+    "foot";
 }
 
-.page-main   { grid-area: main; }
-.page-header { grid-area: header; }
-.page-footer { grid-area: footer; }
+.layout-head { grid-area: head; }
+.layout-main { grid-area: main; }
+.layout-foot { grid-area: foot; }
 
-.page-wrapper {
+.layout-wrapper {
   width: var(--w-page);
   margin: 0 auto;
   padding: 0 120px;
@@ -57,11 +46,11 @@
   --img-bg-footer: url(../img/bg-page-footer.jpg);
 }
 
-.page-main {
+.layout-main {
   background-color: var(--color-bg-main);
 }
 
-.page-header {
+.layout-head {
   background-color: var(--color-bg-header);
   background-image:
     var(--img-bg-header),
@@ -69,7 +58,7 @@
     var(--img-bg-header);
 }
 
-.page-footer {
+.layout-foot {
   background-color: var(--color-bg-footer);
   background-image:
     var(--img-bg-footer),
@@ -77,7 +66,7 @@
     var(--img-bg-footer);
 }
 
-.page-facade {
+.layout-bg {
   background-size: contain, auto, cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -85,12 +74,12 @@
 
 
 /*******************************************************************************
-  section [Page-Header]
+  section [layout-head]
 *******************************************************************************/
 
 /* block {Header} */
 
-.page-header header {
+.header {
   padding-top: 19px;
   display: flex;
   justify-content: space-between;
@@ -130,10 +119,9 @@
   padding: 0;
   color: var(--color-font-light);
   background-color: transparent;
-  cursor: pointer;
 }
 
-.menu-list {
+.header__menu .menu-list {
   list-style: none;
   height: 100%;
   margin: 0;
@@ -143,7 +131,7 @@
   column-gap: 62px;
 }
 
-.btn-search {
+.header__menu .btn-search {
   width: 32px;
   height: 32px;
   border: none;
@@ -152,16 +140,16 @@
   background-position: 75% 75%;
 }
 
-.btn-sign-in {
+.header__menu .btn-sign-in {
   width: 120px;
   height: 50px;
   border: 2px solid var(--color-orange-main);
   border-radius: 5px;
 }
 
-/* block {Article} */
+/* block {Survival} */
 
-.page-header article {
+.header__article {
   --w-text: 274px;
   padding-top: 120px;
   width: var(--w-text);
@@ -170,18 +158,18 @@
   row-gap: 50px;
 }
 
-.article__title {
+.header__article .article__title {
   margin: 0;
   color: var(--color-orange-main);
   letter-spacing: 2px;
 }
 
-.article__content {
+.header__article .article__content {
   margin: 0;
   color: var(--color-font-light);
 }
 
-.btn-donate {
+.header__article .btn-donate {
   width: 160px;
   height: 60px;
   padding: 0;
@@ -189,5 +177,4 @@
   border-radius: 5px;
   background-color: var(--color-orange-main);
   color: var(--color-font-light);
-  cursor: pointer;
 }

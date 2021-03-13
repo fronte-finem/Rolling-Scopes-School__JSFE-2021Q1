@@ -8,14 +8,15 @@
     <link rel="stylesheet" href="./assets/css/main.css">
   </head>
   <body class="page">
-
-    <!-- section [page-header]:
+    <!-- ------------------------------------------------------------------- -->
+    <!--
+        section [layout-head]:
             block {Header}
             block {Survival}
     -->
-    <section class="page-header page-facade">
-      <div class="page-wrapper">
-        <header>
+    <section class="layout-head layout-bg">
+      <div class="layout-wrapper">
+        <header class="header">
           <a class="header__logo" href="#home">
             <h1 class="font-logo">Wildlife</h1>
           </a>
@@ -28,32 +29,38 @@
             </ul>
           </nav>
         </header>
-        <article>
+        <article class="header__article">
             <h2 class="article__title">Survival</h2>
             <p class="article__content">What this means is that we exist to help protect our environment and do in numbers of ways. You can save the planet by donation.</p>
             <button class="btn-donate font-ui">Donate</button>
         </article>
       </div>
     </section>
-
-    <!-- section [page-main]:
+    <!-- end section [layout-head] -->
+    <!-- ------------------------------------------------------------------- -->
+    <!--
+        section [layout-main]:
             block {Latest articles}
             block {Get notified}
     -->
-    <section class="page-main">
-      <div class="page-wrapper">
-        <section class="latest-articles"></section>
+    <section class="layout-main">
+      <div class="layout-wrapper">
+        <main class="latest-articles"></main>
         <section class="get-notified"></section>
       </div>
     </section>
-
-    <!-- section [page-footer]:
+    <!-- end section [layout-main] -->
+    <!-- ------------------------------------------------------------------- -->
+    <!--
+        section [layout-foot]:
             block {Footer}
     -->
-    <section class="page-footer page-facade">
-      <div class="page-wrapper">
-        <footer></footer>
+    <section class="layout-foot layout-bg">
+      <div class="layout-wrapper">
+        <footer class="footer"></footer>
       </div>
     </section>
+    <!-- end section [layout-foot] -->
+    <!-- ------------------------------------------------------------------- -->
   </body>
 </html>
