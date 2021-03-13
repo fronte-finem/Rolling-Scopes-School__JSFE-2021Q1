@@ -85,26 +85,27 @@
 
 
 /*******************************************************************************
-  Block: Header
+  section [Page-Header]
 *******************************************************************************/
 
-.page-header header {
-  --w-logo: 70px;
-  --h-logo: 60px;
+/* block {Header} */
 
+.page-header header {
   padding-top: 19px;
   display: flex;
   justify-content: space-between;
 }
 
-/* Header: Logo */
+/* block {Header}: Logo */
 
-.page-header__logo {
+.header__logo {
+  --w-logo: 70px;
+  --h-logo: 60px;
   display: inline-block;
   text-decoration: none;
 }
 
-.page-header__logo h1 {
+.header__logo h1 {
   color: var(--color-font-light);
   margin: 0;
   padding-left: calc(var(--w-logo) + 15px);
@@ -114,24 +115,25 @@
   background-size: var(--w-logo) var(--h-logo);
 }
 
-/* Header: Nav menu */
+/* block {Header}: Nav menu */
 
-.page-header__menu {
+.header__menu {
   display: inline-block;
 }
 
-.page-header__menu a {
+.header__menu a {
   color: var(--color-font-light);
   text-decoration: none;
 }
 
-.page-header__menu button {
+.header__menu button {
   padding: 0;
   color: var(--color-font-light);
   background-color: transparent;
+  cursor: pointer;
 }
 
-.page-header__menu-list {
+.menu-list {
   list-style: none;
   height: 100%;
   margin: 0;
@@ -141,7 +143,7 @@
   column-gap: 62px;
 }
 
-.page-header__search {
+.btn-search {
   width: 32px;
   height: 32px;
   border: none;
@@ -150,9 +152,42 @@
   background-position: 75% 75%;
 }
 
-.page-header__sign-in {
+.btn-sign-in {
   width: 120px;
   height: 50px;
   border: 2px solid var(--color-orange-main);
   border-radius: 5px;
+}
+
+/* block {Article} */
+
+.page-header article {
+  --w-text: 274px;
+  padding-top: 120px;
+  width: var(--w-text);
+  display: flex;
+  flex-direction: column;
+  row-gap: 50px;
+}
+
+.article__title {
+  margin: 0;
+  color: var(--color-orange-main);
+  letter-spacing: 2px;
+}
+
+.article__content {
+  margin: 0;
+  color: var(--color-font-light);
+}
+
+.btn-donate {
+  width: 160px;
+  height: 60px;
+  padding: 0;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--color-orange-main);
+  color: var(--color-font-light);
+  cursor: pointer;
 }

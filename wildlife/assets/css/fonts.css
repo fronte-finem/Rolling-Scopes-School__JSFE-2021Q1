@@ -36,6 +36,10 @@ body {
   line-height: var(--font-lh-norm);
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+
 h1, h2 {
   font-size: 48px;
   line-height: var(--font-lh-big1);
