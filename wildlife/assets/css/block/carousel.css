@@ -8,6 +8,7 @@
   --h-btn: 70px;
   --w-btn: 30px;
   --card-padd: 40px;
+  --time: 0.5s ease;
 }
 
 .carousel {
@@ -22,9 +23,9 @@
 }
 .carousel .ctrl--prev { grid-area: prev; }
 .carousel .ctrl--next { grid-area: next; }
-.carousel .card--1 { grid-area: c1; }
-.carousel .card--2 { grid-area: c2; }
-.carousel .card--3 { grid-area: c3; }
+.carousel .slot--1 { grid-area: c1; }
+.carousel .slot--2 { grid-area: c2; }
+.carousel .slot--3 { grid-area: c3; }
 
 @media (max-width: 1300px) {
   .carousel {
@@ -60,6 +61,7 @@
 
 .carousel .card {
   position: relative;
+  display: block;
   width: var(--w-item);
   height: var(--h-item);
 }
@@ -71,6 +73,17 @@
   left: 0;
   width: var(--w-item);
   height: var(--h-item);
+}
+
+.carousel .card-bg {
+  transition: filter var(--time), transform var(--time);
+}
+.carousel .card:hover .card-bg {
+  transform: scale(1.1);
+  filter: saturate(2) sepia(0);
+}
+.carousel .card:active .card-bg {
+  filter: saturate(1) sepia(1);
 }
 
 .carousel .card-description {
@@ -86,7 +99,6 @@
   margin: 0;
   text-align: center;
 }
-
 
 .carousel .ctrl {
   padding: calc((var(--h-item) - var(--h-btn)) / 2) 0;
