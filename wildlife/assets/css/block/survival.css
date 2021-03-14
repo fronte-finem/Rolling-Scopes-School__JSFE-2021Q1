@@ -1,0 +1,26 @@
+@import "../colors.css";
+
+/* block {Survival} */
+
+.header__article {
+  --w-text: 274px;
+  width: var(--w-text);
+  display: flex;
+  flex-direction: column;
+  row-gap: 50px;
+}
+
+.header__article h2 {
+  margin: 0;
+  color: var(--color-orange-main);
+  letter-spacing: 2px;
+}
+
+.header__article p {
+  margin: 0;
+  color: var(--color-font-light);
+}
+
+.header__article .btn-donate {
+  width: 160px;
+}

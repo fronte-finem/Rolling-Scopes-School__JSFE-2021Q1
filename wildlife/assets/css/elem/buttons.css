@@ -1,5 +1,4 @@
-@import url(./colors.css);
-@import url(./fonts.css);
+@import url(../colors.css);
 
 :root {
   --btn-trans: 0.5s ease;
@@ -35,11 +34,11 @@ input[type="submit"] {
                              border-color: var(--color-orange-dark); }
 
 
-.btn-icon {
+.btn-inline-svg {
   background-color: transparent;
   transition: transform var(--btn-trans);
 }
-.btn-icon svg path {
+.btn-inline-svg svg path {
   transition: fill var(--btn-trans);
 }
 

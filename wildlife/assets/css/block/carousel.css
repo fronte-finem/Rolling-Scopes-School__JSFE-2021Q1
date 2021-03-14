@@ -1,4 +1,6 @@
-@import url(./colors.css);
+@import url(../colors.css);
+
+/* block {Carousel} */
 
 .carousel {
   --h-item: 360px;
@@ -58,13 +60,13 @@
   padding: calc((var(--h-item) - var(--h-btn)) / 2) 0;
 }
 
-.carousel .btn-icon {
+.carousel .btn-inline-svg {
   width: var(--w-btn);
   height: var(--h-btn);
 }
-.carousel .btn-icon:hover .icon-arrow { fill: var(--color-orange-light); }
-.carousel .btn-icon:active .icon-arrow { fill: var(--color-orange-dark); }
-.carousel .btn-icon--prev:hover { transform: scale(1.5); }
-.carousel .btn-icon--next:hover { transform: scale(1.5); }
-.carousel .btn-icon--prev:active { transform: scale(1.5) translateX(-5px); }
-.carousel .btn-icon--next:active { transform: scale(1.5) translateX(+5px); }
+.carousel .btn-inline-svg:hover .icon-arrow { fill: var(--color-orange-light); }
+.carousel .btn-inline-svg:active .icon-arrow { fill: var(--color-orange-dark); }
+.carousel .ctrl--prev .btn-inline-svg:hover { transform: scale(1.5); }
+.carousel .ctrl--next .btn-inline-svg:hover { transform: scale(1.5); }
+.carousel .ctrl--prev .btn-inline-svg:active { transform: scale(1.5) translateX(-5px); }
+.carousel .ctrl--next .btn-inline-svg:active { transform: scale(1.5) translateX(+5px); }

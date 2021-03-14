@@ -1,0 +1,32 @@
+@import "../colors.css";
+
+/* block {Header} */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__menu ul {
+  list-style: none;
+  width: 480px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__menu .btn-sign-in {
+  width: 120px;
+}
+
+.header__menu .btn-inline-svg {
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+.header__menu .btn-inline-svg:hover { transform: scale(1.5); }
+.header__menu .btn-inline-svg:active { transform: scale(1.5) rotate(45deg); }
+.header__menu .btn-inline-svg:hover .icon-search { fill: var(--color-orange-light); }
+.header__menu .btn-inline-svg:active .icon-search { fill: var(--color-orange-main); }

@@ -1,4 +1,4 @@
-@import url(./colors.css);
+@import url(../colors.css);
 
 .logo {
   --w-logo: 240px;
@@ -13,7 +13,7 @@
   width: var(--w-logo);
   margin: 0;
   padding-left: calc(var(--w-logo-img) + 15px);
-  background-image: url(../img/logo.svg);
+  background-image: url(../../img/logo.svg);
   background-position: left top;
   background-repeat: no-repeat;
   background-size: var(--w-logo-img) var(--h-logo);
