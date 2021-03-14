@@ -1,0 +1,70 @@
+@import url(./colors.css);
+
+.carousel {
+  --h-item: 360px;
+  --w-item: 300px;
+  --h-btn: 70px;
+  --w-btn: 30px;
+}
+
+.carousel {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-rows: var(--h-item);
+  grid-template-columns: var(--w-btn) repeat(3, var(--w-item)) var(--w-btn);
+  grid-template-areas: "prev c1 c2 c3 next";
+  justify-content: space-between;
+}
+.carousel .ctrl--prev { grid-area: prev; }
+.carousel .ctrl--next { grid-area: next; }
+.carousel .card--1 { grid-area: c1; }
+.carousel .card--2 { grid-area: c2; }
+.carousel .card--3 { grid-area: c3; }
+
+
+.carousel .card {
+  position: relative;
+  width: var(--w-item);
+  height: var(--h-item);
+}
+
+.carousel .card-bg,
+.carousel .card-description {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.carousel .card-description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  row-gap: 10px;
+  padding: 40px;
+  color: var(--color-font-light);
+}
+
+.carousel .card-description > * {
+  margin: 0;
+}
+
+
+.carousel .ctrl {
+  padding: calc((var(--h-item) - var(--h-btn)) / 2) 0;
+}
+
+.carousel .btn-icon {
+  width: var(--w-btn);
+  height: var(--h-btn);
+}
+.carousel .btn-icon:hover .icon-arrow { fill: var(--color-orange-light); }
+.carousel .btn-icon:active .icon-arrow { fill: var(--color-orange-dark); }
+.carousel .btn-icon--prev:hover { transform: scale(1.5); }
+.carousel .btn-icon--next:hover { transform: scale(1.5); }
+.carousel .btn-icon--prev:active { transform: scale(1.5) translateX(-5px); }
+.carousel .btn-icon--next:active { transform: scale(1.5) translateX(+5px); }

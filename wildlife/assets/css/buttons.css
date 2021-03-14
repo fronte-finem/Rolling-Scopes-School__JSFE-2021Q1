@@ -1,70 +1,46 @@
 @import url(./colors.css);
 @import url(./fonts.css);
 
+:root {
+  --btn-trans: 0.5s ease;
+  --btn-bg-trans: background-color var(--btn-trans);
+  --btn-brdr-trans: border-color var(--btn-trans);
+}
+
 button,
 input[type="submit"] {
   cursor: pointer;
   padding: 0;
   border: none;
+  border-radius: 5px;
 }
 
-.btn-search {
-  width: 32px;
-  height: 32px;
-  background-color: transparent;
-  background-image: url(../img/icon-search.svg);
-  background-repeat: no-repeat;
-  background-position: 3px 7px;
-  background-size: 24px 24px;
+.btn-orange {
+  height: 60px;
+  color: var(--color-font-light);
+  background-color: var(--color-orange-main);
+  transition: var(--btn-bg-trans);
 }
+.btn-orange:hover  { background-color: var(--color-orange-light); }
+.btn-orange:active { background-color: var(--color-orange-dark); }
 
-.btn-sign-in {
-  width: 120px;
+.btn-orange--second {
   height: 50px;
   border: 2px solid var(--color-orange-main);
-  border-radius: 5px;
   background-color: transparent;
-  color: var(--color-font-light);
+  transition: var(--btn-bg-trans), var(--btn-brdr-trans);
 }
+.btn-orange--second:hover  { background-color: var(--color-orange-main); }
+.btn-orange--second:active { background-color: var(--color-orange-dark);
+                             border-color: var(--color-orange-dark); }
 
-.btn-donate {
-  width: 160px;
-  height: 60px;
-  border-radius: 5px;
-  background-color: var(--color-orange-main);
-  color: var(--color-font-light);
-}
 
-.carousel {
-  --h-btn: 70px;
-  --w-btn: 30px;
-  --l-off: 2px;
-  --r-off: 2px;
-  --t-off: 18px;
-  --b-off: 13px;
-  --w-img: calc(var(--w-btn) - var(--l-off) - var(--r-off));
-  --h-img: calc(var(--h-btn) - var(--t-off) - var(--b-off));
-}
-
-.carousel-btn {
-  width: var(--w-btn);
-  height: var(--h-btn);
+.btn-icon {
   background-color: transparent;
   background-repeat: no-repeat;
-  background-position: var(--l-off) var(--t-off);
-  background-size: var(--w-img) var(--h-img);
+  mask-repeat: no-repeat;
+  transition: transform var(--btn-trans);
 }
-
-.carousel-btn-prev { background-image: url(../img/icon-control-arrow-left.svg); }
-.carousel-btn-next { background-image: url(../img/icon-control-arrow-right.svg); }
-
-
-.contol__email {
-  --w-btn: 122px;
-}
-
-.contol__email .btn-submit {
-  width: var(--w-btn);
-  background-color: var(--color-orange-main);
-  color: var(--color-font-light);
+.btn-icon svg path {
+  transition: fill var(--btn-trans);
 }
