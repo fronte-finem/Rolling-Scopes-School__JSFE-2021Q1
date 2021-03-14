@@ -108,8 +108,11 @@
   width: var(--w-btn);
   height: var(--h-btn);
 }
-.carousel .btn-inline-svg:hover .icon-arrow { fill: var(--color-orange-light); }
+
+.carousel .btn-inline-svg        .icon-arrow { fill: var(--color-font-gray); }
+.carousel .btn-inline-svg:hover  .icon-arrow { fill: var(--color-orange-light); }
 .carousel .btn-inline-svg:active .icon-arrow { fill: var(--color-orange-dark); }
+
 .carousel .ctrl--prev .btn-inline-svg:hover { transform: scale(1.5); }
 .carousel .ctrl--next .btn-inline-svg:hover { transform: scale(1.5); }
 .carousel .ctrl--prev .btn-inline-svg:active { transform: scale(1.5) translateX(-5px); }
