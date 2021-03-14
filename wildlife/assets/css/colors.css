@@ -1,0 +1,14 @@
+:root {
+  --color-orange-main:  #cd6326;
+  --color-orange-light: #e39128;
+  --color-orange-dark:  #8f5613;
+
+  --color-font-gray:  #666;
+  --color-font-light: #f7f7f7;
+  --color-font-dark:  #333;
+  --color-font-ui:    #c4c4c4;
+
+  --color-bg-main:   #ccc;
+  --color-bg-header: #02160b;
+  --color-bg-footer: #181617;
+}

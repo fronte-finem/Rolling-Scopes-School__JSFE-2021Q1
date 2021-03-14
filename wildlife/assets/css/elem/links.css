@@ -1,0 +1,29 @@
+@import url(./colors.css);
+
+:root {
+  --link-time: 0.5s ease;
+}
+
+.link {
+  color: var(--color-font-light);
+  text-decoration: none;
+  transition: color var(--link-time);
+}
+.link:hover { color: var(--color-orange-light); }
+.link:active { color: var(--color-orange-main); }
+
+
+.link-icon {
+  background-color: var(--color-font-light);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  transition: background-color var(--link-time), transform var(--link-time);
+}
+.link-icon:hover  {
+  background-color: var(--color-orange-light);
+  transform: translateY(1px);
+}
+.link-icon:active {
+  background-color: var(--color-orange-dark);
+  transform: translateY(2px);
+}

@@ -1,0 +1,43 @@
+@import url(../colors.css);
+
+:root {
+  --btn-trans: 0.5s ease;
+  --btn-bg-trans: background-color var(--btn-trans);
+  --btn-brdr-trans: border-color var(--btn-trans);
+}
+
+button,
+input[type="submit"] {
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  border-radius: 5px;
+}
+
+.btn-orange {
+  height: 60px;
+  color: var(--color-font-light);
+  background-color: var(--color-orange-main);
+  transition: var(--btn-bg-trans);
+}
+.btn-orange:hover  { background-color: var(--color-orange-light); }
+.btn-orange:active { background-color: var(--color-orange-dark); }
+
+.btn-orange--second {
+  height: 50px;
+  border: 2px solid var(--color-orange-main);
+  background-color: transparent;
+  transition: var(--btn-bg-trans), var(--btn-brdr-trans);
+}
+.btn-orange--second:hover  { background-color: var(--color-orange-main); }
+.btn-orange--second:active { background-color: var(--color-orange-dark);
+                             border-color: var(--color-orange-dark); }
+
+
+.btn-inline-svg {
+  background-color: transparent;
+  transition: transform var(--btn-trans);
+}
+.btn-inline-svg svg path {
+  transition: fill var(--btn-trans);
+}

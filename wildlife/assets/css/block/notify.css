@@ -1,0 +1,66 @@
+@import url(../colors.css);
+
+/* block {Get notified} */
+
+.notify__title {
+  margin: 0;
+  padding-bottom: 60px;
+  text-align: center;
+  color: var(--color-font-dark);
+}
+
+.contol__email {
+  --w-input: 540px;
+  --w-btn: 122px;
+
+  display: flex;
+  justify-content: center;
+}
+
+.contol__email input {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+}
+
+.contol__email .email-input {
+  height: 60px;
+  max-width: calc(var(--w-input) + var(--w-btn));
+  min-width: calc(var(--w-input) / 2 + var(--w-btn));
+  width: 100%;
+  padding-left: 15px;
+  padding-right: calc(15px + var(--w-btn));
+  border-radius: 2px 5px 2px 2px;
+  background-color: transparent;
+  box-shadow: 0px 0px 0px 1px var(--color-font-gray);
+}
+.contol__email .email-input:focus {
+  box-shadow: 0px 0px 0px 1px var(--color-font-dark);
+}
+
+.contol__email .btn-submit {
+  width: var(--w-btn);
+  margin-left: calc(-1 * var(--w-btn));
+  border-radius: 2px 5px 2px 5px;
+}
+
+
+@media (max-width: 640px) {
+  .contol__email {
+    --w-input: 320px;
+
+    flex-direction: column;
+    align-items: center;
+  }
+  .contol__email .email-input {
+    margin-bottom: 15px;
+    padding: 0 15px;
+    border-radius: 5px;
+  }
+  .contol__email .btn-submit {
+    margin: 0;
+    border-radius: 5px;
+  }
+
+}
