@@ -59,5 +59,7 @@
 }
 .header__menu .btn-inline-svg:hover { transform: scale(1.5); }
 .header__menu .btn-inline-svg:active { transform: scale(1.5) rotate(45deg); }
-.header__menu .btn-inline-svg:hover .icon-search { fill: var(--color-orange-light); }
+
+.header__menu .btn-inline-svg        .icon-search { fill: var(--color-font-light); }
+.header__menu .btn-inline-svg:hover  .icon-search { fill: var(--color-orange-light); }
 .header__menu .btn-inline-svg:active .icon-search { fill: var(--color-orange-main); }

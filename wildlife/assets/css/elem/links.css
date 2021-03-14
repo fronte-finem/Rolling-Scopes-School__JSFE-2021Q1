@@ -1,4 +1,4 @@
-@import url(./colors.css);
+@import url(../colors.css);
 
 :root {
   --link-time: 0.5s ease;
