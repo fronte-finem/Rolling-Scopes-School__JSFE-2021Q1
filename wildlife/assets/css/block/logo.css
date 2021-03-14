@@ -4,23 +4,41 @@
   --w-logo: 240px;
   --h-logo: 60px;
   --w-logo-img: 70px;
+  --logo: url(../../img/logo.svg);
+  --time: 0.5s ease;
 
-  display: block;
+  position: relative;
   width: var(--w-logo);
   height: var(--h-logo);
-
   text-decoration: none;
+  color: var(--color-font-light);
+  transition: color var(--time), transform var(--time);
 }
+.logo:hover  { transform: translateY(1px); }
+.logo:active { transform: translateY(2px); }
 
 .logo__box {
-  display: block;
-  width: var(--w-logo);
+  position: absolute;
+  top: 0;
+  left: var(--w-logo-img);
   height: var(--h-logo);
   margin: 0;
-  padding-left: calc(var(--w-logo-img) + 15px);
-  background-image: url(../../img/logo.svg);
-  background-position: left top;
-  background-repeat: no-repeat;
-  background-size: var(--w-logo-img) var(--h-logo);
-  color: var(--color-font-light);
+  padding-left: 15px;
 }
+
+.logo::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--w-logo-img);
+  height: var(--h-logo);
+  background-color: var(--color-font-light);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-image: var(--logo);
+  mask-image: var(--logo);
+  transition: background-color var(--time);
+}
+.logo:hover::before  { background-color: var(--color-orange-light); }
+.logo:active::before { background-color: var(--color-orange-dark); }
