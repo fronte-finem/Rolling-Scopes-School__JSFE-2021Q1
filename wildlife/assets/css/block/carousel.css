@@ -32,7 +32,7 @@
     grid-template-columns: var(--w-btn) repeat(2, var(--w-item)) var(--w-btn);
     grid-template-areas: "prev c1 c2 next";
   }
-  .carousel .card--3 { display: none; }
+  .carousel .slot--3 { display: none; }
 }
 
 @media (max-width: 800px) {
@@ -40,7 +40,7 @@
     grid-template-columns: var(--w-btn) var(--w-item) var(--w-btn);
     grid-template-areas: "prev c1 next";
   }
-  .carousel .card--2 { display: none; }
+  .carousel .slot--2 { display: none; }
 }
 
 @media (max-width: 500px) {
