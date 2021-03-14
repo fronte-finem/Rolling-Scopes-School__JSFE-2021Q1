@@ -26,7 +26,9 @@
 
 .contol__email .email-input {
   height: 60px;
-  width: calc(var(--w-input) + var(--w-btn));
+  max-width: calc(var(--w-input) + var(--w-btn));
+  min-width: calc(var(--w-input) / 2 + var(--w-btn));
+  width: 100%;
   padding-left: 15px;
   padding-right: calc(15px + var(--w-btn));
   border-radius: 2px 5px 2px 2px;
@@ -41,4 +43,24 @@
   width: var(--w-btn);
   margin-left: calc(-1 * var(--w-btn));
   border-radius: 2px 5px 2px 5px;
+}
+
+
+@media (max-width: 640px) {
+  .contol__email {
+    --w-input: 320px;
+
+    flex-direction: column;
+    align-items: center;
+  }
+  .contol__email .email-input {
+    margin-bottom: 15px;
+    padding: 0 15px;
+    border-radius: 5px;
+  }
+  .contol__email .btn-submit {
+    margin: 0;
+    border-radius: 5px;
+  }
+
 }

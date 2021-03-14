@@ -3,18 +3,49 @@
 /* block {Header} */
 
 .header {
+  --w-logo: 240px;
+  --w-menu: 480px;
+
   display: flex;
   justify-content: space-between;
+}
+.header__menu {
+  width: var(--w-menu);
+}
+.header__menu ul {
+  width: var(--w-menu);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: 1024px) {
+  .header {
+    --w-menu: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+  .header__menu li {
+    margin: 0 10px;
+  }
+  .header__menu li:nth-of-type(2) {
+    margin-right: auto;
+  }
+}
+@media (max-width: 640px) {
+  .header__menu ul {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .header__menu li, .header__menu li:nth-of-type(2) {
+    margin: 0;
+  }
 }
 
 .header__menu ul {
   list-style: none;
-  width: 480px;
   margin: 0;
   padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .header__menu .btn-sign-in {

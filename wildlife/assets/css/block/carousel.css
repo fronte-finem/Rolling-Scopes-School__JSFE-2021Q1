@@ -7,6 +7,7 @@
   --w-item: 300px;
   --h-btn: 70px;
   --w-btn: 30px;
+  --card-padd: 40px;
 }
 
 .carousel {
@@ -25,6 +26,37 @@
 .carousel .card--2 { grid-area: c2; }
 .carousel .card--3 { grid-area: c3; }
 
+@media (max-width: 1300px) {
+  .carousel {
+    grid-template-columns: var(--w-btn) repeat(2, var(--w-item)) var(--w-btn);
+    grid-template-areas: "prev c1 c2 next";
+  }
+  .carousel .card--3 { display: none; }
+}
+
+@media (max-width: 800px) {
+  .carousel {
+    grid-template-columns: var(--w-btn) var(--w-item) var(--w-btn);
+    grid-template-areas: "prev c1 next";
+  }
+  .carousel .card--2 { display: none; }
+}
+
+@media (max-width: 500px) {
+  .carousel {
+    --h-item: 300px;
+    --w-item: 250px;
+    --card-padd: 20px;
+  }
+}
+
+@media (max-width: 350px) {
+  .carousel {
+    --h-item: 240px;
+    --w-item: 200px;
+    --card-padd: 10px;
+  }
+}
 
 .carousel .card {
   position: relative;
@@ -37,22 +69,22 @@
   position: absolute;
   top: 0;
   left: 0;
-  bottom: 0;
-  right: 0;
+  width: var(--w-item);
+  height: var(--h-item);
 }
 
 .carousel .card-description {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: flex-end;
   row-gap: 10px;
-  padding: 40px;
+  padding: var(--card-padd);
   color: var(--color-font-light);
 }
 
 .carousel .card-description > * {
   margin: 0;
+  text-align: center;
 }
 
 

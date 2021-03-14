@@ -4,15 +4,35 @@
   Layout
 *******************************************************************************/
 
-.page {
-  --h-header: 780px;
-  --h-footer: 360px;
+:root {
+  --w-max: 1440px;
+  --w-min: 320px;
+  --h-head: 780px;
+  --h-foot: 360px;
+  --c-padd: 120px;
+}
+@media (max-width: 1024px) {
+  :root {
+    --c-padd: 60px;
+  }
+}
+@media (max-width: 640px) {
+  :root {
+    --c-padd: 30px;
+  }
+}
+@media (max-width: 480px) {
+  :root {
+    --c-padd: 15px;
+  }
+}
 
+.page {
   display: grid;
   grid-template-rows:
-    var(--h-header)
-    minmax(calc(100vh - var(--h-header) - var(--h-footer)), auto)
-    var(--h-footer);
+    var(--h-head)
+    minmax(calc(100vh - var(--h-head) - var(--h-foot)), auto)
+    var(--h-foot);
   grid-template-areas:
     "head"
     "main"
@@ -24,19 +44,20 @@
 .layout-foot { grid-area: foot; }
 
 .layout-wrapper {
-  max-width: 1440px;
-  min-width: 320px;
+  max-width: var(--w-max);
+  min-width: var(--w-min);
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  padding: 0 120px;
+  padding: 0 var(--c-padd);
 }
 
 .layout-head .layout-wrapper { padding-top: 19px; }
-.layout-head .layout-box { padding-bottom: 120px; }
+.layout-head .layout-box { padding-bottom: var(--c-padd); }
 
-.layout-main .layout-wrapper { padding-top: 120px; }
-.layout-main .layout-box { padding-bottom: 240px; }
+.layout-main .layout-wrapper { padding-top: var(--c-padd); }
+.layout-main .layout-box { padding-bottom: calc(2 * var(--c-padd)); }
+
 
 /*******************************************************************************
   Backgrounds
