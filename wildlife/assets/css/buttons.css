@@ -37,10 +37,26 @@ input[type="submit"] {
 
 .btn-icon {
   background-color: transparent;
-  background-repeat: no-repeat;
-  mask-repeat: no-repeat;
   transition: transform var(--btn-trans);
 }
 .btn-icon svg path {
   transition: fill var(--btn-trans);
+}
+
+.link-icon {
+  background-color: var(--color-font-light);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  transition: var(--btn-bg-trans), transform var(--btn-trans);
+}
+.link-icon:visited  {
+  background-color: var(--color-font-gray);
+}
+.link-icon:hover  {
+  background-color: var(--color-orange-light);
+  transform: translateY(1px);
+}
+.link-icon:active {
+  background-color: var(--color-orange-dark);
+  transform: translateY(2px);
 }

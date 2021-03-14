@@ -8,7 +8,18 @@
 @import url(./logo.css);
 @import url(./carousel.css);
 
+:root {
+  --link-time: 0.5s ease;
+}
 
+.link {
+  color: var(--color-font-light);
+  text-decoration: none;
+  transition: color var(--link-time);
+}
+.link:visited { color: var(--color-font-gray); }
+.link:hover { color: var(--color-orange-light); }
+.link:active { color: var(--color-orange-main); }
 
 /*******************************************************************************
   section [layout-head]
@@ -29,12 +40,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.header__menu a {
-  /* padding-right: 5px; */
-  color: var(--color-font-light);
-  text-decoration: none;
 }
 
 .header__menu .btn-sign-in {
@@ -108,18 +113,28 @@
   width: 240px;
 }
 
-.social-links .icon {
+.social-links .link-icon {
   display: block;
   width: 40px;
   height: 40px;
-  background-position: 0 0;
-  background-repeat: no-repeat;
 }
 
-.social-links .icon--fb { background-image: url(../img/icon-fb.svg); }
-.social-links .icon--ig { background-image: url(../img/icon-ig.svg); }
-.social-links .icon--pt { background-image: url(../img/icon-pt.svg); }
-.social-links .icon--tg { background-image: url(../img/icon-tg.svg); }
+.social-links .link-icon--fb {
+  -webkit-mask-image: url(../img/icon-fb.svg);
+  mask-image: url(../img/icon-fb.svg);
+}
+.social-links .link-icon--ig {
+  -webkit-mask-image: url(../img/icon-ig.svg);
+  mask-image: url(../img/icon-ig.svg);
+}
+.social-links .link-icon--pt {
+  -webkit-mask-image: url(../img/icon-pt.svg);
+  mask-image: url(../img/icon-pt.svg);
+}
+.social-links .link-icon--tg {
+  -webkit-mask-image: url(../img/icon-tg.svg);
+  mask-image: url(../img/icon-tg.svg);
+}
 
 
 /*******************************************************************************
