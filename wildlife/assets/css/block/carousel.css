@@ -3,67 +3,78 @@
 /* block {Carousel} */
 
 .carousel {
-  --h-item: 360px;
-  --w-item: 300px;
+  --visible-slots: 3;
+  --curr-slot: 0;
+
   --h-btn: 70px;
   --w-btn: 30px;
-  --card-padd: 40px;
+  --h-card: 360px;
+  --w-card: 300px;
+  --p-card: 40px;
+
   --time: 0.5s ease;
 }
 
 .carousel {
-  list-style: none;
-  margin: 0;
-  padding: 0;
   display: grid;
-  grid-template-rows: var(--h-item);
-  grid-template-columns: var(--w-btn) repeat(3, var(--w-item)) var(--w-btn);
-  grid-template-areas: "prev c1 c2 c3 next";
-  justify-content: space-between;
+  width: 100%;
+  grid-template-rows: var(--h-card);
+  grid-template-columns: var(--w-btn) 1fr var(--w-btn);
+  grid-template-areas: "prev slots next";
+  column-gap: var(--w-btn);
 }
 .carousel .ctrl--prev { grid-area: prev; }
 .carousel .ctrl--next { grid-area: next; }
-.carousel .slot--1 { grid-area: c1; }
-.carousel .slot--2 { grid-area: c2; }
-.carousel .slot--3 { grid-area: c3; }
+.carousel .slots { grid-area: slots; }
 
-@media (max-width: 1300px) {
-  .carousel {
-    grid-template-columns: var(--w-btn) repeat(2, var(--w-item)) var(--w-btn);
-    grid-template-areas: "prev c1 c2 next";
-  }
-  .carousel .slot--3 { display: none; }
-}
-
-@media (max-width: 800px) {
-  .carousel {
-    grid-template-columns: var(--w-btn) var(--w-item) var(--w-btn);
-    grid-template-areas: "prev c1 next";
-  }
-  .carousel .slot--2 { display: none; }
-}
+@media (max-width: 1280px) { .carousel { column-gap: 0; }}
 
 @media (max-width: 500px) {
   .carousel {
-    --h-item: 300px;
-    --w-item: 250px;
-    --card-padd: 20px;
+    --h-card: 300px;
+    --w-card: 250px;
+    --p-card: 20px;
+  }
+}
+@media (max-width: 380px) {
+  .carousel {
+    --h-card: 240px;
+    --w-card: 200px;
+    --p-card: 10px;
   }
 }
 
-@media (max-width: 350px) {
-  .carousel {
-    --h-item: 240px;
-    --w-item: 200px;
-    --card-padd: 10px;
-  }
+.carousel .slots {
+  list-style: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  overflow: hidden;
 }
+@media (max-width: 1260px) { .carousel .slots { --visible-slots: 2; }}
+@media (max-width: 820px) { .carousel .slots { --visible-slots: 1; }}
+
+.carousel .slot {
+  width: var(--h-card);
+  height: var(--h-card);
+  display: flex;
+  flex-basis: calc(100% / var(--visible-slots));
+  flex-shrink: 0;
+  justify-content: center;
+
+  transition: transform var(--time);
+  transform: translateX(calc(-100% * var(--curr-slot)));
+}
+
 
 .carousel .card {
   position: relative;
   display: block;
-  width: var(--w-item);
-  height: var(--h-item);
+  width: var(--w-card);
+  height: var(--h-card);
+  overflow: hidden;
+  background-color: var(--color-font-gray);
 }
 
 .carousel .card-bg,
@@ -71,8 +82,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: var(--w-item);
-  height: var(--h-item);
+  width: var(--w-card);
+  height: var(--h-card);
 }
 
 .carousel .card-bg {
@@ -91,7 +102,7 @@
   flex-direction: column;
   justify-content: flex-end;
   row-gap: 10px;
-  padding: var(--card-padd);
+  padding: var(--p-card);
   color: var(--color-font-light);
 }
 
@@ -101,7 +112,7 @@
 }
 
 .carousel .ctrl {
-  padding: calc((var(--h-item) - var(--h-btn)) / 2) 0;
+  padding: calc((var(--h-card) - var(--h-btn)) / 2) 0;
 }
 
 .carousel .btn-inline-svg {
@@ -117,3 +128,16 @@
 .carousel .ctrl--next .btn-inline-svg:hover { transform: scale(1.5); }
 .carousel .ctrl--prev .btn-inline-svg:active { transform: scale(1.5) translateX(-5px); }
 .carousel .ctrl--next .btn-inline-svg:active { transform: scale(1.5) translateX(+5px); }
+
+
+.carousel .ctrl--disabled .btn-inline-svg { cursor: not-allowed; }
+
+.carousel .ctrl--disabled .btn-inline-svg        .icon-arrow,
+.carousel .ctrl--disabled .btn-inline-svg:hover  .icon-arrow,
+.carousel .ctrl--disabled .btn-inline-svg:active .icon-arrow {
+  opacity: .1;
+  fill: var(--color-font-dark);
+}
+
+.carousel .ctrl--disabled .btn-inline-svg:hover,
+.carousel .ctrl--disabled .btn-inline-svg:active { transform: scale(1) translateX(0); }
