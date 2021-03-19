@@ -1,0 +1,13 @@
+.header {
+	text-align: center;
+	width: 100%;
+	border-bottom: 1px solid;
+	border-image-slice: 1;
+	border-image-source: var(--grad-hdr-ftr);
+}
+
+.header-title {
+	line-height: 60px;
+	font-weight: 300;
+	color: var(--color-main-light);
+}
