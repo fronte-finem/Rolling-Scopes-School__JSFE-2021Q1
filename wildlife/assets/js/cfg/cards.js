@@ -25,7 +25,7 @@ export const cards = [
     link: "#article-bird",
     img: {
       src: "./assets/img/bg-card-bird.jpeg",
-      alt: "Deer",
+      alt: "Bird",
       w: 300,
       h: 360
     },
