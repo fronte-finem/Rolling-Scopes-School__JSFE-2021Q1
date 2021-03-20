@@ -26,19 +26,21 @@ piano.addEventListener('mouseleave', e => onPiano = false);
 piano.querySelectorAll('.piano-key').forEach(pKey => {
   pKey.addEventListener('mousedown', handleKeyStart);
   pKey.addEventListener('mouseover', handleKeyStart);
-})
+  pKey.myAudio = new Audio(`./assets/audio/${pKey.parentElement.dataset.note}.mp3`);
+});
 
 function handleKeyStart(e) {
   if (e.buttons != 1) return false;
   toggleActive({add: [e.target, e.target.parentElement]});
   e.target.addEventListener('mouseup', handleKeyEnd);
   e.target.addEventListener('mouseout', handleKeyEnd);
-  console.log(this, e);
+  e.target.myAudio.pause();
+  e.target.myAudio.currentTime = 0;
+  e.target.myAudio.play();
 }
 
 function handleKeyEnd(e) {
   toggleActive({del: [e.target, e.target.parentElement]});
   e.target.removeEventListener('mouseup', handleKeyEnd);
   e.target.removeEventListener('mouseout', handleKeyEnd);
-  console.log(this, e);
 }
