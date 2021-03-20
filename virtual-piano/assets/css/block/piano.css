@@ -17,6 +17,7 @@
 	--w: 560px;
 	--h: 270px;
   --g: 4px;
+  --key-move-offset: -10px;
 }
 @media (max-width: 600px) {
 	.piano {
@@ -28,16 +29,28 @@
   list-style: none;
 	position: relative;
 	display: flex;
+  align-items: flex-start;
   column-gap: var(--g);
 	width: var(--w);
 	height: var(--h);
 	margin: 0 auto 60px;
+  box-sizing: content-box;
+}
+.piano::before{
+  content: '';
+  position: absolute;
+  top: var(--key-move-offset);
+  width: var(--w);
+  height: calc(-1 * var(--key-move-offset));
+  background-color: var(--color-main-dark);
+  z-index: 5;
 }
 
 .piano-key-slot {
 	--w: 80px;
 	--h: 270px;
   --h-sharp: 170px;
+  --p-sharp: calc(var(--h) - var(--h-sharp));
 }
 @media (max-width: 600px) {
 	.piano-key-slot {
@@ -55,7 +68,7 @@
 }
 .piano-key-slot.sharp {
 	width: 0px;
-  padding-bottom: calc(var(--h) - var(--h-sharp));
+  padding-bottom: var(--p-sharp);
 }
 
 
@@ -72,15 +85,15 @@
 	width: 100%;
 	height: 100%;
 	border-radius: var(--r);
-	transition: 0.3s;
 	cursor: pointer;
   pointer-events: auto;
   transform-origin: top center;
+	transition: var(--transit-time);
 }
 
 .piano-key        { background-color: var(--color-key-def); }
 .piano-key:hover  { background-color: var(--color-key-hov); }
-.piano-key:active { background-color: var(--color-key-act); }
+.piano-key.active { background-color: var(--color-key-act); }
 
 .sharp .piano-key {
   --w: 54px;
@@ -100,19 +113,16 @@
 	top: 0;
   left: calc(var(--w) / -2);
 	z-index: 3;
-	pointer-events: auto;
-	transform-origin: center top;
+  backface-visibility: hidden;
 }
 
 .sharp .piano-key        { background-color: var(--color-key-sharp-def); }
 .sharp .piano-key:hover  { background-color: var(--color-key-sharp-hov); }
-.sharp .piano-key:active { background-color: var(--color-key-sharp-act); }
+.sharp .piano-key.active { background-color: var(--color-key-sharp-act); }
 
-.piano-key.piano-key-active,
-.sharp .piano-key.piano-key-active,
-.piano-key:active,
-.sharp .piano-key:active {
-	transform: scale(0.96);
+.piano-key.active,
+.sharp .piano-key.active {
+	transform: translateY(var(--key-move-offset));
 }
 
 
@@ -154,6 +164,7 @@
 .piano-key-slot::before,
 .piano-key-slot::after {
 	position: absolute;
+  z-index: 9;
 	width: var(--size);
 	height: var(--size);
 	font-size: var(--font-size);
