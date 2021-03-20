@@ -1,3 +1,11 @@
+export { newDiv, toggleClass, playAudio };
+
+function newDiv(className = '') {
+  let div = document.createElement('div');
+  div.className = className;
+  return div;
+}
+
 function toggleClass(cls = '', opts = {add:[], del:[]}) {
   if (opts == undefined) return;
 
@@ -14,4 +22,8 @@ function toggleClass(cls = '', opts = {add:[], del:[]}) {
   }
 }
 
-export { toggleClass }
+function playAudio(audio) {
+  audio.pause();
+  audio.currentTime = 0;
+  audio.play();
+}
