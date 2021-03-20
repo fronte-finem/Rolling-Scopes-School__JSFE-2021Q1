@@ -129,11 +129,10 @@
 .piano-key-slot::before { content: attr(data-note); }
 .piano-key-slot::after  { content: attr(data-letter); }
 
-.piano-key-slot::before        { display: block; }
-.piano-key-slot::after         { display: none; }
-.piano-key-slot.letter::before { display: none; }
-.piano-key-slot.letter::after  { display: block; }
-
+.piano         .piano-key-slot::before { display: block; }
+.piano         .piano-key-slot::after  { display: none; }
+.piano.letters .piano-key-slot::before { display: none; }
+.piano.letters .piano-key-slot::after  { display: block; }
 
 
 .piano-key-slot::before,
