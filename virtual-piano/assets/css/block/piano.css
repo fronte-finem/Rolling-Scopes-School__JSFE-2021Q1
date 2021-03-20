@@ -91,9 +91,9 @@
 	transition: var(--transit-time);
 }
 
-.piano-key        { background-color: var(--color-key-def); }
-.piano-key:hover  { background-color: var(--color-key-hov); }
-.piano-key.active { background-color: var(--color-key-act); }
+.piano-key-slot        .piano-key       { background-color: var(--color-key-def); }
+.piano-key-slot        .piano-key:hover { background-color: var(--color-key-hov); }
+.piano-key-slot.active .piano-key       { background-color: var(--color-key-act); }
 
 .sharp .piano-key {
   --w: 54px;
@@ -116,12 +116,12 @@
   backface-visibility: hidden;
 }
 
-.sharp .piano-key        { background-color: var(--color-key-sharp-def); }
-.sharp .piano-key:hover  { background-color: var(--color-key-sharp-hov); }
-.sharp .piano-key.active { background-color: var(--color-key-sharp-act); }
+.piano-key-slot.sharp        .piano-key       { background-color: var(--color-key-sharp-def); }
+.piano-key-slot.sharp        .piano-key:hover { background-color: var(--color-key-sharp-hov); }
+.piano-key-slot.sharp.active .piano-key       { background-color: var(--color-key-sharp-act); }
 
-.piano-key.active,
-.sharp .piano-key.active {
+.piano-key-slot.active       .piano-key,
+.piano-key-slot.active.sharp .piano-key {
 	transform: translateY(var(--key-move-offset));
 }
 
@@ -181,4 +181,8 @@
 .piano-key-slot:hover::before,
 .piano-key-slot:hover::after {
 	color: var(--color-symbol-hov);
+}
+.piano-key-slot.active::before,
+.piano-key-slot.active::after {
+	color: var(--color-symbol-act);
 }
