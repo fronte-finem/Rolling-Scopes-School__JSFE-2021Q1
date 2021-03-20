@@ -1,0 +1,75 @@
+@import url(./init.css);
+
+@import url(./elem/button.css);
+
+@import url(./block/header.css);
+@import url(./block/footer.css);
+@import url(./block/piano.css);
+
+
+:root {
+  --color-main-dark: #313940;
+  --color-main-light: #fff;
+
+  --font-main: "Open Sans", Arial, Helvetica, sans-serif;
+
+  --grad-hdr-ftr: linear-gradient(to left, #38495a, #a2abb3, #38495a);
+
+  --transit-time: 300ms;
+}
+
+
+.main {
+  --padd-top: 60px;
+}
+@media (max-width: 600px) {
+	.main {
+		--padd-top: 40px;
+	}
+}
+.main {
+	min-height: calc(100vh - 110px);
+	padding: var(--padd-top) 10px 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: space-between;
+	width: 100%;
+	max-width: 1140px;
+	margin: 0 auto;
+}
+
+
+.btn-container {
+  --w: 306px;
+}
+@media (max-width: 600px) {
+	.btn-container {
+		--w: 244px;
+	}
+}
+.btn-container {
+	display: flex;
+	justify-content: space-between;
+	width: var(--w);
+	height: 40px;
+	margin: 0 auto;
+	margin-bottom: 80px;
+}
+
+
+.fullscreen {
+	--t: 120px;
+	--r: 40px;
+}
+@media (max-width: 768px) {
+	.fullscreen {
+		--t: 10px;
+		--r: 20px;
+	}
+}
+.fullscreen {
+	position: fixed;
+	top: var(--t);
+	right: var(--r);
+}

@@ -1,0 +1,22 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	user-select: none;
+}
+
+a:focus {
+	outline: 0;
+}
+
+html {
+	background: var(--color-main-dark);
+}
+
+body {
+	min-height: 100vh;
+	background-color: var(--color-main-dark);
+	font-family: var(--font-main);
+	background: var(--color-main-dark);
+	overflow-x: hidden;
+}
