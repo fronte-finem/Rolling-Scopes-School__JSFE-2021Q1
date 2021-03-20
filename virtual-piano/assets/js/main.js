@@ -27,16 +27,21 @@ piano.querySelectorAll('.piano-key').forEach(pKey => {
   pKey.addEventListener('mousedown', handleKeyStart);
   pKey.addEventListener('mouseover', handleKeyStart);
   pKey.myAudio = new Audio(`./assets/audio/${pKey.parentElement.dataset.note}.mp3`);
+  pKey.myKey = `Key${pKey.parentElement.dataset.letter}`;
 });
+
+function playAudio(audio) {
+  audio.pause();
+  audio.currentTime = 0;
+  audio.play();
+}
 
 function handleKeyStart(e) {
   if (e.buttons != 1) return false;
   toggleActive({add: [e.target, e.target.parentElement]});
   e.target.addEventListener('mouseup', handleKeyEnd);
   e.target.addEventListener('mouseout', handleKeyEnd);
-  e.target.myAudio.pause();
-  e.target.myAudio.currentTime = 0;
-  e.target.myAudio.play();
+  playAudio(e.target.myAudio);
 }
 
 function handleKeyEnd(e) {
@@ -44,3 +49,18 @@ function handleKeyEnd(e) {
   e.target.removeEventListener('mouseup', handleKeyEnd);
   e.target.removeEventListener('mouseout', handleKeyEnd);
 }
+
+document.addEventListener('keydown', (e) => {
+  if (e.repeat) return false;
+  Array
+    .from(piano.querySelectorAll('.piano-key'))
+    .filter(pKey => pKey.myKey == e.code)
+    .forEach(pKey => { toggleActive({add: [pKey, pKey.parentElement]}); playAudio(pKey.myAudio) })
+});
+
+document.addEventListener('keyup', (e) => {
+  Array
+    .from(piano.querySelectorAll('.piano-key'))
+    .filter(pKey => pKey.myKey == e.code)
+    .forEach(pKey => toggleActive({del: [pKey, pKey.parentElement]}));
+});
