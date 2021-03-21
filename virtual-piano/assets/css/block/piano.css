@@ -1,14 +1,3 @@
-.piano .piano-key-slot {
-	--color-key-def: #ccc;
-	--color-key-hov: #fff;
-	--color-key-act: #aaf;
-}
-.piano .piano-key-slot.sharp {
-	--color-key-def: #111;
-	--color-key-hov: #000;
-	--color-key-act: #002;
-}
-
 .piano {
 	--w: 560px;
 	--h: 270px;
@@ -116,8 +105,11 @@
 }
 
 
-.piano-key-slot::before { content: attr(data-note); }
-.piano-key-slot::after  { content: attr(data-letter); }
+.piano-key-slot::before       { content: attr(data-note); }
+.piano-key-slot.sharp::before { content: attr(data-note) "♯"; }
+.piano-key-slot.empty::before { content: ""; }
+.piano-key-slot::after        { content: attr(data-letter); }
+.piano-key-slot.empty::after  { content: ""; }
 
 .piano         .piano-key-slot::before { display: block; }
 .piano         .piano-key-slot::after  { display: none; }
@@ -163,12 +155,3 @@
   transform: translateX(-50%);
 	transition: var(--transit-time);
 }
-
-
-.piano-key-slot        { color: var(--color-key-def); }
-.piano-key-slot:hover  { color: var(--color-key-hov); }
-.piano-key-slot.active { color: var(--color-key-act); }
-
-.piano-key-slot        .piano-key .piano-key-face { background-color: var(--color-key-def); }
-.piano-key-slot:hover  .piano-key .piano-key-face { background-color: var(--color-key-hov); }
-.piano-key-slot.active .piano-key .piano-key-face { background-color: var(--color-key-act); }

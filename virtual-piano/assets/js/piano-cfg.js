@@ -16,11 +16,10 @@ export const PIANO_CFG = [
 
 function genPianoKeyOpt(sharp, note, letter) {
   if (!note) return { sharp: sharp };
-  note = `${note}${sharp ? '♯' : ''}`;
   return {
     sharp: sharp,
     note: note,
     letter: letter,
-    audio: new Audio(`./assets/audio/${note}.mp3`)
+    audio: new Audio(`./assets/audio/${note}${sharp ? '♯' : ''}.mp3`)
   };
 }

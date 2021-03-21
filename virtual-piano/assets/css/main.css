@@ -5,6 +5,7 @@
 @import url(./block/header.css);
 @import url(./block/footer.css);
 @import url(./block/piano.css);
+@import url(./block/piano-colors.css);
 
 
 :root {
@@ -15,7 +16,7 @@
 
   --grad-hdr-ftr: linear-gradient(to left, #38495a, #a2abb3, #38495a);
 
-  --transit-time: 300ms;
+  --transit-time: 500ms;
 }
 
 
