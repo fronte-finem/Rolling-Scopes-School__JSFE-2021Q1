@@ -4,7 +4,7 @@ export const PIANO_CFG = [
   genPianoKeyOpt(false, "d", "F"),
   genPianoKeyOpt(true,  "d", "T"),
   genPianoKeyOpt(false, "e", "G"),
-  genPianoKeyOpt(true),
+  // genPianoKeyOpt(true),
   genPianoKeyOpt(false, "f", "H"),
   genPianoKeyOpt(true,  "f", "U"),
   genPianoKeyOpt(false, "g", "J"),

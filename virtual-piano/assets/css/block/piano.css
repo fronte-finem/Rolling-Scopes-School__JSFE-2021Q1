@@ -47,6 +47,9 @@
   padding-bottom: var(--p-sharp);
 }
 
+.piano-key-slot:not(.sharp) + .piano-key-slot:not(.sharp) {
+  margin-left: var(--gap);
+}
 
 .piano-key {
   --r: 0 0 12px 12px;

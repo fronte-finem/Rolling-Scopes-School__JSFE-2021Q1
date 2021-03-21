@@ -1,34 +1,17 @@
 import { Piano } from './piano.js'
 import { PIANO_CFG } from './piano-cfg.js'
-import { toggleClass } from './util.js'
 
-window.addEventListener('load', _ => {
-  const piano = new Piano(document.querySelector('.piano'));
+window.addEventListener('load', () => {
+  const piano = new Piano(document.querySelector('.piano'), {
+    btnNotes: document.querySelector('.btn-notes'),
+    btnLetters: document.querySelector('.btn-letters')
+  });
   PIANO_CFG.map(piano.addKey.bind(piano));
 
-  const toggleBtn = toggleClass.bind(null, 'btn-active');
+  document.addEventListener('keydown', (e) => e.repeat || piano.keyDown(e.code));
+  document.addEventListener('keyup', (e) => piano.keyUp(e.code));
 
-  const btnNotes = document.querySelector('.btn-notes');
-  const btnLetters = document.querySelector('.btn-letters');
-
-  btnNotes.addEventListener('click', (_) => {
-    toggleBtn({add:btnNotes, del:btnLetters});
-    piano.toggleLetters(false);
-  });
-  btnLetters.addEventListener('click', (_) => {
-    toggleBtn({del:btnNotes, add:btnLetters});
-    piano.toggleLetters(true);
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.repeat) return false;
-    piano.playKey(e.code);
-  });
-  document.addEventListener('keyup', (e) => {
-    piano.stopKey(e.code);
-  });
-
-  document.querySelector('.btn-fullscreen').addEventListener('click', (_) => {
+  document.querySelector('.btn-fullscreen').addEventListener('click', () => {
     if (document.fullscreenElement) {
       document.exitFullscreen?.();
     } else {
@@ -40,7 +23,7 @@ window.addEventListener('load', _ => {
 
   document.querySelector('.btn-theme').addEventListener('click', (e) => {
     e.target.classList.toggle('btn-theme--dark');
-    const isDark = theme.getAttribute("href") == './assets/css/color-theme-dark.css';
+    const isDark = './assets/css/color-theme-dark.css' == theme.getAttribute("href");
     theme.href = `./assets/css/color-theme-${isDark ? 'light' : 'dark'}.css`;
   });
 });
