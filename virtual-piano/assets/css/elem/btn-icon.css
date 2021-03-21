@@ -1,0 +1,15 @@
+.btn-icon {
+	width: 40px;
+	height: 40px;
+	border: 0;
+	outline: 0;
+	background-size: contain;
+	cursor: pointer;
+}
+
+.btn-icon {
+	transition: background-color var(--transit-time);
+}
+.btn-icon        { background-color: var(--color-def); }
+.btn-icon:hover  { background-color: var(--color-hov); }
+.btn-icon:active { background-color: var(--color-act); }
