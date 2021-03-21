@@ -101,7 +101,7 @@
   left: calc(var(--w) / -2);
 	z-index: 3;
   backface-visibility: hidden;
-  background-color: var(--color-main-dark);
+  background-color: var(--color-main-bg);
 }
 
 

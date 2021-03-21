@@ -10,13 +10,13 @@ a:focus {
 }
 
 html {
-	background: var(--color-main-dark);
+	background: var(--color-main-bg);
 }
 
 body {
 	min-height: 100vh;
-	background-color: var(--color-main-dark);
+	background-color: var(--color-main-bg);
 	font-family: var(--font-main);
-	background: var(--color-main-dark);
+	background: var(--color-main-bg);
 	overflow-x: hidden;
 }
