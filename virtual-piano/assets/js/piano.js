@@ -1,99 +1,84 @@
-import { newDiv, playAudio } from './util.js'
+import { PianoKeyModel, PianoKeyView } from './piano-key.js'
+import { genPianoCfg, NOTES_DEFAULT, NOTES_FUNNY } from './piano-cfg.js'
+import { playAudio } from './util.js'
+
 
 export { Piano }
 
 class Piano {
-  constructor (root, {btnNotes, btnLetters} = btns) {
+  constructor (root) {
     this._root = root;
-    this._keys = {};
+    this._keyModels = [];
+    this._keyViews = [];
     this._isMouseDown = false;
     this._descr = { notes: true, letters: false };
+    this._kbDowns = new Set();
 
-    root.addEventListener('mousedown', mouseDown.bind(this));
-    root.addEventListener('mouseup', mouseUp.bind(this));
-    root.addEventListener('mouseleave', mouseUp.bind(this));
+    root.addEventListener('mousedown', (function () { this._isMouseDown = true; }).bind(this));
+    root.addEventListener('mouseup', (function () { this._isMouseDown = false; }).bind(this));
+    root.addEventListener('mouseleave', (function () { this._isMouseDown = false; }).bind(this));
 
-    function mouseDown() { this._isMouseDown = true; }
-    function mouseUp() { this._isMouseDown = false; }
+    window.addEventListener('keydown', (function (e) { e.repeat || this.keyDown(e.code) }).bind(this));
+    window.addEventListener('keyup', (function (e) { this.keyUp(e.code) }).bind(this));
 
-    btnNotes?.addEventListener('click', showNotes.bind(this));
-    btnLetters?.addEventListener('click', showLetters.bind(this));
-
-    function showLetters() {
-      if (this._descr.letters) return;
-      this._descr.letters = !(this._descr.notes = false);
-      btnNotes.classList.remove('btn-active');
-      btnLetters.classList.add('btn-active');
-      this._root.classList.add('letters');
-    };
-
-    function showNotes() {
-      if (this._descr.notes) return;
-      this._descr.notes = !(this._descr.letters = false);
-      btnNotes.classList.add('btn-active');
-      btnLetters.classList.remove('btn-active');
-      this._root.classList.remove('letters');
-    };
+    this._cfgs = { empty : [...genPianoCfg((() => ''), NOTES_FUNNY)] };
+    this._cfgs.empty.forEach(this.addKey.bind(this));
   }
 
-  addKey(opts = { letter: null }) {
-    opts.hookIsMouseOverNotAllowed = isMouseOverNotAllowed.bind(this);
-    let pianoKey = new PianoKey(opts);
-    this._root.append(pianoKey.slot)
-    this._keys[`Key${opts.letter}`] = pianoKey;
+  addKey(data) {
+    let pianoKeyModel = new PianoKeyModel(data);
+    let pianoKeyView = new PianoKeyView(pianoKeyModel);
+    this._root.append(pianoKeyView.base);
 
+    this._keyModels.push(pianoKeyModel);
+    this._keyViews.push(pianoKeyView);
+
+    pianoKeyView.onMouseOver(isMouseOverNotAllowed.bind(this));
     function isMouseOverNotAllowed() { return !this._isMouseDown; }
+
+    pianoKeyView.onMouseDown(() => playAudio(pianoKeyModel.audio));
   }
 
-  keyDown(keyCode) { this._keys[keyCode]?.down(); }
-  keyUp(keyCode) { this._keys[keyCode]?.up(); }
-}
-
-
-class PianoKeySlot {
-  constructor ({ sharp, audio, note, letter } = opts ) {
-    this._root = newDiv(`piano-key-slot`);
-    sharp && this._root.classList.add('sharp');
-    this._audio = audio;
-    this._root.dataset.note = note;
-    this._root.dataset.letter = letter;
+  addCfg(name, dir, notes = NOTES_DEFAULT) {
+    this._cfgs[name] = [...genPianoCfg((note) => `${dir}/${note}.mp3`, notes)];
   }
 
-  get slot() { return this._root; }
-
-  down() {
-    this._root.classList.add('active');
-    playAudio(this._audio);
+  setCfg(name) {
+    if (name === this._currCfgName) return false;
+    if (!this._cfgs[name]) return false;
+    const noAudio = name === 'empty';
+    this._cfgs[name]?.forEach((data, i) => {
+      noAudio || (data.audio ??= new Audio(data.file));
+      this._keyModels[i].update(data);
+    });
+    this._currCfgName = name;
+    return true;
   }
 
-  up() {
-    this._root.classList.remove('active');
-  }
-}
-
-
-class PianoKey extends PianoKeySlot {
-  constructor (opts = { hookIsMouseOverNotAllowed: null }) {
-    super(opts);
-    this._hookIsMouseOverNotAllowed = opts.hookIsMouseOverNotAllowed;
-
-    const [key, face]= ['piano-key', 'piano-key-face'].map(newDiv);
-    key.append(face);
-    this._root.append(key);
-
-    key.addEventListener('mousedown', this.handleMouseDown.bind(this));
-    key.addEventListener('mouseover', this.handleMouseOver.bind(this));
-    key.addEventListener('mouseup', this.up.bind(this));
-    key.addEventListener('mouseout', this.up.bind(this));
+  keyDown(keyCode) {
+    if (this._kbDowns.has(keyCode)) return false;
+    this._kbDowns.add(keyCode);
+    let xs = this._keyViews
+      .filter(k => `Key${k.letter}` == keyCode)[0]
+      ?.handleMouseDown({ buttons: 1 });
   }
 
-  handleMouseOver(e) {
-    if (this._hookIsMouseOverNotAllowed()) return false;
-    this.handleMouseDown(e);
+  keyUp(keyCode) {
+    this._kbDowns.delete(keyCode);
+    this._keyViews
+      .filter(k => `Key${k.letter}` == keyCode)[0]
+      ?.handleMouseUp();
   }
 
-  handleMouseDown(e) {
-    if (e.buttons != 1) return false;
-    this.down();
-  }
+  showLetters() {
+    if (this._descr.letters) return false;
+    this._root.classList.add('letters');
+    return this._descr.letters = !(this._descr.notes = false);
+  };
+
+  showNotes() {
+    if (this._descr.notes) return false;
+    this._root.classList.remove('letters');
+    return this._descr.notes = !(this._descr.letters = false);
+  };
 }

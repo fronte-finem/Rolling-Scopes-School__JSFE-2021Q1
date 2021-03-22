@@ -1,15 +1,37 @@
+import { preset } from './init.js'
 import { Piano } from './piano.js'
-import { PIANO_CFG } from './piano-cfg.js'
+import { NOTES_DEFAULT, NOTES_FUNNY } from './piano-cfg.js'
+
 
 window.addEventListener('load', () => {
-  const piano = new Piano(document.querySelector('.piano'), {
-    btnNotes: document.querySelector('.btn-notes'),
-    btnLetters: document.querySelector('.btn-letters')
-  });
-  PIANO_CFG.map(piano.addKey.bind(piano));
+  const piano = new Piano(preset.piano);
 
-  document.addEventListener('keydown', (e) => e.repeat || piano.keyDown(e.code));
-  document.addEventListener('keyup', (e) => piano.keyUp(e.code));
+  piano.addCfg('🎹', './assets/audio/piano', NOTES_DEFAULT);
+  piano.addCfg('🎸', './assets/audio/guitar', NOTES_FUNNY);
+
+  piano.setCfg('🎹');
+
+  preset.btnNotes.addEventListener('click', () => {
+    if (!piano.showNotes()) return false;
+    preset.btnNotes.classList.add('btn-active');
+    preset.btnLetters.classList.remove('btn-active');
+  });
+  preset.btnLetters.addEventListener('click', () => {
+    if (!piano.showLetters()) return false;
+    preset.btnNotes.classList.remove('btn-active');
+    preset.btnLetters.classList.add('btn-active');
+  });
+
+  preset.btnCfg1.addEventListener('click', () => {
+    if (!piano.setCfg('🎹')) return false;
+    preset.btnCfg1.classList.add('btn-active');
+    preset.btnCfg2.classList.remove('btn-active');
+  });
+  preset.btnCfg2.addEventListener('click', () => {
+    if (!piano.setCfg('🎸')) return false;
+    preset.btnCfg1.classList.remove('btn-active');
+    preset.btnCfg2.classList.add('btn-active');
+  });
 
   document.querySelector('.btn-fullscreen').addEventListener('click', () => {
     if (document.fullscreenElement) {

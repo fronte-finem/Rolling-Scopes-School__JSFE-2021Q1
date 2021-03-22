@@ -12,5 +12,5 @@
 
 :root {
   --font-main: "Open Sans", Arial, Helvetica, sans-serif;
-  --transit-time: 500ms;
+  --transit-time: 300ms;
 }

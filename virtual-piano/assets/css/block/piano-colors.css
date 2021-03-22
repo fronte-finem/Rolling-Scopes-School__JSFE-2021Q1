@@ -1,4 +1,4 @@
-.piano-key-slot {
+.piano-key-base {
   --light-hov: 75%;
   --light-act: 65%;
   --satur-hov: 100%;
@@ -21,7 +21,7 @@
 	--color-act-6: hsl(280, var(--satur-act), var(--light-act));
 	--color-act-7: hsl(320, var(--satur-act), var(--light-act));
 }
-.piano-key-slot.sharp {
+.piano-key-base.sharp {
   --light-hov: 15%;
   --light-act: 25%;
   --satur-hov: 80%;
@@ -29,68 +29,88 @@
 	--color-def: hsl(0, 0%, 10%);
 }
 
-.piano-key-slot { color: var(--color-def); }
+.piano-key-base { color: var(--color-def); }
 
-.piano-key-slot[data-note="c"]:hover  { color: var(--color-hov-1); }
-.piano-key-slot[data-note="d"]:hover  { color: var(--color-hov-2); }
-.piano-key-slot[data-note="e"]:hover  { color: var(--color-hov-3); }
-.piano-key-slot[data-note="f"]:hover  { color: var(--color-hov-4); }
-.piano-key-slot[data-note="g"]:hover  { color: var(--color-hov-5); }
-.piano-key-slot[data-note="a"]:hover  { color: var(--color-hov-6); }
-.piano-key-slot[data-note="b"]:hover  { color: var(--color-hov-7); }
+.piano-key-base:nth-child(1):hover  { color: var(--color-hov-1); }
+.piano-key-base:nth-child(2):hover  { color: var(--color-hov-1); }
+.piano-key-base:nth-child(3):hover  { color: var(--color-hov-2); }
+.piano-key-base:nth-child(4):hover  { color: var(--color-hov-2); }
+.piano-key-base:nth-child(5):hover  { color: var(--color-hov-3); }
+.piano-key-base:nth-child(6):hover  { color: var(--color-hov-4); }
+.piano-key-base:nth-child(7):hover  { color: var(--color-hov-4); }
+.piano-key-base:nth-child(8):hover  { color: var(--color-hov-5); }
+.piano-key-base:nth-child(9):hover  { color: var(--color-hov-5); }
+.piano-key-base:nth-child(10):hover  { color: var(--color-hov-6); }
+.piano-key-base:nth-child(11):hover  { color: var(--color-hov-6); }
+.piano-key-base:nth-child(12):hover  { color: var(--color-hov-7); }
 
-.piano-key-slot[data-note="c"].active { color: var(--color-act-1); }
-.piano-key-slot[data-note="d"].active { color: var(--color-act-2); }
-.piano-key-slot[data-note="e"].active { color: var(--color-act-3); }
-.piano-key-slot[data-note="f"].active { color: var(--color-act-4); }
-.piano-key-slot[data-note="g"].active { color: var(--color-act-5); }
-.piano-key-slot[data-note="a"].active { color: var(--color-act-6); }
-.piano-key-slot[data-note="b"].active { color: var(--color-act-7); }
+.piano-key-base:nth-child(1).active  { color: var(--color-act-1); }
+.piano-key-base:nth-child(2).active  { color: var(--color-act-1); }
+.piano-key-base:nth-child(3).active  { color: var(--color-act-2); }
+.piano-key-base:nth-child(4).active  { color: var(--color-act-2); }
+.piano-key-base:nth-child(5).active  { color: var(--color-act-3); }
+.piano-key-base:nth-child(6).active  { color: var(--color-act-4); }
+.piano-key-base:nth-child(7).active  { color: var(--color-act-4); }
+.piano-key-base:nth-child(8).active  { color: var(--color-act-5); }
+.piano-key-base:nth-child(9).active  { color: var(--color-act-5); }
+.piano-key-base:nth-child(10).active  { color: var(--color-act-6); }
+.piano-key-base:nth-child(11).active  { color: var(--color-act-6); }
+.piano-key-base:nth-child(12).active  { color: var(--color-act-7); }
 
-.piano-key-slot .piano-key-face { background-color: var(--color-def); }
+.piano-key-base .piano-key-face { background-color: var(--color-def); }
 
-.piano-key-slot[data-note="c"]:hover .piano-key-face { background-color: var(--color-hov-1); }
-.piano-key-slot[data-note="d"]:hover .piano-key-face { background-color: var(--color-hov-2); }
-.piano-key-slot[data-note="e"]:hover .piano-key-face { background-color: var(--color-hov-3); }
-.piano-key-slot[data-note="f"]:hover .piano-key-face { background-color: var(--color-hov-4); }
-.piano-key-slot[data-note="g"]:hover .piano-key-face { background-color: var(--color-hov-5); }
-.piano-key-slot[data-note="a"]:hover .piano-key-face { background-color: var(--color-hov-6); }
-.piano-key-slot[data-note="b"]:hover .piano-key-face { background-color: var(--color-hov-7); }
+.piano-key-base:nth-child(1):hover .piano-key-face  { background-color: var(--color-hov-1); }
+.piano-key-base:nth-child(2):hover .piano-key-face  { background-color: var(--color-hov-1); }
+.piano-key-base:nth-child(3):hover .piano-key-face  { background-color: var(--color-hov-2); }
+.piano-key-base:nth-child(4):hover .piano-key-face  { background-color: var(--color-hov-2); }
+.piano-key-base:nth-child(5):hover .piano-key-face  { background-color: var(--color-hov-3); }
+.piano-key-base:nth-child(6):hover .piano-key-face  { background-color: var(--color-hov-4); }
+.piano-key-base:nth-child(7):hover .piano-key-face  { background-color: var(--color-hov-4); }
+.piano-key-base:nth-child(8):hover .piano-key-face  { background-color: var(--color-hov-5); }
+.piano-key-base:nth-child(9):hover .piano-key-face  { background-color: var(--color-hov-5); }
+.piano-key-base:nth-child(10):hover .piano-key-face  { background-color: var(--color-hov-6); }
+.piano-key-base:nth-child(11):hover .piano-key-face  { background-color: var(--color-hov-6); }
+.piano-key-base:nth-child(12):hover .piano-key-face  { background-color: var(--color-hov-7); }
 
-.piano-key-slot[data-note="c"].active .piano-key-face { background-color: var(--color-act-1); }
-.piano-key-slot[data-note="d"].active .piano-key-face { background-color: var(--color-act-2); }
-.piano-key-slot[data-note="e"].active .piano-key-face { background-color: var(--color-act-3); }
-.piano-key-slot[data-note="f"].active .piano-key-face { background-color: var(--color-act-4); }
-.piano-key-slot[data-note="g"].active .piano-key-face { background-color: var(--color-act-5); }
-.piano-key-slot[data-note="a"].active .piano-key-face { background-color: var(--color-act-6); }
-.piano-key-slot[data-note="b"].active .piano-key-face { background-color: var(--color-act-7); }
+.piano-key-base:nth-child(1).active .piano-key-face  { background-color: var(--color-act-1); }
+.piano-key-base:nth-child(2).active .piano-key-face  { background-color: var(--color-act-1); }
+.piano-key-base:nth-child(3).active .piano-key-face  { background-color: var(--color-act-2); }
+.piano-key-base:nth-child(4).active .piano-key-face  { background-color: var(--color-act-2); }
+.piano-key-base:nth-child(5).active .piano-key-face  { background-color: var(--color-act-3); }
+.piano-key-base:nth-child(6).active .piano-key-face  { background-color: var(--color-act-4); }
+.piano-key-base:nth-child(7).active .piano-key-face  { background-color: var(--color-act-4); }
+.piano-key-base:nth-child(8).active .piano-key-face  { background-color: var(--color-act-5); }
+.piano-key-base:nth-child(9).active .piano-key-face  { background-color: var(--color-act-5); }
+.piano-key-base:nth-child(10).active .piano-key-face  { background-color: var(--color-act-6); }
+.piano-key-base:nth-child(11).active .piano-key-face  { background-color: var(--color-act-6); }
+.piano-key-base:nth-child(12).active .piano-key-face  { background-color: var(--color-act-7); }
 
 
-.piano-key-slot {
+.piano-key-base {
   --txt-stroke: 0 0 2px rgba(0, 0, 0, .9);
   --txt-hov: 0 0 5px rgba(255, 255, 255, .5);
   --txt-act: 0 0 10px rgba(255, 255, 255, .5);
 }
 
-.piano-key-slot        { text-shadow: var(--txt-stroke); }
-.piano-key-slot:hover  { text-shadow: var(--txt-stroke), var(--txt-hov); }
-.piano-key-slot.active { text-shadow: var(--txt-stroke), var(--txt-act); }
+.piano-key-base        { text-shadow: var(--txt-stroke); }
+.piano-key-base:hover  { text-shadow: var(--txt-stroke), var(--txt-hov); }
+.piano-key-base.active { text-shadow: var(--txt-stroke), var(--txt-act); }
 
-.piano-key-slot.sharp        { text-shadow: none; }
-.piano-key-slot.sharp:hover  { text-shadow: var(--txt-stroke), var(--txt-hov); }
-.piano-key-slot.sharp.active { text-shadow: var(--txt-stroke), var(--txt-act); }
+.piano-key-base.sharp        { text-shadow: none; }
+.piano-key-base.sharp:hover  { text-shadow: var(--txt-stroke), var(--txt-hov); }
+.piano-key-base.sharp.active { text-shadow: var(--txt-stroke), var(--txt-act); }
 
 
-.piano-key-slot {
+.piano-key-base {
   --shade-def: 0 -3px 5px 0 rgba(0, 0, 0, .2);
   --shade-hov: 0 -3px 5px 0 rgba(0, 0, 0, .3);
   --shade-act: 0 -3px 5px 0 rgba(0, 0, 0, .4);
 }
 
-.piano-key-slot        .piano-key-face { box-shadow: inset var(--shade-def); }
-.piano-key-slot:hover  .piano-key-face { box-shadow: inset var(--shade-hov); }
-.piano-key-slot.active .piano-key-face { box-shadow: inset var(--shade-act); }
+.piano-key-base        .piano-key-face { box-shadow: inset var(--shade-def); }
+.piano-key-base:hover  .piano-key-face { box-shadow: inset var(--shade-hov); }
+.piano-key-base.active .piano-key-face { box-shadow: inset var(--shade-act); }
 
-.piano-key-slot.sharp        .piano-key { box-shadow: var(--shade-def); }
-.piano-key-slot.sharp:hover  .piano-key { box-shadow: var(--shade-hov); }
-.piano-key-slot.sharp.active .piano-key { box-shadow: var(--shade-act); }
+.piano-key-base.sharp        .piano-key { box-shadow: var(--shade-def); }
+.piano-key-base.sharp:hover  .piano-key { box-shadow: var(--shade-hov); }
+.piano-key-base.sharp.active .piano-key { box-shadow: var(--shade-act); }
