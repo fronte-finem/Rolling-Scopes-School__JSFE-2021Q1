@@ -1,9 +1,9 @@
 .btn {
-  --w: 150px;
+  --w: 120px;
 }
 @media (max-width: 600px) {
 	.btn {
-		--w: 120px;
+		--w: 100px;
 	}
 }
 

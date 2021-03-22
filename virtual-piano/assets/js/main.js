@@ -1,34 +1,39 @@
+import { preset } from './init.js'
 import { Piano } from './piano.js'
-import { PIANO_CFG } from './piano-cfg.js'
-import { toggleClass } from './util.js'
+import { NOTES_DEFAULT, NOTES_FUNNY } from './piano-cfg.js'
 
-window.addEventListener('load', _ => {
-  const piano = new Piano(document.querySelector('.piano'));
-  PIANO_CFG.map(piano.addKey.bind(piano));
 
-  const toggleBtn = toggleClass.bind(null, 'btn-active');
+window.addEventListener('load', () => {
+  const piano = new Piano(preset.piano);
 
-  const btnNotes = document.querySelector('.btn-notes');
-  const btnLetters = document.querySelector('.btn-letters');
+  piano.addCfg('🎹', './assets/audio/piano', NOTES_DEFAULT);
+  piano.addCfg('🎸', './assets/audio/guitar', NOTES_FUNNY);
 
-  btnNotes.addEventListener('click', (_) => {
-    toggleBtn({add:btnNotes, del:btnLetters});
-    piano.toggleLetters(false);
+  piano.setCfg('🎹');
+
+  preset.btnNotes.addEventListener('click', () => {
+    if (!piano.showNotes()) return false;
+    preset.btnNotes.classList.add('btn-active');
+    preset.btnLetters.classList.remove('btn-active');
   });
-  btnLetters.addEventListener('click', (_) => {
-    toggleBtn({del:btnNotes, add:btnLetters});
-    piano.toggleLetters(true);
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.repeat) return false;
-    piano.playKey(e.code);
-  });
-  document.addEventListener('keyup', (e) => {
-    piano.stopKey(e.code);
+  preset.btnLetters.addEventListener('click', () => {
+    if (!piano.showLetters()) return false;
+    preset.btnNotes.classList.remove('btn-active');
+    preset.btnLetters.classList.add('btn-active');
   });
 
-  document.querySelector('.btn-fullscreen').addEventListener('click', (_) => {
+  preset.btnCfg1.addEventListener('click', () => {
+    if (!piano.setCfg('🎹')) return false;
+    preset.btnCfg1.classList.add('btn-active');
+    preset.btnCfg2.classList.remove('btn-active');
+  });
+  preset.btnCfg2.addEventListener('click', () => {
+    if (!piano.setCfg('🎸')) return false;
+    preset.btnCfg1.classList.remove('btn-active');
+    preset.btnCfg2.classList.add('btn-active');
+  });
+
+  document.querySelector('.btn-fullscreen').addEventListener('click', () => {
     if (document.fullscreenElement) {
       document.exitFullscreen?.();
     } else {
@@ -40,7 +45,7 @@ window.addEventListener('load', _ => {
 
   document.querySelector('.btn-theme').addEventListener('click', (e) => {
     e.target.classList.toggle('btn-theme--dark');
-    const isDark = theme.getAttribute("href") == './assets/css/color-theme-dark.css';
+    const isDark = './assets/css/color-theme-dark.css' == theme.getAttribute("href");
     theme.href = `./assets/css/color-theme-${isDark ? 'light' : 'dark'}.css`;
   });
 });

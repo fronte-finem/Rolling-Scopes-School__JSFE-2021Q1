@@ -20,18 +20,33 @@
 
 
 .main .btn-container {
-  --w: 306px;
+  --dir: row;
+  --aln: unset;
+  --w: 540px;
+  --h: 40px;
+  --m: auto
 }
 @media (max-width: 600px) {
 	.main .btn-container {
-		--w: 244px;
+    --dir: column;
+    --aln: center;
+		--w: 300px;
+    --h: 85px;
+    --m: 0
 	}
 }
 .main .btn-container {
 	display: flex;
-	justify-content: space-between;
+  flex-wrap: wrap;
+  flex-direction: var(--dir);
+  align-items: var(--aln);
+  justify-content: space-between;
+  column-gap: 5px;
 	width: var(--w);
-	height: 40px;
+	height: var(--h);
 	margin: 0 auto;
 	margin-bottom: 80px;
+}
+.main .btn-container .btn:nth-child(2) {
+  margin-right: var(--m);
 }

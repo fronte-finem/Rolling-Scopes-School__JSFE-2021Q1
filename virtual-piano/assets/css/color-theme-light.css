@@ -1,11 +1,11 @@
 body {
-  --color-main-bg: #fff;
+  --color-main-bg: #999;
   --color-main-text: #333;
 }
 
 .header,
 .footer {
-  --end: #eee;
+  --end: #969696;
   --mid: #666;
   --grad: linear-gradient(to left, var(--end), var(--mid), var(--end));
 }
@@ -17,9 +17,9 @@ body {
 }
 
 .btn {
-  --color-def: hsl(0, 0%, 85%);
-  --color-hov: hsl(0, 0%, 75%);
-  --color-act: hsl(0, 0%, 65%);
+  --color-def: hsl(0, 0%, 70%);
+  --color-hov: hsl(0, 0%, 80%);
+  --color-act: hsl(0, 0%, 90%);
   --color-act-def: hsl(30, 75%, 75%);
   --color-act-hov: hsl(30, 85%, 65%);
   --color-act-act: hsl(30, 95%, 55%);

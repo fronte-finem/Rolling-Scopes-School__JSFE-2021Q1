@@ -22,31 +22,34 @@
   box-sizing: content-box;
 }
 
-.piano-key-slot {
+.piano-key-base {
 	--w: 80px;
 	--h: 270px;
   --h-sharp: 170px;
   --p-sharp: calc(var(--h) - var(--h-sharp));
 }
 @media (max-width: 600px) {
-	.piano-key-slot {
+	.piano-key-base {
 		--w: 44px;
 		--h: 160px;
     --h-sharp: 100px;
 	}
 }
-.piano-key-slot {
+.piano-key-base {
   display: block;
 	position: relative;
 	width: var(--w);
 	height: var(--h);
   pointer-events: none;
 }
-.piano-key-slot.sharp {
+.piano-key-base.sharp {
 	width: 0px;
   padding-bottom: var(--p-sharp);
 }
 
+.piano-key-base:not(.sharp) + .piano-key-base:not(.sharp) {
+  margin-left: var(--gap);
+}
 
 .piano-key {
   --r: 0 0 12px 12px;
@@ -74,8 +77,8 @@
 	transition: var(--transit-time);
   pointer-events: none;
 }
-.piano-key-slot.active       .piano-key .piano-key-face,
-.piano-key-slot.active.sharp .piano-key .piano-key-face {
+.piano-key-base.active       .piano-key .piano-key-face,
+.piano-key-base.active.sharp .piano-key .piano-key-face {
 	transform: translateY(var(--key-move-offset));
 }
 
@@ -105,45 +108,42 @@
 }
 
 
-.piano-key-slot::before       { content: attr(data-note); }
-.piano-key-slot.sharp::before { content: attr(data-note) "♯"; }
-.piano-key-slot.empty::before { content: ""; }
-.piano-key-slot::after        { content: attr(data-letter); }
-.piano-key-slot.empty::after  { content: ""; }
+.piano-key-base::before       { content: attr(data-note); }
+.piano-key-base::after        { content: attr(data-letter); }
 
-.piano         .piano-key-slot::before { display: block; }
-.piano         .piano-key-slot::after  { display: none; }
-.piano.letters .piano-key-slot::before { display: none; }
-.piano.letters .piano-key-slot::after  { display: block; }
+.piano         .piano-key-base::before { display: block; }
+.piano         .piano-key-base::after  { display: none; }
+.piano.letters .piano-key-base::before { display: none; }
+.piano.letters .piano-key-base::after  { display: block; }
 
 
-.piano-key-slot::before,
-.piano-key-slot::after {
+.piano-key-base::before,
+.piano-key-base::after {
   --size: 40px;
   --font-size: 26px;
   --offset: calc(-5px - var(--size));
 }
 @media (max-width: 600px) {
-	.piano-key-slot::before,
-	.piano-key-slot::after {
+	.piano-key-base::before,
+	.piano-key-base::after {
 		--size: 30px;
 		--font-size: 22px;
 	}
 }
 
-.piano-key-slot::before,
-.piano-key-slot::after {
+.piano-key-base::before,
+.piano-key-base::after {
 	top: unset;
   bottom: var(--offset);
 }
-.piano-key-slot.sharp::before,
-.piano-key-slot.sharp::after {
+.piano-key-base.sharp::before,
+.piano-key-base.sharp::after {
 	bottom: unset;
   top: var(--offset);
 }
 
-.piano-key-slot::before,
-.piano-key-slot::after {
+.piano-key-base::before,
+.piano-key-base::after {
 	position: absolute;
   z-index: 9;
 	width: var(--size);

@@ -1,25 +1,12 @@
-export { newDiv, toggleClass, playAudio };
+export { newDiv, newBtn, newElem, playAudio };
 
-function newDiv(className = '') {
-  let div = document.createElement('div');
-  div.className = className;
-  return div;
-}
+const newDiv = newElem.bind(null, 'div');
+const newBtn = newElem.bind(null, 'button');
 
-function toggleClass(cls = '', opts = {add:[], del:[]}) {
-  if (opts == undefined) return;
-
-  if (Array.isArray(opts.add)) {
-    opts.add.forEach(x => x?.classList.add(cls));
-  } else {
-    opts.add?.classList.add(cls);
-  }
-
-  if (Array.isArray(opts.del)) {
-    opts.del.forEach(x => x?.classList.remove(cls));
-  } else {
-    opts.del?.classList.remove(cls);
-  }
+function newElem(tagName, className) {
+  let elem = document.createElement(tagName);
+  elem.className = className;
+  return elem;
 }
 
 function playAudio(audio) {
