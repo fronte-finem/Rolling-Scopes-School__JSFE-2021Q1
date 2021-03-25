@@ -102,3 +102,13 @@ dist
 
 # TernJS port file
 .tern-port
+
+# VSCode files
+.vscode/
+
+# Task files
+Taskfile.yml
+.task/
+
+# Deploy ouutput
+online-zoo/
