@@ -1,0 +1,21 @@
+- var block = '.testimonials'
+
+- var cls = `${block}__info`
+section(class = `${cls}`)
+  h2(class = `${cls}-title`)= "what our users think"
+  p(class = `${cls}-text`)= "We are continuously striving to improve the experiences of our future guests. Below you can leave your own feedback, or simply view feedback from past clients."
+
+- var cls = `${block}__slider`
+div(class = `${cls}`)
+  ul(class = `${cls}-slots`)
+    include ../_mixin/_testimonial-card.pug
+    include ../_content/_testimonials.pug
+    each testimonial in testimonials
+      li(class = `${cls}-slot`)
+        +testimonial-card(`${cls}-card`, testimonial)
+  div(class = `${cls}-controls`)
+    button.btn-icon.btn-prev(class = `${cls}-btn`)= "<-"
+    button.btn-icon.btn-next(class = `${cls}-btn`)= "->"
+
+div(class = `${block}__btn-container`)
+  button.btn(class = `${block}__btn-feedback`)= "leave feedback"
