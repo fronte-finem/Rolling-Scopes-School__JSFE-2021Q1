@@ -1,0 +1,17 @@
+section.pets-in-zoo__info.info
+  h2.info__title= "meet some our Pets"
+  p.info__text= "Do you have a special place in your heart for animals? Who are your favorites? Perhaps you'd like to donate to special ones or all our pets? We think it's important for you to choose how your donation is used."
+
+.pets-in-zoo__slider.slider
+  .slider__controls.controls
+    button.slider__btn.btn-icon.btn-icon-prev= "<-"
+    button.slider__btn.btn-icon.btn-icon-next= "->"
+  ul.slider__slots
+    include ../_mixin/_animal-card.pug
+    include ../_content/_animals.pug
+    each animal in animals
+      li.slider__slot.slot
+        +animal-card('slider__card', animal)
+
+.btn-container
+  a.btn.btn-choose(href="#pages/map")= "choose your favourite"

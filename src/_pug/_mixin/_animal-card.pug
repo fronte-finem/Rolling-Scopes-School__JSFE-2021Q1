@@ -1,0 +1,9 @@
+mixin animal-card(cls, animal)
+  .animal-card(class = cls)
+    figure.animal-view
+      img.animal-photo(src=animal.imgSrc, alt=`${animal.kind} — ${animal.name}`)
+      figcaption.animal-name= animal.name
+    section.animal-info
+      h4.animal-kind= animal.kind
+      p.animal-descr= animal.descr
+    a.live-cam-link(href=animal.camLink)= "VIEW LIVE CAM"
