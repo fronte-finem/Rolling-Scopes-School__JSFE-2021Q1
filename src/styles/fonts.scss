@@ -1,0 +1,17 @@
+@use '_mixin/font';
+
+$path: '../assets/fonts';
+
+$ff: 'Montserrat Alternates';
+$file: 'montserrat-alternates-v12-latin';
+
+@include font.font-face($ff, $path, $file);
+@include font.font-face($ff, $path, $file, 800);
+
+$ff: 'Montserrat';
+$file: 'montserrat-v15-latin';
+
+@include font.font-face($ff, $path, $file);
+@include font.font-face($ff, $path, $file, 500);
+@include font.font-face($ff, $path, $file, 600);
+@include font.font-face($ff, $path, $file, 800);
