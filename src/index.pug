@@ -1,4 +1,5 @@
 extends ./_pug/_layout/_page.pug
+include ./_pug/_mixin/_layout-block.pug
 
 block head-vars
   - var pageTitle = "🐼";
@@ -7,10 +8,18 @@ block header
   h1 Online-Zoo!
 
 block main
-  h2 123
-  h2 234
-  h2 345
-  h2 456
+  +layout-block("hero")
+    include ./_pug/_partial/_hero.pug
+  +layout-block("welcome")
+    include ./_pug/_partial/_welcome.pug
+  +layout-block("pets-in-zoo")
+    h2 pets in zoo
+  +layout-block("pay-and-feed")
+    h2 pay and feed
+  +layout-block("testimonials")
+    h2 testimonials
+  +layout-block("care-for-animals")
+    h2 care for animals
 
 block footer
   h2 Online-Zoo!
