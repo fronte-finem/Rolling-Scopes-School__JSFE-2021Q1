@@ -1,0 +1,21 @@
+include ../_mixin/_head.pug
+
+doctype html
+html(lang="en")
+  head
+    block head-vars
+      - var pageTitle = "🐾";
+    +head(pageTitle)
+  body
+    block dev
+      .dev-overlay.dev-pixelperfect
+      .dev-overlay.dev-grid
+    block layout
+      .layout-bg
+        .layout-page
+          .layout-header
+            block header
+          .layout-main
+            block main
+          .layout-footer
+            block footer

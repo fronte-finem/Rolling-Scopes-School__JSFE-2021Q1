@@ -1,0 +1,25 @@
+.dev {
+  &-overlay {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
+    height: 12330px;
+    width: 100%;
+    background-position: top center;
+    background-repeat: no-repeat;
+  }
+  &-pixelperfect {
+    z-index: 2;
+    background-image: url("../assets/pp/1920/first-page.jpg");
+    background-size: 1920px 12330px;
+    opacity: .5;
+    filter: invert(1);
+  }
+  &-grid {
+    z-index: 3;
+    width: 100%;
+    background-image: repeating-linear-gradient(to left, rgba(0,0,0,.2) 0 80px, transparent 80px 120px );
+    background-size: 1400px 12330px;
+  }
+}
