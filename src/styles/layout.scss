@@ -1,0 +1,15 @@
+.layout-page {
+  --h-header: 110px;
+  --h-footer: 329px;
+  --h-min-main: calc(100vh - var(--h-header) - var(--h-footer));
+}
+
+.layout-page {
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows:
+    var(--h-header)
+    minmax(var(--h-min-main), max-content)
+    var(--h-footer);
+}
