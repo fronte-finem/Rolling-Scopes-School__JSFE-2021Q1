@@ -2,6 +2,7 @@
   --h-header: 110px;
   --h-footer: 329px;
   --h-min-main: calc(100vh - var(--h-header) - var(--h-footer));
+  --w-content: 1400px;
 }
 
 .layout-page {
@@ -12,4 +13,11 @@
     var(--h-header)
     minmax(var(--h-min-main), max-content)
     var(--h-footer);
+}
+
+.layout {
+  max-width: var(--w-content);
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid black;
 }
