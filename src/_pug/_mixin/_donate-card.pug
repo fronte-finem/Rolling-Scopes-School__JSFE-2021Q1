@@ -1,0 +1,15 @@
+- var self = 'donate-card';
+
+mixin donate-card(cls, donate)
+  // 💳
+  |
+  |
+  a.donate-card(class = `${cls} ${self}`, href = donate.animal.pageLink)
+    // 🖼️📋
+    |
+    |
+    img(class = `${self}__img`,
+        src = donate.animal.imgSrc,
+        alt = `${donate.animal.kind} — ${donate.animal.name}`)
+    p(class = `${self}__text`)= donate.text
+    div(class = `${self}__pseudo-btn`)= "feed ⇨"

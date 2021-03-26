@@ -1,0 +1,28 @@
+- var blk = 'care-for-animals'
+
+- var cls = `${blk}__info`
+section(class = `${cls}`)
+  h2(class = `${cls}-title`)= "care for the animals you love"
+  p(class = `${cls}-text`)= "You can help to look after the animals you love with your gift today"
+
+- var cls = `${blk}__donate`
+div(class = `${cls}`)
+  ul(class = `${cls}-slots`)
+    li(class = `${cls}-slot ${cls}-slot--big`)
+      img(class = `${cls}-img`, src="./assets/img/block_care--koala.jpg", alt="Koala close up")
+    include ../_mixin/_donate-card.pug
+    include ../_content/_donates.pug
+    each donate in donates
+      li(class = `${cls}-slot`)
+        +donate-card(`${cls}-card`, donate)
+
+div(class = `${blk}__btn-container`)
+  a.btn.btn-choose(class = `${blk}__btn-choose`, href="#pages/map")= "choose your favourite"
+
+- var cls = `${blk}__touch-the-animal`
+figure(class = cls)
+  img(class = `${cls}-img`,
+      src = "./assets/img/block_care--touch.jpg",
+      alt = "Hands touch the screen, which shows a lemur close-up",
+      width = "1400",
+      height = "652")
