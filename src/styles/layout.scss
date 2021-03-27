@@ -3,6 +3,24 @@
   --h-footer: 329px;
   --h-min-main: calc(100vh - var(--h-header) - var(--h-footer));
   --w-content: 1400px;
+
+  --cols:     12;
+  --w-gap:    40px;
+  --w-col:    calc(var(--w-content) / var(--cols) - var(--w-gap));
+  --w-colgap: calc(var(--w-col) + var(--w-gap));
+
+  --w-col-1:  var(--w-col);
+  --w-col-2:  calc(var(--w-col)    + var(--w-colgap));
+  --w-col-3:  calc(var(--w-col-2)  + var(--w-colgap));
+  --w-col-4:  calc(var(--w-col-3)  + var(--w-colgap));
+  --w-col-5:  calc(var(--w-col-4)  + var(--w-colgap));
+  --w-col-6:  calc(var(--w-col-5)  + var(--w-colgap));
+  --w-col-7:  calc(var(--w-col-6)  + var(--w-colgap));
+  --w-col-8:  calc(var(--w-col-7)  + var(--w-colgap));
+  --w-col-9:  calc(var(--w-col-8)  + var(--w-colgap));
+  --w-col-10: calc(var(--w-col-9)  + var(--w-colgap));
+  --w-col-11: calc(var(--w-col-10) + var(--w-colgap));
+  --w-col-12: var(--w-content);
 }
 
 .layout-page {
