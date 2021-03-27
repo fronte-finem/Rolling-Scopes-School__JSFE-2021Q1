@@ -6,11 +6,14 @@ html(lang="en")
   head
     block head-vars
       - var pageTitle = "🐾";
-    +head(pageTitle)
+      - var root = '.'
+    +head(pageTitle, root)
+
   body
     block dev
-      .dev-overlay.dev-pixelperfect
       .dev-overlay.dev-grid
+      block dev-pp
+
     block layout
       .layout-page
 
