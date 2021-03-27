@@ -1,17 +1,12 @@
 extends ../../_pug/_layout/_page.pug
 include ../../_pug/_mixin/_layout-block.pug
-
-
-mixin genBtn(tag = 'button', cls = 'btn', text = 'ok')
-  #{tag}(class = cls)= text
-    svg(class = 'svg-icon', viewBox = '0 0 25 22', x = '0', y = '0')
-      use(class = 'icon__arrow-to-right', xlink:href = '#arrow-to-right')
+include ../../_pug/_mixin/_button.pug
 
 mixin genBtns(cls = 'btn', text = 'ok')
   .btns-cont
-    +genBtn('button', cls, text)
-    +genBtn('a', cls, text)
-    +genBtn('div', cls, text)
+    +btn('button', cls, text)
+    +btn('a', cls, text)
+    +btn('div', cls, text)
 
 block head-vars
   - var pageTitle = '🧱';

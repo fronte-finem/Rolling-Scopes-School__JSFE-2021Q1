@@ -1,0 +1,4 @@
+mixin btn(tag = 'button', cls = 'btn', text = 'ok')
+  #{tag}(class = cls)= text
+    svg(class = 'svg-icon', viewBox = '0 0 25 22', x = '0', y = '0')
+      use(class = 'icon__arrow-to-right', xlink:href = '#arrow-to-right')
