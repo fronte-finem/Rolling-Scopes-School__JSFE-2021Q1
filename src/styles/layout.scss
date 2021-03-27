@@ -6,7 +6,7 @@
 
   --cols:     12;
   --w-gap:    40px;
-  --w-col:    calc(var(--w-content) / var(--cols) - var(--w-gap));
+  --w-col:    calc((var(--w-content) + var(--w-gap)) / var(--cols) - var(--w-gap));
   --w-colgap: calc(var(--w-col) + var(--w-gap));
 
   --w-col-1:  var(--w-col);
