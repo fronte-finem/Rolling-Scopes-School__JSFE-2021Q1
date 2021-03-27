@@ -3,9 +3,13 @@ include ./_pug/_mixin/_layout-block.pug
 
 block head-vars
   - var pageTitle = "🐼";
+  - var root = ".";
 
 block header
   h1 Online-Zoo!
+
+block dev-pp
+  .dev-overlay.dev-pixelperfect
 
 block main
   +layout-block("section", "hero")
