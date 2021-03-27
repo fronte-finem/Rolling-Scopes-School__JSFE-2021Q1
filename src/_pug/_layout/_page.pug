@@ -1,4 +1,5 @@
 include ../_mixin/_head.pug
+include ../_mixin/_layout-block.pug
 
 doctype html
 html(lang="en")
@@ -12,12 +13,12 @@ html(lang="en")
       .dev-overlay.dev-grid
     block layout
       .layout-page
-        header.header
-          .layout.layout-header
-            block header
+
+        +layout-block("header", "header")
+          block header
+
         main.main
-          .layout.layout-main
-            block main
-        footer.footer
-          .layout.layout-footer
-            block footer
+          block main
+
+        +layout-block("footer", "footer")
+          block footer

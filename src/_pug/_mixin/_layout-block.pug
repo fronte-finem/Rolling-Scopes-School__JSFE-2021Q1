@@ -1,4 +1,8 @@
-mixin layout-block(cls)
-  .layout-block(class = cls)
-    - var cls = cls
-    block
+mixin layout-block(tag, cls)
+  - var lo = 'layout';
+  - var wr = 'wrapper';
+
+  #{tag}(class = `${cls} ${cls}-${lo} ${lo}`)
+    div(class = `${cls}-${wr} ${wr}`)
+      - var cls = cls;
+      block
