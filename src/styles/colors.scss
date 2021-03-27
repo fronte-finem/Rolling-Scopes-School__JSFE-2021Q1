@@ -1,8 +1,12 @@
 :root {
-  --color-primary-black: #000;
-  --color-primary-white: #fff;
-  --color-primary-navy: #20113d;
-  --color-primary-orange: #f58021;
-  --color-primary-green: #00a092;
-  --color-primary-grey: #c4c4c4;
+  --color-primary-black: hsl(0deg, 0%, 0%);
+  --color-primary-white: hsl(0deg, 0% ,100%);
+
+  --color-primary-navy: hsl(260deg, 56%, 15%);
+
+  --color-primary-orange: hsl(27deg, 91%, 55%);
+  --color-hover-orange:   hsl(27deg, 96%, 42%);
+
+  --color-primary-cyan: hsl(175deg, 100%, 31%);
+  --color-hover-cyan:   hsl(175deg, 92%, 24%);
 }
