@@ -5,3 +5,21 @@
   background-position-x: calc(50% - 37px);
   background-position-y: -42px;
 }
+
+.hero__header {
+  width: var(--w-col-8);
+  padding-top: 129px;
+  padding-bottom: 31px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: 82px;
+  line-height: 100px;
+  color: var(--color-primary-green);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.hero__descr {
+  width: var(--w-col-4);
+  padding-bottom: 44px;
+}
