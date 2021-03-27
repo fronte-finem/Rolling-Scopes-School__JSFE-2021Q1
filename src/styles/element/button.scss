@@ -1,0 +1,94 @@
+.btns {
+  background-color: #bababa;
+}
+
+.btns-cont {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px var(--w-colgap);
+}
+
+.btn {
+  --time: 300ms;
+  --w-m: calc(var(--w-col-2) + var(--w-gap));
+  --w-l: calc(var(--w-col-3) + var(--w-gap));
+  --w-s: min-content;
+  --h: 74px;
+  --p: 0 26px
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 10px;
+
+  height: var(--h);
+  margin: 0;
+  padding: var(--p);
+  border: none;
+  border-radius: 5px;
+
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  user-select: none;
+
+  transition: color var(--time), background-color var(--time);
+}
+
+.btn {
+  width: var(--w-m);
+  &--long { width: var(--w-l); }
+  &--free { width: var(--w-s); }
+}
+
+.btn {
+  &--orange       { background-color: var(--color-primary-orange); }
+  &--orange:hover { background-color: var(--color-hover-orange); }
+
+  &--cyan       { background-color: var(--color-primary-cyan); }
+  &--cyan:hover { background-color: var(--color-hover-cyan); }
+
+  &--navy       { border: 1px solid var(--color-primary-navy); }
+  &--navy       { background-color: transparent; }
+  &--navy:hover { background-color: var(--color-primary-navy); }
+
+  &--white       { border: 1px solid var(--color-primary-white); }
+  &--white       { background-color: transparent; }
+  &--white:hover { background-color: var(--color-primary-cyan); }
+
+  &--text       { background-color: transparent; }
+  &--text:hover { background-color: var(--color-primary-orange); }
+}
+
+.btn {
+  color: var(--color-primary-white);
+
+  &--navy       { color: var(--color-primary-navy); }
+  &--navy:hover { color: var(--color-primary-white); }
+
+  &--text       { color: var(--color-primary-orange); }
+  &--text:hover { color: var(--color-primary-white); }
+}
+
+.btn {
+  .svg-icon {
+    width: 25px;
+    height: 22px;
+
+    transition: fill var(--time);
+  }
+
+  .svg-icon { fill: var(--color-primary-white); }
+
+  &--navy       .svg-icon { fill: var(--color-primary-navy); }
+  &--navy:hover .svg-icon { fill: var(--color-primary-white); }
+
+  &--text       .svg-icon { fill: var(--color-primary-orange); }
+  &--text:hover .svg-icon { fill: var(--color-primary-white); }
+}
