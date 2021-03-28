@@ -1,4 +1,17 @@
-mixin btn(tag = 'button', cls = 'btn', text = 'ok')
-  #{tag}(class = cls)= text
+mixin btn(tag = 'button', text = 'ok', ...mods)
+  - var c = 'btn'
+  #{tag}(class = c + ' ' + mods.map(x => `${c}--${x}`).join(' '))= text
     svg(class = 'svg-icon', viewBox = '0 0 25 22', x = '0', y = '0')
       use(class = 'icon__arrow-to-right', xlink:href = '#arrow-to-right')
+
+mixin btn-icon(tag = 'button', iconId = 'arrow-to-left', ...mods)
+  - var c = 'btn-icon'
+  #{tag}(class = c + ' ' + mods.map(x => `${c}--${x}`).join(' '))
+    svg(class = 'svg-icon', x = '0', y = '0')
+      use(class = `icon__${iconId}`, xlink:href = `#${iconId}`)
+
+mixin btn-map-tag(tag = 'button', ...mods)
+  - var c = 'btn-map-tag'
+  #{tag}(class = c + ' ' + mods.map(x => `${c}--${x}`).join(' '), onclick=`console.log(this)`)
+    svg(class = 'svg-map-tag', viewBox = '0 0 100 144')
+      use(class = 'icon__map-tag', xlink:href = '#map-tag')
