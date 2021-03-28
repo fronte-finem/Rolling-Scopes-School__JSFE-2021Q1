@@ -11,12 +11,10 @@ html(lang="en")
       block head
 
   body
-    block dev
-      .dev-overlay.dev-grid
-      block dev-pp
-
     block layout
       .layout-page
+
+        block dev
 
         +layout-block("header", "header")
           block header

@@ -8,8 +8,10 @@ block head-vars
 block header
   h1 Online-Zoo!
 
-block dev-pp
-  .dev-overlay.dev-pixelperfect
+block dev
+  - var h = "--h-dev-overlay: 12330px"
+  .dev-overlay.dev-grid
+  .dev-overlay.dev-pixelperfect(style = h)
 
 block main
   +layout-block("section", "hero")
