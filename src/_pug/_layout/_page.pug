@@ -8,6 +8,7 @@ html(lang="en")
       - var pageTitle = "🐾";
       - var root = '.'
     +head(pageTitle, root)
+      block head
 
   body
     block dev
@@ -26,11 +27,10 @@ html(lang="en")
         +layout-block("footer", "footer")
           block footer
 
-    block svg-sprite
-      .svg-sprite(style = 'display: none')
-        // 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧
-        |
-        |
-        |
-        include ../../svg/sprite.svg
-        // 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧
+
+    .svg-sprite(style = 'display: none')
+      // 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧
+      include ../../svg/_sprite.svg.pug
+      // 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧
+      block svg-sprite
+      // 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧
