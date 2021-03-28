@@ -1,9 +1,13 @@
+:root {
+  --h-btn: 74px;
+}
+
 .btn {
   --time: 300ms;
   --w-m: calc(var(--w-col-2) + var(--w-gap));
   --w-l: calc(var(--w-col-3) + var(--w-gap));
   --w-s: min-content;
-  --h: 74px;
+  --h: var(--h-btn);
   --p: 0 26px
 }
 

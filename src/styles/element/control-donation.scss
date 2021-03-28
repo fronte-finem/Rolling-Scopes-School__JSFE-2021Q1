@@ -1,0 +1,57 @@
+.control-donation {
+  --w: calc(var(--w-col-3));
+  --b: 1px;
+}
+
+.control-donation {
+  display: flex;
+  width: var(--w);
+  height: var(--h-btn);
+  border-width: var(--b);
+
+  .donation-amount {
+    width: calc(var(--w-colgap) + var(--w-colgap) - var(--b));
+  }
+
+  .btn {
+    width: calc(var(--w-col) - var(--b));
+    height: calc(var(--h-btn) - var(--b) - var(--b));
+  }
+}
+
+.control-donation {
+  border-color: var(--color-primary-white);
+  border-style: solid;
+  border-radius: 5px;
+
+  .donation-amount {
+    border: none;
+    padding: 0 15px;
+    outline: none;
+
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    text-transform: uppercase;
+
+    background-color: transparent;
+    color: var(--color-primary-white);
+
+    &::placeholder {
+      color: var(--color-primary-white);
+      opacity: 1;
+    }
+
+    /* Chrome, Safari, Edge, Opera */
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    /* Firefox */
+    &[type=number] {
+      -moz-appearance: textfield;
+    }
+  }
+}

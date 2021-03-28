@@ -1,7 +1,9 @@
 extends ../../_pug/_layout/_page.pug
+
 include ../../_pug/_mixin/_layout-block.pug
 include ../../_pug/_mixin/_button.pug
 include ../../_pug/_mixin/_control-arrows.pug
+include ../../_pug/_mixin/_control-donation.pug
 
 mixin gen(mix, ...args)
   .btns-cont
@@ -23,11 +25,12 @@ block head-vars
   - var pageTitle = '🧱';
   - var root = '../..'
 
+block head
+  link(rel = "stylesheet", href = `${root}/styles/element/control-donation.css`)
+  link(rel = "stylesheet", href = `${root}/styles/element/button-map-tag.css`)
+
 block dev
   .dev-overlay.dev-grid
-
-block head
-  link(rel = "stylesheet", href = `${root}/styles/element/button-map-tag.css`)
 
 block header
   h1 Online-Zoo!
@@ -48,6 +51,11 @@ block main
 
     +genCtrlArrows('white')
     +genCtrlArrows('navy')
+
+    .btns-cont
+      +control-donation()
+      +control-donation()
+      +control-donation()
 
     .map-tags-cont
       +genMapBtnTags('panda', '🐼')

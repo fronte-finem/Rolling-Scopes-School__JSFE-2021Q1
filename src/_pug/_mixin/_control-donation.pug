@@ -1,0 +1,6 @@
+include ./_button.pug
+
+mixin control-donation()
+  .control-donation
+    input.donation-amount(type="number", placeholder="$ donation amount")
+    +btn(tag, '', 'orange', 'free')
