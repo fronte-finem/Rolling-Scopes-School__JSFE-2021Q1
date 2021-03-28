@@ -42,8 +42,9 @@
   &--orange       { background-color: var(--color-primary-orange); }
   &--orange:hover { background-color: var(--color-hover-orange); }
 
-  &--cyan       { background-color: var(--color-primary-cyan); }
-  &--cyan:hover { background-color: var(--color-hover-cyan); }
+  &--cyan.btn--active { background-color: var(--color-primary-cyan); }
+  &--cyan             { background-color: var(--color-secondary-cyan); }
+  &--cyan:hover       { background-color: var(--color-hover-cyan); }
 
   &--navy       { border: 1px solid var(--color-primary-navy); }
   &--navy       { background-color: transparent; }
