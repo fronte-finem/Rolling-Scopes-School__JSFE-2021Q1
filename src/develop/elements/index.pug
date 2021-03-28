@@ -1,0 +1,62 @@
+extends ../../_pug/_layout/_page.pug
+include ../../_pug/_mixin/_layout-block.pug
+include ../../_pug/_mixin/_button.pug
+include ../../_pug/_mixin/_control-arrows.pug
+
+mixin gen(mix, ...args)
+  .btns-cont
+    +#{mix}('button', ...args)
+    +#{mix}('a', ...args)
+    +#{mix}('div', ...args)
+
+mixin genBtns(txt, ...mods)
+  +gen('btn', txt, ...mods)
+
+mixin genCtrlArrows(color)
+  +gen('control-arrows', color)
+
+mixin genMapBtnTags(...mods)
+  +gen('btn-map-tag',...mods)
+
+
+block head-vars
+  - var pageTitle = '🧱';
+  - var root = '../..'
+
+block head
+  link(rel = "stylesheet", href = `${root}/styles/element/button-map-tag.css`)
+
+block header
+  h1 Online-Zoo!
+
+block main
+  +layout-block("section", "btns")
+    h3 Btns
+
+    +genBtns('donate now', 'orange')
+    +genBtns('view live cam', 'orange')
+    +genBtns('send message', 'cyan', 'long')
+    +genBtns('choose your favourite', 'navy', 'long')
+    +genBtns('leave feedback', 'white', 'long')
+    +genBtns('view live cam', 'text')
+    +genBtns('feed', 'text', 'free')
+    +genBtns('view map', 'text')
+
+    +genCtrlArrows('white')
+    +genCtrlArrows('navy')
+
+    .map-tags-cont
+      +genMapBtnTags('panda', '🐼')
+      +genMapBtnTags('tiger', '🐯')
+      +genMapBtnTags('lion', '🦁')
+      +genMapBtnTags('gorilla', '🦍')
+      +genMapBtnTags('eagle', '🦅')
+      +genMapBtnTags('alligator', '🐊')
+      +genMapBtnTags('lemur')
+      +genMapBtnTags('coala')
+
+block footer
+  h2 Online-Zoo!
+
+block svg-sprite
+  include ../../svg/_sprite-map-tag.svg.pug
