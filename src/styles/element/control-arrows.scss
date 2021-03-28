@@ -1,0 +1,9 @@
+.control-arrows {
+  --w: calc(var(--w-colgap) + var(--w-btn-icon));
+}
+
+.control-arrows {
+  display: flex;
+  justify-content: space-between;
+  width: var(--w);
+}

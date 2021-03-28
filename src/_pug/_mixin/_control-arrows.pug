@@ -1,0 +1,6 @@
+include ./_button.pug
+
+mixin control-arrows(tag, color)
+  .control-arrows
+    +btn-icon(tag, 'arrow-to-left', color, 'prev')
+    +btn-icon(tag, 'arrow-to-right', color, 'next')
