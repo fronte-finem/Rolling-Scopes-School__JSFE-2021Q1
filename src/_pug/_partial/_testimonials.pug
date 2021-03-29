@@ -1,21 +1,24 @@
-- var block = 'testimonials'
+include ../_mixin/_button.pug
+include ../_mixin/_control-arrows.pug
+include ../_mixin/_testimonial-card.pug
+include ../_content/_testimonials.pug
 
-- var cls = `${block}__info`
-section(class = `${cls}`)
-  h2(class = `${cls}-title`)= "what our users think"
-  p(class = `${cls}-text`)= "We are continuously striving to improve the experiences of our future guests. Below you can leave your own feedback, or simply view feedback from past clients."
 
-- var cls = `${block}__slider`
-div(class = `${cls}`)
-  ul(class = `${cls}-slots`)
-    include ../_mixin/_testimonial-card.pug
-    include ../_content/_testimonials.pug
-    each testimonial in testimonials
-      li(class = `${cls}-slot`)
-        +testimonial-card(`${cls}-card`, testimonial)
-  div(class = `${cls}-controls`)
-    button.btn-icon.btn-prev(class = `${cls}-btn`)= "<-"
-    button.btn-icon.btn-next(class = `${cls}-btn`)= "->"
+section.info
+  h2.info__title= "what our users think"
+  p.info__text= "We are continuously striving to improve the experiences of our future guests. Below you can leave your own feedback, or simply view feedback from past clients."
+  .btn-container
+    +btn('a', 'leave feedback', 'white', 'long')
 
-div(class = `${block}__btn-container`)
-  button.btn(class = `${block}__btn-feedback`)= "leave feedback"
+.slider
+  .slider__wrapper
+    ul.slider__slots.slider__slots--row1
+      each data in testimonials1
+        li.slider__slot
+          +testimonial-card('slider__card', data)
+    ul.slider__slots.slider__slots--row2
+      each data in testimonials2
+        li.slider__slot
+          +testimonial-card('slider__card', data)
+  .slider__controls
+    +control-arrows('button', 'white')
