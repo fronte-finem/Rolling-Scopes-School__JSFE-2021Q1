@@ -1,0 +1,58 @@
+@use '../_mixin/font';
+
+.pets-in-zoo {
+  background-color: var(--primary-color-white);
+  overflow-x: hidden;
+}
+
+.pets-in-zoo__wrapper {
+  padding-top: 136px;
+  padding-bottom: 150px;
+}
+
+.pets-in-zoo .info__title {
+  padding-bottom: 50px;
+
+  @include font.h2;
+  text-align: center;
+}
+.pets-in-zoo .info__text {
+  padding: 0 calc(var(--w-col-2) + var(--w-gap));
+  padding-bottom: 100px;
+
+  @include font.h-sub;
+  color: var(--color-primary-black);
+  text-align: center;
+}
+
+.pets-in-zoo .btn-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-top: 100px;
+}
+
+/* slider */
+.pets-in-zoo .slider__controls {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-bottom: 50px;
+}
+
+.pets-in-zoo .slider__wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+}
+
+.pets-in-zoo .slider__slots {
+  display: flex;
+  column-gap: 40px;
+}
+
+
+/* 💩 pixel-perfect 💩 */
+.pets-in-zoo .info__title {
+  padding-left: 20px;
+}

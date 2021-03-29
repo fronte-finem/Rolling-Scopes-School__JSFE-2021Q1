@@ -1,0 +1,68 @@
+@use '../_mixin/font';
+
+.animal-card {
+  --w: 440px;
+  --h: 747px;
+  --h-pict: 436px;
+  --p-descr: 44px;
+}
+
+.animal-card {
+  width: 440px;
+  height: 747px;
+  border-radius: 5px;
+  background-color: var(--color-primary-navy);
+  color: var(--color-primary-white);
+  overflow: hidden;
+}
+
+.card-pict {
+  position: relative;
+  height: var(--h-pict);
+  overflow: hidden;
+}
+.animal-name {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 13px 30px;
+  border-radius: 5px 0px;
+  background-color: var(--color-primary-navy);
+  @include font.h-sub;
+}
+.animal-photo {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  height: calc(var(--h) - var(--h-pict));
+  padding-top: 30px;
+  padding-bottom: 47px;
+}
+
+.animal-info {
+  text-align: center;
+}
+.animal-kind {
+  @include font.h-sub;
+  padding-bottom: 18px;
+}
+.animal-descr {
+  padding: 0 var(--p-descr);
+}
+
+
+/* 💩 pixel-perfect 💩 */
+.animal-card .btn {
+  letter-spacing: 1.3px;
+  width: 250px;
+}

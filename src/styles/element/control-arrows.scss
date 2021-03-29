@@ -1,9 +1,13 @@
 .control-arrows {
-  --w: calc(var(--w-colgap) + var(--w-btn-icon));
+  --x: 60px;
 }
 
 .control-arrows {
   display: flex;
-  justify-content: space-between;
-  width: var(--w);
+  column-gap: var(--x);
+}
+
+.control-arrows .btn-icon {
+  width: var(--x);
+  height: var(--x);
 }
