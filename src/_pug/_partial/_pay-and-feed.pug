@@ -1,32 +1,34 @@
-h2.pay-and-feed__title= "PAY AND FEED"
+include ../_mixin/_button.pug
 
-section.pay-and-feed__step
+h2.title= "PAY AND FEED"
+
+section.step.step--1
   figure.step__picture
-    img.step__img
-    img(src="./assets/img/pay-feed--01.jpg", alt="Monkey want eat 🐒")
+    img.step__img(src="./assets/img/pay-feed--01.jpg", alt="Monkey want eat 🐒")
   .step__info
     .info__icon
-      svg
+      svg.svg-icon
+        use(xlink:href = "#heart-in-hands")
     h4.info__title= "Your donation has an impact"
     p.info__text= "Providing our animals with high-quality nutritious diets is just one element of animal care at our Zoo. We do all the best so that our animals can eat food similar to what they might find in their natural habitats while making sure they get the right mix of nutrients, proteins, and vitamins to be happy and healthy. Please help us provide nutritious food for our animals by donating. The generosity of people like you can help us make sure that our animals enjoy good food that keeps them in great condition."
 
-section.pay-and-feed__step
+section.step.step--2
   figure.step__picture
-    img.step__img
-    img(src="./assets/img/pay-feed--02.jpg", alt="Banans in your giving hands 🍌")
+    img.step__img(src="./assets/img/pay-feed--02.jpg", alt="Banans in your giving hands 🍌")
   .step__info
     .info__icon
-      svg
+      svg.svg-icon
+        use(xlink:href = "#donate-box")
     h4.info__title= "Make a donation"
     p.info__text= "You can donate through your credit card without any fees. It is easy and safe. We do not keep donors' personal information on an online network. Choose an amount to give and the pet's name if needed. One of the most effective ways you can give is by making regular donations."
 
-section.pay-and-feed__step
+section.step.step--3
   figure.step__picture
-    img.step__img
-    img(src="./assets/img/pay-feed--03.jpg", alt="Happy monkey eat banan 🐵🍌")
+    img.step__img(src="./assets/img/pay-feed--03.jpg", alt="Happy monkey eat banan 🐵🍌")
   .step__info
     .info__icon
-      svg
-    h4.info__title= "Bring your food charity — straight to your favorites pets"
+      svg.svg-icon
+        use(xlink:href = "#food-box")
+    h4.info__title= "Bring your food charity — straight to your favorites pets."
     p.info__text= "After your donation, the animal receives its favorite foods. You can support your favorite animals or any animal you care about and make a real personal impact. Never doubt that your donation can make a difference even if it is small."
-    button.btn.btn-donate= "donate now"
+    +btn('button', 'donate now', 'orange')

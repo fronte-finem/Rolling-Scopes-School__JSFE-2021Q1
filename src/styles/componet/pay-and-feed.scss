@@ -1,0 +1,90 @@
+@use '../_mixin/font';
+
+.pay-and-feed {
+  background-color: var(--color-primary-navy);
+  color: var(--color-primary-white);
+
+  counter-reset: step;
+}
+
+.pay-and-feed__wrapper {
+  padding-top: 91px;
+  padding-bottom: 100px;
+}
+
+.pay-and-feed .title {
+  @include font.h2;
+  color: var(--color-primary-white);
+}
+
+.pay-and-feed .step {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--w-col-5) var(--w-col-6);
+  justify-content: space-between;
+  margin-top: 100px;
+}
+.pay-and-feed .step::before {
+  counter-increment: step;
+  content: '0' counter(step);
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  @include font.h-sub;
+}
+.pay-and-feed .step::after {
+  content: '';
+  position: absolute;
+  display: block;
+  top: 16px;
+  right: 0;
+  width: var(--w-col-11);
+  border-bottom: 1px solid var(--color-primary-white);
+}
+
+
+.pay-and-feed .step__picture {
+  padding-top: 116px;
+}
+
+.pay-and-feed .step__img {
+  display: block;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.pay-and-feed .step__info {
+  padding-top: 135px;
+  padding-right: var(--w-colgap);
+}
+
+.pay-and-feed .info__icon {
+  height: 80px;
+  fill: var(--color-primary-cyan);
+}
+
+.pay-and-feed .info__title {
+  padding-top: 30px;
+  padding-bottom: 50px;
+  @include font.h-sub;
+}
+
+.pay-and-feed .step__info .btn {
+  margin-top: 55px;
+}
+
+/* 💩 pixel-perfect 💩 */
+.pay-and-feed .step--2 {
+  margin-top: 108px;
+}
+.pay-and-feed .step--3 {
+  margin-top: 86px;
+}
+.pay-and-feed .step--3 .info__title {
+  padding-bottom: 52px;
+  padding-right: 30px;
+}
+.pay-and-feed .step--3 .info__text {
+  padding-right: 10px;
+}
