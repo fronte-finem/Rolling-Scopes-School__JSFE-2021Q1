@@ -1,5 +1,9 @@
 @use '../_mixin/font';
 
+.hero-layout {
+  height: calc(900px - var(--h-header));
+}
+
 .hero {
   background-color: var(--color-primary-white);
   background-image: url("../../assets/bg/about-intro.jpg");
