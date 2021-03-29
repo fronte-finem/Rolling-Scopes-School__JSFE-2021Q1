@@ -1,0 +1,33 @@
+@use '../_mixin/font';
+
+.quick-donation {
+  background-color: var(--color-primary-navy);
+  color: var(--color-primary-white);
+}
+
+.quick-donation-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px 0;
+}
+
+.quick-donation__info {
+  max-width: var(--w-col-8);
+}
+
+.quick-donation__info-title {
+  padding-bottom: 20px;
+  @include font.h3;
+  color: var(--color-primary-white);
+}
+
+/* 💩 pixel-perfect 💩 */
+.quick-donation__info-text {
+  max-width: calc(var(--w-col-5) + var(--w-gap) + 10px);
+}
+
+.quick-donation__action-title {
+  padding-bottom: 10px;
+  @include font.h-sub;
+}
