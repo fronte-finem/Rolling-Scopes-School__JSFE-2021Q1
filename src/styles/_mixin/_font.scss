@@ -1,6 +1,34 @@
 $font-family-primary: "Montserrat", sans-serif;
 $font-family-secondary: "Montserrat Alternates", sans-serif;
 
+$sz-text: var(--font-size--normal-text);
+$lh-text: var(--line-height--normal-text);
+$ww-text: var(--font-weight--normal-text);
+
+$sz-ui: var(--font-size--ui-text);
+$lh-ui: var(--line-height--ui-text);
+$ww-ui: var(--font-weight--ui-text);
+
+$sz-h1: var(--font-size--h1);
+$lh-h1: var(--line-height--h1);
+$ww-h1: var(--font-weight--h1);
+
+$sz-h2: var(--font-size--h2);
+$lh-h2: var(--line-height--h2);
+$ww-h2: var(--font-weight--h2);
+
+$sz-h3: var(--font-size--h3);
+$lh-h3: var(--line-height--h3);
+$ww-h3: var(--font-weight--h3);
+
+$sz-h-sub: var(--font-size--h-sub);
+$lh-h-sub: var(--line-height--h-sub);
+$ww-h-sub: var(--font-weight--h-sub);
+
+$sz-quote: var(--font-size--quote);
+$lh-quote: var(--line-height--quote);
+$ww-quote: var(--font-weight--quote);
+
 $color-header-primary: var(--color-primary-cyan);
 $color-header-secondary: var(--color-primary-white);
 
@@ -32,46 +60,39 @@ $color-text-ui: var(--color-primary-white);
   @include font($font-family-primary, normal, $w, $sz, $lh, $clr, $upp, $lett-spac);
 }
 
+@mixin text {
+  @include def($ww-text, $sz-text, $lh-text, $color-text);
+}
+
+@mixin ui {
+  @include def($ww-ui, $sz-ui, $lh-ui, $color-text-ui, $upp: true);
+}
+
 @mixin h($w, $sz, $lh, $lett-spac: false) {
   @include def($w, $sz, $lh, $color-header-primary, true, $lett-spac);
 }
 
 @mixin h1 {
-  @include h(800, 82px, 100px, 0.01em);
+  @include h($ww-h1, $sz-h1, $lh-h1, 0.01em);
 }
 
 @mixin h2 {
-  @include h(600, 54px, 66px);
+  @include h($ww-h2, $sz-h2, $lh-h2);
 }
 
 @mixin h3 {
-  @include h(500, 42px, 51px);
+  @include h($ww-h3, $sz-h3, $lh-h3);
 }
 
 @mixin h-sub {
-  @include def(500, 26px, 34px, $color-header-secondary);
-}
-
-@mixin text {
-  @include def(400, 18px, 27px, $color-text);
-}
-
-@mixin ui {
-  @include def(600, 18px, 22px, $color-text-ui, $upp: true);
+  @include def($ww-h-sub, $sz-h-sub, $lh-h-sub, $color-header-secondary);
 }
 
 @mixin quote {
   @include font($font-family-secondary, normal,
-                800, 120px, 146px,
+                $ww-quote, $sz-quote, $lh-quote,
                 $color-header-primary,
                 $upp: true,
                 $lett-spac: 0.01em);
 }
 
-@mixin h1-320 {
-  @include h(800, 40px, 49px, 0.01em);
-}
-
-@mixin h2-320 {
-  @include h(500, 26px, 32px);
-}
