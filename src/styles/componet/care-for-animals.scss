@@ -1,0 +1,52 @@
+@use '../_mixin/font';
+
+.care-for-animals {
+  background-color: var(--color-primary-white);
+}
+
+.care-for-animals .wrapper {
+  padding-top: 136px;
+  padding-bottom: 150px;
+}
+
+.care-for-animals .info {
+  text-align: center;
+}
+
+.care-for-animals .info__title {
+  padding: 0 calc(var(--w-col-3) + var(--w-gap));
+  padding-bottom: 50px;
+  @include font.h2;
+}
+
+.care-for-animals .info__text {
+  padding: 0 var(--w-col-4);
+  padding-bottom: 100px;
+  @include font.h-sub;
+  color: var(--color-primary-navy);
+}
+
+.care-for-animals .feed__slots {
+  display: grid;
+  grid-template-columns: repeat(3, var(--w-col-4));
+  grid-template-rows: repeat(2, 1fr);
+  column-gap: var(--w-gap);
+  row-gap: 30px;
+}
+
+.care-for-animals .feed__slot--big {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.care-for-animals .btn-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 90px;
+  padding-bottom: 150px;
+}
+
+.touch-the-animal__img {
+  display: block;
+  width: 100%;
+}

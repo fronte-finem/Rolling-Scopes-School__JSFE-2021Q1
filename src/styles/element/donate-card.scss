@@ -1,0 +1,37 @@
+@use '../_mixin/font';
+
+.donate-card {
+  --w: var(--w-col-4);
+  --h: 658px;
+  --h-pict: 373px;
+  --p-descr: 44px;
+}
+
+.donate-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: var(--w);
+  height: var(--h);
+  padding-bottom: 50px;
+  border-radius: 5px;
+
+  background-color: var(--color-primary-navy);
+  color: var(--color-primary-white);
+  overflow: hidden;
+}
+
+.donate-card__pict {
+  height: var(--h-pict);
+  overflow: hidden;
+}
+
+.donate-card__photo {
+  display: block;
+}
+
+.donate-card__text {
+  margin-bottom: auto;
+  padding: 28px 25px;
+  text-align: center;
+}

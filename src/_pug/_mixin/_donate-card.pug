@@ -1,15 +1,8 @@
-- var self = 'donate-card';
+include ./_button.pug
 
 mixin donate-card(cls, donate)
-  // 💳
-  |
-  |
-  a.donate-card(class = `${cls} ${self}`, href = donate.animal.pageLink)
-    // 🖼️📋
-    |
-    |
-    img(class = `${self}__img`,
-        src = donate.animal.imgSrc,
-        alt = `${donate.animal.kind} — ${donate.animal.name}`)
-    p(class = `${self}__text`)= donate.text
-    div(class = `${self}__pseudo-btn`)= "feed ⇨"
+  .donate-card(class = `${cls} donate-card donate-card--${donate.animal.kind}`)
+    figure.donate-card__pict
+      img.donate-card__photo(src = donate.animal.imgSrc, alt=`${donate.animal.kind} — ${donate.animal.name}`)
+    .donate-card__text= donate.text
+    +btn('a', 'feed', 'text', 'free')

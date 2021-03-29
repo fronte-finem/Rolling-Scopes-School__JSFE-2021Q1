@@ -8,8 +8,8 @@
 }
 
 .animal-card {
-  width: 440px;
-  height: 747px;
+  width: var(--w);
+  height: var(--h);
   border-radius: 5px;
   background-color: var(--color-primary-navy);
   color: var(--color-primary-white);
