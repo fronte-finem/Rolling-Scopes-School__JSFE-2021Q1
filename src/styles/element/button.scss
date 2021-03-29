@@ -1,3 +1,5 @@
+@use '../_mixin/font';
+
 :root {
   --h-btn: 74px;
 }
@@ -24,11 +26,7 @@
   border-radius: 5px;
   outline: none;
 
-  font-family: "Montserrat", sans-serif;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 22px;
-  text-transform: uppercase;
+  @include font.ui;
 
   cursor: pointer;
   user-select: none;

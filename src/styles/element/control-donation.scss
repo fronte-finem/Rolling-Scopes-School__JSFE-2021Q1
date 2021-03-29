@@ -1,3 +1,5 @@
+@use '../_mixin/font';
+
 .control-donation {
   --w: calc(var(--w-col-3));
   --b: 1px;
@@ -29,11 +31,7 @@
     padding: 0 15px;
     outline: none;
 
-    font-family: "Montserrat", sans-serif;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 22px;
-    text-transform: uppercase;
+    @include font.ui;
 
     background-color: transparent;
     color: var(--color-primary-white);

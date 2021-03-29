@@ -1,3 +1,5 @@
+@use '../_mixin/font';
+
 .hero {
   background-color: var(--color-primary-white);
   background-image: url("../../assets/bg/about-intro.jpg");
@@ -10,13 +12,8 @@
   width: var(--w-col-8);
   padding-top: 129px;
   padding-bottom: 31px;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 800;
-  font-size: 82px;
-  line-height: 100px;
-  color: var(--color-primary-cyan);
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
+
+  @include font.h1;
 }
 
 .hero__descr {

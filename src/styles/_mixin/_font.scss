@@ -1,22 +1,77 @@
-// naming style: http://google-webfonts-helper.herokuapp.com/fonts
+$font-family-primary: "Montserrat", sans-serif;
+$font-family-secondary: "Montserrat Alternates", sans-serif;
 
-@mixin font-face($name, $path, $file, $weight: 400, $style: normal) {
-  @font-face {
-    font-family: $name;
-    font-style: $style;
-    font-weight: $weight;
+$color-header-primary: var(--color-primary-cyan);
+$color-header-secondary: var(--color-primary-white);
 
-    @if $weight == 400 {
-      $weight: regular;
+$color-text: var(--color-primary-black);
+$color-text-ui: var(--color-primary-white);
+
+@mixin font($ff, $st, $w, $sz, $lh, $clr, $upp: false, $lett-spac: false) {
+  /* 🔽🔠🔽 */
+  font-family: $ff;
+  font-style: $st;
+  font-weight: $w;
+  font-size: $sz;
+  line-height: $lh;
+  @if $upp or $lett-spac {
+    /* ⚜️🔠⚜️ */
+    @if $upp {
+      text-transform: uppercase;
     }
-    $file: "#{$path}/#{$file}-#{$weight}";
-
-    src: local(''),
-        file($file, 'woff2'), // Chrome 26+, Opera 23+, Firefox 39+
-        file($file, 'woff');  // Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+
+    @if $lett-spac {
+      letter-spacing: $lett-spac;
+    }
   }
+  /* 🌈🔠🌈 */
+  color: $clr;
+  /* 🔼🔠🔼 */
 }
 
-@function file($name, $ext) {
-  @return url("#{$name}.#{$ext}") format(#{$ext});
+@mixin def($w, $sz, $lh, $clr, $upp: false, $lett-spac: false) {
+  @include font($font-family-primary, normal, $w, $sz, $lh, $clr, $upp, $lett-spac);
+}
+
+@mixin h($w, $sz, $lh, $lett-spac: false) {
+  @include def($w, $sz, $lh, $color-header-primary, true, $lett-spac);
+}
+
+@mixin h1 {
+  @include h(800, 82px, 100px, 0.01em);
+}
+
+@mixin h2 {
+  @include h(600, 54px, 66px);
+}
+
+@mixin h3 {
+  @include h(500, 42px, 51px);
+}
+
+@mixin h-sub {
+  @include def(500, 26px, 34px, $color-header-secondary);
+}
+
+@mixin text {
+  @include def(400, 18px, 27px, $color-text);
+}
+
+@mixin ui {
+  @include def(600, 18px, 22px, $color-text-ui, $upp: true);
+}
+
+@mixin quote {
+  @include font($font-family-secondary, normal,
+                800, 120px, 146px,
+                $color-header-primary,
+                $upp: true,
+                $lett-spac: 0.01em);
+}
+
+@mixin h1-320 {
+  @include h(800, 40px, 49px, 0.01em);
+}
+
+@mixin h2-320 {
+  @include h(500, 26px, 32px);
 }
