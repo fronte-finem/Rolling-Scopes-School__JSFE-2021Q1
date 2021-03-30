@@ -1,12 +1,19 @@
 extends ./_pug/_layout/_page.pug
+
 include ./_pug/_mixin/_layout-block.pug
+include ./_pug/_mixin/_header.pug
+include ./_pug/_mixin/_footer.pug
 
 block head-vars
+  - var page = "about";
   - var pageTitle = "🐼";
   - var root = ".";
 
 block header
-  h1 Online-Zoo!
+  +header(page)
+
+block footer
+  +footer(page)
 
 block dev
   - var h = "--h-dev-overlay: 12330px"
@@ -35,5 +42,3 @@ block main
   +layout-block("section", "care-for-animals")
     include ./_pug/_partial/_care-for-animals.pug
 
-block footer
-  h2 Online-Zoo!
