@@ -6,7 +6,7 @@ $col: 80px;
 $colgap: $col + $gap;
 
 .layout-page {
-  @include css-vars((
+  @include set-vars((
     h-header: 110px,
     h-footer: 329px,
     h-min-main: calc(100vh - var(--h-header) - var(--h-footer)),
@@ -17,7 +17,7 @@ $colgap: $col + $gap;
   ));
 
   @for $i from 1 through $cols {
-    @include css-var(w-col-#{$i}, $col * $i + $gap * ($i - 1));
+    @include set-var(w-col-#{$i}, $col * $i + $gap * ($i - 1));
   }
 }
 
@@ -26,9 +26,9 @@ $colgap: $col + $gap;
   min-height: 100vh;
   display: grid;
   grid-template-rows:
-    css-var(h-header)
-    minmax(css-var(h-min-main), max-content)
-    css-var(h-footer);
+    use-var(h-header)
+    minmax(use-var(h-min-main), max-content)
+    use-var(h-footer);
 }
 
 .layout {
@@ -36,7 +36,7 @@ $colgap: $col + $gap;
 }
 
 .wrapper {
-  max-width: css-var(w-col-12);
+  max-width: use-var(w-col-12);
   width: 100%;
   margin: 0 auto;
 }

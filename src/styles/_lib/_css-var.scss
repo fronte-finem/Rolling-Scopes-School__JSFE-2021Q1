@@ -1,13 +1,19 @@
-@function css-var($name) {
+@function use-var($name) {
   @return var(--#{$name});
 }
 
-@mixin css-var ($name, $value) {
+@mixin use-vars($css_rules) {
+  @each $name, $var in $css_rules {
+    #{$name}: use-var($var);
+  }
+}
+
+@mixin set-var ($name, $value) {
   --#{$name}: #{$value};
 }
 
-@mixin css-vars($css_variables) {
+@mixin set-vars($css_variables) {
   @each $name, $value in $css_variables {
-    @include css-var($name, $value);
+    @include set-var($name, $value);
   }
 }
