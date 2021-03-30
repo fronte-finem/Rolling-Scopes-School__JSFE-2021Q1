@@ -1,0 +1,33 @@
+@use '../_lib/css-var' as *;
+
+.social-media {
+  &__items {
+    display: flex;
+  }
+
+  &__link {
+    display: block;
+    width: 40px;
+    height: 40px;
+  }
+
+  &__svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__link {  pointer-events: none; }
+  &__use { pointer-events: fill; }
+
+  &__link {
+    color: use-var(color-primary-white);
+    fill: hsl(326deg, 57%, 48%);
+    &--youtube {
+      fill: hsl(0deg, 100%, 50%);
+    }
+    &:hover {
+      color: use-var(color-primary-orange);
+    }
+    transition: color 300ms ease-in-out;
+  }
+}
