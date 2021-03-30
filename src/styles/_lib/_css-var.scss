@@ -1,0 +1,13 @@
+@function css-var($name) {
+  @return var(--#{$name});
+}
+
+@mixin css-var ($name, $value) {
+  --#{$name}: #{$value};
+}
+
+@mixin css-vars($css_variables) {
+  @each $name, $value in $css_variables {
+    @include css-var($name, $value);
+  }
+}

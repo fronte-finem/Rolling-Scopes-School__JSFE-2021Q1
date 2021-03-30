@@ -1,0 +1,9 @@
+@use './str-lib' as *;
+
+@function css-calc($str) {
+  $res: ' ';
+  @each $token in str-split(quote($str), ' ') {
+    $res: $res + #{$token} + ' ';
+  }
+  @return calc(#{$res});
+}

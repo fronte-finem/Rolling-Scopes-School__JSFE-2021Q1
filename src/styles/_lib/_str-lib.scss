@@ -1,0 +1,23 @@
+@function str-split($str, $separator) {
+  $split-arr: ();
+  $i: str-index($str, $separator);
+  @while $i != null {
+      $item: str-slice($str, 1, $i - 1);
+      $split-arr: append($split-arr, $item);
+      $str: str-slice($str, $i + 1);
+      $i : str-index($str, $separator);
+  }
+  $split-arr: append($split-arr, $str);
+  @return $split-arr;
+}
+
+@function str-split-rec($str, $separator) {
+  $i: str-index($str, $separator);
+  @if $i != null {
+    @return append(
+      str-slice($str, 1, $i - 1),
+      str-split-rec(str-slice($str, $i + str-length($separator)), $separator)
+    );
+  }
+  @return $str
+}

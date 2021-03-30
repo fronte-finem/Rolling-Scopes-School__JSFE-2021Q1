@@ -1,26 +1,24 @@
+@use './_lib/css-var' as *;
+
+$cols: 12;
+$gap: 40px;
+$col: 80px;
+$colgap: $col + $gap;
+
 .layout-page {
-  --h-header: 110px;
-  --h-footer: 329px;
-  --h-min-main: calc(100vh - var(--h-header) - var(--h-footer));
-  --w-content: 1400px;
+  @include css-vars((
+    h-header: 110px,
+    h-footer: 329px,
+    h-min-main: calc(100vh - var(--h-header) - var(--h-footer)),
+    w-gap: $gap,
+    w-col: $col,
+    w-colgap: $colgap,
+    cols: $cols,
+  ));
 
-  --cols:     12;
-  --w-gap:    40px;
-  --w-col:    calc((var(--w-content) + var(--w-gap)) / var(--cols) - var(--w-gap));
-  --w-colgap: calc(var(--w-col) + var(--w-gap));
-
-  --w-col-1:  var(--w-col);
-  --w-col-2:  calc(var(--w-col)    + var(--w-colgap));
-  --w-col-3:  calc(var(--w-col-2)  + var(--w-colgap));
-  --w-col-4:  calc(var(--w-col-3)  + var(--w-colgap));
-  --w-col-5:  calc(var(--w-col-4)  + var(--w-colgap));
-  --w-col-6:  calc(var(--w-col-5)  + var(--w-colgap));
-  --w-col-7:  calc(var(--w-col-6)  + var(--w-colgap));
-  --w-col-8:  calc(var(--w-col-7)  + var(--w-colgap));
-  --w-col-9:  calc(var(--w-col-8)  + var(--w-colgap));
-  --w-col-10: calc(var(--w-col-9)  + var(--w-colgap));
-  --w-col-11: calc(var(--w-col-10) + var(--w-colgap));
-  --w-col-12: var(--w-content);
+  @for $i from 1 through $cols {
+    @include css-var(w-col-#{$i}, $col * $i + $gap * ($i - 1));
+  }
 }
 
 .layout-page {
@@ -28,9 +26,9 @@
   min-height: 100vh;
   display: grid;
   grid-template-rows:
-    var(--h-header)
-    minmax(var(--h-min-main), max-content)
-    var(--h-footer);
+    css-var(h-header)
+    minmax(css-var(h-min-main), max-content)
+    css-var(h-footer);
 }
 
 .layout {
@@ -38,7 +36,7 @@
 }
 
 .wrapper {
-  max-width: var(--w-content);
+  max-width: css-var(w-col-12);
   width: 100%;
   margin: 0 auto;
 }
