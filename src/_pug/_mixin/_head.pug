@@ -4,6 +4,7 @@ mixin head(title = '🚧', root = '.')
     meta(http-equiv="X-UA-Compatible", content="IE=edge")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title= 'Online-Zoo | ' + title
+    link(rel="shortcut icon", href = `${root}/favicon.svg`, type="image/svg+xml")
     // 🧹
     link(rel = "stylesheet", href = `${root}/styles/minireset.css`)
     // 🚧
@@ -16,6 +17,9 @@ mixin head(title = '🚧', root = '.')
     // 🏗️
     link(rel = "stylesheet", href = `${root}/styles/layout.css`)
     // 🧱
+    link(rel = "stylesheet", href = `${root}/styles/element/logo.css`)
+    link(rel = "stylesheet", href = `${root}/styles/element/nav-menu.css`)
+    link(rel = "stylesheet", href = `${root}/styles/element/social-media-links.css`)
     link(rel = "stylesheet", href = `${root}/styles/element/button.css`)
     link(rel = "stylesheet", href = `${root}/styles/element/button-icon.css`)
     link(rel = "stylesheet", href = `${root}/styles/element/control-arrows.css`)
