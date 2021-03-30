@@ -1,7 +1,7 @@
 @use '../_mixin/font';
 
 .animal-card {
-  --w: 440px;
+  --w: var(--w-col-4);
   --h: 747px;
   --h-pict: 436px;
   --p-descr: 44px;

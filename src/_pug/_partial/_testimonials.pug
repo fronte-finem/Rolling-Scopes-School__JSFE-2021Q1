@@ -1,3 +1,4 @@
+include ../_mixin/_slider.pug
 include ../_mixin/_button.pug
 include ../_mixin/_control-arrows.pug
 include ../_mixin/_testimonial-card.pug
@@ -11,14 +12,6 @@ section.info
     +btn('a', 'leave feedback', 'white', 'long')
 
 .slider
-  .slider__wrapper
-    ul.slider__slots.slider__slots--row1
-      each data in testimonials1
-        li.slider__slot
-          +testimonial-card('slider__card', data)
-    ul.slider__slots.slider__slots--row2
-      each data in testimonials2
-        li.slider__slot
-          +testimonial-card('slider__card', data)
+  +gen-slider('testimonial-card', testimonials, 2)
   .slider__controls
     +control-arrows('button', 'white')

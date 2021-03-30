@@ -1,0 +1,15 @@
+-
+  function chanks(chankSize, xs) {
+    let res = xs.reduce((obj, x) => {
+      if (obj.buff.length == chankSize) {
+        obj.acc.push(obj.buff);
+        obj.buff = [];
+      }
+      obj.buff.push(x);
+      return obj;
+    }, {acc:[], buff:[]});
+
+    if (res.buff.length > 0) res.acc.push(res.buff);
+
+    return res.acc;
+  }

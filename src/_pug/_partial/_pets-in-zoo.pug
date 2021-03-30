@@ -1,3 +1,4 @@
+include ../_mixin/_slider.pug
 include ../_mixin/_button.pug
 include ../_mixin/_control-arrows.pug
 include ../_mixin/_animal-card.pug
@@ -10,15 +11,7 @@ section.info
 .slider
   .slider__controls
     +control-arrows('button', 'navy')
-  .slider__wrapper
-    ul.slider__slots.slider__slots--row1
-      each animal in animals1
-        li.slider__slot
-          +animal-card('slider__card', animal)
-    ul.slider__slots.slider__slots--row2
-      each animal in animals2
-        li.slider__slot
-          +animal-card('slider__card', animal)
+  +gen-slider('animal-card', animals, 2)
 
 .btn-container
   +btn('a', 'choose your favourite', 'navy', 'long')

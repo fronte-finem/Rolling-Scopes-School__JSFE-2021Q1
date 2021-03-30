@@ -51,6 +51,17 @@
   column-gap: 40px;
 }
 
+.pets-in-zoo .slider__slot {
+  width: var(--w-col-4);
+}
+
+.pets-in-zoo .cards-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+}
+
+
 
 /* 💩 pixel-perfect 💩 */
 .pets-in-zoo .info__title {
