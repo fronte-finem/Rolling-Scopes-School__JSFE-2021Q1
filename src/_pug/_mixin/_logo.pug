@@ -1,0 +1,13 @@
+mixin logo-main()
+  include ../_lib-js/_array.js.pug
+  - cls = ['logo', 'logo-main'];
+  h1(class = ArrUtils.clsMap(cls))= 'Online-Zoo'
+    svg(class = ArrUtils.clsMap(cls, 'svg'))
+      use(class = ArrUtils.clsMap(cls, 'use'), xlink:href = '#logo--main')
+
+mixin logo(id)
+  include ../_lib-js/_array.js.pug
+  - cls = ['logo', `logo-${id}`];
+  div(class = ArrUtils.clsMap(cls))
+    svg(class = ArrUtils.clsMap(cls, 'svg'))
+      use(class = ArrUtils.clsMap(cls, 'use'), xlink:href = `#logo--${id}`)

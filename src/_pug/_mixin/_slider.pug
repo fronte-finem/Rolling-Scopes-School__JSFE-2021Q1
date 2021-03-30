@@ -3,7 +3,7 @@ include ../_lib-js/_array.js.pug
 mixin gen-slider(gen_card, cards_data, column_size)
   .slider__wrapper
     ul.slider__slots
-      each chank in chanks(column_size, cards_data)
+      each chank in ArrUtils.chanks(column_size, cards_data)
         li.slider__slot
           .cards-container
             +#{gen_card}('slider__card', chank[0])
