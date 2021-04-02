@@ -1,8 +1,0 @@
-include ./_button.pug
-
-mixin donate-card(cls, donate)
-  .donate-card(class = `${cls} donate-card donate-card--${donate.animal.kind}`)
-    figure.donate-card__pict
-      img.donate-card__photo(src = donate.animal.imgSrc, alt=`${donate.animal.kind} — ${donate.animal.name}`)
-    .donate-card__text= donate.text
-    +btn('a', 'feed', 'text', 'free')

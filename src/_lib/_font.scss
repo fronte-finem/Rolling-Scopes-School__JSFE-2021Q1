@@ -1,0 +1,60 @@
+@use '../_lib/css-var' as *;
+
+$font-family-primary: "Montserrat", sans-serif;
+$font-family-secondary: "Montserrat Alternates", sans-serif;
+
+@mixin font($ff, $st, $type, $upp: false, $lett-spac: false) {
+  /* 🔽🔠🔽 */
+  font-family: $ff;
+  font-style: $st;
+  font-weight: use-var(font-weight--#{$type});
+  font-size: use-var(font-size--#{$type});
+  line-height: use-var(line-height--#{$type});
+  @if $upp or $lett-spac {
+    /* 🆎 */
+    @if $upp {
+      text-transform: uppercase;
+    }
+    @if $lett-spac {
+      letter-spacing: $lett-spac;
+    }
+  }
+  /* 🔼🔠🔼 */
+}
+
+@mixin def($type, $upp: false, $lett-spac: false) {
+  @include font($font-family-primary, normal, $type, $upp, $lett-spac);
+}
+
+@mixin text {
+  @include def('normal-text');
+}
+
+@mixin ui {
+  @include def('ui-text', $upp: true);
+}
+
+@mixin h($type, $lett-spac: false) {
+  @include def($type, true, $lett-spac);
+}
+
+@mixin h1 {
+  @include h('h1', 0.01em);
+}
+
+@mixin h2 {
+  @include h('h2');
+}
+
+@mixin h3 {
+  @include h('h3');
+}
+
+@mixin h-sub {
+  @include def('h-sub');
+}
+
+@mixin quote {
+  @include font($font-family-secondary, normal, 'quote', $upp: true, $lett-spac: 0.01em);
+}
+

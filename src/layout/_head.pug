@@ -1,0 +1,23 @@
+mixin head(title = '🚧', root = '.', file = 'index')
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title= 'Online-Zoo | ' + title
+    link(rel="shortcut icon", href = `${root}/favicon.svg`, type="image/svg+xml")
+    // 🧹
+    link(rel = "stylesheet", href = `${root}/styles/minireset.css`)
+    // 🚧
+    link(rel = "stylesheet", href = `${root}/styles/seo.css`)
+    link(rel = "stylesheet", href = `${root}/develop/dev.css`)
+    // 🌈
+    link(rel = "stylesheet", href = `${root}/styles/colors.css`)
+    // 🔠
+    link(rel = "stylesheet", href = `${root}/assets/fonts/index.css`)
+    link(rel = "stylesheet", href = `${root}/styles/fonts.css`)
+    // 👑
+    link(rel = "stylesheet", href = `${root}/styles/main.css`)
+    // ♻️
+    link(rel = "stylesheet", href = `./${file}.css`)
+    if block
+      block

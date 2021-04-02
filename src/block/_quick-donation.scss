@@ -1,0 +1,60 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+@use '../_lib/font';
+
+/*
+  ⚜️ BLOCK: QUICK-DONATION ⚜️
+*/
+
+.quick-donation {
+  background-color: var(--clr-main-navy);
+
+  .wrapper {
+    padding-top: 50px;
+    padding-bottom: 46px;
+  }
+
+  @include set-vars ((
+    c3: grid.col(3),
+    c6: grid.col(6),
+  ));
+
+  .wrapper {
+    display: grid;
+    grid-template-columns: 1fr var(--c3);
+    column-gap: var(--gap);
+    grid-template-areas: "info action";
+  }
+  .info { grid-area: info; }
+  .action { grid-area: action; }
+
+  .info {
+    &__title {
+      padding-bottom: 20px;
+      @include font.h3;
+      color: var(--clr-main-light);
+    }
+    &__text {
+      width: var(--c6);
+      color: var(--clr-main-light);
+    }
+  }
+
+  .action {
+    &__title {
+      padding-bottom: 12px;
+      @include font.h-sub;
+      color: var(--clr-main-light);
+    }
+    &__text {
+      color: var(--clr-main-light);
+    }
+  }
+}
+
+/* 💩 pixel-perfect 💩 */
+.quick-donation {
+  .info {
+    &__text { padding-right: 60px; }
+  }
+}

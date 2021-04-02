@@ -1,0 +1,70 @@
+extends ../layout/_layout-page.pug
+
+include ../layout/_layout-block.pug
+include ../element/_button.pug
+include ../element/_control-arrows.pug
+include ../element/_control-donation.pug
+
+mixin gen(mix, ...args)
+  .btns-cont
+    +#{mix}('button', ...args)
+    +#{mix}('a', ...args)
+    +#{mix}('div', ...args)
+
+mixin genBtns(txt, ...mods)
+  +gen('btn', {text:txt, href:'#'}, ...mods)
+
+
+block page-vars
+  - var page = "elements";
+  - var file = "elements";
+  - var title = '🧱';
+  - var root = '..'
+
+block dev
+  .dev-overlay.dev-grid
+
+block main
+  +layout-block("section", "btns")
+    h3 Btns
+
+    +genBtns('donate now', 'orange')
+    +genBtns('view live cam', 'orange')
+    +genBtns('send message', 'cyan', 'long')
+    +genBtns('send message', 'cyan', 'long', 'active')
+    +genBtns('choose your favourite', 'navy', 'long')
+    +genBtns('leave feedback', 'white', 'long')
+    +genBtns('view live cam', 'text')
+    +genBtns('feed', 'text', 'free')
+    +genBtns('view map', 'text')
+
+    .btns-cont
+      +control-arrows()
+      +control-arrows()
+      +control-arrows()
+    .btns-cont
+      +control-arrows('white')
+      +control-arrows('white')
+      +control-arrows('white')
+    .btns-cont
+      +control-arrows('navy')
+      +control-arrows('navy')
+      +control-arrows('navy')
+
+    .btns-cont
+      +control-donation()
+      +control-donation()
+      +control-donation()
+
+    .map-pins-cont
+      +btn-map-pin('panda', '🐼')
+      +btn-map-pin('tiger', '🐯')
+      +btn-map-pin('lion', '🦁')
+      +btn-map-pin('gorilla', '🦍')
+      +btn-map-pin('eagle', '🦅')
+      +btn-map-pin('alligator', '🐊')
+      +btn-map-pin('lemur')
+      +btn-map-pin('coala')
+
+block svg-sprite
+  include ../svg/_sprite-map-pin.svg.pug

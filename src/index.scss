@@ -1,14 +1,21 @@
+// 🧱
+@use "./element/control-donation";
+@use "./element/slider";
+@use "./element/animal-card";
+@use "./element/testimonial-card";
+@use "./element/donate-card";
+
+// ⚜️
+@use "./block/hero";
+@use "./block/intro";
+@use "./block/quick-donation";
+@use "./block/pets-in-zoo";
+@use "./block/pay-and-feed";
+@use "./block/testimonials";
+@use "./block/care-for-animals";
+
 /*
-    🦸🐼
+   👑 👑 👑 👑 👑
+  👑 PAGE: ABOUT 👑
+   👑 👑 👑 👑 👑
 */
-@import url("./styles/element/control-donation.css");
-@import url("./styles/element/animal-card.css");
-@import url("./styles/element/testimonial-card.css");
-@import url("./styles/element/donate-card.css");
-@import url("./styles/componet/hero.css");
-@import url("./styles/componet/intro.css");
-@import url("./styles/componet/quick-donation.css");
-@import url("./styles/componet/pets-in-zoo.css");
-@import url("./styles/componet/pay-and-feed.css");
-@import url("./styles/componet/testimonials.css");
-@import url("./styles/componet/care-for-animals.css");

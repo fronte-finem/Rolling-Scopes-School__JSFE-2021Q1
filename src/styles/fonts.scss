@@ -1,4 +1,4 @@
-@use './_mixin/font';
+@use '../_lib/font';
 
 :root {
   /* 🔠 normal text */
@@ -44,4 +44,5 @@
 
 body {
   @include font.text;
+  color: var(--clr-main-dark);
 }

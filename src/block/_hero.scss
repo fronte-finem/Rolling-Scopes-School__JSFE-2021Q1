@@ -1,0 +1,50 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+@use '../_lib/font';
+
+/*
+  ⚜️ BLOCK: HERO ⚜️
+*/
+
+.hero {
+  background-color: var(--clr-main-light);
+  background-image: url("./assets/bg/about-intro.jpg");
+  background-repeat: no-repeat;
+  background-position-x: calc(50% - 37px);
+  background-position-y: -42px;
+
+  .wrapper {
+    min-height: calc(900px - var(--h-header));
+    padding-top: 129px;
+  }
+
+  .wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, min-content);
+    column-gap: var(--gap);
+    row-gap: 50px;
+    grid-template-areas:
+      "a a ."
+      "b . ."
+      "c c c";
+  }
+  .title { grid-area: a; }
+  .text { grid-area: b; }
+  .btn-container { grid-area: c; }
+}
+
+.hero {
+  .title {
+    @include font.h1;
+    color: var(--clr-ui-2-def);
+  }
+}
+
+
+/* 💩 pixel perfect 💩 */
+.hero {
+  .wrapper { row-gap: 30px; }
+  .text { padding-right: 20px; }
+  .btn-container { padding-top: 15px; }
+}

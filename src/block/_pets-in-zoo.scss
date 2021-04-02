@@ -1,0 +1,97 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+@use '../_lib/font';
+
+/*
+  ⚜️ BLOCK: PETS-IN-ZOO ⚜️
+*/
+
+.pets-in-zoo {
+  background-color: var(--clr-main-light);
+  overflow-x: hidden;
+
+  @include set-vars ((
+    c2: grid.col(2),
+    c4: grid.col(4),
+    c6: grid.col(6),
+    c12: grid.col(12),
+    w-max: 1920px,
+  ));
+
+  .wrapper {
+    padding-top: 136px;
+    padding-bottom: 100px;
+  }
+
+  .info {
+    &__title {
+      padding-bottom: 50px;
+      @include font.h2;
+      text-align: center;
+      color: var(--clr-ui-2-def);
+    }
+
+    &__text {
+      padding: 0 calc(var(--c2) + var(--gap));
+      padding-bottom: 100px;
+      @include font.h-sub;
+      color: var(--clr-main-dark);
+      text-align: center;
+    }
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 50px 0;
+  }
+
+  .slider {
+    &__controls {
+      max-width: var(--c12);
+    }
+
+    &__slot {
+      width: var(--c4);
+    }
+
+    --a: calc(var(--w-max) / 2 - var(--c12) / 2);
+
+    &__slots {
+      position: relative;
+    }
+
+    &__slots::before {
+      content: '';
+      position: absolute;
+      z-index: 999;
+      top: 0;
+      left: var(--c12);
+      bottom: 0;
+      right: 0;
+      pointer-events: none;
+      background-image: linear-gradient(90deg, transparent 0px, var(--clr-main-light) var(--a));
+    }
+
+    &__slots::after {
+      content: '';
+      position: absolute;
+      z-index: 9999;
+      top: 0;
+      left: calc(var(--c12) + var(--a));
+      bottom: 0;
+      right: 0;
+      background-color: var(--clr-main-light);
+    }
+  }
+}
+
+
+/* 💩 pixel-perfect 💩 */
+.pets-in-zoo {
+  .info {
+    &__title { padding-left: 20px; }
+    &__text { min-height: 202px; }
+  }
+}

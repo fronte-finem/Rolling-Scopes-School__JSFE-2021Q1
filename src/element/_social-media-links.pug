@@ -1,0 +1,16 @@
+mixin social-media-links()
+  -
+    var social_data = [
+      { name: 'youtube',   link: 'https://www.youtube.com/'},
+      { name: 'instagram', link: 'https://www.instagram.com/'},
+      { name: 'facebook',  link: 'https://www.facebook.com/'},
+    ];
+    var cls = 'social-media';
+
+  div(class = cls)
+    ul(class = `${cls}__items`)
+      each item in social_data
+        li(class = `${cls}__item`)
+          a(class = `link-icon ${cls}__link ${cls}__link--${item.name}`, href = item.link)
+            svg(class = `${cls}__svg`)
+              use(class = `${cls}__use`, xlink:href = `#${item.name}`)

@@ -1,0 +1,19 @@
+include ../layout/_layout-block.pug
+include ../element/_slider.pug
+include ../element/_button.pug
+include ../element/_animal-card.pug
+
+mixin pets-in-zoo
+  include ../_content/_animals.pug
+  - var controlColor = 'navy';
+
+  // ⚜️ BLOCK: PETS-IN-ZOO ⚜️
+  +layout-block("section", "pets-in-zoo")
+    section.info
+      h2.info__title= "meet some our Pets"
+      p.info__text= "Do you have a special place in your heart for animals? Who are your favorites? Perhaps you'd like to donate to special ones or all our pets? We think it's important for you to choose how your donation is used."
+
+    +gen-slider('animal-card', animals, 'double-row', controlColor)
+
+    .btn-container
+      +btn('a', {text: 'choose your favourite', href: '/online-zoo/pages/map.html'}, controlColor, 'long')

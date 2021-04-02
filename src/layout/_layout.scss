@@ -1,0 +1,52 @@
+@use '../_lib/css-var' as *;
+
+/*
+   🏗️ 🏗️ 🏗️ 🏗️
+  🏗️  LAYOUT  🏗️
+   🏗️ 🏗️ 🏗️ 🏗️
+*/
+
+$columns: 12;
+$gap: 40px;
+$col: 80px;
+$gap-pure: 40;
+$col-pure: 80;
+
+.page {
+  @include set-vars((
+    h-header: 110px,
+    h-footer: 329px,
+    w-page-max: 1400px,
+    col: $col,
+    gap: $gap,
+    col-pure: $col-pure,
+    gap-pure: $gap-pure,
+    columns: $columns,
+  ));
+}
+
+// @for $i from 6 through 0 {
+//   @media screen and (max-width: 1200px + $i * 120px) {
+//     .page {
+//       @include set-var(gap, 20px + $i * 3px);
+//     }
+//   }
+// }
+
+.page {
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: var(--h-header) 1fr var(--h-footer);
+}
+
+.layout {
+  max-width: var(--w-page-max);
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.wrapper {
+  width: 100%;
+}

@@ -1,0 +1,20 @@
+mixin nav-menu(page, data)
+  -
+    var menu_data = [
+      { name: 'about',      link: '/online-zoo/'},
+      { name: 'map',        link: '/online-zoo/pages/map.html'},
+      { name: 'zoos',       link: '/online-zoo/pages/zoos/panda.html'},
+      { name: 'contact us', link: '/online-zoo/pages/contact-us.html'},
+    ]
+    Array.isArray(data) && (menu_data = menu_data.concat(data));
+
+    var cls = 'nav-menu';
+
+  nav(class = cls)
+    ul(class = `${cls}__items`)
+      each item in menu_data
+        li(class = `${cls}__item`)
+          if item.name == page
+            span(class = `${cls}__self`)= item.name
+          else
+            a(class = `link ${cls}__link`, href = item.link)= item.name

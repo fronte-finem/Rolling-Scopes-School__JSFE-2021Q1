@@ -1,0 +1,22 @@
+include ./_button.pug
+
+mixin animal-card(cls, animal)
+  - var self = 'animal-card'
+  div(class = `${cls} ${self} ${self}--${animal.kind.toLowerCase().split(' ').join('-')}`,
+      onclick = 'this.querySelector(".btn").click()'
+    )
+    .card-pict
+      .animal-name= animal.name
+      img.animal-photo(
+        src = animal.img.src,
+        alt = `${animal.kind} — ${animal.name}`,
+        width = animal.img.w
+      )
+    .card-info
+      section.animal-info
+        h4.animal-kind= animal.kind
+        p.animal-descr= animal.descr[0]
+          each str in animal.descr.slice(1)
+            br
+            = str
+      +btn('a', {text: 'view live cam', href: animal.camLink}, 'text')

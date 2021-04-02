@@ -1,0 +1,92 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+
+/*
+  🧱 ELEMENT: BUTTON-ICON 🧱
+*/
+
+:root {
+  --w-btn-icon:65px;
+  --h-btn-icon:60px;
+}
+
+.btn-icon {
+  @include set-vars((
+    h: 60,
+    w: use-var(w-btn-icon),
+    time: 300ms,
+  ));
+}
+
+.btn-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: var(--w-btn-icon);
+  height: var(--h-btn-icon);
+  margin: 0;
+  padding: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  outline: none;
+
+  background-color: transparent;
+
+  cursor: pointer;
+  user-select: none;
+
+  transition: background-color var(--time);
+
+  .svg-icon {
+    width: 25px;
+    height: 22px;
+
+    transition: fill var(--time);
+  }
+
+  & {
+    border-color: var(--clr-ui-1-def);
+    fill: var(--clr-ui-1-def);
+  }
+
+  &:hover {
+    background-color: var(--clr-ui-1-def);
+    fill: var(--clr-main-light);
+  }
+
+  &--white {
+    border-color: var(--clr-main-light);
+    fill: var(--clr-main-light);
+  }
+
+  &--white:hover {
+    background-color: var(--clr-main-light);
+    fill: var(--clr-main-navy);
+  }
+
+  &--navy {
+    border-color: var(--clr-main-navy);
+    fill: var(--clr-main-navy);
+  }
+
+  &--navy:hover {
+    background-color: var(--clr-main-navy);
+    fill: var(--clr-main-light);
+  }
+}
+
+
+.btn-icon.btn-icon--minimal {
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+
+  fill: var(--clr-ui-2-hov);
+  &:hover {
+    fill: var(--clr-ui-1-hov);
+  }
+}

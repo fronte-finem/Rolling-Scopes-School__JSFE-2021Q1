@@ -1,0 +1,102 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+@use '../_lib/font';
+
+/*
+  ⚜️ BLOCK: TESTIMONIALS ⚜️
+*/
+
+.testimonials {
+  background-color: var(--clr-main-navy);
+  background-image: url('./assets/bg/about-testimonials.jpg');
+  background-repeat: no-repeat;
+  background-position: calc(50% + 0px) 0px;
+
+  @include set-vars ((
+    c6: grid.col(6),
+    c7: grid.col(7),
+    c12: grid.col(12),
+    c1-g1: grid.col-gap(1, 1),
+    w-max: 1920px,
+  ));
+
+  overflow-x: hidden;
+
+  --a: calc((var(--w-max) - var(--c12)) / 2);
+
+  .wrapper {
+    min-height: 1776px;
+    display: grid;
+    grid-template-columns: 1fr var(--c7);
+    grid-template-rows: 1fr auto;
+    column-gap: var(--gap);
+    padding-top: 100px;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      z-index: 999;
+      width: 9999px;
+      right: 100%;
+      top: 0;
+      bottom: 0;
+      background-image: linear-gradient(to left, transparent 0px, var(--clr-main-navy) var(--a));
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      z-index: 999;
+      width: 9999px;
+      left: 100%;
+      top: 0;
+      bottom: 0;
+      background-image: linear-gradient(to right, transparent 0px, var(--clr-main-navy) var(--a));
+    }
+  }
+
+  .btn-container {
+    padding: 150px 0;
+  }
+
+  .info {
+    &__title {
+      padding-right: var(--c1-g1);
+      padding-bottom: 38px;
+      @include font.h2;
+      color: var(--clr-main-light);
+    }
+    &__text {
+      @include font.h-sub;
+      color: var(--clr-main-light);
+    }
+  }
+
+  .slider {
+    grid-template-areas: "slots" "controls";
+    row-gap: 60px;
+
+    &__slots {
+      grid-gap: 30px;
+    }
+
+    &__slot {
+        width: 515px;
+    }
+
+    &__controls {
+      justify-content: flex-start;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+

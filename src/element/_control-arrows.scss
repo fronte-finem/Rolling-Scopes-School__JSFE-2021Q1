@@ -1,0 +1,17 @@
+/*
+  🧱 ELEMENT: CONTROL-ARROWS 🧱
+*/
+
+.control-arrows {
+  --x: 60px;
+}
+
+.control-arrows {
+  display: flex;
+  column-gap: var(--x);
+}
+
+.control-arrows .btn-icon {
+  width: var(--x);
+  height: var(--x);
+}

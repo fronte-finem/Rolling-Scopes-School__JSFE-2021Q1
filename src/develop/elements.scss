@@ -1,0 +1,38 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+
+@use "../element/control-donation";
+@use "../element/button-map-pin";
+
+/*
+   👑 👑 👑 👑 👑 👑
+  👑 PAGE: ELEMENTS 👑
+   👑 👑 👑 👑 👑 👑
+*/
+
+.main {
+  @include set-vars((
+    c1-g1: grid.col-gap(1, 1),
+  ));
+}
+
+.btns {
+  background-color: #333;
+}
+
+.btns-cont {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px var(--c1-g1);
+}
+
+.map-pins-cont {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px var(--c1-g1);
+
+  .btns-cont {
+    flex-direction: column;
+    padding: 0;
+  }
+}

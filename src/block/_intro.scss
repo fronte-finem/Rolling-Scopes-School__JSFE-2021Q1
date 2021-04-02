@@ -1,0 +1,64 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+@use '../_lib/font';
+
+/*
+  ⚜️ BLOCK: INTRO ⚜️
+*/
+
+.intro {
+  .wrapper {
+    padding: 150px 0;
+  }
+
+  @include set-vars ((
+    c2: grid.col(2),
+  ));
+
+  .wrapper {
+    display: grid;
+    grid-template-columns: 1fr var(--c2) 1fr;
+    grid-template-rows: repeat(2, min-content);
+    column-gap: var(--gap);
+    row-gap: 150px;
+    grid-template-areas: "info1 pic1 pic1" "pic2 pic2 info2";
+  }
+  .picture:nth-of-type(1) { grid-area: pic1; }
+  .picture:nth-of-type(2) { grid-area: pic2; }
+  .info:nth-of-type(1) { grid-area: info1; }
+  .info:nth-of-type(2) { grid-area: info2; }
+
+  .picture {
+    position: relative;
+
+    &__img {
+      display: block;
+    }
+
+    .btn-icon {
+      position: absolute;
+      top: 30%;
+      left: 51%;
+    }
+  }
+
+  .info {
+    &__title {
+      padding: 50px 0;
+      @include font.h2;
+      color: var(--clr-ui-2-def);
+    }
+  }
+
+  background-color: use-var(clr-main-light);
+}
+
+/* 💩 pixel-perfect tweaking 💩 */
+.intro {
+  .info:nth-of-type(1) {
+    .info__title { padding-top: 68px; }
+  }
+  .info:nth-of-type(2) {
+    .info__title { padding-top: 113px; }
+  }
+}

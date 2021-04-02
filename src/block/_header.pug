@@ -1,0 +1,11 @@
+include ../layout/_layout-block.pug
+include ../element/_logo.pug
+include ../element/_nav-menu.pug
+include ../element/_social-media-links.pug
+
+mixin header(page)
+  // ⚜️ BLOCK: HEADER ⚜️
+  +layout-block("header", "header")
+    +logo-main
+    +nav-menu(page, [{name:'design', link:'https://www.figma.com/file/lnK11foY8Aoa6oOlDXovVN/Online-ZOO-Project'}])
+    +social-media-links

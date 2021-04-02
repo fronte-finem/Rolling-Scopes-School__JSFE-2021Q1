@@ -1,0 +1,51 @@
+include ../layout/_layout-block.pug
+include ../element/_button.pug
+
+mixin pay-and-feed
+  -
+    var steps_data = [
+      {
+        picSrc: "./assets/img/pay-feed--01.jpg",
+        picAlt: "Monkey want eat 🐒",
+        iconId: "#heart-in-hands",
+        title: "Your donation has an impact",
+        text: "Providing our animals with high-quality nutritious diets is just one element of animal care at our Zoo. We do all the best so that our animals can eat food similar to what they might find in their natural habitats while making sure they get the right mix of nutrients, proteins, and vitamins to be happy and healthy. Please help us provide nutritious food for our animals by donating. The generosity of people like you can help us make sure that our animals enjoy good food that keeps them in great condition.",
+      },
+      {
+        picSrc: "./assets/img/pay-feed--02.jpg",
+        picAlt: "Bananas in your giving hands 🍌",
+        iconId: "#donate-box",
+        title: "Make a donation",
+        text: "You can donate through your credit card without any fees. It is easy and safe. We do not keep donors' personal information on an online network. Choose an amount to give and the pet's name if needed. One of the most effective ways you can give is by making regular donations.",
+      },
+      {
+        picSrc: "./assets/img/pay-feed--03.jpg",
+        picAlt: "Happy monkey eat banan 🐵🍌",
+        iconId: "#food-box",
+        title: "Bring your food charity — straight to your favorites pets.",
+        text: "After your donation, the animal receives its favorite foods. You can support your favorite animals or any animal you care about and make a real personal impact. Never doubt that your donation can make a difference even if it is small.",
+      },
+    ];
+    var helper = (cls, i) => `${cls} ${cls}--${i}`;
+
+  // ⚜️ BLOCK: PAY-AND-FEED ⚜️
+  +layout-block("section", "pay-and-feed")
+    h2.title= "pay and feed"
+
+    ul.steps
+      each item, ix in steps_data
+        - var cls =  helper('step', ix + 1);
+        li.step-prefix(class = cls)
+          .step-prefix__num= `0${ix + 1}`
+          .step-prefix__line
+        li.step-picture(class = cls)
+          img.step-picture__img(src = item.picSrc, alt = item.picAlt)
+        li.step-info(class = cls)
+          .step-info__icon
+            svg.svg-icon
+              use(xlink:href = item.iconId)
+          h4.step-info__title= item.title
+          p.step-info__text= item.text
+
+    .btn-container
+      +btn('button', {text: 'donate now'})

@@ -1,0 +1,14 @@
+include ./_control-arrows.pug
+
+mixin gen-slider(gen_card, cards_data, slider_type, control_color)
+  - var cls = 'slider'
+  div(class = `${cls}`)
+    div(class = `${cls}__controls`)
+      +control-arrows(control_color)
+    - var slts = `${cls}__slots`
+    ul(class = `${slts} ${slts}--${slider_type}`)
+      each item in cards_data
+        li(class = `${cls}__slot`)
+          +#{gen_card}(`${cls}__card`, item)
+    div(class = `${cls}__overlay`)
+

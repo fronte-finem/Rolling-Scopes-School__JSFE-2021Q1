@@ -1,0 +1,25 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/font';
+
+/*
+  🧱 ELEMENT: NAV-MENU 🧱
+*/
+
+.nav-menu {
+  @include font.ui;
+
+  &__items {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__self {
+    cursor: default;
+  }
+
+  &__link {
+    text-decoration: none;
+    transition: color 300ms ease-in-out;
+  }
+}

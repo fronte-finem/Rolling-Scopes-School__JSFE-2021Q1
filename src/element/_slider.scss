@@ -1,0 +1,45 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+
+/*
+  🧱 ELEMENT: SLIDER 🧱
+*/
+
+.slider {
+  @include set-vars ((
+    c4: grid.col(4),
+    c6: grid.col(6),
+    c12: grid.col(12),
+  ));
+
+  display: grid;
+  grid-template-rows: repeat(2, min-content);
+  grid-template-areas: "controls" "slots";
+  row-gap: 50px;
+
+  &__controls { grid-area: controls; }
+  &__slots { grid-area: slots; }
+
+  &__controls {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  &__slots {
+    display:grid;
+
+    grid-auto-flow: column;
+    grid-gap: use-var(gap);
+
+    &--double-row {
+      grid-template-rows: repeat(2, 1fr);
+    }
+  }
+
+  &__slot {
+    position: relative;
+    width: var(--c4);
+  }
+}
+

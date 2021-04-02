@@ -1,0 +1,57 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+
+/*
+  ⚜️ BLOCK: HEADER ⚜️
+*/
+
+.header {
+  width: 100%;
+  height: var(--h-header);
+
+  .wrapper {
+    height: 100%;
+  }
+
+  @include set-vars ((
+    c3: grid.col(3),
+    c5: grid.col(5),
+  ));
+
+  .wrapper {
+    display: grid;
+    grid-template-columns: 1fr var(--c3) var(--c5) 1fr;
+    grid-gap: var(--gap);
+    grid-template-areas: "a . b c";
+    align-items: center;
+  }
+  .logo { grid-area: a; }
+  .nav-menu { grid-area: b; }
+  .social-media { grid-area: c; }
+
+  .nav-menu { padding-right: 7px; }
+  .social-media { padding-left: 18px; }
+
+  .social-media {
+    &__items {
+      column-gap: 30px;
+    }
+  }
+}
+
+header {
+  background-color: use-var(clr-ui-1-def);
+
+  .logo {
+    color: use-var(clr-main-dark);
+  }
+  .nav-menu {
+    &__self {
+      color: use-var(clr-ui-2-def);
+    }
+    &__link {
+      color: use-var(clr-main-dark);
+      &:hover { color: use-var(clr-main-light); }
+    }
+  }
+}

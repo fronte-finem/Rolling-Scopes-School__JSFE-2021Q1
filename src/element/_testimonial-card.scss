@@ -1,0 +1,47 @@
+@use '../_lib/font';
+
+/*
+  🧱 ELEMENT: TESTIMONIAL-CARD 🧱
+*/
+
+.testimonial-card {
+  --w: 515px;
+  --h: 463px;
+}
+
+.testimonial-card {
+  display: flex;
+  flex-direction: column;
+
+  width: var(--w);
+  height: var(--h);
+  padding: 20px 50px;
+  padding-bottom: 68px;
+  border-radius: 5px;
+
+  background-color: var(--clr-main-light);
+  box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.5);
+}
+.testimonial-card::before {
+  content: '“';
+  display: block;
+  @include font.quote;
+  color: var(--clr-ui-2-def);
+}
+
+.testimonial-card__title {
+  margin-top: -30px;
+  padding-bottom: 22px;
+  @include font.h-sub;
+  color: var(--clr-main-dark);
+}
+
+.testimonial-card__text {
+  margin-bottom: auto;
+  color: var(--clr-main-dark);
+}
+
+.testimonial-card__name {
+  @include font.ui;
+  color: var(--clr-main-dark);
+}

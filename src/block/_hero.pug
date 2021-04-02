@@ -1,0 +1,12 @@
+include ../layout/_layout-block.pug
+include ../element/_button.pug
+
+mixin hero
+  // ⚜️ BLOCK: HERO ⚜️
+  +layout-block("section", "hero")
+    h2.title= "Watch your favorite animal online"
+
+    p.text= "Explore the exciting and mysterious world of wild animals in a natural setting without leaving your home."
+
+    .btn-container
+      +btn('a', {text: 'view live cam', href: '/online-zoo/pages/zoos/panda.html'})

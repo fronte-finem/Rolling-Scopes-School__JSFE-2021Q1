@@ -1,0 +1,56 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+@use '../_lib/font';
+
+/*
+  🧱 ELEMENT:   DONATE-CARD 🧱
+*/
+
+.donate-card {
+  @include set-vars ((
+    w: grid.col-pure(4),
+    h: 658,
+    w-scale: calc((var(--w) + 40) / var(--w)),
+    h-scale: calc((var(--h) + 40) / var(--h)),
+    h-pict: 373px,
+    p-descr: 44px,
+  ));
+}
+
+.donate-card {
+  cursor: pointer;
+  transition: transform 300ms ease-in-out;
+  transform: scale(1, 1);
+  &:hover {
+    transform: scale(var(--w-scale), var(--h-scale));
+  }
+}
+
+.donate-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: calc(var(--w) * 1px);
+  height: calc(var(--h) * 1px);
+  padding-bottom: 50px;
+  border-radius: 5px;
+
+  background-color: var(--clr-main-navy);
+  color: var(--clr-main-light);
+  overflow: hidden;
+
+  &__pict {
+    height: var(--h-pict);
+    overflow: hidden;
+  }
+
+  &__photo {
+    display: block;
+  }
+
+  &__text {
+    margin-bottom: auto;
+    padding: 31px 25px;
+    text-align: center;
+  }
+}

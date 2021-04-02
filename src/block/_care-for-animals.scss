@@ -1,0 +1,80 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+@use '../_lib/font';
+
+/*
+  ⚜️ BLOCK: CARE-FOR-ANIMALS ⚜️
+*/
+
+.care-for-animals {
+  background-color: var(--clr-main-light);
+
+  @include set-vars ((
+    c2: grid.col(2),
+    c3: grid.col(3),
+    c4: grid.col(4),
+    c3-g3: grid.col-gap(3, 3),
+  ));
+
+  .wrapper {
+    padding-top: 136px;
+    padding-bottom: 150px;
+  }
+
+  .info {
+    min-height: 347px;
+    text-align: center;
+
+    &__title {
+      padding: 0 var(--c3-g3);
+      padding-bottom: 50px;
+      @include font.h2;
+      color: var(--clr-ui-2-def);
+    }
+
+    &__text {
+      padding: 0 var(--c4);
+      @include font.h-sub;
+      color: var(--clr-main-navy);
+    }
+  }
+
+  .feed {
+    &__slots {
+      display: grid;
+      grid-template-columns: repeat(3, var(--c4));
+      grid-template-rows: repeat(2, 1fr);
+      column-gap: var(--gap);
+      row-gap: 32px;
+    }
+
+    &__slot--big {
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 90px;
+  }
+
+  .touch-the-animal {
+    &__img {
+      display: block;
+      width: 100%;
+      padding-top: 152px;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+

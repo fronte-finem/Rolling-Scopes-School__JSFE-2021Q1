@@ -1,0 +1,98 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+@use '../_lib/font';
+
+/*
+  🧱 ELEMENT: BUTTON 🧱
+*/
+
+:root {
+  --h-btn: 74px;
+}
+
+.btn {
+  --time: 300ms;
+  --w-m: calc(2 * (var(--col) + var(--gap)));
+  --w-l: calc(3 * (var(--col) + var(--gap)));
+  --w-s: min-content;
+  --h: var(--h-btn);
+  --p: 0 26px
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 10px;
+
+  height: var(--h);
+  margin: 0;
+  padding: var(--p);
+  border: none;
+  border-radius: 5px;
+  outline: none;
+
+  @include font.ui;
+  text-decoration: none;
+
+  cursor: pointer;
+  user-select: none;
+
+  transition: color var(--time), background-color var(--time);
+}
+
+.btn {
+  width: var(--w-m);
+  &--long { width: var(--w-l); }
+  &--free { width: var(--w-s); }
+}
+
+.btn {
+  &               { background-color: var(--clr-ui-1-def); }
+  &:hover         { background-color: var(--clr-ui-1-hov); }
+
+  &--orange       { background-color: var(--clr-ui-1-def); }
+  &--orange:hover { background-color: var(--clr-ui-1-hov); }
+
+  &--cyan.btn--active { background-color: var(--clr-ui-2-def); }
+  &--cyan             { background-color: var(--clr-ui-2-off); }
+  &--cyan:hover       { background-color: var(--clr-ui-2-hov); }
+
+  &--navy       { border: 1px solid var(--clr-main-navy); }
+  &--navy       { background-color: transparent; }
+  &--navy:hover { background-color: var(--clr-main-navy); }
+
+  &--white       { border: 1px solid var(--clr-main-light); }
+  &--white       { background-color: transparent; }
+  &--white:hover { background-color: var(--clr-ui-2-def); }
+
+  &--text       { background-color: transparent; }
+  &--text:hover { background-color: var(--clr-ui-1-def); }
+}
+
+.btn {
+  color: var(--clr-main-light);
+
+  &--navy       { color: var(--clr-main-navy); }
+  &--navy:hover { color: var(--clr-main-light); }
+
+  &--text       { color: var(--clr-ui-1-def); }
+  &--text:hover { color: var(--clr-main-light); }
+}
+
+.btn {
+  .svg-icon {
+    width: 25px;
+    height: 22px;
+
+    transition: fill var(--time);
+  }
+
+  .svg-icon { fill: var(--clr-main-light); }
+
+  &--navy       .svg-icon { fill: var(--clr-main-navy); }
+  &--navy:hover .svg-icon { fill: var(--clr-main-light); }
+
+  &--text       .svg-icon { fill: var(--clr-ui-1-def); }
+  &--text:hover .svg-icon { fill: var(--clr-main-light); }
+}

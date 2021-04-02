@@ -1,0 +1,72 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+@use '../_lib/font';
+
+/*
+  🧱 ELEMENT: CONTROL-DONATION 🧱
+*/
+
+.control-donation {
+  @include set-vars ((
+    c2: grid.col(2),
+    c3: grid.col(3),
+    xx: calc(var(--c2) + 4px),
+  ));
+}
+
+.control-donation {
+  width: var(--c3);
+  height: var(--h-btn);
+  border-width: 1px;
+
+  display: grid;
+  grid-template-columns: 25px var(--c2) var(--col);
+  column-gap: 5px;
+  align-items: center;
+
+  .btn {
+    width: calc(var(--col) - 1px);
+    height: calc(var(--h-btn) - 2px);
+    margin-left: 4px;
+  }
+}
+
+.control-donation {
+  border-color: var(--clr-main-light);
+  border-style: solid;
+  border-radius: 5px;
+
+  .sign {
+    @include font.ui;
+    text-align: right;
+    color: var(--clr-main-light);
+    user-select: none;
+  }
+
+  .amount {
+    padding: 0;
+    border: none;
+    outline: none;
+
+    @include font.ui;
+
+    background-color: transparent;
+    color: var(--clr-main-light);
+
+    &::placeholder {
+      color: var(--clr-main-light);
+      opacity: 1;
+    }
+
+    /* Chrome, Safari, Edge, Opera */
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    /* Firefox */
+    &[type=number] {
+      -moz-appearance: textfield;
+    }
+  }
+}

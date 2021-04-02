@@ -1,0 +1,39 @@
+include ./_head.pug
+include ./_layout-block.pug
+include ../block/_header.pug
+include ../block/_footer.pug
+
+doctype html
+html(lang="en")
+  block page-vars
+    - var page = "X-Y-Z";
+    - var file = "X-Y-Z";
+    - var title = "🐾";
+    - var root = '.'
+
+  head
+    +head(title, root, file)
+      block head
+
+  body
+    // 🔰 LAYOUT: PAGE 🔰
+    .page
+
+      +header(page)
+
+      // 👑 BLOCK: MAIN 👑
+      main.main
+        // 🚧 🅢🅘🅣🅔:🅣🅘🅣🅛🅔 🚧
+        h1.site-title.visible-hidden= "Online-Zoo"
+        block main
+
+      +footer(page)
+
+    .svg-sprite(style = 'display: none')
+      // 🚧 🚧 🚧 (っ◔◡◔)っ 🅢🅥🅖 🅢🅟🅡🅘🅣🅔 (✿◡‿◡) 🚧 🚧 🚧
+      include ../svg/_sprite.svg.pug
+      // 🚧 🚧 🚧 (っ◔◡◔)っ 🅢🅥🅖 🅢🅟🅡🅘🅣🅔 (✿◡‿◡) 🚧 🚧 🚧
+      block svg-sprite
+      // 🚧 🚧 🚧 (╯°□°）╯︵ ┻━┻  ┳━┳ ノ( ゜-゜ノ) 🚧 🚧 🚧
+
+    block dev

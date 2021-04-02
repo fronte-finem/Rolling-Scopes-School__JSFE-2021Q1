@@ -1,44 +1,30 @@
-extends ./_pug/_layout/_page.pug
+extends ./layout/_layout-page.pug
 
-include ./_pug/_mixin/_layout-block.pug
-include ./_pug/_mixin/_header.pug
-include ./_pug/_mixin/_footer.pug
+include ./block/_hero.pug
+include ./block/_intro.pug
+include ./block/_quick-donation.pug
+include ./block/_pets-in-zoo.pug
+include ./block/_pay-and-feed.pug
+include ./block/_testimonials.pug
+include ./block/_care-for-animals.pug
 
-block head-vars
+
+block page-vars
   - var page = "about";
-  - var pageTitle = "🐼";
+  - var file = "index";
+  - var title = "About";
   - var root = ".";
 
-block header
-  +header(page)
-
-block footer
-  +footer(page)
+block main
+  +hero
+  +intro
+  +quick-donation
+  +pets-in-zoo
+  +pay-and-feed
+  +testimonials
+  +care-for-animals
 
 block dev
   - var h = "--h-dev-overlay: 12330px"
   .dev-overlay.dev-grid
   .dev-overlay.dev-pixelperfect(style = h)
-
-block main
-  +layout-block("section", "hero")
-    include ./_pug/_partial/_hero.pug
-
-  +layout-block("section", "intro")
-    include ./_pug/_partial/_intro.pug
-
-  +layout-block("section", "quick-donation")
-    include ./_pug/_partial/_quick-donation.pug
-
-  +layout-block("section", "pets-in-zoo")
-    include ./_pug/_partial/_pets-in-zoo.pug
-
-  +layout-block("section", "pay-and-feed")
-    include ./_pug/_partial/_pay-and-feed.pug
-
-  +layout-block("section", "testimonials")
-    include ./_pug/_partial/_testimonials.pug
-
-  +layout-block("section", "care-for-animals")
-    include ./_pug/_partial/_care-for-animals.pug
-

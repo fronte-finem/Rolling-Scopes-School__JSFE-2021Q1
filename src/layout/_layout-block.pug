@@ -1,0 +1,6 @@
+mixin layout-block(tag, cls)
+  #{tag}(class = cls)
+    div.layout
+      div.wrapper
+        - var cls = cls;
+        block
