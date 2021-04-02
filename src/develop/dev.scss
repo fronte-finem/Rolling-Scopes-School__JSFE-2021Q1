@@ -5,12 +5,17 @@
   height: 100%;
 }
 
+.dev-overlay {
+  @include set-vars((
+    c: var(--col),
+    g: var(--gap),
+    x: calc(var(--c) + var(--g)),
+    w: calc(var(--c)*12 + var(--g)*11),
+  ));
+}
+
 .dev {
   &-overlay {
-    --c: var(--col);
-    --g: var(--gap);
-    --x: calc(var(--c) + var(--g));
-    --w: calc(var(--c)*12 + var(--g)*11);
     position: absolute;
     top: 0;
     left: 50%;
@@ -32,8 +37,8 @@
     z-index: 3;
     bottom: 0;
     background-image: repeating-linear-gradient(to left,
-    rgba(0,0,0,.05) 0 var(--c),
-      transparent var(--c) var(--x)
+      rgba(0,0,0,.1) 0 var(--c),
+        transparent var(--c) var(--x)
     );
     background-size: var(--w) 100%;
   }
