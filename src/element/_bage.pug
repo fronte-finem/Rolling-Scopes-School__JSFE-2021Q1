@@ -1,0 +1,8 @@
+
+mixin bage(text, type)
+  - var cls = type ? `bage bage--${type}` : 'bage';
+  div(class = cls)
+    .bage__text= text
+    .bage__icon
+      svg
+        use(xlink:href = `#live-cam`)

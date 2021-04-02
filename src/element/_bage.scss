@@ -1,0 +1,28 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/font';
+
+.bage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 120px;
+  height: 38px;
+  border-bottom-right-radius: 5px;
+  border-bottom: 1px solid var(--clr-main-light);
+  border-right: 1px solid var(--clr-main-light);
+
+  @include font.ui;
+  color: var(--clr-main-light);
+  fill: var(--clr-main-light);
+
+  &__icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  &--active {
+    border-color: var(--clr-ui-1-def);
+    background-color: var(--clr-ui-1-def);
+  }
+}

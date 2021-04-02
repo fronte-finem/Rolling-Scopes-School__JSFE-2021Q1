@@ -1,0 +1,35 @@
+include ../element/_button.pug
+include ../element/_bage.pug
+
+mixin side-bar(animal)
+  -
+    var animals = [
+      { name: 'panda', id: 'icon-panda', link: '/online-zoo/pages/zoos/panda.html' },
+      { name: 'lemur', id: 'icon-lemur', link: '/online-zoo/pages/zoos/lemur.html' },
+      { name: 'eagle', id: 'icon-eagle', link: '/online-zoo/pages/zoos/eagle.html' },
+      { name: 'gorilla', id: 'icon-gorilla', link: '/online-zoo/pages/zoos/gorilla.html' },
+    ];
+    selfId = `icon-${animal}`;
+    animals = animals.filter(a => a.id != selfId);
+
+  // ⚜️ BLOCK: SIDE-BAR ⚜️
+  aside.side-bar
+    .side-bar__control
+      +bage('live', 'active')
+      +btn-icon('button', 'icon-expand', {}, 'minimal')
+
+    ul.side-bar__cam-menu
+      li.cam-selector.cam-selector--current
+        div(class = `cam-icon cam-self ${selfId}`, title = animal)
+          svg
+            use(xlink:href = `#${selfId}`)
+      each item in animals
+        li.cam-selector
+          a(class = `cam-icon cam-link ${item.id}`, href = item.link, title = item.name)
+            svg
+              use(xlink:href = `#${item.id}`)
+
+    .side-bar__control
+      +btn-icon('button', 'icon-scroll-down', {}, 'minimal')
+
+

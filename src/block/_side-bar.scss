@@ -1,0 +1,69 @@
+@use '../_lib/css-var' as *;
+
+/*
+  ⚜️ BLOCK: SIDE-BAR ⚜️
+*/
+
+.side-bar {
+  --w: 220px
+}
+
+.side-bar {
+  position: sticky;
+  top: 0;
+  left: 0;
+
+  width: var(--w);
+  background-color: var(--clr-main-navy);
+
+  &__control {
+    position: relative;
+    height: 80px;
+
+    .btn-icon {
+      position: absolute;
+      right: 30px;
+      top: 30px;
+
+      fill: var(--clr-main-light);
+      &:hover svg { fill: var(--clr-ui-1-def) }
+    }
+  }
+
+  .cam-selector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 172px;
+    border-top: 1px solid var(--clr-main-light);
+  }
+  &__control:last-child {
+    border-top: 1px solid var(--clr-main-light);
+  }
+
+  .cam-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
+    background-color: var(--clr-ui-1-def);
+    fill: var(--clr-main-navy);
+
+    svg { transition: transform 300ms ease-in-out; }
+    &:hover svg { transform: scale(1.2); }
+  }
+  .cam-icon svg { height: 61px; }
+  .icon-panda svg { width: 81px; }
+  .icon-lemur svg { width: 37px; }
+  .icon-eagle svg { width: 69px; }
+  .icon-gorilla svg { width: 69px; }
+
+  .cam-icon.cam-self {
+    fill: var(--clr-main-navy);
+    background-color: var(--clr-main-light);
+    box-shadow: 0 0 0 5px var(--clr-main-navy), 0 0 0 8px var(--clr-main-light);
+    svg { transform: scale(1); }
+  }
+}
