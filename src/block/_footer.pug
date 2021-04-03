@@ -4,9 +4,13 @@ include ../element/_nav-menu.pug
 include ../element/_social-media-links.pug
 include ../element/_button.pug
 
-mixin footer
+mixin footer(page)
   -
     var logosData = [
+      {
+        id: 'main',
+        title: 'Online Zoo'
+      },
       {
         id: 'yem-digital',
         title: 'Yem Digital'
@@ -17,12 +21,15 @@ mixin footer
       }
     ];
 
+    logosData = page == 'about' ? logosData.filter(x => x.id != 'main') : logosData;
+
   // ⚜️ BLOCK: FOOTER ⚜️
   +layout-block("footer", "footer")
     .footer__top
       ul.logo__items
-        li.logo__item
-          +logo-main
+        if page == 'about'
+          li.logo__item
+            +logo-main
         each data in logosData
           li.logo__item
             +logo(data)
