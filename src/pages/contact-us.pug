@@ -1,0 +1,28 @@
+extends ../layout/_layout-page.pug
+
+include ../layout/_layout-block.pug
+include ../element/_button.pug
+include ../block/_contact-form.pug
+
+
+block page-vars
+  - var page = "contact-us";
+  - var file = "contact-us";
+  - var title = '✉️';
+  - var root = '..'
+
+block main
+  +layout-block("div", "touch-the-animal")
+    figure.touch-the-animal__picture
+      img.touch-the-animal__img(src = "../assets/img/contact-us--touch-the-animal.jpg",
+                                alt = "Hands touch the screen, which shows a cheetah close-up")
+
+  +layout-block("div", "contact-us")
+    section.info
+      h2.info__title= "Get in touch"
+      p.info__text= "Whether you have a question, or would like to say hello, we're happy to hear from you. Please use the form to send us a message and we'll get back to you as soon as we can. Whether you have a question, or would like to say hello, we're happy to hear from you. Please use the form to send us a message and we'll get back to you as soon as we can."
+
+    +contact-form
+
+block dev
+  .dev-overlay.dev-grid

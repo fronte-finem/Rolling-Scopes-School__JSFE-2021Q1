@@ -1,0 +1,46 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+@use '../_lib/font';
+
+@use '../block/contact-form';
+
+/*
+    👑 👑 👑 👑
+  👑 PAGE: CONTACT-US 👑
+    👑 👑 👑 👑
+*/
+
+.touch-the-animal {
+  .wrapper {
+    padding-bottom: 150px;
+  }
+  &__img {
+    display: block;
+  }
+}
+
+.contact-us {
+  @include set-vars((
+    c1-g1: grid.col-gap(1, 1),
+    c1: grid.col(1),
+    c6: grid.col(6),
+  ));
+
+  .wrapper {
+    display: grid;
+    grid-template-columns: 1fr var(--c6);
+    column-gap: var(--gap);
+    padding-bottom: 150px;
+  }
+
+  .info {
+    &__title {
+      padding-bottom: 50px;
+      @include font.h2;
+      color: var(--clr-ui-2-def);
+    }
+    &__text {
+      padding-right: 140px;
+    }
+  }
+}
