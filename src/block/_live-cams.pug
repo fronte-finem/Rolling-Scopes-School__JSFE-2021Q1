@@ -35,7 +35,7 @@ mixin live-cams(animal)
     data = animals.filter(a => a.name == animal)[0];
 
   // ⚜️ BLOCK: LIVE-CAM ⚜️
-  +layout-block("section", "live-cams")
+  +layout-block("div", "live-cams")
     .live-cams__heading
       h2.live-cams__title= data.title
       .btn-container

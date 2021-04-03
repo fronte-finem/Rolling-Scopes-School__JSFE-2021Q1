@@ -3,7 +3,7 @@ include ../element/_button.pug
 
 mixin intro
   // ⚜️ BLOCK: INTRO ⚜️
-  +layout-block("section", "intro")
+  +layout-block("div", "intro")
     figure.picture
       img.picture__img(src="./assets/img/block_welcome_01.jpg", alt="Online-Zoo entry")
       +btn-icon('a', 'live-cam', {href: '/online-zoo/pages/zoos/panda.html'}, 'minimal')
