@@ -81,7 +81,8 @@ mixin facts(animal)
           dt.facts__spec-name= spec.name
           dd.facts__spec-value= spec.value
           if spec.link
-            +btn('a', {text: "view map", href: spec.link}, 'text')
+            dd.facts__spec-link
+              +btn('a', {text: "view map", href: spec.link}, 'text')
 
     figure.facts__picture
       img.facts__img(src = data.imgSrc, alt = data.name)
