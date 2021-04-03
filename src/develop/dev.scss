@@ -35,7 +35,8 @@
   }
   &-grid {
     z-index: 3;
-    bottom: 0;
+    // bottom: 0;
+    height: 1000%;
     background-image: repeating-linear-gradient(to left,
       rgba(0,0,0,.1) 0 var(--c),
         transparent var(--c) var(--x)

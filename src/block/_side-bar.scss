@@ -15,7 +15,7 @@
   width: var(--w);
   top: 0;
   bottom: 0;
-  left: max(0px, var(--offcet));
+  left: max(-10px, var(--offcet));
 
   &__menu {
     position: sticky;
@@ -27,18 +27,31 @@
     background-color: var(--clr-main-navy);
   }
 
-
   &__control {
     position: relative;
     height: 80px;
 
     .btn-icon {
-      position: absolute;
-      right: 30px;
-      top: 30px;
-
       fill: var(--clr-main-light);
-      &:hover svg { fill: var(--clr-ui-1-def) }
+      transition: 300ms ease-in-out;
+      &:hover {
+        fill: var(--clr-ui-1-def);
+        transform: scale(1.1);
+      }
+    }
+
+    &-expand {
+      .btn-icon {
+        position: absolute;
+        right: 30px;
+        top: 30px;
+
+      }
+    }
+    &-scroll-down {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 

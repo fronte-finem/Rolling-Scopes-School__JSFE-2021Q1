@@ -35,7 +35,7 @@ mixin quick-donation(animal)
     data = animals.filter(a => a.name == name)[0];
 
   // ⚜️ BLOCK: QUICK-DONATION ⚜️
-  +layout-block("section", "quick-donation")
+  +layout-block("section", `quick-donation quick-donation--${name}`)
     .info
       h3.info__title= data.title
       p.info__text= data.text

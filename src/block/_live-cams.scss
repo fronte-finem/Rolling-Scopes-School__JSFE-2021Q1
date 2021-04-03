@@ -53,6 +53,7 @@
     .title {
       @include font.h3;
       text-align: center;
+      padding-bottom: 30px;
     }
   }
 }
@@ -116,6 +117,16 @@
           transform: scale(1.1);
         }
       }
+    }
+
+    .youtube-player {
+      padding-bottom: 65.3125%;
+    }
+
+    .bage {
+      width: 190px;
+      height: 43px;
+      @include font.h-sub;
     }
   }
 }

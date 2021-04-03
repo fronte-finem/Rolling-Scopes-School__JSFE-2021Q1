@@ -1,0 +1,103 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+@use '../_lib/font';
+
+@use '../element/youtube-player';
+
+/*
+  ⚜️ BLOCK: FACTS ⚜️
+*/
+.facts {
+  @include set-vars((
+    c2: grid.col(2),
+    c4: grid.col(4),
+  ));
+}
+
+.facts {
+  .wrapper {
+    width: 100%;
+    padding-top: 150px;
+    padding-bottom: 148px;
+
+    display: grid;
+    grid-template-rows: repeat(3, auto);
+    grid-template-columns: repeat(2, 1fr) repeat(2, var(--c4)) repeat(2, 1fr);
+    column-gap: var(--gap);
+    row-gap: 45px;
+    grid-template-areas:
+      ". . a a a ."
+      "b b b c . ."
+      "d d d d . .";
+
+    .facts__did-you-know { grid-area: a; }
+    .facts__specs        { grid-area: b; }
+    .facts__picture      { grid-area: c; }
+    .facts__descr        { grid-area: d; }
+  }
+
+  &__did-you-know {
+    padding-top: 46px;
+    padding-bottom: 50px;
+    margin-bottom: 102px;
+    text-align: center;
+    background: var(--clr-main-light);
+    box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+  }
+  &__title {
+    padding-bottom: 20px;
+    @include font.h3;
+    color: var(--clr-ui-2-def);
+  }
+  &__sub-title {
+    padding: 0 60px;
+    @include font.h-sub;
+  }
+
+  &__specs {
+    display: flex;
+    flex-direction: column;
+  }
+  &__spec {
+    height: 34px;
+    margin-bottom: 18px;
+
+    display: flex;
+    align-items: flex-end;
+    column-gap: 20px;
+
+    &-name {
+      @include font.h-sub;
+    }
+    // &-value {
+
+    // }
+    .btn {
+      align-self: center;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 25px;
+    }
+  }
+
+  // &__picture {
+
+  // }
+  &__img {
+    border-radius: 5px;
+  }
+
+  // &__descr {
+
+  // }
+}
+
+
+/* 💩 pixel-perfect 💩 */
+.facts {
+  &__spec:nth-child(1),
+  &__spec:nth-child(2) {
+    margin-bottom: 25px;
+  }
+}

@@ -1,9 +1,24 @@
+@use '../../_lib/css-var' as *;
+@use '../../_lib/grid';
+
 @use '../../element/bage';
 
 @use '../../block/side-bar';
 @use '../../block/live-cams';
 @use '../../block/quick-donation';
+@use '../../block/facts';
 
 .main {
   position: relative;
+}
+
+.quick-donation {
+  @include set-vars((
+    c8: grid.col(8),
+  ));
+
+  &--panda .info__text {
+    width: var(--c8);
+    padding-right: 45px;
+  }
 }
