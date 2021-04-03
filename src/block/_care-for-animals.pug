@@ -15,7 +15,7 @@ mixin care-for-animals
     div.feed
       ul.feed__slots
         li.feed__slot.feed__slot--big
-          img.feed__slot-img(src="./assets/img/block_care--koala.jpg", alt="Koala close up")
+          img.feed__slot-img(src="./assets/img/feed-koala.jpg", alt="Koala close up")
         each donate in donates
           li.feed__slot
             +donate-card('feed__card', donate)
@@ -24,5 +24,5 @@ mixin care-for-animals
       +btn('a', {text: 'choose your favourite', href: './pages/map.html'}, 'navy', 'long')
 
     figure.touch-the-animal
-      img.touch-the-animal__img(src = "./assets/img/block_care--touch.jpg",
+      img.touch-the-animal__img(src = "./assets/img/touch-lemur.jpg",
                                 alt = "Hands touch the screen, which shows a lemur close-up")
