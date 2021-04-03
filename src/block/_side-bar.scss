@@ -22,8 +22,8 @@
     top: 0;
     left: 0;
 
-    border-right: 1px solid var(--clr-main-light);
-    border-bottom: 1px solid var(--clr-main-light);
+    border: 1px solid var(--clr-main-light);
+    border-top: none;
     background-color: var(--clr-main-navy);
   }
 
