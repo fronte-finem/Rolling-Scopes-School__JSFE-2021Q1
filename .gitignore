@@ -104,7 +104,7 @@ dist
 .tern-port
 
 # VSCode files
-.vscode/
+# .vscode/
 
 # Task files
 Taskfile.yml
