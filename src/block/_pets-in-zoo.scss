@@ -8,7 +8,6 @@
 
 .pets-in-zoo {
   background-color: var(--clr-main-light);
-  overflow-x: hidden;
 
   @include set-vars ((
     c2: grid.col(2),
@@ -18,10 +17,40 @@
     w-max: 1920px,
   ));
 
+  overflow-x: hidden;
+
+  --a: calc((var(--w-max) - var(--c12)) / 2);
+
   .wrapper {
     padding-top: 136px;
     padding-bottom: 100px;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      z-index: 999;
+      width: 9999px;
+      left: 100%;
+      top: 0;
+      bottom: 0;
+      pointer-events: none;
+      background-image: linear-gradient(to right, transparent 0px, var(--clr-main-light) var(--a));
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      z-index: 999;
+      width: 9999px;
+      left: calc(100% + var(--a));
+      top: 0;
+      bottom: 0;
+      background-color: var(--clr-main-light);
+    }
   }
+
+
 
   .info {
     &__title {
@@ -56,33 +85,8 @@
       width: var(--c4);
     }
 
-    --a: calc(var(--w-max) / 2 - var(--c12) / 2);
-
     &__slots {
       position: relative;
-    }
-
-    &__slots::before {
-      content: '';
-      position: absolute;
-      z-index: 999;
-      top: 0;
-      left: var(--c12);
-      bottom: 0;
-      right: 0;
-      pointer-events: none;
-      background-image: linear-gradient(90deg, transparent 0px, var(--clr-main-light) var(--a));
-    }
-
-    &__slots::after {
-      content: '';
-      position: absolute;
-      z-index: 9999;
-      top: 0;
-      left: calc(var(--c12) + var(--a));
-      bottom: 0;
-      right: 0;
-      background-color: var(--clr-main-light);
     }
   }
 }
