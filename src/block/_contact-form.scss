@@ -1,0 +1,26 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+@use '../_lib/font';
+
+@use '../element/input';
+
+/*
+  ⚜️ BLOCK: CONTACT-FORM ⚜️
+*/
+
+.contact-form {
+  @include set-vars((
+    c3-g4: grid.col-gap(3, 4),
+    c4: grid.col(4),
+  ));
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+  }
+
+  .btn-container {
+    padding-top: 37px;
+  }
+}
