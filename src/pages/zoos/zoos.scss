@@ -21,4 +21,39 @@
     width: var(--c8);
     padding-right: 45px;
   }
+
+  &--eagle .info__text {
+    width: var(--c8);
+    padding-right: 0px;
+  }
+
+  &--gorilla .info__text {
+    width: var(--c8);
+    padding-right: 0px;
+  }
+
+  &--lemur .info__text {
+    width: var(--c8);
+    padding-right: 0px;
+  }
+}
+
+.facts {
+  @include set-vars((
+    c8: grid.col(8),
+  ));
+
+  // &--panda .wrapper {
+  // }
+
+  // &--eagle .wrapper {
+  // }
+
+  &--gorilla .wrapper {
+    padding-top: 180px;
+  }
+
+  &--lemur .wrapper {
+    padding-bottom: 175px;
+  }
 }

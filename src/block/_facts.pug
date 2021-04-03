@@ -69,7 +69,7 @@ mixin facts(animal)
     data = animals.filter(a => a.name == animal)[0];
 
   // ⚜️ BLOCK: FACTS ⚜️
-  +layout-block("section", "facts")
+  +layout-block("section", `facts facts--${animal}`)
 
     .facts__did-you-know
       h3.facts__title= "did you know?"

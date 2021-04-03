@@ -1,0 +1,22 @@
+extends ../../layout/_layout-page.pug
+
+include ../../block/_side-bar.pug
+include ../../block/_live-cams.pug
+include ../../block/_quick-donation.pug
+include ../../block/_facts.pug
+
+block page-vars
+  - var page = "zoos";
+  - var file = "zoos";
+  - var title = 'Lemur';
+  - var root = '../..'
+  - var animal = 'lemur'
+
+block main
+  +side-bar(animal)
+  +live-cams(animal)
+  +quick-donation(animal)
+  +facts(animal)
+
+block dev
+  .dev-overlay.dev-grid
