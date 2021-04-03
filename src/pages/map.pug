@@ -1,0 +1,41 @@
+extends ../layout/_layout-page.pug
+
+include ../layout/_layout-block.pug
+include ../element/_button.pug
+
+
+block page-vars
+  - var page = "map";
+  - var file = "map";
+  - var title = '🗺️';
+  - var root = '..'
+
+block main
+  +layout-block("div", "map-header")
+    h2.title= 'find where are the animals live'
+
+  -
+    var data = [
+      { name: 'panda', active: true, link: '/online-zoo/pages/zoos/panda.html', title: 'Giant panda 🐼\nSouth Central China'},
+      { name: 'gorilla', active: true, link: '/online-zoo/pages/zoos/gorilla.html', title: 'Gorilla 🦍\nRainforests in Africa'},
+      { name: 'eagle', active: true, link: '/online-zoo/pages/zoos/eagle.html', title: 'Bald eagle 🦅\nNorth America'},
+      { name: 'lemur', active: true, link: '/online-zoo/pages/zoos/lemur.html', title: 'Lemur \nMadagascar'},
+      { name: 'alligator', active: false, link: '', title: 'American alligator 🐊\nSoutheastern United States'},
+      { name: 'tiger', active: false, link: '', title: 'Tiger 🐯\n Southeast Asia'},
+      { name: 'lion', active: false, link: '', title: 'Lion 🦁\nAfrica '},
+      { name: 'coala', active: false, link: '', title: 'Koala \nAustralia'},
+    ];
+
+  +layout-block("div", "map")
+    include ../svg/_map.svg.pug
+    each item in data
+      if item.active
+        +btn-map-pin('a', {href: item.link, title: item.title}, item.name, 'active')
+      else
+        +btn-map-pin('div', {title: item.title}, item.name)
+
+block svg-sprite
+  include ../svg/_sprite-map-pin.svg.pug
+
+block dev
+  .dev-overlay.dev-grid

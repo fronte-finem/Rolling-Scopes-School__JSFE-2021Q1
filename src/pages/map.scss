@@ -1,0 +1,64 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+@use '../_lib/font';
+
+@use "../element/button-map-pin";
+
+
+/*
+    👑 👑 👑 👑
+  👑 PAGE: MAP 👑
+    👑 👑 👑 👑
+*/
+
+.map-header {
+  @include set-vars((
+    c3-g4: grid.col-gap(3, 4),
+    c4: grid.col(4),
+  ));
+
+  .wrapper {
+    padding: 0 var(--c3-g4);
+    padding-top: 40px;
+    padding-bottom: 70px;
+  }
+
+  .title {
+    @include font.h2;
+    text-align: center;
+    color: var(--clr-main-navy);
+  }
+}
+
+
+
+.map {
+  padding-bottom: 150px;
+
+  .wrapper {
+    position: relative;
+  }
+
+  .map-svg {
+    display: block;
+    width: 100%;
+    fill: var(--clr-main-navy);
+  }
+
+  .btn-map-pin {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+  }
+
+  .btn-map-pin {
+      &--panda     { top: 38.2%; left: 67.5%; }
+      &--tiger     { top: 55.4%; left: 72.0%; }
+      &--lion      { top: 49.6%; left: 40.7%; }
+      &--gorilla   { top: 52.1%; left: 48.9%; }
+      &--eagle     { top: 43.0%; left: 11.3%; }
+      &--alligator { top: 44.4%; left: 20.3%; }
+      &--lemur     { top: 65.2%; left: 56.3%; }
+      &--coala     { top: 67.9%; left: 81.3%; }
+  }
+}

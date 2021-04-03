@@ -8,8 +8,8 @@ mixin btn-icon(tag, id, data, ...mods)
     svg(class = 'svg-icon', x = '0', y = '0')
       use(class = `icon__${id}`, xlink:href = `#${id}`)
 
-mixin btn-map-pin(...mods)
-  +gen-btn('button', 'btn-map-pin', {}, ...mods)
+mixin btn-map-pin(tag, data, ...mods)
+  +gen-btn(tag, 'btn-map-pin', data, ...mods)
     svg(class = 'svg-map-pin', viewBox = '0 0 100 144')
       use(class = 'icon__map-pin', xlink:href = '#map-pin')
 
@@ -17,13 +17,33 @@ mixin btn-map-pin(...mods)
 mixin gen-btn(tag, cls, data, ...mods)
   - var h = 'console.log(this, event); event.cancelBubble = true'
   - var c = cls + ' ' + mods.map(x => `${cls}--${x}`).join(' ')
-  - var t = data.text || ''
+  - var text = data.text || ''
 
   if tag == 'a'
-    a(class = c, href = data.href, onclick = h)= t
-      if block
-        block
+    +gen-a(c, data.href, data.title, text, h)
+        if block
+          block
   else
-    #{tag}(class = c, onclick = h)= t
-      if block
-        block
+    +gen-tag(tag, c, data.title, text, h)
+        if block
+          block
+
+mixin gen-a(cls, href, title, text, onclick)
+    if title
+      a(class = cls, href = href, title = title, onclick = h)= text
+        if block
+          block
+    else
+      a(class = cls, href = href, onclick = h)= text
+          if block
+            block
+
+mixin gen-tag(tag, cls, title, text, onclick)
+    if title
+      #{tag}(class = cls, title = title, onclick = h)= text
+        if block
+          block
+    else
+      #{tag}(class = cls, onclick = h)= text
+          if block
+            block
