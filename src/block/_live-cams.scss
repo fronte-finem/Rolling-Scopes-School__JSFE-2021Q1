@@ -1,0 +1,121 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+@use '../_lib/font';
+
+@use '../element/youtube-player';
+
+/*
+  ⚜️ BLOCK: LIVE-CAM ⚜️
+*/
+
+.live-cams {
+  @include set-vars((
+    c3: grid.col(3),
+    c1-g1: grid.col-gap(1, 1),
+  ));
+
+  &__heading {
+    display: grid;
+    width: 100%;
+    grid-template-columns: var(--c3) 1fr var(--c3);
+    grid-template-areas: ". title btn";
+    align-items: center;
+    padding-top: 50px;
+    padding-bottom: 46px;
+
+    .live-cams__title { grid-area: title; }
+    .btn-container { grid-area: btn; }
+
+    .live-cams__title {
+      text-align: center;
+    }
+    .btn-container {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  &__title {
+    @include font.h2;
+    color: var(--clr-ui-2-def);
+  }
+
+  .main-cam {
+    width: 100%;
+  }
+}
+
+.live-cams {
+  &__cams {
+    width: 100%;
+    padding-top: 100px;
+    padding-bottom: 150px;
+
+    .title {
+      @include font.h3;
+      text-align: center;
+    }
+  }
+}
+
+.live-cams {
+  &__slider {
+    width: 100%;
+    padding-left: var(--c1-g1);
+
+    display: grid;
+    grid-template-columns: var(--col) 1fr var(--col);
+    grid-template-areas: "prev slots next";
+    column-gap: var(--gap);
+
+    .slider__control--prev { grid-area: prev }
+    .slider__control--next { grid-area: next }
+    .slider__slots { grid-area: slots }
+  }
+
+  .slider {
+    &__slots {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: var(--gap);
+    }
+
+    &__slot {
+      position: relative;
+      overflow: hidden;
+    }
+    &__overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+    &__slot .bage {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    &__control {
+      display: flex;
+      align-items: center;
+
+      &--prev { justify-self: flex-end; }
+      &--next { justify-self: flex-start; }
+
+      .btn-icon {
+        width: auto;
+        height: auto;
+        padding: 0;
+        border: none;
+        background-color: transparent;
+        transition: 300ms ease-in-out;
+
+        &:hover {
+          fill: var(--clr-ui-2-def);
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+}

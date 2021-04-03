@@ -14,22 +14,23 @@ mixin side-bar(animal)
 
   // ⚜️ BLOCK: SIDE-BAR ⚜️
   aside.side-bar
-    .side-bar__control
-      +bage('live', 'active')
-      +btn-icon('button', 'icon-expand', {}, 'minimal')
+    .side-bar__menu
+      .side-bar__control
+        +bage('live', 'active')
+        +btn-icon('button', 'icon-expand', {}, 'minimal')
 
-    ul.side-bar__cam-menu
-      li.cam-selector.cam-selector--current
-        div(class = `cam-icon cam-self ${selfId}`, title = animal)
-          svg
-            use(xlink:href = `#${selfId}`)
-      each item in animals
-        li.cam-selector
-          a(class = `cam-icon cam-link ${item.id}`, href = item.link, title = item.name)
+      ul.side-bar__cams
+        li.cam-selector.cam-selector--current
+          div(class = `cam-icon cam-self ${selfId}`, title = animal)
             svg
-              use(xlink:href = `#${item.id}`)
+              use(xlink:href = `#${selfId}`)
+        each item in animals
+          li.cam-selector
+            a(class = `cam-icon cam-link ${item.id}`, href = item.link, title = item.name)
+              svg
+                use(xlink:href = `#${item.id}`)
 
-    .side-bar__control
-      +btn-icon('button', 'icon-scroll-down', {}, 'minimal')
+      .side-bar__control
+        +btn-icon('button', 'icon-scroll-down', {}, 'minimal')
 
 

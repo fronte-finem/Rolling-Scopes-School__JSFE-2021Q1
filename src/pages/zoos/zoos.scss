@@ -1,2 +1,9 @@
 @use '../../element/bage';
+
 @use '../../block/side-bar';
+@use '../../block/live-cams';
+@use '../../block/quick-donation';
+
+.main {
+  position: relative;
+}

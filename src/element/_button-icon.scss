@@ -37,13 +37,11 @@
   cursor: pointer;
   user-select: none;
 
-  transition: background-color var(--time);
+  transition: var(--time) ease-in-out;
 
   .svg-icon {
     width: 25px;
     height: 22px;
-
-    transition: fill var(--time);
   }
 
   & {

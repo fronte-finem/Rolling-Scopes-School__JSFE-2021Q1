@@ -1,0 +1,54 @@
+include ../layout/_layout-block.pug
+include ../element/_button.pug
+include ../element/_youtube-player.pug
+include ../element/_bage.pug
+
+mixin live-cams(animal)
+  -
+    var animals = [
+      {
+        name: 'panda',
+        title: 'live panda cams',
+        main: 'D0eqnda8dOk',
+        cams: ['YgFFo1-X8zY', 'OObOQ2GElhA', '65JHo3Cy2tY'],
+      },
+      {
+        name: 'lemur',
+        title: 'lemurs cams',
+        link: '/online-zoo/pages/zoos/lemur.html',
+      },
+      {
+        name: 'eagle',
+        title: 'bald eagle cams',
+        link: '/online-zoo/pages/zoos/eagle.html',
+      },
+      {
+        name: 'gorilla',
+        title: 'gorillas cams',
+        link: '/online-zoo/pages/zoos/gorilla.html',
+      },
+    ];
+
+    data = animals.filter(a => a.name == animal)[0];
+
+  // ⚜️ BLOCK: LIVE-CAM ⚜️
+  +layout-block("section", "live-cams")
+    .live-cams__heading
+      h2.live-cams__title= data.title
+      .btn-container
+        +btn('button', {text: 'donate now'})
+    +youtube-player('main-cam', data.main)
+
+    .live-cams__cams
+      h3.title= 'more live views'
+      .live-cams__slider.slider
+        .slider__control.slider__control--prev
+          +btn-icon('button', 'arrow-to-left', {}, 'navy', 'prev')
+        .slider__control.slider__control--next
+          +btn-icon('button', 'arrow-to-right', {}, 'navy', 'next')
+        ul.slider__slots
+          each item, ix in data.cams
+            li.slider__slot
+              +youtube-player(`cam-${ix+1}`, item)
+              .slider__overlay
+              +bage(`cam ${ix+1}`)

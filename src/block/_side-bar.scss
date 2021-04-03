@@ -5,16 +5,28 @@
 */
 
 .side-bar {
-  --w: 220px
+  --w: 220px;
+  --offcet: calc(50% - 960px);
 }
 
 .side-bar {
-  position: sticky;
-  top: 0;
-  left: 0;
-
+  z-index: 999;
+  position: absolute;
   width: var(--w);
-  background-color: var(--clr-main-navy);
+  top: 0;
+  bottom: 0;
+  left: max(0px, var(--offcet));
+
+  &__menu {
+    position: sticky;
+    top: 0;
+    left: 0;
+
+    border-right: 1px solid var(--clr-main-light);
+    border-bottom: 1px solid var(--clr-main-light);
+    background-color: var(--clr-main-navy);
+  }
+
 
   &__control {
     position: relative;
