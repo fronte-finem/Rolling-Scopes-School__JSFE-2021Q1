@@ -11,9 +11,8 @@ html(lang="en")
     - var title = "🐾";
     - var root = '.'
 
-  head
-    +head(title, root, file)
-      block head
+  +head(title, root, file)
+    block head
 
   body
     // 🔰 LAYOUT: PAGE 🔰
