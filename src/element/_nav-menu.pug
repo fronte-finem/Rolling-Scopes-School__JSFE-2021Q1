@@ -1,10 +1,10 @@
-mixin nav-menu(page, data)
+mixin nav-menu(page, data, root)
   -
     var menu_data = [
-      { name: 'about',      link: '/online-zoo/'},
-      { name: 'map',        link: '/online-zoo/pages/map.html'},
-      { name: 'zoos',       link: '/online-zoo/pages/zoos/panda.html'},
-      { name: 'contact us', link: '/online-zoo/pages/contact-us.html'},
+      { name: 'about',      link: root},
+      { name: 'map',        link: `${root}/pages/map.html`},
+      { name: 'zoos',       link: `${root}/pages/zoos/panda.html`},
+      { name: 'contact us', link: `${root}/pages/contact-us.html`},
     ]
     Array.isArray(data) && (menu_data = menu_data.concat(data));
 

@@ -4,10 +4,10 @@ include ../element/_bage.pug
 mixin side-bar(animal)
   -
     var animals = [
-      { name: 'panda',   id: 'icon-panda',   link: '/online-zoo/pages/zoos/panda.html' },
-      { name: 'eagle',   id: 'icon-eagle',   link: '/online-zoo/pages/zoos/eagle.html' },
-      { name: 'gorilla', id: 'icon-gorilla', link: '/online-zoo/pages/zoos/gorilla.html' },
-      { name: 'lemur',   id: 'icon-lemur',   link: '/online-zoo/pages/zoos/lemur.html' },
+      { name: 'panda',   id: 'icon-panda',   link: './panda.html' },
+      { name: 'eagle',   id: 'icon-eagle',   link: './eagle.html' },
+      { name: 'gorilla', id: 'icon-gorilla', link: './gorilla.html' },
+      { name: 'lemur',   id: 'icon-lemur',   link: './lemur.html' },
     ];
     selfId = `icon-${animal}`;
     animals = animals.filter(a => a.id != selfId);

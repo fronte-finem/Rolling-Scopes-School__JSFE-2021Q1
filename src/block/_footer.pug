@@ -4,7 +4,7 @@ include ../element/_nav-menu.pug
 include ../element/_social-media-links.pug
 include ../element/_button.pug
 
-mixin footer(page)
+mixin footer(page, root)
   -
     var logosData = [
       {
@@ -33,7 +33,7 @@ mixin footer(page)
         each data in logosData
           li.logo__item
             +logo(data)
-      +nav-menu('')
+      +nav-menu('', {}, root)
       +btn('button', {text: 'donate for volunteers'}, 'white', 'long')
 
     .footer__bottom

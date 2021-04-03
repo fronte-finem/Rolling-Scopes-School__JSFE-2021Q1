@@ -1,5 +1,5 @@
-mixin logo-main
-  a(class = 'logo logo-main logo-link', href = '/online-zoo/')
+mixin logo-main(root)
+  a(class = 'logo logo-main logo-link', href = root)
     +svg-logo('main')
 
 mixin logo(data)

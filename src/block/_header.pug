@@ -3,9 +3,9 @@ include ../element/_logo.pug
 include ../element/_nav-menu.pug
 include ../element/_social-media-links.pug
 
-mixin header(page)
+mixin header(page, root)
   // ⚜️ BLOCK: HEADER ⚜️
   +layout-block("header", "header")
-    +logo-main
-    +nav-menu(page, [{name:'design', link:'https://www.figma.com/file/lnK11foY8Aoa6oOlDXovVN/Online-ZOO-Project'}])
+    +logo-main(root)
+    +nav-menu(page, [{name:'design', link:'https://www.figma.com/file/lnK11foY8Aoa6oOlDXovVN/Online-ZOO-Project'}], root)
     +social-media-links

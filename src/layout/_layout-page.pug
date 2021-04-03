@@ -19,7 +19,7 @@ html(lang="en")
     .page
       block dev
 
-      +header(page)
+      +header(page, root)
 
       // 👑 BLOCK: MAIN 👑
       main.main
@@ -27,7 +27,7 @@ html(lang="en")
         h1.site-title.visible-hidden= "Online-Zoo"
         block main
 
-      +footer(page)
+      +footer(page, root)
 
     .svg-sprite(style = 'display: none')
       // 🚧 🚧 🚧 (っ◔◡◔)っ 🅢🅥🅖 🅢🅟🅡🅘🅣🅔 (✿◡‿◡) 🚧 🚧 🚧
