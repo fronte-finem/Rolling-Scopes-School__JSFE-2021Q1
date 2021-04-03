@@ -1,0 +1,22 @@
+mixin input(cls, name, type, data, required = false, ...args)
+  - var req = required ? 'required' : '';
+  +input-wrapper(cls, name, type, data)
+    input.input__base(name = name, type = type, required = req, placeholder = data.tip)
+
+mixin textarea(cls, name, data, required = false, rows = "10")
+  - var req = required ? 'required' : '';
+  +input-wrapper(cls, name, 'textarea', data)
+    textarea.input__base(name = name, required = req, placeholder = data.tip, rows = rows)
+
+
+mixin input-wrapper(cls, name, type, data)
+  div(class = `input input-${cls} input-${type}`)
+    .input__descr
+      if required
+        .input__required= '*'
+      label.input__descr-msg= data.descr
+
+    block
+
+    .input__error
+      label.input__error-msg= data.errMsg

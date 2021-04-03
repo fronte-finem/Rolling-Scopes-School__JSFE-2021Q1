@@ -1,0 +1,60 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/font';
+
+/*
+  🧱 ELEMENT: INPUT 🧱
+*/
+
+.input {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+
+  &__descr {
+    display: flex;
+    column-gap: 5px;
+
+    &-msg {
+      text-transform: capitalize;
+    }
+  }
+  &__required {
+    color: var(--clr-ui-1-def);
+  }
+
+  &__error {
+    display: none;
+    position: absolute;
+    bottom: -25px;
+    color: var(--clr-ui-1-def);
+
+    &-msg {
+      text-transform: capitalize;
+    }
+  }
+
+  &__base {
+    padding: 16px 20px;
+    border: 1px solid var(--clr-main-dark);
+    border-radius: 5px;
+
+    @include font.text;
+
+    &::placeholder {
+      color: #969696;
+    }
+  }
+}
+
+
+.input--error {
+  .input__error {
+    display: block;
+  }
+
+  &__base {
+    background: rgba(245, 128, 33, 0.2);
+    border: 1px solid var(--clr-ui-1-def);
+  }
+}
