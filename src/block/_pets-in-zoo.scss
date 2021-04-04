@@ -35,7 +35,7 @@
       top: 0;
       bottom: 0;
       pointer-events: none;
-      background-image: linear-gradient(to right, transparent 0px, var(--clr-main-light) var(--a));
+      background-image: linear-gradient(to right, transparent 0px, var(--clr-main-light) var(--c4));
     }
 
     &::after {
@@ -43,7 +43,7 @@
       position: absolute;
       z-index: 999;
       width: 9999px;
-      left: calc(100% + var(--a));
+      left: calc(100% + var(--a) + var(--c2));
       top: 0;
       bottom: 0;
       background-color: var(--clr-main-light);

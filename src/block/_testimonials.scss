@@ -10,7 +10,8 @@
   background-color: var(--clr-main-navy);
   background-image: url('./assets/bg/about-testimonials.jpg');
   background-repeat: no-repeat;
-  background-position: calc(50% + 0px) 0px;
+  background-position: center top;
+  background-size: auto;
 
   @include set-vars ((
     c6: grid.col(6),
@@ -38,7 +39,7 @@
       position: absolute;
       z-index: 999;
       width: 9999px;
-      right: 100%;
+      right: calc(100%);
       top: 0;
       bottom: 0;
       background-image: linear-gradient(to left, transparent 0px, var(--clr-main-navy) var(--a));
@@ -49,7 +50,7 @@
       position: absolute;
       z-index: 999;
       width: 9999px;
-      left: 100%;
+      left: calc(100%);
       top: 0;
       bottom: 0;
       background-image: linear-gradient(to right, transparent 0px, var(--clr-main-navy) var(--a));
