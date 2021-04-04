@@ -3,14 +3,24 @@ include ../element/_bage.pug
 
 mixin side-bar(animal)
   -
-    var animals = [
+    var data = [
       { name: 'panda',   id: 'icon-panda',   link: './panda.html' },
       { name: 'eagle',   id: 'icon-eagle',   link: './eagle.html' },
       { name: 'gorilla', id: 'icon-gorilla', link: './gorilla.html' },
       { name: 'lemur',   id: 'icon-lemur',   link: './lemur.html' },
     ];
     selfId = `icon-${animal}`;
-    animals = animals.filter(a => a.id != selfId);
+    var {head, tail} = round(animal, {head: data.shift(), tail: data});
+
+    function round(x, {head, tail} = barrel) {
+      if (x == head.name) return {head:head, tail:tail};
+      if (tail.every(y => y.name != x)) throw new Error(`'${x}' not found in ${tail}`);
+      while (x != head.name) {
+        tail.push(head);
+        head = tail.shift();
+      }
+      return {head:head, tail:tail};
+    }
 
   // ⚜️ BLOCK: SIDE-BAR ⚜️
   aside.side-bar
@@ -21,10 +31,10 @@ mixin side-bar(animal)
 
       ul.side-bar__cams
         li.cam-selector.cam-selector--current
-          div(class = `cam-icon cam-self ${selfId}`, title = animal)
+          div(class = `cam-icon cam-self ${head.id}`, title = head.animal)
             svg
-              use(xlink:href = `#${selfId}`)
-        each item in animals
+              use(xlink:href = `#${head.id}`)
+        each item in tail
           li.cam-selector
             a(class = `cam-icon cam-link ${item.id}`, href = item.link, title = item.name)
               svg
