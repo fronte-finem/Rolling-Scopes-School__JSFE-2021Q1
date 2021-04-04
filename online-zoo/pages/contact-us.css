@@ -1,0 +1,108 @@
+@charset "UTF-8";
+/*
+  🧱 ELEMENT: INPUT 🧱
+*/
+.input {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+.input__descr {
+  display: flex;
+  column-gap: 5px;
+}
+.input__descr-msg {
+  text-transform: capitalize;
+}
+.input__required {
+  color: var(--clr-ui-1-def);
+}
+.input__error {
+  display: none;
+  position: absolute;
+  bottom: -25px;
+  color: var(--clr-ui-1-def);
+}
+.input__error-msg {
+  text-transform: capitalize;
+}
+.input__base {
+  padding: 16px 20px;
+  border: 1px solid var(--clr-main-dark);
+  border-radius: 5px;
+  /* 🔽🔠🔽 */
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: var(--font-weight--normal-text);
+  font-size: var(--font-size--normal-text);
+  line-height: var(--line-height--normal-text);
+  /* 🔼🔠🔼 */
+}
+.input__base::placeholder {
+  color: #969696;
+}
+
+.input--error .input__error {
+  display: block;
+}
+.input--error__base {
+  background: rgba(245, 128, 33, 0.2);
+  border: 1px solid var(--clr-ui-1-def);
+}
+
+/*
+  ⚜️ BLOCK: CONTACT-FORM ⚜️
+*/
+.contact-form {
+  --c3-g4: calc(var(--col)*3 + var(--gap)*4);
+  --c4: calc(var(--col)*4 + var(--gap)*3);
+}
+.contact-form .form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+}
+.contact-form .btn-container {
+  padding-top: 37px;
+}
+
+/*
+    👑 👑 👑 👑
+  👑 PAGE: CONTACT-US 👑
+    👑 👑 👑 👑
+*/
+.touch-the-animal .wrapper {
+  padding-bottom: 150px;
+}
+.touch-the-animal__img {
+  display: block;
+}
+
+.contact-us {
+  --c1-g1: calc(var(--col)*1 + var(--gap)*1);
+  --c1: calc(var(--col)*1 + var(--gap)*0);
+  --c6: calc(var(--col)*6 + var(--gap)*5);
+}
+.contact-us .wrapper {
+  display: grid;
+  grid-template-columns: 1fr var(--c6);
+  column-gap: var(--gap);
+  padding-bottom: 150px;
+}
+.contact-us .info__title {
+  padding-bottom: 50px;
+  /* 🔽🔠🔽 */
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: var(--font-weight--h2);
+  font-size: var(--font-size--h2);
+  line-height: var(--line-height--h2);
+  /* 🆎 */
+  text-transform: uppercase;
+  /* 🔼🔠🔼 */
+  color: var(--clr-ui-2-def);
+}
+.contact-us .info__text {
+  padding-right: 140px;
+}
