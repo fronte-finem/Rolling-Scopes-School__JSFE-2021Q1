@@ -1,0 +1,166 @@
+@charset "UTF-8";
+/*
+  🧱 ELEMENT: BUTTON-MAP-PIN 🧱
+*/
+:root {
+  --w-btn-map-pin: 100px;
+  --h-btn-map-pin: 144px;
+}
+
+.btn-map-pin {
+  --time1: 500ms;
+  --time2: 600ms;
+  --w: var(--w-btn-map-pin);
+  --h: var(--h-btn-map-pin);
+}
+
+.btn-map-pin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--w);
+  height: var(--h);
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  filter: drop-shadow(0px 4px 30px rgba(245, 128, 33, 0.7));
+  cursor: default;
+  user-select: none;
+}
+.btn-map-pin--active {
+  cursor: pointer;
+}
+.btn-map-pin {
+  pointer-events: none;
+}
+.btn-map-pin .svg-map-pin use {
+  pointer-events: all;
+}
+.btn-map-pin .svg-map-pin {
+  width: var(--w);
+  height: var(--h);
+}
+.btn-map-pin .svg-map-pin {
+  transition: fill var(--time1) ease-in-out, color var(--time2) ease-in-out;
+}
+.btn-map-pin .svg-map-pin {
+  fill: var(--clr-ui-1-def);
+  color: transparent;
+}
+.btn-map-pin--active:hover .svg-map-pin {
+  fill: var(--clr-main-light);
+  color: var(--clr-main-light);
+}
+.btn-map-pin .svg-map-pin {
+  --color__map-pin__icon--tiger: transparent;
+  --color__map-pin__icon--lion: transparent;
+  --color__map-pin__icon--eagle: transparent;
+  --color__map-pin__icon--alligator: transparent;
+  --color__map-pin__icon--lemur: transparent;
+  --color__map-pin__icon--panda: transparent;
+  --color__map-pin__icon--coala: transparent;
+  --color__map-pin__icon--gorilla: transparent;
+}
+.btn-map-pin--tiger .svg-map-pin {
+  --color__map-pin__icon--tiger: var(--clr-main-navy);
+}
+.btn-map-pin--lion .svg-map-pin {
+  --color__map-pin__icon--lion: var(--clr-main-navy);
+}
+.btn-map-pin--eagle .svg-map-pin {
+  --color__map-pin__icon--eagle: var(--clr-main-navy);
+}
+.btn-map-pin--alligator .svg-map-pin {
+  --color__map-pin__icon--alligator: var(--clr-main-navy);
+}
+.btn-map-pin--lemur .svg-map-pin {
+  --color__map-pin__icon--lemur: var(--clr-main-navy);
+}
+.btn-map-pin--panda .svg-map-pin {
+  --color__map-pin__icon--panda: var(--clr-main-navy);
+}
+.btn-map-pin--coala .svg-map-pin {
+  --color__map-pin__icon--coala: var(--clr-main-navy);
+}
+.btn-map-pin--gorilla .svg-map-pin {
+  --color__map-pin__icon--gorilla: var(--clr-main-navy);
+}
+
+/*
+    👑 👑 👑 👑
+  👑 PAGE: MAP 👑
+    👑 👑 👑 👑
+*/
+.map-header {
+  --c3-g4: calc(var(--col)*3 + var(--gap)*4);
+  --c4: calc(var(--col)*4 + var(--gap)*3);
+}
+.map-header .wrapper {
+  padding: 0 var(--c3-g4);
+  padding-top: 40px;
+  padding-bottom: 70px;
+}
+.map-header .title {
+  /* 🔽🔠🔽 */
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: var(--font-weight--h2);
+  font-size: var(--font-size--h2);
+  line-height: var(--line-height--h2);
+  /* 🆎 */
+  text-transform: uppercase;
+  /* 🔼🔠🔼 */
+  text-align: center;
+  color: var(--clr-main-navy);
+}
+
+.map {
+  padding-bottom: 150px;
+}
+.map .wrapper {
+  position: relative;
+}
+.map .map-svg {
+  display: block;
+  width: 100%;
+  fill: var(--clr-main-navy);
+}
+.map .btn-map-pin {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+}
+.map .btn-map-pin--panda {
+  top: 38.2%;
+  left: 67.5%;
+}
+.map .btn-map-pin--tiger {
+  top: 55.4%;
+  left: 72%;
+}
+.map .btn-map-pin--lion {
+  top: 49.6%;
+  left: 40.7%;
+}
+.map .btn-map-pin--gorilla {
+  top: 52.1%;
+  left: 48.9%;
+}
+.map .btn-map-pin--eagle {
+  top: 43%;
+  left: 11.3%;
+}
+.map .btn-map-pin--alligator {
+  top: 44.4%;
+  left: 20.3%;
+}
+.map .btn-map-pin--lemur {
+  top: 65.2%;
+  left: 56.3%;
+}
+.map .btn-map-pin--coala {
+  top: 67.9%;
+  left: 81.3%;
+}
