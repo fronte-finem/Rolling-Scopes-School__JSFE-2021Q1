@@ -9,27 +9,23 @@ mixin footer(page, root)
     var logosData = [
       {
         id: 'main',
-        title: 'Online Zoo'
+        title: 'Online Zoo',
+        link: root,
       },
       {
         id: 'yem-digital',
-        title: 'Yem Digital'
+        title: 'Yem Digital',
       },
       {
         id:'rs-school-js',
-        title:'Rolling Scopes School'
+        title:'Rolling Scopes School',
       }
     ];
-
-    logosData = page == 'about' ? logosData.filter(x => x.id != 'main') : logosData;
 
   // ⚜️ BLOCK: FOOTER ⚜️
   +layout-block("footer", "footer")
     .footer__top
       ul.logo__items
-        if page == 'about'
-          li.logo__item
-            +logo-main
         each data in logosData
           li.logo__item
             +logo(data)

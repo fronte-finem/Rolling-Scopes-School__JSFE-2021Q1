@@ -3,7 +3,12 @@ mixin logo-main(root)
     +svg-logo('main')
 
 mixin logo(data)
-  div(class = `logo logo-${data.id}`, title = data.title)
+  -
+    var tag = data.link ? 'a' : 'div';
+    var cls = `logo logo-${data.id}`;
+    data.link && (cls +=' logo-link');
+
+  #{tag}(class = cls, href = data.link, title = data.title)
     +svg-logo(data.id)
 
 mixin svg-logo(id)
