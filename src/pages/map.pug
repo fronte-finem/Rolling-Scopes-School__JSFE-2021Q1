@@ -15,24 +15,26 @@ block main
     h2.title= 'find where are the animals live'
 
   -
-    var data = [
-      { name: 'panda', active: true, link: './zoos/panda.html', title: 'Giant panda 🐼\nSouth Central China'},
-      { name: 'gorilla', active: true, link: './zoos/gorilla.html', title: 'Gorilla 🦍\nRainforests in Africa'},
-      { name: 'eagle', active: true, link: './zoos/eagle.html', title: 'Bald eagle 🦅\nNorth America'},
-      { name: 'lemur', active: true, link: './zoos/lemur.html', title: 'Lemur \nMadagascar'},
-      { name: 'alligator', active: false, link: '', title: 'American alligator 🐊\nSoutheastern United States'},
-      { name: 'tiger', active: false, link: '', title: 'Tiger 🐯\n Southeast Asia'},
-      { name: 'lion', active: false, link: '', title: 'Lion 🦁\nAfrica '},
-      { name: 'coala', active: false, link: '', title: 'Koala \nAustralia'},
+    const self = 'map';
+    const data = [
+      { name: 'panda', link: 'pages/zoos/panda.html', title: 'Giant panda 🐼\nSouth Central China'},
+      { name: 'gorilla', link: 'pages/zoos/gorilla.html', title: 'Gorilla 🦍\nRainforests in Africa'},
+      { name: 'eagle', link: 'pages/zoos/eagle.html', title: 'Bald eagle 🦅\nNorth America'},
+      { name: 'lemur', link: 'pages/zoos/lemur.html', title: 'Lemur \nMadagascar'},
+      { name: 'alligator', title: 'American alligator 🐊\nSoutheastern United States'},
+      { name: 'tiger', title: 'Tiger 🐯\n Southeast Asia'},
+      { name: 'lion', title: 'Lion 🦁\nAfrica '},
+      { name: 'coala', title: 'Koala \nAustralia'},
     ];
 
-  +layout-block("div", "map")
+  +layout-block('div', self)
     include ../svg/_map.svg.pug
     each item in data
-      if item.active
-        +btn-map-pin('a', {href: item.link, title: item.title}, item.name, 'active')
+      - item.id = 'map-pin'
+      if item.link
+        +btn-link-icon(root, item, [item.name])
       else
-        +btn-map-pin('div', {title: item.title}, item.name)
+        +btn-icon(item, [item.name])
 
 block svg-sprite
   include ../svg/_sprite-map-pin.svg.pug

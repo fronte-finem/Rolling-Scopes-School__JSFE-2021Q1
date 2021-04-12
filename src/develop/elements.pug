@@ -5,21 +5,18 @@ include ../element/_button.pug
 include ../element/_control-arrows.pug
 include ../element/_control-donation.pug
 
-mixin gen(mix, ...args)
-  .btns-cont
-    +#{mix}('button', ...args)
-    +#{mix}('a', ...args)
-    +#{mix}('div', ...args)
-
-mixin genBtns(txt, ...mods)
-  +gen('btn', {text:txt, href:'#'}, ...mods)
-
-
 block page-vars
-  - var page = "elements";
-  - var file = "elements";
+  - var page = 'elements';
+  - var file = 'elements';
   - var title = '🧱';
   - var root = '..'
+
+mixin genBtns(txt, mods)
+  - const data = {text:txt, link:'#'}
+  .btns-cont
+    +btn(data, mods)
+    +btn-div(data, mods)
+    +btn-link(root, data, mods)
 
 block dev
   .dev-overlay.dev-grid
@@ -28,15 +25,15 @@ block main
   +layout-block("section", "btns")
     h3 Btns
 
-    +genBtns('donate now', 'orange')
-    +genBtns('view live cam', 'orange')
-    +genBtns('send message', 'cyan', 'long')
-    +genBtns('send message', 'cyan', 'long', 'active')
-    +genBtns('choose your favourite', 'navy', 'long')
-    +genBtns('leave feedback', 'white', 'long')
-    +genBtns('view live cam', 'text')
-    +genBtns('feed', 'text', 'free')
-    +genBtns('view map', 'text')
+    +genBtns('donate now', ['orange'])
+    +genBtns('view live cam', ['orange'])
+    +genBtns('send message', ['cyan', 'long'])
+    +genBtns('send message', ['cyan', 'long', 'active'])
+    +genBtns('choose your favourite', ['navy', 'long'])
+    +genBtns('leave feedback', ['white', 'long'])
+    +genBtns('view live cam', ['text'])
+    +genBtns('feed', ['text', 'free'])
+    +genBtns('view map', ['text'])
 
     .btns-cont
       +control-arrows()
@@ -57,14 +54,14 @@ block main
       +control-donation()
 
     .map-pins-cont
-      +btn-map-pin('div', {}, 'panda', '🐼')
-      +btn-map-pin('div', {}, 'tiger', '🐯')
-      +btn-map-pin('div', {}, 'lion', '🦁')
-      +btn-map-pin('div', {}, 'gorilla', '🦍')
-      +btn-map-pin('div', {}, 'eagle', '🦅')
-      +btn-map-pin('div', {}, 'alligator', '🐊')
-      +btn-map-pin('div', {}, 'lemur')
-      +btn-map-pin('div', {}, 'coala')
+      +btn-icon({id:'map-pin'}, [self], ['panda', '🐼'])
+      +btn-icon({id:'map-pin'}, [self], ['tiger', '🐯'])
+      +btn-icon({id:'map-pin'}, [self], ['lion', '🦁'])
+      +btn-icon({id:'map-pin'}, [self], ['gorilla', '🦍'])
+      +btn-icon({id:'map-pin'}, [self], ['eagle', '🦅'])
+      +btn-icon({id:'map-pin'}, [self], ['alligator', '🐊'])
+      +btn-icon({id:'map-pin'}, [self], ['lemur'])
+      +btn-icon({id:'map-pin'}, [self], ['coala'])
 
 block svg-sprite
   include ../svg/_sprite-map-pin.svg.pug

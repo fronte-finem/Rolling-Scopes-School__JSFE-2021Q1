@@ -13,10 +13,10 @@ block page-vars
   - var animal = 'lemur'
 
 block main
-  +side-bar(animal)
-  +live-cams(animal)
-  +quick-donation(animal)
-  +facts(animal)
+  +side-bar(root, animal)
+  +live-cams(root, animal)
+  +quick-donation(root, animal)
+  +facts(root, animal)
 
 //- block dev
 //-   .dev-overlay.dev-grid
