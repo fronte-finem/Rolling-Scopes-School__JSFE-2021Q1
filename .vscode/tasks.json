@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "gulp",
+			"task": "watch",
+			"problemMatcher": [
+				"$node-sass"
+			],
+			"group": "build",
+			"label": "gulp: watch"
+		}
+	]
+}

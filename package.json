@@ -1,0 +1,25 @@
+{
+  "name": "online-zoo",
+  "version": "1.0.0",
+  "description": "# 🦍 online-zoo 🦍\r > - [x] [task](https://rolling-scopes-school.github.io/stage0/#/stage1/tasks/online-zoo/online-zoo)\r >   - [x] [variant-2](https://rolling-scopes-school.github.io/stage0/#/stage1/tasks/online-zoo/variant-2)",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/issues"
+  },
+  "homepage": "https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1#readme",
+  "devDependencies": {
+    "del": "^6.0.0",
+    "execa": "^5.0.0",
+    "gulp": "^4.0.2",
+    "pug-dependency": "^1.0.1"
+  }
+}
