@@ -2,7 +2,7 @@ include ../layout/_layout-block.pug
 include ../element/_button.pug
 include ../element/_donate-card.pug
 
-mixin care-for-animals
+mixin care-for-animals(root)
   include ../_content/_donates.pug
 
   // ⚜️ BLOCK: CARE-FOR-ANIMALS ⚜️
@@ -18,10 +18,11 @@ mixin care-for-animals
           img.feed__slot-img(src="./assets/img/feed-koala.jpg", alt="Koala close up")
         each donate in donates
           li.feed__slot
-            +donate-card('feed__card', donate)
+            +donate-card(root, 'feed__card', donate)
 
     div.btn-container
-      +btn('a', {text: 'choose your favourite', href: './pages/map.html'}, 'navy', 'long')
+      -const data = {text: 'choose your favourite', link: 'pages/map.html'}
+      +btn-link(root, data, ['navy', 'long'])
 
     figure.touch-the-animal
       img.touch-the-animal__img(src = "./assets/img/touch-lemur.jpg",

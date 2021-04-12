@@ -1,9 +1,10 @@
 include ../layout/_layout-block.pug
 include ../element/_control-donation.pug
 
-mixin quick-donation(animal)
+mixin quick-donation(root, animal)
+  include ../_lib/_bem.js.pug
   -
-    var animals = [
+    const animals = [
       {
         name: 'panda',
         title: 'make the Bamboo Donation!',
@@ -31,11 +32,13 @@ mixin quick-donation(animal)
       },
     ];
 
-    name = animal || '🔰';
-    data = animals.filter(a => a.name == name)[0];
+    const name = animal || '🔰';
+    const data = animals.filter(a => a.name == name)[0];
+    const self = 'quick-donation';
+    const bem = new Bem(self, [name]);
 
   // ⚜️ BLOCK: QUICK-DONATION ⚜️
-  +layout-block("div", `quick-donation quick-donation--${name}`)
+  +layout-block("div", bem.fullClass)
     .info
       h3.info__title= data.title
       p.info__text= data.text

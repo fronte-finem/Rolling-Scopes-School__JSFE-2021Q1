@@ -1,7 +1,7 @@
 include ../layout/_layout-block.pug
 include ../element/_button.pug
 
-mixin hero
+mixin hero(root)
   // ⚜️ BLOCK: HERO ⚜️
   +layout-block("div", "hero")
     h2.title= "Watch your favorite animal online"
@@ -9,4 +9,5 @@ mixin hero
     p.text= "Explore the exciting and mysterious world of wild animals in a natural setting without leaving your home."
 
     .btn-container
-      +btn('a', {text: 'view live cam', href: './pages/zoos/panda.html'})
+      -const data = {text: 'view live cam', link: 'pages/zoos/panda.html'}
+      +btn-link(root, data)

@@ -3,17 +3,21 @@ include ../element/_slider.pug
 include ../element/_button.pug
 include ../element/_testimonial-card.pug
 
-mixin testimonials
+mixin testimonials(root)
+  include ../_lib/_bem.js.pug
   include ../_content/_testimonials.pug
-  - var controlColor = 'white';
+  -
+    const self = 'testimonials';
+    const bem = new Bem(self);
+    const controlColor = 'white';
 
   // ⚜️ BLOCK: TESTIMONIALS ⚜️
-  +layout-block("div", "testimonials")
+  +layout-block('div', self)
     section.info
       h2.info__title= "what our users think"
       p.info__text= "We are continuously striving to improve the experiences of our future guests. Below you can leave your own feedback, or simply view feedback from past clients."
 
-    +gen-slider('testimonial-card', testimonials, 'double-row', controlColor)
+    +gen-slider(root, 'testimonial-card', testimonials, 'double-row', controlColor)
 
     .btn-container
-      +btn('a', {text: 'leave feedback'}, controlColor, 'long')
+      +btn({text: 'leave feedback'}, [controlColor, 'long'])

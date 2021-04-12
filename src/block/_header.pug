@@ -3,11 +3,12 @@ include ../element/_logo.pug
 include ../element/_nav-menu.pug
 include ../element/_social-media-links.pug
 
-mixin header(page, root)
+mixin header(root, page)
   - let self = 'header'
   - let design = {text:'design', link:'https://www.figma.com/file/lnK11foY8Aoa6oOlDXovVN/Online-ZOO-Project'}
+
   // ⚜️ BLOCK: HEADER ⚜️
   +layout-block(self, self)
     +logo-main(root)
-    +nav-menu(self, page, [design], root)
+    +nav-menu(root, self, page, [design])
     +social-media-links

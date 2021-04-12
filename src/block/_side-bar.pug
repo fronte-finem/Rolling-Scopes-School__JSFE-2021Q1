@@ -1,16 +1,18 @@
 include ../element/_button.pug
 include ../element/_bage.pug
 
-mixin side-bar(animal)
+mixin side-bar(root, animal)
+  include ../_lib/_bem.js.pug
   -
-    var data = [
+    const self = 'live-cams';
+    const bem = new Bem(self);
+    const data = [
       { name: 'panda',   id: 'icon-panda',   link: './panda.html' },
       { name: 'eagle',   id: 'icon-eagle',   link: './eagle.html' },
       { name: 'gorilla', id: 'icon-gorilla', link: './gorilla.html' },
       { name: 'lemur',   id: 'icon-lemur',   link: './lemur.html' },
     ];
-    selfId = `icon-${animal}`;
-    var {head, tail} = round(animal, {head: data.shift(), tail: data});
+    const {head, tail} = round(animal, {head: data.shift(), tail: data});
 
     function round(x, {head, tail} = barrel) {
       if (x == head.name) return {head:head, tail:tail};
@@ -27,7 +29,7 @@ mixin side-bar(animal)
     .side-bar__menu
       .side-bar__control.side-bar__control-expand
         +bage('live', 'active')
-        +btn-icon('button', 'icon-expand', {}, 'minimal')
+        +btn-icon({id: 'icon-expand'}, ['minimal'], [self])
 
       ul.side-bar__cams
         li.cam-selector.cam-selector--current
@@ -41,6 +43,6 @@ mixin side-bar(animal)
                 use(xlink:href = `#${item.id}`)
 
       .side-bar__control.side-bar__control-scroll-down
-        +btn-icon('button', 'icon-scroll-down', {}, 'minimal')
+        +btn-icon({id: 'icon-scroll-down'}, ['minimal'], [self])
 
 

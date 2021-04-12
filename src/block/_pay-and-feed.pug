@@ -1,9 +1,12 @@
 include ../layout/_layout-block.pug
 include ../element/_button.pug
 
-mixin pay-and-feed
+mixin pay-and-feed(root)
+  include ../_lib/_bem.js.pug
   -
-    var steps_data = [
+    const self = 'pay-and-feed';
+    const bem = new Bem(self);
+    const steps_data = [
       {
         picSrc: "./assets/img/pay-feed-step-1.jpg",
         picAlt: "Monkey want eat 🐒",
@@ -26,10 +29,10 @@ mixin pay-and-feed
         text: "After your donation, the animal receives its favorite foods. You can support your favorite animals or any animal you care about and make a real personal impact. Never doubt that your donation can make a difference even if it is small.",
       },
     ];
-    var helper = (cls, i) => `${cls} ${cls}--${i}`;
+    const helper = (cls, i) => `${cls} ${cls}--${i}`;
 
   // ⚜️ BLOCK: PAY-AND-FEED ⚜️
-  +layout-block("div", "pay-and-feed")
+  +layout-block('div', self)
     h2.title= "pay and feed"
 
     ul.steps
@@ -48,4 +51,4 @@ mixin pay-and-feed
           p.step-info__text= item.text
 
     .btn-container
-      +btn('button', {text: 'donate now'})
+      +btn({text: 'donate now'})

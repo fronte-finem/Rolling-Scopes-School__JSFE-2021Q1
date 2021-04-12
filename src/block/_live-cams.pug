@@ -3,9 +3,12 @@ include ../element/_button.pug
 include ../element/_youtube-player.pug
 include ../element/_bage.pug
 
-mixin live-cams(animal)
+mixin live-cams(root, animal)
+  include ../_lib/_bem.js.pug
   -
-    var animals = [
+    const self = 'live-cams';
+    const bem = new Bem(self);
+    const animals = [
       {
         name: 'panda',
         title: 'live panda cams',
@@ -31,24 +34,24 @@ mixin live-cams(animal)
         cams: ['3MtsSkBWCfc', '2M1BmfHlOEI', '2w-8DnczSLI'],
       },
     ];
-
-    data = animals.filter(a => a.name == animal)[0];
+    const data = animals.filter(a => a.name == animal)[0];
 
   // ⚜️ BLOCK: LIVE-CAM ⚜️
-  +layout-block("div", "live-cams")
-    .live-cams__heading
-      h2.live-cams__title= data.title
-      .btn-container
-        +btn('button', {text: 'donate now'})
-    +youtube-player('main-cam', data.main)
+  +layout-block('div', self)
+    div(class = bem.elem('heading'))
+      h2(class = bem.elem('title'))= data.title
+      div(class = bem.elem('btn-container'))
+        +btn({text: 'donate now'})
+    +youtube-player(bem.elem('main-cam'), data.main)
 
-    .live-cams__cams
+    div(class = bem.elem('cams'))
       h3.title= 'more live views'
+      //- div(class = bem.elem('slider'))
       .live-cams__slider.slider
         .slider__control.slider__control--prev
-          +btn-icon('button', 'arrow-to-left', {}, 'navy', 'prev')
+          +btn-icon({id: 'arrow-to-left'}, ['navy', 'prev'], [self])
         .slider__control.slider__control--next
-          +btn-icon('button', 'arrow-to-right', {}, 'navy', 'next')
+          +btn-icon({id: 'arrow-to-right'}, ['navy', 'next'], [self])
         ul.slider__slots
           each item, ix in data.cams
             li.slider__slot

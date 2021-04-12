@@ -4,10 +4,10 @@ include ../element/_nav-menu.pug
 include ../element/_social-media-links.pug
 include ../element/_button.pug
 
-mixin footer(page, root)
+mixin footer(root, page)
   -
-    let self = 'footer'
-    let logosData = [
+    const self = 'footer';
+    const logosData = [
       {
         id: 'main',
         title: 'Online Zoo',
@@ -30,8 +30,8 @@ mixin footer(page, root)
         each data in logosData
           li.logo__item
             +logo(data)
-      +nav-menu(self, '', {}, root)
-      +btn('button', {text: 'donate for volunteers'}, 'white', 'long')
+      +nav-menu(root, self)
+      +btn({text: 'donate for volunteers'}, ['white', 'long'])
 
     .footer__bottom
       ul.copyright__items
