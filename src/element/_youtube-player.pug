@@ -1,8 +1,8 @@
-mixin youtube-player(cls, link)
+mixin youtube-player(cls, id)
   div.youtube-player(class = cls)
     iframe(
       class = `youtube-player__iframe ${cls}__iframe`,
-      src = `https://www.youtube.com/embed/${link}`,
+      src = `https://www.youtube.com/embed/${id}`,
       title = "YouTube video player",
       allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
       allowfullscreen,

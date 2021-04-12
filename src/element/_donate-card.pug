@@ -1,6 +1,6 @@
 include ./_button.pug
 
-mixin donate-card(cls, donate)
+mixin donate-card(root, cls, donate)
   - var self = 'donate-card';
   div(class = `${cls} ${self} ${self}--${donate.animal.kind}`,
       onclick = 'this.querySelector(".btn").click()'
@@ -13,4 +13,5 @@ mixin donate-card(cls, donate)
       each str in donate.text.slice(1)
         br
         = str
-    +btn('a', {text: 'feed', href: donate.animal.pageLink}, 'text', 'free')
+    -const data = {text: 'feed', link: donate.animal.pageLink}
+    +btn-link(root, data, ['text', 'free'])

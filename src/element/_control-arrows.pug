@@ -1,6 +1,12 @@
 include ./_button.pug
 
 mixin control-arrows(color)
-  .control-arrows
-    +btn-icon('button', 'arrow-to-left', {}, color, 'prev')
-    +btn-icon('button', 'arrow-to-right', {}, color, 'next')
+  include ../_lib/_bem.js.pug
+  -
+    const self = 'control-arrows';
+    const bem = new Bem(self);
+    const mods = color ? [color] : [];
+
+  div(class = self)
+    +btn-icon({id: 'arrow-to-left'}, [...mods, 'prev'])
+    +btn-icon({id: 'arrow-to-right'}, [...mods, 'next'])

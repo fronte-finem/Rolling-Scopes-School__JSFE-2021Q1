@@ -1,6 +1,6 @@
 include ./_button.pug
 
-mixin animal-card(cls, animal)
+mixin animal-card(root, cls, animal)
   - var self = 'animal-card'
   div(class = `${cls} ${self} ${self}--${animal.kind.toLowerCase().split(' ').join('-')}`,
       onclick = 'this.querySelector(".btn").click()'
@@ -19,4 +19,5 @@ mixin animal-card(cls, animal)
           each str in animal.descr.slice(1)
             br
             = str
-      +btn('a', {text: 'view live cam', href: animal.camLink}, 'text')
+      -const data = {text: 'view live cam', link: animal.camLink}
+      +btn-link(root, data, ['text'])
