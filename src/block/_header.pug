@@ -4,8 +4,10 @@ include ../element/_nav-menu.pug
 include ../element/_social-media-links.pug
 
 mixin header(page, root)
+  - let self = 'header'
+  - let design = {text:'design', link:'https://www.figma.com/file/lnK11foY8Aoa6oOlDXovVN/Online-ZOO-Project'}
   // ⚜️ BLOCK: HEADER ⚜️
-  +layout-block("header", "header")
+  +layout-block(self, self)
     +logo-main(root)
-    +nav-menu(page, [{name:'design', link:'https://www.figma.com/file/lnK11foY8Aoa6oOlDXovVN/Online-ZOO-Project'}], root)
+    +nav-menu(self, page, [design], root)
     +social-media-links

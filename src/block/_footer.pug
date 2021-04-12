@@ -6,7 +6,8 @@ include ../element/_button.pug
 
 mixin footer(page, root)
   -
-    var logosData = [
+    let self = 'footer'
+    let logosData = [
       {
         id: 'main',
         title: 'Online Zoo',
@@ -23,13 +24,13 @@ mixin footer(page, root)
     ];
 
   // ⚜️ BLOCK: FOOTER ⚜️
-  +layout-block("footer", "footer")
+  +layout-block(self, self)
     .footer__top
       ul.logo__items
         each data in logosData
           li.logo__item
             +logo(data)
-      +nav-menu('', {}, root)
+      +nav-menu(self, '', {}, root)
       +btn('button', {text: 'donate for volunteers'}, 'white', 'long')
 
     .footer__bottom

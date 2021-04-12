@@ -39,19 +39,15 @@
   }
 }
 
-header {
-  background-color: use-var(clr-ui-1-def);
+.header {
+  background-color: var(--clr-ui-1-def);
 
   .logo {
-    color: use-var(clr-main-dark);
+    color: var(--clr-main-dark);
   }
-  .nav-menu {
-    &__self {
-      color: use-var(clr-ui-2-def);
-    }
-    &__link {
-      color: use-var(clr-main-dark);
-      &:hover { color: use-var(clr-main-light); }
-    }
+
+  &__link {
+    color: var(--clr-main-dark);
+    &:hover { color: var(--clr-ui-2-def); }
   }
 }

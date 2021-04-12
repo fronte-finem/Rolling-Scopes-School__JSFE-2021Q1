@@ -53,15 +53,9 @@
     color: var(--clr-ui-1-def);
   }
 
-  .nav-menu {
-    &__self {
-      color: var(--clr-ui-2-def);
-    }
-
-    &__link {
-      color: var(--clr-main-light);
-      &:hover { color: var(--clr-ui-1-def); }
-    }
+  &__link {
+    color: var(--clr-main-light);
+    &:hover { color: var(--clr-ui-1-def); }
   }
 
   .footer__bottom {

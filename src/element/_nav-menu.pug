@@ -1,20 +1,19 @@
-mixin nav-menu(page, data, root)
+include ./_link.pug
+
+mixin nav-menu(cls, page, data, root)
   -
     var menu_data = [
-      { name: 'about',      link: root},
-      { name: 'map',        link: `${root}/pages/map.html`},
-      { name: 'zoos',       link: `${root}/pages/zoos/panda.html`},
-      { name: 'contact us', link: `${root}/pages/contact-us.html`},
+      { text: 'about',      link: root},
+      { text: 'map',        link: 'pages/map.html'},
+      { text: 'zoos',       link: 'pages/zoos/panda.html'},
+      { text: 'contact us', link: 'pages/contact-us.html'},
     ]
     Array.isArray(data) && (menu_data = menu_data.concat(data));
 
-    var cls = 'nav-menu';
+    var nav = 'nav-menu';
 
-  nav(class = cls)
-    ul(class = `${cls}__items`)
+  nav(class = `${nav} ${cls}__${nav}`)
+    ul(class = `${nav}__items`)
       each item in menu_data
-        li(class = `${cls}__item`)
-          if item.name == page
-            span(class = `${cls}__self`)= item.name
-          else
-            a(class = `link ${cls}__link`, href = item.link)= item.name
+        li(class = `${nav}__item`)
+          +link([nav, cls], item, root, disabled = (item.text == page))

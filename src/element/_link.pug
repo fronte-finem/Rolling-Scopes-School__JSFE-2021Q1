@@ -1,0 +1,8 @@
+mixin link(clss, data, root, disabled = false)
+  - cls = `link ${disabled ? 'link--disabled ' : ''}${[...clss, ''].join('__link ')}`;
+  - external = data.external || /^[^:]+:\/{2}/.test(data.link);
+  - link = external ? data.link : `${root}/${data.link}`;
+  if disabled
+    span(class = cls, title = data.title)= data.text
+  else
+    a(class = cls, href = link, title = data.title)= data.text
