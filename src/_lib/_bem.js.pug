@@ -1,0 +1,13 @@
+-
+  class Bem {
+    constructor(self, mods, blocks) {
+      this.self = Array.isArray(self) ? self : [self];
+      this.mods = this.self.flatMap(b => (mods || []).map(m => `${b}--${m}`));
+      this.blocks = this.self.flatMap(e => (blocks || []).map(b => `${b}__${e}`));
+      this.fullClass = this.self.concat(this.mods, this.blocks).join(' ');
+    }
+
+    elem(e) {
+      return this.self.map(b => `${b}__${e}`).join(' ');
+    }
+  }
