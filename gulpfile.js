@@ -9,7 +9,7 @@ const dstDir = 'online-zoo';
 const srcPug = `${srcDir}/**/*.pug`;
 const srcSCSS = `${srcDir}/**/*.scss`;
 
-const pugDep = pugDependency(srcPug);
+let pugDep = pugDependency(srcPug);
 
 function getAbsDstDir(absSrcFile) {
   const absSrcDir = path.resolve(srcDir);
@@ -21,7 +21,7 @@ function getAbsDstDir(absSrcFile) {
 
 async function cleanDst(cb) {
   try {
-    const deleted = await del([dstDir]);
+    const deleted = await del([`${dstDir}/**`, `!${dstDir}`, `!${dstDir}/assets`]);
     console.log('Deleted:\n', deleted.join('\n'));
     cb();
   } catch (error) {
@@ -31,13 +31,14 @@ async function cleanDst(cb) {
 }
 
 async function pugAdded(pug) {
-  pugDep.file_changed(pug);
+  pugDep = pugDependency(srcPug);
   await pugChanged(pug);
 }
 
 async function pugChanged(pug) {
-  let pugs = pugDep.find_dependents(pug);
-  pugs = [pug, ...pugs].filter(p => !path.basename(p).startsWith('_'));
+  pugDep.file_changed(pug);
+  let pugs = [pug, ...pugDep.find_dependents(pug)]
+      .filter(p => !path.basename(p).startsWith('_'));
   for (const pugFile of pugs) {
     // console.log(pugFile);
     // console.log(getAbsDstDir(pugFile));

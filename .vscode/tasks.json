@@ -9,6 +9,15 @@
 			],
 			"group": "build",
 			"label": "gulp: watch"
+		},
+		{
+			"type": "gulp",
+			"task": "build",
+			"problemMatcher": [
+				"$node-sass"
+			],
+			"group": "build",
+			"label": "gulp: build"
 		}
 	]
 }
