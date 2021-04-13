@@ -53,15 +53,14 @@ block main
       +control-donation()
       +control-donation()
 
+    - const ids = ['panda', 'tiger', 'lion', 'gorilla', 'eagle', 'alligator', 'lemur', 'coala'];
+
     .map-pins-cont
-      +btn-icon({id:'map-pin'}, [self], ['panda', '🐼'])
-      +btn-icon({id:'map-pin'}, [self], ['tiger', '🐯'])
-      +btn-icon({id:'map-pin'}, [self], ['lion', '🦁'])
-      +btn-icon({id:'map-pin'}, [self], ['gorilla', '🦍'])
-      +btn-icon({id:'map-pin'}, [self], ['eagle', '🦅'])
-      +btn-icon({id:'map-pin'}, [self], ['alligator', '🐊'])
-      +btn-icon({id:'map-pin'}, [self], ['lemur'])
-      +btn-icon({id:'map-pin'}, [self], ['coala'])
+      each id in ids
+        - const item = {id:'map-pin', link:'#', icons: [{id: `map-icon-${id}`, cls: 'map-icon'}]};
+        .btns-cont
+          +btn-icon(item, [id])
+          +btn-link-icon(root, item, [id])
 
 block svg-sprite
   include ../svg/_sprite-map-pin.svg.pug

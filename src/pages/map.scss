@@ -2,9 +2,6 @@
 @use '../_lib/grid';
 @use '../_lib/font';
 
-@use "../element/button-map-pin";
-
-
 /*
     👑 👑 👑 👑
   👑 PAGE: MAP 👑
@@ -45,13 +42,9 @@
     fill: var(--clr-main-navy);
   }
 
-  .btn-map-pin {
-    position: absolute;
-    top: 0%;
-    left: 0%;
-  }
+  .btn-icon {
+      &--map-pin   { position: absolute; }
 
-  .btn-map-pin {
       &--panda     { top: 38.2%; left: 67.5%; }
       &--tiger     { top: 55.4%; left: 72.0%; }
       &--lion      { top: 49.6%; left: 40.7%; }

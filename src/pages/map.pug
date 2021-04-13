@@ -30,7 +30,9 @@ block main
   +layout-block('div', self)
     include ../svg/_map.svg.pug
     each item in data
-      - item.id = 'map-pin'
+      -
+        item.id = 'map-pin';
+        item.icons = [{id: `map-icon-${item.name}`, cls: 'map-icon'}];
       if item.link
         +btn-link-icon(root, item, [item.name])
       else
