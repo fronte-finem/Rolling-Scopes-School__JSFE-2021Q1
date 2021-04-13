@@ -8,5 +8,5 @@ mixin control-arrows(color)
     const mods = color ? [color] : [];
 
   div(class = self)
-    +btn-icon({id: 'arrow-to-left'}, [...mods, 'prev'])
-    +btn-icon({id: 'arrow-to-right'}, [...mods, 'next'])
+    +btn-icon({id: 'arrow-to-left'}, [...mods, 'prev'], [self])
+    +btn-icon({id: 'arrow-to-right'}, [...mods, 'next'], [self])

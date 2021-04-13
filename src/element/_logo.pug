@@ -15,4 +15,4 @@ mixin svg-logo(id)
   include ../_lib/_array.js.pug
   - var cls = ['logo', `logo-${id}`];
   svg(class = ArrUtils.clsMap(cls, 'svg'))
-    use(class = ArrUtils.clsMap(cls, 'use'), xlink:href = `#logo--${id}`)
+    use(class = ArrUtils.clsMap(cls, 'use'), href = `#logo--${id}`)
