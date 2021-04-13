@@ -1,3 +1,10 @@
-mixin svg-icon(id)
-  svg(class = `svg-icon svg-icon--${id}`)
-    use(class = `svg-icon__use`, xlink:href = `#${id}`)
+mixin svg-icon(data)
+    +gen-svg-icon(data)
+    if (Array.isArray(data.icons))
+      each icon in data.icons
+        +gen-svg-icon(icon)
+
+mixin gen-svg-icon(data)
+  - const cls = data.cls ? ` svg-icon--${data.cls}` : '';
+  svg(class = `svg-icon${cls} svg-icon--${data.id}`)
+    use(class = `svg-icon__use`, href = `#${data.id}`)

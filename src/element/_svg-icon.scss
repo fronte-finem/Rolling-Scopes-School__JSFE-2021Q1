@@ -1,0 +1,50 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+
+/*
+  🧱 ELEMENT: SVG-ICON 🧱
+*/
+
+.svg-icon {
+  width: var(--w-svg-icon, auto);
+  height: var(--h-svg-icon, auto);
+}
+
+.svg-icon--arrow-to-left,
+.svg-icon--arrow-to-right {
+  --w-svg-icon: 25px;
+  --h-svg-icon: 22px;
+}
+
+.svg-icon--live-cam {
+  --w-svg-icon: 18px;
+  --h-svg-icon: 18px;
+}
+
+.svg-icon--icon-expand {
+  --w-svg-icon: 16px;
+  --h-svg-icon: 15px;
+}
+
+.svg-icon--icon-scroll-down {
+  --w-svg-icon: 15px;
+  --h-svg-icon: 19px;
+}
+
+.svg-icon--map-pin {
+  --w-svg-icon: 100px;
+  --h-svg-icon: 144px;
+}
+
+.svg-icon--map-icon  {
+  --w-svg-icon: var(--w);
+  --h-svg-icon: var(--h);
+}
+.svg-icon--map-icon-tiger     { --w: 62.6px;  --h: 52.61px; }
+.svg-icon--map-icon-lion      { --w: 52.04px; --h: 46.7px; }
+.svg-icon--map-icon-eagle     { --w: 48.16px; --h: 46.7px; }
+.svg-icon--map-icon-alligator { --w: 57.76px; --h: 46.7px; }
+.svg-icon--map-icon-lemur     { --w: 33px;    --h: 56px; }
+.svg-icon--map-icon-panda     { --w: 58.91px; --h: 43.59px; }
+.svg-icon--map-icon-coala     { --w: 42.64px; --h: 53.92px; }
+.svg-icon--map-icon-gorilla   { --w: 54.86px; --h: 46.7px; }
