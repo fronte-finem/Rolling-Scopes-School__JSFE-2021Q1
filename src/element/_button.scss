@@ -37,14 +37,18 @@
 
   cursor: pointer;
   user-select: none;
-
-  transition: color var(--time), background-color var(--time);
 }
 
 .btn {
   width: var(--w-m);
   &--long { width: var(--w-l); }
   &--free { width: var(--w-s); }
+}
+
+.btn {
+  transition: background-color var(--time),
+              color var(--time),
+              fill var(--time);
 }
 
 .btn {
@@ -84,15 +88,13 @@
   .svg-icon {
     width: 25px;
     height: 22px;
-
-    transition: fill var(--time);
   }
 
-  .svg-icon { fill: var(--clr-main-light); }
+  fill: var(--clr-main-light);
 
-  &--navy       .svg-icon { fill: var(--clr-main-navy); }
-  &--navy:hover .svg-icon { fill: var(--clr-main-light); }
+  &--navy       { fill: var(--clr-main-navy); }
+  &--navy:hover { fill: var(--clr-main-light); }
 
-  &--text       .svg-icon { fill: var(--clr-ui-1-def); }
-  &--text:hover .svg-icon { fill: var(--clr-main-light); }
+  &--text       { fill: var(--clr-ui-1-def); }
+  &--text:hover { fill: var(--clr-main-light); }
 }

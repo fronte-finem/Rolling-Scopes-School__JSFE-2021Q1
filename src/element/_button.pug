@@ -5,12 +5,12 @@ include ./_svg-icon.pug
 mixin btn-link(root, data, mods, blks)
   - data.id = 'arrow-to-right'
   +link-gen(root, data, ['btn', 'btn-link'], mods, blks)
-    +svg-icon('arrow-to-right')
+    +svg-icon(data)
 
 mixin btn-link-icon(root, data, mods, blks)
   - data.text = false
-  +link-gen(root, data, ['btn', 'btn-link', 'btn-icon'], mods, blks)
-    +svg-icon(data.id)
+  +link-gen(root, data, ['btn-icon', 'btn-link'], [...(mods || []), data.id], blks)
+    +svg-icon(data)
 
 
 mixin btn(data, mods, blks)
@@ -19,7 +19,7 @@ mixin btn(data, mods, blks)
 
 mixin btn-icon(data, mods, blks)
   - data.text = false
-  +btn-gen('button', data, ['btn', 'btn-icon'], mods, blks)
+  +btn-gen('button', data, 'btn-icon', [...(mods || []), data.id], blks)
 
 
 mixin btn-div(data, mods, blks)
@@ -28,7 +28,7 @@ mixin btn-div(data, mods, blks)
 
 mixin btn-div-icon(data, mods, blks)
   - data.text = false
-  +btn-gen('div', data, ['btn', 'btn-icon'], mods, blks)
+  +btn-gen('div', data, 'btn-icon', [...(mods || []), data.id], blks)
 
 
 mixin btn-gen(tag, data, self, mods, blks)
@@ -37,4 +37,4 @@ mixin btn-gen(tag, data, self, mods, blks)
   #{tag}(class = bem.fullClass, title = data.title)
     if data.text
       span(class = bem.elem('text'))= data.text
-    +svg-icon(data.id)
+    +svg-icon(data)
