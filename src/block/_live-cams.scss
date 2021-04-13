@@ -105,17 +105,9 @@
       &--next { justify-self: flex-start; }
 
       .btn-icon {
-        width: auto;
-        height: auto;
-        padding: 0;
-        border: none;
-        background-color: transparent;
-        transition: 300ms ease-in-out;
-
-        &:hover {
-          fill: var(--clr-ui-2-def);
-          transform: scale(1.1);
-        }
+        --color-icon-def: var(--clr-main-navy);
+        --color-icon-hov: var(--clr-ui-2-def);
+        &:hover { transform: scale(1.1); }
       }
     }
 

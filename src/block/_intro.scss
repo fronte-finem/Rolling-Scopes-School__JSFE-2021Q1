@@ -39,6 +39,9 @@
       position: absolute;
       top: 30%;
       left: 51%;
+
+      --color-icon-def: var(--clr-ui-2-hov);
+      --color-icon-hov: var(--clr-ui-1-hov);
     }
   }
 

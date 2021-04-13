@@ -32,12 +32,9 @@
     height: 80px;
 
     .btn-icon {
-      fill: var(--clr-main-light);
-      transition: 300ms ease-in-out;
-      &:hover {
-        fill: var(--clr-ui-1-def);
-        transform: scale(1.1);
-      }
+      --color-icon-def: var(--clr-main-light);
+      --color-icon-hov: var(--clr-ui-1-def);
+      &:hover { transform: scale(1.1); }
     }
 
     &-expand {

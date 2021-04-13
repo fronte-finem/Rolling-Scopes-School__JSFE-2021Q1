@@ -29,20 +29,20 @@ mixin side-bar(root, animal)
     .side-bar__menu
       .side-bar__control.side-bar__control-expand
         +bage('live', 'active')
-        +btn-icon({id: 'icon-expand'}, ['minimal'], [self])
+        +btn-icon({id: 'icon-expand'})
 
       ul.side-bar__cams
         li.cam-selector.cam-selector--current
           div(class = `cam-icon cam-self ${head.id}`, title = head.animal)
             svg
-              use(xlink:href = `#${head.id}`)
+              use(href = `#${head.id}`)
         each item in tail
           li.cam-selector
             a(class = `cam-icon cam-link ${item.id}`, href = item.link, title = item.name)
               svg
-                use(xlink:href = `#${item.id}`)
+                use(href = `#${item.id}`)
 
       .side-bar__control.side-bar__control-scroll-down
-        +btn-icon({id: 'icon-scroll-down'}, ['minimal'], [self])
+        +btn-icon({id: 'icon-scroll-down'})
 
 
