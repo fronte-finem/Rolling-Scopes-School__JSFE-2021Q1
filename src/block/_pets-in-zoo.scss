@@ -1,101 +1,162 @@
 @use '../_lib/css-var' as *;
 @use '../_lib/grid';
 @use '../_lib/font';
+@use '../element/article';
 
 /*
   ⚜️ BLOCK: PETS-IN-ZOO ⚜️
 */
 
-.pets-in-zoo {
-  background-color: var(--clr-main-light);
+.page__pets-in-zoo-background {
+  --color-bg: var(--color-main-light);
+  background-color: var(--color-bg);
 
-  @include set-vars ((
-    c2: grid.col(2),
-    c4: grid.col(4),
-    c6: grid.col(6),
-    c12: grid.col(12),
-    w-max: 1920px,
-  ));
-
+  position: relative;
   overflow-x: hidden;
+}
 
-  --a: calc((var(--w-max) - var(--c12)) / 2);
+@media screen and (min-width: 500px) {
+  .page__pets-in-zoo-mask {
+    --page-w-half: calc(var(--page-w) / 2);
+    --mask-w: calc(50% - var(--page-w-half));
+    --mask-grad-w-max: calc(960px - var(--page-w-half));
+    --mask-grad-w: min(100%, var(--mask-grad-w-max));
+    --grad: linear-gradient(90deg, transparent, var(--color-bg) var(--mask-grad-w));
 
-  .wrapper {
-    padding-top: 136px;
-    padding-bottom: 100px;
-    position: relative;
-
-    &::before {
-      content: '';
+    &--wall,
+    &--grad {
       position: absolute;
-      z-index: 999;
-      width: 9999px;
-      left: 100%;
       top: 0;
       bottom: 0;
+    }
+
+    &--left { left: 0; }
+    &--right { right: 0; }
+
+    &--wall {
+      z-index: 100101;
+      width: calc(var(--mask-w) - var(--mask-grad-w));
+      background-color: var(--color-bg);
+      pointer-events: all;
+    }
+    &--grad {
+      z-index: 100100;
+      width: var(--mask-w);
       pointer-events: none;
-      background-image: linear-gradient(to right, transparent 0px, var(--clr-main-light) var(--c4));
     }
 
-    &::after {
-      content: '';
-      position: absolute;
-      z-index: 999;
-      width: 9999px;
-      left: calc(100% + var(--a) + var(--c2));
-      top: 0;
-      bottom: 0;
-      background-color: var(--clr-main-light);
+    &--left-grad {
+      background: linear-gradient(to left, transparent, var(--color-bg) var(--mask-grad-w));
+    }
+    &--right-grad {
+      background: linear-gradient(to right, transparent, var(--color-bg) var(--mask-grad-w));
     }
   }
+}
 
+.pets-in-zoo {
+  padding: 136px 0 147px;
 
+  &__article {
+    display: grid;
+    grid-template-columns: repeat(var(--page-col), 1fr);
+    column-gap: var(--page-w-gap);
+    row-gap: 50px;
 
-  .info {
-    &__title {
-      padding-bottom: 50px;
-      @include font.h2;
-      text-align: center;
-      color: var(--clr-ui-2-def);
-    }
-
-    &__text {
-      padding: 0 calc(var(--c2) + var(--gap));
-      padding-bottom: 100px;
-      @include font.h-sub;
-      color: var(--clr-main-dark);
-      text-align: center;
-    }
+    margin-bottom: 103px;
+    text-align: center;
+  }
+  &__article-heading {
+    grid-column: 3 / span 8;
+    padding-left: 19px;
+  }
+  &__article-text {
+    grid-column: 3 / span 8;
   }
 
-  .btn-container {
+  @include article.style(h2, var(--color-ui-2-def), h-sub);
+
+  &__slider {
+    margin-bottom: 100px;
+  }
+
+  &__btn-container {
     display: flex;
     justify-content: center;
-    width: 100%;
-    padding: 50px 0;
   }
 
-  .slider {
-    &__controls {
-      max-width: var(--c12);
+
+  @media screen and (max-width: 1300px) {
+    padding: 100px 0 150px;
+
+    &__article {
+      row-gap: 30px;
+      margin-bottom: 105px;
+    }
+    &__article-heading {
+      grid-column: 2 / span 11;
+      padding-left: 0;
+    }
+    &__article-text {
+      grid-column: 1 / span var(--page-col);
+      padding: 0 calc(185px - var(--page-w-off));
     }
 
-    &__slot {
-      width: var(--c4);
+    &__slider {
+      --slider-ctrl-gap-h: 25px;
+      --slider-slot-cols: 5;
+      margin-bottom: 50px;
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    padding: 100px 0;
+
+    &__article {
+      margin-bottom: 50px;
+    }
+    &__article-heading {
+      grid-column: 2 / span 6;
+      padding-left: 0;
+    }
+    &__article-text {
+      padding: 0;
     }
 
-    &__slots {
-      position: relative;
+    &__slider {
+      --slider-ctrl-arrows-display: none;
+      --slider-slot-cols: 4;
+      --slider-move-slots: -5;
+
+      .slider__slots--row-2 {
+        display: none;
+      }
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    padding: 50px 0 65px;
+
+    &__article {
+      display: block;
+      margin-bottom: 22px;
+    }
+    &__article-heading {
+      padding-bottom: 30px;
+      letter-spacing: -0.01em;
+    }
+    &__article-text {
+      @include font.text;
+    }
+
+    &__slider {
+      margin-bottom: 0;
+    }
+
+    &__btn-container {
+      display: none;
     }
   }
 }
 
 
-/* 💩 pixel-perfect 💩 */
-.pets-in-zoo {
-  .info {
-    &__title { padding-left: 20px; }
-    &__text { min-height: 202px; }
-  }
-}

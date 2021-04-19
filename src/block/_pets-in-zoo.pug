@@ -1,20 +1,35 @@
 include ../layout/_layout-block.pug
-include ../element/_slider.pug
+include ../element/_article.pug
 include ../element/_button.pug
-include ../element/_animal-card.pug
+include ../element/_slider.pug
 
-mixin pets-in-zoo(root)
-  include ../_content/_animals.pug
-  - var controlColor = 'navy';
+mixin pets-in-zoo(root, dataAnimals)
+  -
+    const petsInZoo = new Bem('pets-in-zoo');
+    const controlColor = 'navy';
+    const articleData = {
+      lvl: 2,
+      head: 'meet some our Pets',
+      text: "Do you have a special place in your heart for animals? Who are your favorites? Perhaps you'd like to donate to special ones or all our pets? We think it's important for you to choose how your donation is used.",
+    };
+    const sliderData = {
+      cardMixin: 'card-animal',
+      cardData: dataAnimals,
+      controlColor: controlColor,
+    };
+    const btnData = { text: 'choose your favourite', link: 'pages/map.html' };
+    const masksData = [
+      ['left', 'wall', 'left-wall'], ['left', 'grad', 'left-grad'],
+      ['right', 'wall', 'right-wall'], ['right', 'grad', 'right-grad'],
+    ];
+
 
   // ⚜️ BLOCK: PETS-IN-ZOO ⚜️
-  +layout-block("div", "pets-in-zoo")
-    section.info
-      h2.info__title= "meet some our Pets"
-      p.info__text= "Do you have a special place in your heart for animals? Who are your favorites? Perhaps you'd like to donate to special ones or all our pets? We think it's important for you to choose how your donation is used."
+  +layout-block(petsInZoo.fullClass, 'div', masksData)
 
-    +gen-slider(root, 'animal-card', animals, 'double-row', controlColor)
+    +article(articleData, petsInZoo.fullClass)
 
-    .btn-container
-      -const data = {text: 'choose your favourite', link: './pages/map.html'}
-      +btn-link(root, data, [controlColor, 'long'])
+    +slider(root, sliderData, 2, [], petsInZoo.fullClass)
+
+    div(class = petsInZoo.elem('btn-container'))
+      +btn-link(root, btnData, [controlColor, 'long'])

@@ -1,13 +1,19 @@
 include ../layout/_layout-block.pug
 include ../element/_button.pug
+include ../element/_article.pug
 
 mixin hero(root)
+  -
+    const hero = new Bem('hero');
+    const dataArticle = {
+      lvl: 2,
+      head: 'Watch your favorite animal online',
+      text: 'Explore the exciting and mysterious world of wild animals in a natural setting without leaving your home.'
+    };
+    const dataLink = { text: 'view live cam', link: 'pages/zoos/panda.html' };
+
   // ⚜️ BLOCK: HERO ⚜️
-  +layout-block("div", "hero")
-    h2.title= "Watch your favorite animal online"
-
-    p.text= "Explore the exciting and mysterious world of wild animals in a natural setting without leaving your home."
-
-    .btn-container
-      -const data = {text: 'view live cam', link: 'pages/zoos/panda.html'}
-      +btn-link(root, data)
+  +layout-block(hero.fullClass)
+    +article(dataArticle, hero.fullClass)
+    div(class = hero.elem('btn-container'))
+      +btn-link(root, dataLink)

@@ -1,49 +1,51 @@
 include ../layout/_layout-block.pug
 include ../element/_control-donation.pug
+include ../element/_article.pug
 
-mixin quick-donation(root, animal)
+mixin quick-donation(root, id = '🔰')
   include ../_lib/_bem.js.pug
   -
-    const animals = [
+    const data = [
       {
-        name: 'panda',
-        title: 'make the Bamboo Donation!',
+        id: '🔰',
+        head: 'Your donation makes a difference!',
+        text: "The Online Zoo's animal webcams are some of the most famous on the internet. Tune in to watch your favourite animals — live, 24/7!",
+      },
+      {
+        id: 'panda',
+        head: 'make the Bamboo Donation!',
         text: 'Our process for bamboo donations first starts with a site evaluation. It is important that our team sees where the bamboo is growing, then determining if the bamboo is a species that our animals are currently eating. Thank you for your interest in donating bamboo for our pandas.',
       },
       {
-        name: 'lemur',
-        title: 'Provide Andy the lemur with fruits!',
+        id: 'lemur',
+        head: 'Provide Andy the lemur with fruits!',
         text: 'More than 90% of lemur species are endangered and might face extinction in the nearest future. Watch the ring-tailed lemurs play and climb in this soothing setting and support them by donating for the fruits they adore.',
       },
       {
-        name: 'eagle',
-        title: 'Keep the Bald Eagle cams Streaming!',
+        id: 'eagle',
+        head: 'Keep the Bald Eagle cams Streaming!',
         text: 'Watch as this lifelong pair of eagle parents lay and protect eggs, feed their chicks and teach them to hunt and fly. Sam & Lora have stolen the hearts of thousands of viewers! 100% of the donations from this page will be utilized directly for the streaming and operational costs of this project.',
       },
       {
-        name: 'gorilla',
-        title: 'make a difference for the gorillas!',
+        id: 'gorilla',
+        head: 'make a difference for the gorillas!',
         text: 'It is our goal to ensure the conservation and restoration of the gorilla population and their habitat in Central Africa. To do this, we need your help! Bring your food charity straight to Glen and his family.',
-      },
-      {
-        name: '🔰',
-        title: 'Your donation makes a difference!',
-        text: "The Online Zoo's animal webcams are some of the most famous on the internet. Tune in to watch your favourite animals — live, 24/7!",
       },
     ];
 
-    const name = animal || '🔰';
-    const data = animals.filter(a => a.name == name)[0];
     const self = 'quick-donation';
-    const bem = new Bem(self, [name]);
+    const mods = id === '🔰' ? [id] : [id, 'zoos'];
+    const bem = new Bem(self, mods);
+    const item = data.filter(x => x.id === id)[0];
+    item.lvl = 3;
 
   // ⚜️ BLOCK: QUICK-DONATION ⚜️
-  +layout-block("div", bem.fullClass)
-    .info
-      h3.info__title= data.title
-      p.info__text= data.text
+  +layout-block(self)
 
-    .action
-      .action__title= "Quick Donate"
-      .action__input
-        +control-donation
+    div(class = bem.elem('wrapper', mods))
+      +article(item, bem.self, mods)
+
+      div(class = bem.elem('ctrl-wrapper', mods))
+        div(class = bem.elem('ctrl-heading', mods))= "Quick Donate"
+        div(class = bem.elem('ctrl-container', mods))
+          +control-donation
