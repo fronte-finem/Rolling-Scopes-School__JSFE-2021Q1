@@ -2,6 +2,8 @@ extends ../layout/_layout-page.pug
 
 include ../layout/_layout-block.pug
 include ../element/_button.pug
+include ../element/_img.pug
+include ../element/_article.pug
 include ../block/_contact-form.pug
 
 
@@ -12,17 +14,34 @@ block page-vars
   - var root = '..'
 
 block main
-  +layout-block("div", "touch-the-animal")
-    figure.touch-the-animal__picture
-      img.touch-the-animal__img(src = "../assets/img/touch-cheetah.jpg",
-                                alt = "Hands touch the screen, which shows a cheetah close-up")
+  include ../_lib/_bem.js.pug
+  -
+    const self = 'touch-the-animal';
+    const bem = new Bem(self);
+    const imgData = {
+        link: 'assets/img/touch-cheetah-1400.jpg',
+        alt: 'Hands touch the screen, which shows a cheetah close-up',
+        sources: [
+          {link: 'assets/img/touch-cheetah-320.jpg 320w', media: '(max-width: 320px)'},
+          {link: 'assets/img/touch-cheetah-640.jpg 640w', media: '(max-width: 640px)'},
+          {link: 'assets/img/touch-cheetah-1200.jpg 1200w', media: '(max-width: 1200px)'},
+          {link: 'assets/img/touch-cheetah-1400.jpg 1400w', media: '(max-width: 1400px)'},
+        ]
+      };
+    const txtData = {
+      lvl: 2,
+      head: 'Get in touch',
+      text: "Whether you have a question, or would like to say hello, we're happy to hear from you. Please use the form to send us a message and we'll get back to you as soon as we can. Whether you have a question, or would like to say hello, we're happy to hear from you. Please use the form to send us a message and we'll get back to you as soon as we can.",
+    };
 
-  +layout-block("div", "contact-us")
-    section.info
-      h2.info__title= "Get in touch"
-      p.info__text= "Whether you have a question, or would like to say hello, we're happy to hear from you. Please use the form to send us a message and we'll get back to you as soon as we can. Whether you have a question, or would like to say hello, we're happy to hear from you. Please use the form to send us a message and we'll get back to you as soon as we can."
+  +layout-block(self)
+    div(class = bem.elem('container', 'pic'))
+      +img(root, imgData, bem)
 
-    +contact-form(root)
+    div(class = bem.elem('container', 'flex'))
 
-//- block dev
-//-   .dev-overlay.dev-grid
+      div(class = bem.elem('container', 'txt'))
+        +article(txtData, bem.self)
+
+      div(class = bem.elem('container', 'form'))
+        +contact-form(root)
