@@ -1,0 +1,114 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+@use '../_lib/font';
+
+/*
+  🧱 ELEMENT: CARD-FEED-ANIMAL 🧱
+*/
+
+.card-feed-animal {
+  --card-self-h-max-abs: var(--card-h-max-abs, 658);
+  --card-self-scale-abs: var(--card-scale-abs, 20);
+  --card-self-scale: calc(
+      (var(--card-self-h-max-abs) + 2 * var(--card-self-scale-abs))
+        / var(--card-self-h-max-abs));
+  --card-self-scale-time: var(--card-scale-time, 200ms);
+  --card-self-pic-h: var(--card-pic-h, 373px);
+  --card-self-pic-w: var(--card-pic-w, 455px);
+  --card-self-color-bg: var(--card-color-bg, var(--color-main-navy));
+  --card-self-color-txt: var(--card-color-text, var(--color-main-light));
+  --card-self-text-h: var(--card-text-h, 150px);
+  --card-self-bott-padd-h: var(--card-bott-padd-h, 50px);
+
+  @media screen and (max-width: 1400px) {
+    --card-self-h-max-abs: var(--card-h-max-abs, 638);
+    --card-self-bott-padd-h: var(--card-bott-padd-h, 40px);
+  }
+  @media screen and (max-width: 900px) {
+    --card-self-h-max-abs: var(--card-h-max-abs, 297);
+  }
+  @media screen and (max-width: 600px) {
+    --card-self-h-max-abs: var(--card-h-max-abs, 570);
+    --card-self-pic-h: var(--card-pic-h, 353px);
+    --card-self-bott-padd-h: var(--card-bott-padd-h, 35px);
+  }
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: var(--card-self-bott-padd-h);
+
+  width: 100%;
+  height: calc(var(--card-self-h-max-abs) * 1px);
+  overflow: hidden;
+
+  border-radius: 5px;
+  background-color: var(--card-self-color-bg);
+  color: var(--card-self-color-txt);
+
+  cursor: pointer;
+  transition: transform var(--card-self-scale-time) ease-in-out;
+  transform: scale(1);
+
+  &:hover { transform: scale(var(--card-self-scale)); }
+
+  @media screen and (max-width: 900px) {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 1fr auto;
+    justify-items: center;
+  }
+  @media screen and (max-width: 600px) {
+    display: flex;
+    justify-items: center;
+  }
+
+  &__pic-container {
+    flex-shrink: 0;
+    position: relative;
+    width: 100%;
+    height: var(--card-self-pic-h);
+    background: #f00;
+    overflow: hidden;
+
+    @media screen and (max-width: 900px) {
+      grid-row: 1 / span 2;
+    }
+  }
+
+  &__img {
+    z-index: 1;
+    position: absolute;
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
+  }
+
+  &__txt-container {
+    overflow: hidden;
+    max-height: var(--card-self-text-h);
+    padding: 30px 20px;
+    text-align: center;
+
+    @media screen and (max-width: 1400px) {
+      width: 100%;
+      padding: 28px 30px 28px 20px;
+    }
+    @media screen and (max-width: 900px) {
+      width: 100%;
+      padding: 30px 10px 0;
+    }
+    @media screen and (max-width: 600px) {
+      padding: 15px 30px 0;
+    }
+  }
+
+  &__btn-container {
+    flex-shrink: 0;
+    margin-top: auto;
+  }
+}
