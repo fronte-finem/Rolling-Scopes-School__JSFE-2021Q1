@@ -3,13 +3,5 @@
 }
 
 @function col-gap($c, $g) {
-  @return calc(var(--col)*#{$c} + var(--gap)*#{$g});
-}
-
-@function col-pure($n) {
-  @return col-gap-pure($n, $n - 1);
-}
-
-@function col-gap-pure($c, $g) {
-  @return calc(var(--col-pure)*#{$c} + var(--gap-pure)*#{$g});
+  @return calc(var(--page-w-col)*#{$c} + var(--page-w-gap)*#{$g});
 }

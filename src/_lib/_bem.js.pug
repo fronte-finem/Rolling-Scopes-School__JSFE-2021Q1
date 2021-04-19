@@ -1,14 +1,43 @@
 -
   class Bem {
-    constructor(self, mods, blocks) {
+    constructor(self, mods, blks) {
       this.self = Array.isArray(self) ? self : [self];
-      this.bm = this.self.flatMap(b => (mods || []).map(m => `${b}--${m}`));
-      this.be = this.self.flatMap(e => (blocks || []).map(b => `${b}__${e}`));
-      this.bem = this.be.flatMap(be => (mods || []).map(m => `${be}--${m}`));
-      this.fullClass = this.self.concat(this.bm, this.be, this.bem).join(' ');
+      this.mods = Array.isArray(mods) ? mods : (mods ? [mods] : []);
+      this.blks = Array.isArray(blks) ? blks : (blks ? [blks] : []);
     }
 
-    elem(e) {
-      return this.self.map(b => `${b}__${e}`).join(' ');
+    get bm() { return this.self.flatMap(b => this.mods.map(m => `${b}--${m}`)); }
+    get be() { return this.self.flatMap(e => this.blks.map(b => `${b}__${e}`)); }
+    get bem() { return this.be.flatMap(be => this.mods.map(m => `${be}--${m}`)); }
+
+    get fullClass() { return this.self.concat(this.bm, this.be, this.bem).join(' '); }
+
+    addMod(mod) { this.mods.push(mod); }
+    addBlk(blk) { this.blks.push(blk); }
+    addSlf(slf) { this.self.push(slf); }
+
+    elem(e, m) {
+      const mods = Array.isArray(m) ? m : (m ? [m] : []);
+      const be = Bem.addElem(this.self, e);
+      const bem = Bem.addMods(be, mods);
+      return be.concat(bem).join(' ');
+    }
+
+    elemExt(e, m) {
+      const mods = Array.isArray(m) ? m : (m ? [m] : []);
+      const sem = this.elem(e, mods);
+      const be = Bem.addSubElem(this.be, e);
+      const bem = Bem.addMods(be, mods);
+      return `${sem} ${be.join(' ')} ${bem.join(' ')}`;
+    }
+
+    static addElem(bs, e) {
+      return bs.map(b => `${b}__${e}`);
+    }
+    static addSubElem(bs, e) {
+      return bs.map(b => `${b}-${e}`);
+    }
+    static addMods(bs, ms) {
+      return bs.flatMap(b => ms.map(m => `${b}--${m}`));
     }
   }
