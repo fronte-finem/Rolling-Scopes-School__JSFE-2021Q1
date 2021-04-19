@@ -1,0 +1,40 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/font';
+
+@mixin style($head-type, $head-color, $text-type: false, $text-color: false) {
+  &__article {
+
+    &-heading {
+      @include style-selector($head-type, $head-color);
+    }
+
+    &-text {
+      @include style-selector($text-type, $text-color);
+    }
+  }
+}
+
+@mixin style-selector($font-type: false, $font-color: false) {
+  @if $font-type == h1 {
+    @include font.h1;
+  }
+  @else if $font-type == h2 {
+    @include font.h2;
+  }
+  @else if $font-type == h3 {
+    @include font.h3;
+  }
+  @else if $font-type == h-sub {
+    @include font.h-sub;
+  }
+  @else if $font-type == ui {
+    @include font.ui;
+  }
+  @else if $font-type == text {
+    @include font.text;
+  }
+
+  @if $font-color {
+    color: $font-color;
+  }
+}

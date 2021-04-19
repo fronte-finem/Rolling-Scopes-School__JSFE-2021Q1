@@ -20,14 +20,14 @@
     }
   }
   &__required {
-    color: var(--clr-ui-1-def);
+    color: var(--color-ui-1-def);
   }
 
   &__error {
     display: none;
     position: absolute;
     bottom: -25px;
-    color: var(--clr-ui-1-def);
+    color: var(--color-ui-1-def);
 
     &-msg {
       text-transform: capitalize;
@@ -36,13 +36,17 @@
 
   &__base {
     padding: 16px 20px;
-    border: 1px solid var(--clr-main-dark);
+    border: 1px solid var(--color-main-dark);
     border-radius: 5px;
 
     @include font.text;
 
     &::placeholder {
       color: #969696;
+    }
+
+    @media (max-width: 500px) {
+      padding: 8px 10px;
     }
   }
 }
@@ -55,6 +59,6 @@
 
   &__base {
     background: rgba(245, 128, 33, 0.2);
-    border: 1px solid var(--clr-ui-1-def);
+    border: 1px solid var(--color-ui-1-def);
   }
 }
