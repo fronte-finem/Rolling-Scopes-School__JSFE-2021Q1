@@ -1,11 +1,16 @@
 const path = require('path');
 const { src, dest, watch, series } = require('gulp');
+const changed = require('gulp-changed');
+const imagemin = require('gulp-imagemin');
 const pugDependency = require('pug-dependency');
 const execa = require('execa');
 const del = require('del');
 
 const srcDir = 'src';
-const dstDir = 'online-zoo';
+// const dstDir = 'online-zoo';
+const dstDir = 'r:/online-zoo';
+const srcAssets = `${srcDir}/assets/**`;
+const dstAssets = `${dstDir}/assets`;
 const srcPug = `${srcDir}/**/*.pug`;
 const srcSCSS = `${srcDir}/**/*.scss`;
 
@@ -19,9 +24,30 @@ function getAbsDstDir(absSrcFile) {
   return absDstDir;
 }
 
+function cpyAssets(cb) {
+  src(srcAssets)
+    .pipe(changed(dstAssets))
+    .pipe(imagemin([
+        imagemin.gifsicle({interlaced: true}),
+        imagemin.mozjpeg({quality: 75, progressive: true}),
+        imagemin.optipng({optimizationLevel: 5}),
+        imagemin.svgo({
+          plugins: [
+            {removeViewBox: false},
+            {cleanupIDs: false}
+          ]
+        })
+      ],
+      {verbose: true}))
+    .pipe(dest(dstAssets))
+  cb();
+}
+
 async function cleanDst(cb) {
   try {
-    const deleted = await del([`${dstDir}/**`, `!${dstDir}`, `!${dstDir}/assets`]);
+    const paths = [`${dstDir}/**`, `!${dstDir}`, `!${dstDir}/assets`];
+    const opts = { force: true };
+    const deleted = await del(paths, opts);
     console.log('Deleted:\n', deleted.join('\n'));
     cb();
   } catch (error) {
@@ -75,12 +101,8 @@ async function buildSCSS(cb) {
 
 exports.clean = cleanDst;
 
-exports.build = series(cleanDst, buildPug, buildSCSS);
+exports.build = series(cleanDst, cpyAssets, buildPug, buildSCSS);
 
 exports.watch = function () {
-  const pugWatcher = watch(srcPug);
-  pugWatcher.on('add', pugAdded);
-  pugWatcher.on('change', pugChanged);
-
   watch(srcSCSS, buildSCSS);
 }

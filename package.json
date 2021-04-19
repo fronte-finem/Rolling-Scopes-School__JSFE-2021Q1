@@ -20,6 +20,9 @@
     "del": "^6.0.0",
     "execa": "^5.0.0",
     "gulp": "^4.0.2",
+    "gulp-changed": "^4.0.2",
+    "gulp-imagemin": "^7.1.0",
+    "prettier": "^2.2.1",
     "pug-dependency": "^1.0.1"
   }
 }
