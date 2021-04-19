@@ -1,14 +1,35 @@
 include ../layout/_layout-block.pug
 include ../element/_logo.pug
+include ../element/_button.pug
 include ../element/_nav-menu.pug
 include ../element/_social-media-links.pug
 
 mixin header(root, page)
-  - let self = 'header'
-  - let design = {text:'design', link:'https://www.figma.com/file/lnK11foY8Aoa6oOlDXovVN/Online-ZOO-Project'}
+  include ../_lib/_bem.js.pug
+  -
+    const self = 'header';
+    const header = new Bem(self);
+    const design = {
+      text:'design',
+      link:'https://www.figma.com/file/lnK11foY8Aoa6oOlDXovVN/Online-ZOO-Project'
+    };
+    const btnData = { id: 'icon-hamburger' };
 
   // ⚜️ BLOCK: HEADER ⚜️
   +layout-block(self, self)
-    +logo-main(root)
-    +nav-menu(root, self, page, [design])
-    +social-media-links
+
+    div(class = header.elem('container', 'logo'))
+      +logo-main(root, self)
+
+    div(class = header.elem('separator', 'first'))
+
+    div(class = header.elem('container', 'menu'))
+      +nav-menu(root, self, page, [design])
+
+    div(class = header.elem('separator', 'second'))
+
+    div(class = header.elem('container', 'social-links'))
+      +social-media-links(self)
+
+    div(class = header.elem('container', 'hamburger'))
+      +btn-icon(btnData, [], self)

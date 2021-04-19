@@ -4,79 +4,146 @@
   ⚜️ BLOCK: FOOTER ⚜️
 */
 
-.footer {
-  @include set-vars((
-    h-top: 214px,
-    footer-inner-pad: 0px,
-    footer-gap-top: 100px,
-    footer-gap-logo: 65px,
-    footer-gap-copy: 50px,
-  ));
+.page__footer-background {
+  --footer-color-bg: var(--color-main-navy);
+  --footer-color-main: var(--color-main-light);
+
+  background-color: var(--footer-color-bg);
+  color: var(--footer-color-main);
+}
+.page__footer-wrapper {
+  @media screen and (max-width: 1500px) {
+    max-width: 100%;
+  }
 }
 
 .footer {
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  min-height: var(--page-h-footer);
+  height: 100%;
+
+  @media screen and (max-width: 1500px) {
   }
-  .footer__top { height: var(--h-top); }
-  .footer__bottom { flex-grow: 1; }
-
-  width: 100%;
-  @include use-vars((
-    height: h-footer,
-    background-color: clr-main-navy,
-    color: clr-main-light,
-  ));
-
-  .footer__top {
-    display: flex;
-    align-items: center;
-    column-gap: var(--footer-gap-top);
-    width: 100%;
-    padding: 0 var(--footer-inner-pad);
-    border-bottom: 1px solid var(--clr-main-light);
+  @media screen and (max-width: 1000px) {
   }
-  .nav-menu { flex-grow: 1; }
-
-  .logo__items {
-    display: flex;
-    column-gap: var(--footer-gap-logo);
-    align-items: center;
+  @media screen and (max-width: 500px) {
   }
 
-  .logo-link {
-    color: var(--clr-main-light);
-  }
-  .logo-link:hover {
-    color: var(--clr-ui-1-def);
-  }
-
-  &__link {
-    color: var(--clr-main-light);
-    &:hover { color: var(--clr-ui-1-def); }
-  }
-
-  .footer__bottom {
+  &__wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 var(--footer-inner-pad);
+    column-gap: 35px;
+    row-gap: 35px;
+
+    &--top { padding-top: 70px; }
+    &--bottom { padding-top: 38px; }
+
+    @media screen and (max-width: 1500px) {
+      max-width: var(--page-w);
+      margin: 0 auto;
+    }
+
+    @media screen and (max-width: 1150px) {
+      flex-direction: column;
+      padding-top: 50px;
+
+      &--top { row-gap: 50px; }
+    }
+
+    @media screen and (max-width: 500px) {
+      row-gap: 30px;
+
+      &--bottom {
+        max-width: 100%;
+        padding-top: 25px;
+      }
+    }
   }
 
-  .copyright__items {
+  &__container {
+    flex: 1 1;
+    width: 100%;
+
+    &--logo         { max-width: 414px; }
+    &--menu         { max-width: 426px; }
+    &--btn          { max-width: 360px; }
+    &--copyright    { max-width: 448px; }
+    &--social-links { max-width: 200px; }
+
+    @media screen and (max-width: 1150px) {
+      &--logo         { max-width: 445px; }
+      &--menu         { max-width: 445px; }
+      &--social-links { max-width: 220px; }
+      &--copyright    { order: 3; }
+      &--btn { margin: -4px 0 4px; }
+    }
+
+    @media screen and (max-width: 500px) {
+      &--logo         { max-width: 445px; }
+      &--menu         { max-width: 100%; }
+      &--copyright    { order: 3; }
+      &--btn {
+        .btn {
+          text-transform: capitalize;
+        }
+      }
+    }
+  }
+
+  &__separator {
+    border-bottom: 1px solid var(--footer-color-main);
+
+    &--first { padding-top: 70px; }
+    &--second { display: none; }
+
+    @media screen and (max-width: 1150px) {
+      &--first { padding-top: 45px; }
+    }
+
+    @media screen and (max-width: 500px) {
+      &--first { display: none; }
+      &--second {
+        display: block;
+        width: 100%;
+      }
+    }
+  }
+
+  &__logo-slots {
     display: flex;
-    column-gap: var(--footer-gap-copy);
+    justify-content: space-between;
+
+    @media screen and (max-width: 500px) {
+      flex-direction: column;
+      align-items: center;
+      row-gap: 30px;
+    }
   }
 
-  .copyright__item::before {
-    content: '© ';
+  &__copyright-items {
+    display: flex;
+    justify-content: space-between;
+
+    @media screen and (max-width: 500px) {
+      flex-direction: column;
+      align-items: center;
+      row-gap: 30px;
+    }
   }
 
-  .social-media {
-    &__items {
-      column-gap: 40px;
+  &__logo-link {
+    --color-logo-def: var(--color-main-light);
+    --color-logo-hov: var(--color-ui-1-def);
+  }
+  &__nav-menu {
+    --color-link-def: var(--color-main-light);
+    --color-link-hov: var(--color-ui-2-def);
+  }
+
+  .nav-menu__link {
+    @media screen and (max-width: 500px) {
+      font-size: 16px;
+      line-height: 20px;
     }
   }
 }

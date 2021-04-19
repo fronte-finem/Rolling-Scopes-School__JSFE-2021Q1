@@ -5,36 +5,40 @@ include ../element/_social-media-links.pug
 include ../element/_button.pug
 
 mixin footer(root, page)
+  include ../_lib/_bem.js.pug
   -
     const self = 'footer';
+    const footer = new Bem(self);
+    const cpyData = ['2021 DinaK', 'Yem Digital', 'RSSchool'];
+    const copyrightData = cpyData.map(x => `© ${x}`);
     const logosData = [
-      {
-        id: 'main',
-        title: 'Online Zoo',
-        link: root,
-      },
-      {
-        id: 'yem-digital',
-        title: 'Yem Digital',
-      },
-      {
-        id:'rs-school-js',
-        title:'Rolling Scopes School',
-      }
+      { id: 'online-zoo',  title: 'Online Zoo', link: '', },
+      { id: 'yem-digital', title: 'Yem Digital', },
+      { id:'rs-school-js', title: 'Rolling Scopes School', },
     ];
+
 
   // ⚜️ BLOCK: FOOTER ⚜️
   +layout-block(self, self)
-    .footer__top
-      ul.logo__items
-        each data in logosData
-          li.logo__item
-            +logo(data)
-      +nav-menu(root, self)
-      +btn({text: 'donate for volunteers'}, ['white', 'long'])
 
-    .footer__bottom
-      ul.copyright__items
-        each item in ['2021 DinaK', 'Yem Digital', 'RSSchool']
-          li.copyright__item= item
-      +social-media-links()
+    div(class = footer.elem('wrapper', 'top'))
+      div(class = footer.elem('container', 'logo'))
+        ul(class = footer.elem('logo-slots'))
+          each data in logosData
+            li(class = footer.elem('logo-slot'))
+              +logo(root, data, self)
+      div(class = footer.elem('container', 'menu'))
+        +nav-menu(root, self)
+      div(class = footer.elem('container', 'btn'))
+        +btn({text: 'donate for volunteers'}, ['white', 'long'])
+
+    div(class = footer.elem('separator', 'first'))
+
+    div(class = footer.elem('wrapper', 'bottom'))
+      div(class = footer.elem('container', 'copyright'))
+        ul(class = footer.elem('copyright-items'))
+          each text in copyrightData
+            li(class = footer.elem('copyright-item'))= text
+      div(class = footer.elem('container', 'social-links'))
+        +social-media-links()
+      div(class = footer.elem('separator', 'second'))
