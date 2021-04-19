@@ -19,27 +19,27 @@
     border-radius: 5px;
 
     & {
-      --color-icon-def: var(--clr-ui-1-def);
-      --color-icon-hov: var(--clr-main-light);
+      --color-icon-def: var(--color-ui-1-def);
+      --color-icon-hov: var(--color-main-light);
 
-      &       { border-color: var(--clr-ui-1-def); }
-      &:hover { background-color: var(--clr-ui-1-def); }
+      &       { border-color: var(--color-ui-1-def); }
+      &:hover { background-color: var(--color-ui-1-def); }
     }
 
     &--white {
-      --color-icon-def: var(--clr-main-light);
-      --color-icon-hov: var(--clr-main-navy);
+      --color-icon-def: var(--color-main-light);
+      --color-icon-hov: var(--color-main-navy);
 
-      &       { border-color: var(--clr-main-light) }
-      &:hover { background-color: var(--clr-main-light); }
+      &       { border-color: var(--color-main-light) }
+      &:hover { background-color: var(--color-main-light); }
     }
 
     &--navy {
-      --color-icon-def: var(--clr-main-navy);
-      --color-icon-hov: var(--clr-main-light);
+      --color-icon-def: var(--color-main-navy);
+      --color-icon-hov: var(--color-main-light);
 
-      &       { border-color: var(--clr-main-navy) }
-      &:hover { background-color: var(--clr-main-navy); }
+      &       { border-color: var(--color-main-navy) }
+      &:hover { background-color: var(--color-main-navy); }
     }
   }
 }

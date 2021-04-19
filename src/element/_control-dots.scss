@@ -1,0 +1,44 @@
+.control-dots {
+  --control-dots-self-color-main: var(--control-dots-color-main, var(--color-main-light));
+
+  display: flex;
+  column-gap: 20px;
+
+  &__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    transition: 200ms;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 0 15px 5px var(--color-ui-1-def);
+    }
+
+    &--active:hover {
+      box-shadow: none;
+      cursor: default;
+    }
+  }
+
+  &__dot {
+    width: 8px;
+    height: 8px;
+    border: 1px solid var(--control-dots-self-color-main);
+    border-radius: 50%;
+    background: none;
+    transition: 200ms;
+
+    &:hover,
+    &--active {
+      background: var(--control-dots-self-color-main);
+    }
+  }
+}
