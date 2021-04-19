@@ -1,6 +1,17 @@
-mixin layout-block(tag, cls)
-  #{tag}(class = cls)
-    div.layout
-      div.wrapper
-        - var cls = cls;
+mixin layout-block(cls, tag = 'div', masks = null)
+  -
+    const a = 'page__block';
+    const b = `page__${cls}`;
+
+  div(class = `${a}-background ${b}-background`)
+
+    if masks
+      each mask in masks
+        -
+          const m = Array.isArray(mask) ? mask : [mask];
+          const c = m.map(x => `${b}-mask--${x}`).join(' ');
+        div(class = `${a}-mask ${b}-mask ${c}`)
+
+    div(class = `${a}-wrapper ${b}-wrapper`)
+      #{tag}(class = cls)
         block

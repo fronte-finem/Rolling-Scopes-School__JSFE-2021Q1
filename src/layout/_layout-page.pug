@@ -1,7 +1,9 @@
 include ./_head.pug
 include ./_layout-block.pug
+include ../develop/_dev.pug
 include ../block/_header.pug
 include ../block/_footer.pug
+
 
 doctype html
 html(lang="en")
@@ -17,7 +19,8 @@ html(lang="en")
   body
     // 🔰 LAYOUT: PAGE 🔰
     .page
-      block dev
+      //- block dev
+      //-   +dev-grid(12)
 
       +header(root, page)
 

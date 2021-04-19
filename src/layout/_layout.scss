@@ -6,47 +6,70 @@
    🏗️ 🏗️ 🏗️ 🏗️
 */
 
-$columns: 12;
-$gap: 40px;
-$col: 80px;
-$gap-pure: 40;
-$col-pure: 80;
-
 .page {
-  @include set-vars((
-    h-header: 110px,
-    h-footer: 329px,
-    w-page-max: 1400px,
-    col: $col,
-    gap: $gap,
-    col-pure: $col-pure,
-    gap-pure: $gap-pure,
-    columns: $columns,
-  ));
-}
+  --page-h-header: 110px;
+  --page-h-footer: 329px;
 
-// @for $i from 6 through 0 {
-//   @media screen and (max-width: 1200px + $i * 120px) {
-//     .page {
-//       @include set-var(gap, 20px + $i * 3px);
-//     }
-//   }
-// }
+  @media screen and (max-width: 1500px) {
+    --page-h-footer: 329px;
+  }
+  @media screen and (max-width: 1000px) {
+    --page-h-footer: 545px;
+  }
+  @media screen and (max-width: 500px) {
+    --page-h-footer: 710px;
+  }
+
+  @media screen and (max-width: 1200px) {
+    --page-h-header: 110px;
+  }
+  @media screen and (max-width: 640px) {
+    --page-h-header: 110px;
+  }
+  @media screen and (max-width: 320px) {
+    --page-h-header: 110px;
+  }
+
+  --page-w-max: 1400px;
+  --page-w-off: 0px;
+  --page-w-gap: 40px;
+  --page-col: 12;
+
+  --page-w: calc(var(--page-w-max) - 2 * var(--page-w-off));
+
+  --page-w-gaps: calc((var(--page-col) - 1) * var(--page-w-gap));
+  --page-w-col: calc((var(--page-w) - var(--page-w-gaps)) / var(--page-col));
+
+  @media screen and (max-width: 1500px) {
+    --page-w-off: 40px;
+    --page-w-gap: 20px;
+    --page-col: 12;
+    --page-w-max: 100vw;
+  }
+
+  @media screen and (max-width: 1000px) {
+    --page-w-off: 20px;
+    --page-w-gap: 20px;
+    --page-col: 8;
+  }
+
+  @media screen and (max-width: 500px) {
+    --page-w-off: 10px;
+    --page-w-gap: 20px;
+    --page-col: 4;
+  }
+}
 
 .page {
   width: 100%;
   min-height: 100vh;
   display: grid;
-  grid-template-rows: var(--h-header) 1fr var(--h-footer);
+  grid-template-rows: var(--page-h-header) 1fr minmax(var(--page-h-footer), auto);
 }
 
-.layout {
-  max-width: var(--w-page-max);
+.page__block-wrapper {
+  max-width: var(--page-w);
   width: 100%;
   height: 100%;
   margin: 0 auto;
-}
-
-.wrapper {
-  width: 100%;
 }
