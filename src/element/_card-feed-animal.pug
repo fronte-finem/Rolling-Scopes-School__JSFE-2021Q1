@@ -1,0 +1,21 @@
+include ./_button.pug
+include ./_img.pug
+
+mixin card-feed-animal(root, data)
+  include ../_lib/_bem.js.pug
+  -
+    const feedAnimals = new Bem('card-feed-animal', data.id);
+    const onClick = "this.querySelector('.btn').click()";
+    const imgData = { link: data.img.link, alt: `${data.id} — ${data.name}` };
+    const btnData = { link: data.link, text: 'feed' };
+
+  div(class = feedAnimals.fullClass, onclick != onClick)
+
+    div(class = feedAnimals.elem('pic-container'))
+      +img(root, imgData, feedAnimals)
+
+    div(class = feedAnimals.elem('txt-container'))
+      div(class = feedAnimals.elem('text'))!= data.text
+
+    div(class = feedAnimals.elem('btn-container'))
+      +btn-link(root, btnData, ['text', 'free'])

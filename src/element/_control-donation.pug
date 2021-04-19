@@ -1,12 +1,20 @@
 include ./_button.pug
 
 mixin control-donation()
-  - var h = 'this.value = this.value.substring(0,4)'
-  .control-donation
-    .sign= "$"
-    input.amount(type = "number",
-                 placeholder = "donation amount",
-                 min = "1",
-                 max = "9999",
-                 oninput = h)
-    +btn('button', '', 'orange', 'free')
+  include ../_lib/_bem.js.pug
+  -
+    const self = 'control-donation';
+    const bem = new Bem(self);
+    const h = 'this.value = this.value.substring(0,4)';
+
+  div(class = self)
+    div(class = bem.elem('sign'))= "$"
+    div(class = bem.elem('input-container'))
+      input(class = bem.elem('input')
+            type = "number",
+            placeholder = "donation amount",
+            min = "1",
+            max = "9999",
+            oninput = h)
+    div(class = bem.elem('btn-container'))
+      +btn({}, ['orange', 'free'])

@@ -11,31 +11,42 @@ block page-vars
   - var root = '..'
 
 block main
-  +layout-block("div", "map-header")
-    h2.title= 'find where are the animals live'
+  +layout-block("title")
+    h2(class = 'title__heading')= 'find where are the animals live'
 
   -
-    var data = [
-      { name: 'panda', active: true, link: './zoos/panda.html', title: 'Giant panda 🐼\nSouth Central China'},
-      { name: 'gorilla', active: true, link: './zoos/gorilla.html', title: 'Gorilla 🦍\nRainforests in Africa'},
-      { name: 'eagle', active: true, link: './zoos/eagle.html', title: 'Bald eagle 🦅\nNorth America'},
-      { name: 'lemur', active: true, link: './zoos/lemur.html', title: 'Lemur \nMadagascar'},
-      { name: 'alligator', active: false, link: '', title: 'American alligator 🐊\nSoutheastern United States'},
-      { name: 'tiger', active: false, link: '', title: 'Tiger 🐯\n Southeast Asia'},
-      { name: 'lion', active: false, link: '', title: 'Lion 🦁\nAfrica '},
-      { name: 'coala', active: false, link: '', title: 'Koala \nAustralia'},
+    const self = 'map';
+    const linked = new Set(['panda', 'gorilla', 'eagle', 'lemur', ]);
+    const data = [
+      { id: 'eagle',     title: 'Bald eagle 🦅\nNorth America' },
+      { id: 'alligator', title: 'American alligator 🐊\nSoutheastern United States' },
+      { id: 'lion',      title: 'Lion 🦁\nAfrica ' },
+      { id: 'gorilla',   title: 'Gorilla 🦍\nRainforests in Africa' },
+      { id: 'lemur',     title: 'Lemur \nMadagascar' },
+      { id: 'panda',     title: 'Giant panda 🐼\nSouth Central China' },
+      { id: 'tiger',     title: 'Tiger 🐯\n Southeast Asia' },
+      { id: 'coala',     title: 'Koala \nAustralia' },
     ];
+    data.forEach(x => linked.has(x.id) && (x.link = `pages/zoos/${x.id}`));
 
-  +layout-block("div", "map")
+  +layout-block(self)
     include ../svg/_map.svg.pug
     each item in data
-      if item.active
-        +btn-map-pin('a', {href: item.link, title: item.title}, item.name, 'active')
+      -
+        const svgData = {
+            id: 'map-pin',
+            title: item.title,
+            icons: [
+              {
+                id: `map-icon-${item.id}`,
+                cls: 'map-icon'
+              }
+            ]
+          }
+      if item.link
+        +btn-link-icon(root, svgData, [item.id])
       else
-        +btn-map-pin('div', {title: item.title}, item.name)
+        +btn-icon(svgData, [item.id])
 
 block svg-sprite
   include ../svg/_sprite-map-pin.svg.pug
-
-//- block dev
-//-   .dev-overlay.dev-grid

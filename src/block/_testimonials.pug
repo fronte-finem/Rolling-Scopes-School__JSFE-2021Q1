@@ -1,19 +1,36 @@
 include ../layout/_layout-block.pug
-include ../element/_slider.pug
+include ../element/_article.pug
 include ../element/_button.pug
-include ../element/_testimonial-card.pug
+include ../element/_slider.pug
 
-mixin testimonials
-  include ../_content/_testimonials.pug
-  - var controlColor = 'white';
+mixin testimonials(root, dataTestimonials)
+  -
+    const testimonials = new Bem('testimonials');
+    const controlColor = 'white';
+    const articleData = {
+      lvl: 2,
+      head: 'what our<br> users think',
+      text: "We are continuously striving to improve the experiences of our future guests. Below you can leave your own feedback, or simply view feedback from past clients.",
+    };
+    const sliderData = {
+      cardMixin: 'card-testimonial',
+      cardData: dataTestimonials,
+      controlColor: controlColor,
+      controlDotsNum: 4,
+    }
+    const btnData = { text: 'leave feedback' };
+    const masksData = [
+      ['left', 'grad', 'left-grad'],
+      ['right', 'grad', 'right-grad'],
+    ];
 
   // ⚜️ BLOCK: TESTIMONIALS ⚜️
-  +layout-block("div", "testimonials")
-    section.info
-      h2.info__title= "what our users think"
-      p.info__text= "We are continuously striving to improve the experiences of our future guests. Below you can leave your own feedback, or simply view feedback from past clients."
+  +layout-block(testimonials.fullClass, 'div', masksData)
 
-    +gen-slider('testimonial-card', testimonials, 'double-row', controlColor)
+    div(class = testimonials.elem('main-container'))
+      +article(articleData, testimonials.fullClass)
 
-    .btn-container
-      +btn('a', {text: 'leave feedback'}, controlColor, 'long')
+      +slider(root, sliderData, 2, [], testimonials.fullClass)
+
+    div(class = testimonials.elem('btn-container'))
+        +btn(btnData, [controlColor, 'long'])

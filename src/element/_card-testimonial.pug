@@ -1,0 +1,14 @@
+include ./_article.pug
+
+mixin card-testimonial(root, data)
+  include ../_lib/_bem.js.pug
+  -
+    const card = new Bem('card-testimonial');
+    const txtData = { head: `${data.city}, ${data.date}`, text: data.text, lvl: 4 };
+
+
+  div(class = card.fullClass)
+
+    +article(txtData, card.self)
+
+    div(class = card.elem('name'))= data.name

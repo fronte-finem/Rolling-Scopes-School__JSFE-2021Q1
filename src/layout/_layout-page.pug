@@ -1,25 +1,28 @@
 include ./_head.pug
 include ./_layout-block.pug
+include ../develop/_dev.pug
 include ../block/_header.pug
 include ../block/_footer.pug
+
 
 doctype html
 html(lang="en")
   block page-vars
-    - var page = "X-Y-Z";
+    - var root = '.';
     - var file = "X-Y-Z";
+    - var page = "X-Y-Z";
     - var title = "🐾";
-    - var root = '.'
 
-  +head(title, root, file)
+  +head(root, file, title)
     block head
 
   body
     // 🔰 LAYOUT: PAGE 🔰
     .page
-      block dev
+      //- block dev
+      //-   +dev-grid(12)
 
-      +header(page, root)
+      +header(root, page)
 
       // 👑 BLOCK: MAIN 👑
       main.main
@@ -27,7 +30,7 @@ html(lang="en")
         h1.site-title.visible-hidden= "Online-Zoo"
         block main
 
-      +footer(page, root)
+      +footer(root, page)
 
     .svg-sprite(style = 'display: none')
       // 🚧 🚧 🚧 (っ◔◡◔)っ 🅢🅥🅖 🅢🅟🅡🅘🅣🅔 (✿◡‿◡) 🚧 🚧 🚧

@@ -2,56 +2,74 @@ include ../layout/_layout-block.pug
 include ../element/_button.pug
 include ../element/_youtube-player.pug
 include ../element/_bage.pug
+include ../block/_side-bar.pug
 
-mixin live-cams(animal)
+mixin live-cams(root, animal)
+  include ../_lib/_bem.js.pug
   -
-    var animals = [
+    const bem = new Bem('live-cams');
+    const animals = [
       {
         name: 'panda',
         title: 'live panda cams',
-        main: 'D0eqnda8dOk',
-        cams: ['YgFFo1-X8zY', 'OObOQ2GElhA', '65JHo3Cy2tY'],
+        cams: ['OObOQ2GElhA', 'YgFFo1-X8zY', '65JHo3Cy2tY'],
       },
       {
         name: 'eagle',
         title: 'bald eagle cams',
-        main: 'XfoUF8YkB7A',
-        cams: ['eTAsANPVqB8', 'j0aIpk6RtQg', 'nmJKl8iKI1Q'],
+        cams: ['XfoUF8YkB7A', 'eTAsANPVqB8', 'nmJKl8iKI1Q'],
       },
       {
         name: 'gorilla',
         title: 'gorillas cams',
-        main: 'rgXWDk7rh4w',
-        cams: ['0P3w8mHiVy0', 'sapfpA9z5PQ', 'CBivU2LHaAU'],
+        cams: ['sapfpA9z5PQ', '0P3w8mHiVy0', 'rgXWDk7rh4w'],
       },
       {
         name: 'lemur',
         title: 'lemurs cams',
-        main: 'vw2Spqhk4AY',
-        cams: ['3MtsSkBWCfc', '2M1BmfHlOEI', '2w-8DnczSLI'],
+        cams: ['vw2Spqhk4AY', '2M1BmfHlOEI', '2w-8DnczSLI'],
       },
     ];
-
-    data = animals.filter(a => a.name == animal)[0];
+    const data = animals.filter(a => a.name == animal)[0];
 
   // ⚜️ BLOCK: LIVE-CAM ⚜️
-  +layout-block("div", "live-cams")
-    .live-cams__heading
-      h2.live-cams__title= data.title
-      .btn-container
-        +btn('button', {text: 'donate now'})
-    +youtube-player('main-cam', data.main)
+  +layout-block(bem.fullClass)
 
-    .live-cams__cams
-      h3.title= 'more live views'
-      .live-cams__slider.slider
-        .slider__control.slider__control--prev
-          +btn-icon('button', 'arrow-to-left', {}, 'navy', 'prev')
-        .slider__control.slider__control--next
-          +btn-icon('button', 'arrow-to-right', {}, 'navy', 'next')
-        ul.slider__slots
-          each item, ix in data.cams
-            li.slider__slot
-              +youtube-player(`cam-${ix+1}`, item)
-              .slider__overlay
-              +bage(`cam ${ix+1}`)
+    +side-bar(root, animal)
+
+    div(class = bem.elem('wrapper', 'header'))
+      div(class = bem.elem('separator', 'header'))
+      div(class = bem.elem('container', 'heading'))
+        h2(class = bem.elem('heading'))= data.title
+      div(class = bem.elem('container', ['btn', 'btn-first', 'header']))
+        +btn({text: 'donate now'})
+
+    div(class = bem.elem('wrapper', 'main-cam'))
+      +youtube-player(data.cams[0], 'main-cam', bem.self)
+
+    div(class = bem.elem('container', ['btn', 'btn-second']))
+      +btn({text: 'donate now'})
+
+    div(class = bem.elem('wrapper', 'cam-slider'))
+      div(class = bem.elem('container', 'sub-heading'))
+        h3(class = bem.elem('sub-heading'))= 'More live views'
+      div(class = bem.elem('slider'))
+        div(class = bem.elem('container', ['control', 'control-prev']))
+          +btn-icon({id: 'arrow-to-left'}, ['navy', 'prev'], bem.self)
+        div(class = bem.elem('container', ['control', 'control-next']))
+          +btn-icon({id: 'arrow-to-right'}, ['navy', 'next'], bem.self)
+        div(class = bem.elem('container', 'slots'))
+          ul(class = bem.elem('slots'))
+            each id, ix in data.cams
+              - const slotMods = [`${ix+1}`];
+              - const active = (ix === 0 ? 'active' : false);
+              - active && slotMods.push(active);
+              li(class = bem.elem('slot', slotMods))
+                - const playerMods = ['slider-cam', `slider-cam-${ix+1}`];
+                +youtube-player(id, playerMods, bem.self)
+                div(class = bem.elem('slot-overlay', active))
+                - const txt = `cam ${ix+1}`
+                +bage(txt, txt, bem.self)
+
+    div(class = bem.elem('container', ['btn', 'btn-third']))
+      +btn({text: 'donate now'})

@@ -1,0 +1,13 @@
+-
+  function getLink(root, data) {
+    const link = data.link;
+    if (link === null || link === undefined) {
+      return link;
+    } else {
+      return isExternal(link) ? link : `${root}/${link}`;
+    }
+  }
+
+  function isExternal(link) {
+    return /^[^:]+:\/{2}/.test(link);
+  }

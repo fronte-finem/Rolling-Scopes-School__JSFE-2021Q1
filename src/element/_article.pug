@@ -1,0 +1,10 @@
+mixin article(data, blks, mods)
+  include ../_lib/_bem.js.pug
+  -
+    const self = 'article';
+    const bem = new Bem(self, mods, blks);
+    const hx = `h${data.lvl || 2}`;
+
+  article(class = bem.fullClass)
+    #{hx}(class = bem.elemExt('heading', mods))!= data.head
+    p(class = bem.elemExt('text', mods))!= data.text

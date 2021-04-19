@@ -1,49 +1,38 @@
-mixin btn(tag, data, ...mods)
-  +gen-btn(tag, 'btn', data, ...mods)
-    svg(class = 'svg-icon', viewBox = '0 0 25 22', x = '0', y = '0')
-      use(class = 'icon__arrow-to-right', xlink:href = '#arrow-to-right')
-
-mixin btn-icon(tag, id, data, ...mods)
-  +gen-btn(tag, 'btn-icon', data, ...mods)
-    svg(class = 'svg-icon', x = '0', y = '0')
-      use(class = `icon__${id}`, xlink:href = `#${id}`)
-
-mixin btn-map-pin(tag, data, ...mods)
-  +gen-btn(tag, 'btn-map-pin', data, ...mods)
-    svg(class = 'svg-map-pin', viewBox = '0 0 100 144')
-      use(class = 'icon__map-pin', xlink:href = '#map-pin')
+include ./_link.pug
+include ./_svg-icon.pug
 
 
-mixin gen-btn(tag, cls, data, ...mods)
-  - var h = 'console.log(this, event); event.cancelBubble = true'
-  - var c = cls + ' ' + mods.map(x => `${cls}--${x}`).join(' ')
-  - var text = data.text || ''
+mixin btn-link(root, data, mods, blks, disabled = false)
+  - data.id = 'arrow-to-right'
+  +gen-link(root, data, ['btn', 'btn-link'], mods, blks, disabled)
+    +svg-icon(data)
 
-  if tag == 'a'
-    +gen-a(c, data.href, data.title, text, h)
-        if block
-          block
-  else
-    +gen-tag(tag, c, data.title, text, h)
-        if block
-          block
+mixin btn-link-icon(root, data, mods, blks, disabled = false)
+  +gen-link-icon(root, data, ['btn-icon', 'btn-link'], mods, blks, disabled)
 
-mixin gen-a(cls, href, title, text, onclick)
-    if title
-      a(class = cls, href = href, title = title, onclick = h)= text
-        if block
-          block
-    else
-      a(class = cls, href = href, onclick = h)= text
-          if block
-            block
 
-mixin gen-tag(tag, cls, title, text, onclick)
-    if title
-      #{tag}(class = cls, title = title, onclick = h)= text
-        if block
-          block
-    else
-      #{tag}(class = cls, onclick = h)= text
-          if block
-            block
+mixin btn(data, mods, blks)
+  - data.id = 'arrow-to-right'
+  +gen-btn('button', data, 'btn', mods, blks)
+
+mixin btn-icon(data, mods, blks)
+  - data.text = false
+  +gen-btn('button', data, 'btn-icon', [...(mods || []), data.id], blks)
+
+
+mixin btn-div(data, mods, blks)
+  - data.id = 'arrow-to-right'
+  +gen-btn('div', data, 'btn', mods, blks)
+
+mixin btn-div-icon(data, mods, blks)
+  - data.text = false
+  +gen-btn('div', data, 'btn-icon', [...(mods || []), data.id], blks)
+
+
+mixin gen-btn(tag, data, self, mods, blks)
+  include ../_lib/_bem.js.pug
+  - const bem = new Bem(self, mods, blks);
+  #{tag}(class = bem.fullClass, title = data.title)
+    if data.text
+      span(class = bem.elem('text'))= data.text
+    +svg-icon(data)

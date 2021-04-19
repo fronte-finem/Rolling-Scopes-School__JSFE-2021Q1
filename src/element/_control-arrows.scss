@@ -3,15 +3,43 @@
 */
 
 .control-arrows {
-  --x: 60px;
+  --w-btn-icon: 60px;
+  --h-btn-icon: 60px;
 }
 
 .control-arrows {
   display: flex;
-  column-gap: var(--x);
+  column-gap: var(--w-btn-icon);
 }
 
-.control-arrows .btn-icon {
-  width: var(--x);
-  height: var(--x);
+.control-arrows {
+  &__btn-icon {
+    border: 1px;
+    border-style: solid;
+    border-radius: 5px;
+
+    & {
+      --color-icon-def: var(--color-ui-1-def);
+      --color-icon-hov: var(--color-main-light);
+
+      &       { border-color: var(--color-ui-1-def); }
+      &:hover { background-color: var(--color-ui-1-def); }
+    }
+
+    &--white {
+      --color-icon-def: var(--color-main-light);
+      --color-icon-hov: var(--color-main-navy);
+
+      &       { border-color: var(--color-main-light) }
+      &:hover { background-color: var(--color-main-light); }
+    }
+
+    &--navy {
+      --color-icon-def: var(--color-main-navy);
+      --color-icon-hov: var(--color-main-light);
+
+      &       { border-color: var(--color-main-navy) }
+      &:hover { background-color: var(--color-main-navy); }
+    }
+  }
 }

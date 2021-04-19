@@ -1,0 +1,54 @@
+include ../layout/_layout-block.pug
+include ../element/_article.pug
+include ../element/_button.pug
+include ../element/_img.pug
+include ../element/_card-feed-animal.pug
+include ../element/_control-dots.pug
+
+mixin feed-animals(root, dataFeedAnimals)
+  -
+    const feedAnimals = new Bem('feed-animals');
+    const artData = {
+      lvl: 2,
+      head: 'care for the animals you love',
+      text: 'You can help to look after the animals you love with your gift today'
+    };
+    const imgData = [
+      { link: 'assets/img/feed-koala.jpg', alt: 'Koala close up' },
+      {
+        link: 'assets/img/touch-lemur-1400.jpg',
+        alt: 'Hands touch the screen, which shows a lemur close-up',
+        sources: [
+          {link: 'assets/img/touch-lemur-320.jpg 320w', media: '(max-width: 320px)'},
+          {link: 'assets/img/touch-lemur-640.jpg 640w', media: '(max-width: 640px)'},
+          {link: 'assets/img/touch-lemur-1200.jpg 1200w', media: '(max-width: 1200px)'},
+          {link: 'assets/img/touch-lemur-1400.jpg 1400w', media: '(max-width: 1400px)'},
+        ]
+      }
+    ];
+    const btnData = { link: 'pages/map.html', text: 'choose your favourite' };
+
+  // ⚜️ BLOCK: FEED-ANIMALS ⚜️
+  +layout-block(feedAnimals.fullClass)
+
+    div(class = feedAnimals.elem('wrapper'))
+      +article(artData, feedAnimals.self)
+
+      div(class = feedAnimals.elem('slots-container'))
+        ul(class = feedAnimals.elem('slots'))
+
+          li(class = feedAnimals.elem('slot', [1, 'big']))
+            +img(root, imgData[0], feedAnimals)
+
+          each data, ix in dataFeedAnimals
+            li(class = feedAnimals.elem('slot', `${ix+2}`))
+              +card-feed-animal(root, data)
+
+      div(class = feedAnimals.elem('ctrl-container', 'dots'))
+        +control-dots(4, [], feedAnimals.self)
+
+      div(class = feedAnimals.elem('btn-container'))
+        +btn-link(root, btnData, ['navy', 'long'])
+
+    div(class = feedAnimals.elem('pic-container'))
+      +img(root, imgData[1], feedAnimals)

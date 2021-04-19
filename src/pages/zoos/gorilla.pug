@@ -13,10 +13,6 @@ block page-vars
   - var animal = 'gorilla'
 
 block main
-  +side-bar(animal)
-  +live-cams(animal)
-  +quick-donation(animal)
-  +facts(animal)
-
-//- block dev
-//-   .dev-overlay.dev-grid
+  +live-cams(root, animal)
+  +quick-donation(root, animal)
+  +facts(root, animal)

@@ -1,6 +1,8 @@
 include ./_button.pug
 
 mixin control-arrows(color)
-  .control-arrows
-    +btn-icon('button', 'arrow-to-left', {}, color, 'prev')
-    +btn-icon('button', 'arrow-to-right', {}, color, 'next')
+  - const self = 'control-arrows';
+
+  div(class = self)
+    +btn-icon({id: 'arrow-to-left'}, [color, 'prev'], [self])
+    +btn-icon({id: 'arrow-to-right'}, [color, 'next'], [self])

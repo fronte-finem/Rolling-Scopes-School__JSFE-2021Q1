@@ -1,4 +1,4 @@
-mixin head(title = '🚧', root = '.', file = 'index')
+mixin head(root = '.', file = 'index', title = '🚧')
   head
     meta(charset="UTF-8")
     meta(http-equiv="X-UA-Compatible", content="IE=edge")
@@ -9,7 +9,6 @@ mixin head(title = '🚧', root = '.', file = 'index')
     link(rel = "stylesheet", href = `${root}/styles/minireset.css`)
     // 🚧
     link(rel = "stylesheet", href = `${root}/styles/seo.css`)
-    link(rel = "stylesheet", href = `${root}/develop/dev.css`)
     // 🌈
     link(rel = "stylesheet", href = `${root}/styles/colors.css`)
     // 🔠

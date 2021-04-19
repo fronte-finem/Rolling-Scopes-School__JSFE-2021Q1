@@ -1,0 +1,223 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+@use '../_lib/font';
+@use '../element/article';
+
+/*
+  ⚜️ BLOCK: CARE-FOR-ANIMALS ⚜️
+*/
+.page__feed-animals-background {
+  --testimonials-bg-color: var(--color-main-light);
+}
+.page__feed-animals-wrapper {
+  @media screen and (max-width: 1400px) {
+    max-width: 100%;
+  }
+}
+
+.feed-animals {
+  min-height: 2965px;
+  height: 100%;
+  padding: 136px 0;
+
+  @media screen and (max-width: 1400px) {
+    min-height: 2965px;
+    padding: 156px 0 140px;
+  }
+  @media screen and (max-width: 1200px) {
+  }
+  @media screen and (max-width: 900px) {
+    min-height: 1435px;
+    padding: 80px 0;
+  }
+  @media screen and (max-width: 640px) {
+  }
+  @media screen and (max-width: 500px) {
+    min-height: 1298px;
+    padding: 50px 0;
+  }
+  @media screen and (max-width: 320px) {
+  }
+
+  &__wrapper {
+    max-width: var(--page-w);
+    width: 100%;
+    margin: auto;
+  }
+
+  &__article {
+    --heading-w: 655px;
+    --text-w: 540px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 50px;
+
+    padding-bottom: 100px;
+    text-align: center;
+    color: var(--color-main-navy);
+
+    @media screen and (max-width: 1400px) {
+      row-gap: 27px;
+      padding-bottom: 46px;
+      padding-left: 50px;
+    }
+    @media screen and (max-width: 900px) {
+      --text-w: 100%;
+      row-gap: 30px;
+      padding-bottom: 70px;
+      padding-left: 0;
+    }
+    @media screen and (max-width: 500px) {
+      padding-bottom: 23px;
+    }
+  }
+
+  &__article-heading {
+    max-width: var(--heading-w);
+    @include font.h2;
+    color: var(--color-ui-2-def);
+
+    @media screen and (max-width: 1400px) {
+    }
+  }
+
+  &__article-text {
+    max-width: var(--text-w);
+    width: 100%;
+    @include font.h-sub;
+
+    @media screen and (max-width: 1400px) {
+      margin-left: 68px;
+    }
+    @media screen and (max-width: 900px) {
+      margin-left: 0;
+    }
+    @media screen and (max-width: 500px) {
+      @include font.text;
+      padding: 0 15px;
+    }
+  }
+
+  &__slots-container {
+    @media screen and (max-width: 1400px) {
+      padding: 0 calc(var(--page-w-gap) + var(--page-w-col));
+    }
+    @media screen and (max-width: 900px) {
+      padding: 0;
+    }
+  }
+
+  &__slots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    column-gap: var(--page-w-gap);
+    row-gap: 35px;
+
+    @media screen and (max-width: 1400px) {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: 470px repeat(2, 1fr);
+      row-gap: 20px;
+    }
+    @media screen and (max-width: 900px) {
+      display: block;
+    }
+    @media screen and (max-width: 500px) {
+    }
+  }
+
+  &__slot {
+    &--big {
+      grid-column: 1 / span 2;
+      position: relative;
+      overflow: hidden;
+      border-radius: 5px;
+
+      .feed-animals__img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    @media screen and (max-width: 1400px) {
+      &--big {
+        .feed-animals__img {
+          object-position: 50% 60%;
+          transform: scaleX(-1);
+        }
+      }
+
+      &--1 { order: 1 }
+      &--2 { order: 2 }
+      &--3 { order: 4 }
+      &--4 { order: 3 }
+      &--5 { order: 5 }
+    }
+    @media screen and (max-width: 900px) {
+      &--1 { display: none; }
+      &--3 { display: none; }
+      &--4 { display: none; }
+      &--5 { display: none; }
+    }
+    @media screen and (max-width: 500px) {
+    }
+  }
+
+  &__ctrl-container--dots {
+    --control-dots-color-main: var(--color-main-dark);
+    display: none;
+
+    @media screen and (max-width: 900px) {
+      display: flex;
+      justify-content: center;
+      padding-top: 48px;
+    }
+    @media screen and (max-width: 500px) {
+      padding-top: 30px;
+    }
+  }
+
+  &__btn-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+
+    @media screen and (max-width: 1400px) {
+      padding-top: 100px;
+    }
+    @media screen and (max-width: 900px) {
+      padding-top: 50px;
+    }
+    @media screen and (max-width: 500px) {
+      .btn {
+        text-transform: capitalize;
+      }
+    }
+  }
+
+  &__pic-container {
+    padding-top: 150px;
+
+    .feed-animals__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media screen and (max-width: 1400px) {
+      padding-top: 152px;
+    }
+    @media screen and (max-width: 900px) {
+      padding-top: 100px;
+    }
+    @media screen and (max-width: 500px) {
+      padding-top: 80px;
+    }
+  }
+}

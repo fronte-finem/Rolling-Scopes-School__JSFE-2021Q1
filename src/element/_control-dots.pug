@@ -1,0 +1,11 @@
+include ./_button.pug
+
+mixin control-dots(num = 4, mods = null, blk = null)
+  - const dots = new Bem('control-dots', mods, blk);
+
+  div(class = dots.self)
+    - let ix = 0;
+    while num > ix++
+      - const mods = (ix === 1 ? [ix, 'active'] : ix);
+      button(class = dots.elem('btn', mods))
+        div(class = dots.elem('dot', mods))

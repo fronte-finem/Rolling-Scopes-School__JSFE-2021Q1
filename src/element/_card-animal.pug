@@ -1,0 +1,23 @@
+include ./_article.pug
+include ./_button.pug
+include ./_img.pug
+
+mixin card-animal(root, data)
+  include ../_lib/_bem.js.pug
+  -
+    const card = new Bem('card-animal', data.id);
+    const onClick = "this.querySelector('.btn').click()";
+    const imgData = { link: data.img.link, alt: `${data.kind} — ${data.name}` };
+    const txtData = { head: data.kind, text: data.text, lvl: 4 };
+    const btnData = { link: data.link, text: 'view live cam' };
+
+  div(class = card.fullClass, onclick != onClick)
+
+    figure(class = card.elem('pic-container'))
+      +img(root, imgData, card)
+      figcaption(class = card.elem('name'))= data.name
+
+    +article(txtData, card.self)
+
+    div(class = card.elem('btn-container'))
+      +btn-link(root, btnData, ['text'])

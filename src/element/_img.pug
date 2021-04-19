@@ -1,0 +1,31 @@
+
+mixin img(root, data, bem)
+  include ../_lib/_link.js.pug
+
+  picture(class = bem.elem('picture'))
+
+    if data.sources
+      each item in data.sources
+        source(media = item.media, srcset = getLink(root, item))
+    |
+    |
+    img(class = bem.elem('img'),
+        src = getLink(root, data),
+        alt = data.alt,
+        title = data.title)
+
+
+//- https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images
+
+  <img srcset="elva-fairy-480w.jpg 480w,
+               elva-fairy-800w.jpg 800w"
+       sizes="(max-width: 600px) 480px,
+              800px"
+       src="elva-fairy-800w.jpg"
+       alt="Elva dressed as a fairy">
+
+  <picture>
+    <source media="(max-width: 799px)" srcset="elva-480w-close-portrait.jpg">
+    <source media="(min-width: 800px)" srcset="elva-800w.jpg">
+    <img src="elva-800w.jpg" alt="Chris standing up holding his daughter Elva">
+  </picture>

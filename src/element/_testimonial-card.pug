@@ -1,6 +1,0 @@
-mixin testimonial-card(cls, testimonial)
-  - var self = 'testimonial-card';
-  section(class = `${cls} ${self}`)
-    h4(class = `${self}__title`)= `${testimonial.city}, ${testimonial.date}`
-    p(class = `${self}__text`)= testimonial.text
-    div(class = `${self}__name`)= testimonial.name

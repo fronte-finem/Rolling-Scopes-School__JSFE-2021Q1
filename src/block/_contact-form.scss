@@ -9,11 +9,6 @@
 */
 
 .contact-form {
-  @include set-vars((
-    c3-g4: grid.col-gap(3, 4),
-    c4: grid.col(4),
-  ));
-
   .form {
     display: flex;
     flex-direction: column;
@@ -22,5 +17,20 @@
 
   .btn-container {
     padding-top: 37px;
+
+    @media (max-width: 1400px) {
+      padding-top: 20px;
+    }
+
+    @media (max-width: 1000px) {
+      --btn-w-large: 290px;
+      display: flex;
+      justify-content: center;
+    }
+
+    @media (max-width: 500px) {
+      --btn-w-large: 100%;
+      padding-top: 0px;
+    }
   }
 }

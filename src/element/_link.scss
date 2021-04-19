@@ -1,0 +1,30 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/font';
+
+/*
+  🧱 ELEMENT: LINK 🧱
+*/
+
+.link {
+  @include font.ui;
+  text-decoration: none;
+  cursor: pointer;
+
+  transition: color 200ms ease-in-out;
+
+  color: var(--color-link-def, var(--color-ui-1-def));
+
+  &:hover {
+    color: var(--color-link-hov, var(--color-ui-1-hov));
+  }
+}
+
+.link.link--not-active {
+  cursor: default;
+
+  color: var(--color-link--not-active, var(--color-ui-2-def));
+
+  &:hover {
+    color: var(--color-link--not-active);
+  }
+}

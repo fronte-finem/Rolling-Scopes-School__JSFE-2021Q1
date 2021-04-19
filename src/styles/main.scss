@@ -1,14 +1,18 @@
 
 // 🏗️
-@use '../layout/layout.scss';
+@use '../layout/layout';
+@use '../develop/dev';
 
 // 🧱
+@use '../element/svg-icon';
+@use '../element/link';
+@use '../element/button';
+@use '../element/button-icon';
 @use '../element/logo';
 @use '../element/nav-menu';
 @use '../element/social-media-links';
-@use '../element/button';
-@use '../element/button-icon';
 @use '../element/control-arrows';
+@use '../element/control-dots';
 
 // ⚜️
 @use '../block/header';

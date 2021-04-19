@@ -2,14 +2,15 @@ include ../layout/_layout-block.pug
 include ../element/_button.pug
 include ../element/_input.pug
 
-mixin contact-form
+mixin contact-form(root)
+  - const self = 'contact-form';
 
   // ⚜️ BLOCK: CONTACT-FORM ⚜️
-  .contact-form
+  div(class = self)
     form.form(action="?", method="get")
       +input('name', 'name', 'text', {descr: 'your name', tip: 'First and last name', errMsg: 'name required'}, required = true)
       +input('email', 'email', 'email', {descr: 'your email address ', tip: 'Enter your email', errMsg: 'email address required'}, required = true)
       +input('subject', 'subject', 'text', {descr: 'subject', tip: 'Enter the subject', errMsg: 'subject required'}, required = true)
       +textarea('message', 'message', {descr: 'message', tip: 'Enter your message', errMsg: 'message required'}, required = true, rows = "6")
       .btn-container
-        +btn('button', {text: 'send message'}, 'cyan', 'long', 'active')
+        +btn({text: 'send message'}, ['cyan', 'long', 'active'])

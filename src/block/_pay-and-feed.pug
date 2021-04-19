@@ -1,51 +1,67 @@
 include ../layout/_layout-block.pug
+include ../element/_article.pug
 include ../element/_button.pug
+include ../element/_img.pug
+include ../element/_svg-icon.pug
 
-mixin pay-and-feed
+mixin pay-and-feed(root)
+  include ../_lib/_bem.js.pug
   -
-    var steps_data = [
+    const payAndFeed = new Bem('pay-and-feed');
+    const stepsData = [
       {
-        picSrc: "./assets/img/pay-feed-step-1.jpg",
-        picAlt: "Monkey want eat 🐒",
-        iconId: "#heart-in-hands",
-        title: "Your donation has an impact",
-        text: "Providing our animals with high-quality nutritious diets is just one element of animal care at our Zoo. We do all the best so that our animals can eat food similar to what they might find in their natural habitats while making sure they get the right mix of nutrients, proteins, and vitamins to be happy and healthy. Please help us provide nutritious food for our animals by donating. The generosity of people like you can help us make sure that our animals enjoy good food that keeps them in great condition.",
+        img: { link: "assets/img/pay-feed-step-1.jpg", alt: "Monkey want eat 🐒" },
+        svg: { id: "heart-in-hands" },
+        txt: {
+          lvl: 4,
+          head: "Your donation has an impact",
+          text: "Providing our animals with high-quality nutritious diets is just one element of animal care at our Zoo. We do all the best so that our animals can eat food similar to what they might find in their natural habitats while making sure they get the right mix of nutrients, proteins, and vitamins to be happy and healthy. Please help us provide nutritious food for our animals by donating. <span class='spoiler'>The generosity of people like you can help us make sure that our animals enjoy good food that keeps them in great condition.</span>",
+        }
       },
       {
-        picSrc: "./assets/img/pay-feed-step-2.jpg",
-        picAlt: "Bananas in your giving hands 🍌",
-        iconId: "#donate-box",
-        title: "Make a donation",
-        text: "You can donate through your credit card without any fees. It is easy and safe. We do not keep donors' personal information on an online network. Choose an amount to give and the pet's name if needed. One of the most effective ways you can give is by making regular donations.",
+        img: { link: "assets/img/pay-feed-step-2.jpg", alt: "Bananas in your giving hands 🍌" },
+        svg: { id: "donate-box" },
+        txt: {
+          lvl: 4,
+          head: "Make a donation",
+          text: "You can donate through your credit card without any fees. It is easy and safe. We do not keep donors' personal information on an online network. Choose an amount to give and the<br> pet's name if needed. <span class='spoiler'>One of the most effective ways you can give is by making regular donations.</span>",
+        }
       },
       {
-        picSrc: "./assets/img/pay-feed-step-3.jpg",
-        picAlt: "Happy monkey eat banan 🐵🍌",
-        iconId: "#food-box",
-        title: "Bring your food charity — straight to your favorites pets.",
-        text: "After your donation, the animal receives its favorite foods. You can support your favorite animals or any animal you care about and make a real personal impact. Never doubt that your donation can make a difference even if it is small.",
+        img: { link: "assets/img/pay-feed-step-3.jpg", alt: "Happy monkey eat banan 🐵🍌" },
+        svg: { id: "food-box" },
+        txt: {
+          lvl: 4,
+          head: "Bring your food charity — straight to<br> your favorites pets.",
+          text: "After your donation, the animal receives its favorite foods.<br> You can support your favorite animals or any animal you care about and make a real personal impact. Never doubt that your donation can make a difference even if it is small.",
+        }
       },
     ];
-    var helper = (cls, i) => `${cls} ${cls}--${i}`;
+    const btnData = { text: 'donate now' };
 
   // ⚜️ BLOCK: PAY-AND-FEED ⚜️
-  +layout-block("div", "pay-and-feed")
-    h2.title= "pay and feed"
+  +layout-block(payAndFeed.fullClass)
 
-    ul.steps
-      each item, ix in steps_data
-        - var cls =  helper('step', ix + 1);
-        li.step-prefix(class = cls)
-          .step-prefix__num= `0${ix + 1}`
-          .step-prefix__line
-        li.step-picture(class = cls)
-          img.step-picture__img(src = item.picSrc, alt = item.picAlt)
-        li.step-info(class = cls)
-          .step-info__icon
-            svg.svg-icon
-              use(xlink:href = item.iconId)
-          h4.step-info__title= item.title
-          p.step-info__text= item.text
+    div(class = payAndFeed.elem('heading-container'))
+      h2(class = payAndFeed.elem('heading'))= "pay and feed"
 
-    .btn-container
-      +btn('button', {text: 'donate now'})
+    ul(class = payAndFeed.elem('steps'))
+      each item, ix in stepsData
+        - const num = ix + 1;
+        li(class = payAndFeed.elem('step', num))
+          div(class = payAndFeed.elem('step-prefix', num))
+            div(class = payAndFeed.elem('step-num'))= `0${num}`
+            div(class = payAndFeed.elem('step-line'))
+
+          div(class = payAndFeed.elem('step-container', num))
+            div(class = payAndFeed.elem('step-picture', num))
+              +img(root, item.img, payAndFeed)
+
+            div(class = payAndFeed.elem('step-info', num))
+              div(class = payAndFeed.elem('step-icon', num))
+                +svg-icon(item.svg)
+              +article(item.txt, payAndFeed.self, num)
+
+    div(class = payAndFeed.elem('btn-container'))
+      div(class = payAndFeed.elem('btn-cell'))
+        +btn(btnData)

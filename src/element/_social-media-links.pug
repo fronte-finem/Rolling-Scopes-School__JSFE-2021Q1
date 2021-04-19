@@ -1,16 +1,18 @@
-mixin social-media-links()
-  -
-    var social_data = [
-      { name: 'youtube',   link: 'https://www.youtube.com/'},
-      { name: 'instagram', link: 'https://www.instagram.com/'},
-      { name: 'facebook',  link: 'https://www.facebook.com/'},
-    ];
-    var cls = 'social-media';
+include ./_link.pug
 
-  div(class = cls)
-    ul(class = `${cls}__items`)
-      each item in social_data
-        li(class = `${cls}__item`)
-          a(class = `link-icon ${cls}__link ${cls}__link--${item.name}`, href = item.link)
-            svg(class = `${cls}__svg`)
-              use(class = `${cls}__use`, xlink:href = `#${item.name}`)
+mixin social-media-links(blk)
+  include ../_lib/_bem.js.pug
+  -
+    const self = 'social-media';
+    const bem = new Bem(self, [], blk);
+    const socialData = [
+      { id: 'youtube',   link: 'https://www.youtube.com/'},
+      { id: 'instagram', link: 'https://www.instagram.com/'},
+      { id: 'facebook',  link: 'https://www.facebook.com/'},
+    ];
+
+  div(class = bem.fullClass)
+    ul(class = bem.elem('items'))
+      each item in socialData
+        li(class = bem.elem('item'))
+          +link-icon('', item, [], self)
