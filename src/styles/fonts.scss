@@ -30,7 +30,17 @@
   --line-height--quote: 146px;
   --font-weight--quote: 800;
 }
-@media (max-width: 320px) {
+@media (max-width: 800px) {
+  :root {
+    /* 1️⃣ */
+    --font-size--h1: 72px;
+    --line-height--h1: 88px;
+    /* 2️⃣ */
+    --font-size--h2: 54px;
+    --line-height--h2: 66px;
+  }
+}
+@media (max-width: 600px) {
   :root {
     /* 1️⃣ */
     --font-size--h1: 40px;
@@ -39,10 +49,15 @@
     --font-size--h2: 26px;
     --line-height--h2: 32px;
     --font-weight--h2: 500;
+    --line-height--h1: 49px;
+    /* 3️⃣ */
+    --font-size--h3: 26px;
+    --line-height--h3: 32px;
+    --font-weight--h3: 500;
   }
 }
 
 body {
   @include font.text;
-  color: var(--clr-main-dark);
+  color: var(--color-main-dark);
 }
