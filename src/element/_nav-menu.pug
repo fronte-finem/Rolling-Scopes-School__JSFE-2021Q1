@@ -1,15 +1,15 @@
 include ./_link.pug
 
-mixin nav-menu(root, cls, page, data)
+mixin nav-menu(root, blk, page, data)
   include ../_lib/_bem.js.pug
   -
     const self = 'nav-menu';
-    const bem = new Bem(self, [], [cls]);
+    const bem = new Bem(self, [], [blk]);
     let menu_data = [
       { text: 'about',      link: ''},
       { text: 'map',        link: 'pages/map.html'},
       { text: 'zoos',       link: 'pages/zoos/panda.html'},
-      { text: 'contact us', link: 'pages/contact-us.html'},
+      { text: 'contact-us', link: 'pages/contact-us.html'},
     ]
     Array.isArray(data) && (menu_data = menu_data.concat(data));
 
@@ -17,5 +17,5 @@ mixin nav-menu(root, cls, page, data)
     ul(class = bem.elem('items'))
       each item in menu_data
         li(class = bem.elem('item'))
-          - const mods = (item.text == page) ? ['disabled'] : [];
-          +link(root, item, mods, [self, cls])
+          - const disabled = item.text === page;
+          +link(root, item, mods, self, disabled)

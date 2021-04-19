@@ -1,18 +1,14 @@
-mixin logo-main(root)
-  a(class = 'logo logo-main logo-link', href = root)
-    +svg-logo('main')
+include ./_link.pug
+include ./_svg-icon.pug
 
-mixin logo(data)
-  -
-    var tag = data.link ? 'a' : 'div';
-    var cls = `logo logo-${data.id}`;
-    data.link && (cls +=' logo-link');
 
-  #{tag}(class = cls, href = data.link, title = data.title)
-    +svg-logo(data.id)
+mixin logo-main(root, blk)
+  - const data = {link: '', id: 'online-zoo'};
+  +logo(root, data, blk)
 
-mixin svg-logo(id)
-  include ../_lib/_array.js.pug
-  - var cls = ['logo', `logo-${id}`];
-  svg(class = ArrUtils.clsMap(cls, 'svg'))
-    use(class = ArrUtils.clsMap(cls, 'use'), href = `#logo--${id}`)
+
+mixin logo(root, data, blk)
+  - data.cls = 'logo';
+  - const disabled = typeof data.link !== 'string';
+  - const self = disabled ? 'logo' : 'logo-link';
+  +gen-link-icon(root, data, self, [], [blk], disabled)

@@ -6,37 +6,29 @@
 
 .social-media {
   &__items {
-    display: flex;
-  }
-
-  &__link {
-    display: block;
-    width: 40px;
-    height: 40px;
-  }
-
-  &__svg {
     width: 100%;
-    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    column-gap: 10px;
   }
 
-  &__link {  pointer-events: none; }
-  &__use { pointer-events: fill; }
-
-  &__link {
-    color: use-var(clr-main-light);
+  &__link-icon {
+    display: block;
+    color: var(--color-main-light);
     fill: hsl(326deg, 57%, 48%);
     transform: scale(1);
+    transition: 200ms ease-in-out;
+
+    &:hover {
+      fill: var(--color-main-navy);
+      transform: scale(1.05);
+    }
 
     &--youtube {
       fill: hsl(0deg, 100%, 50%);
     }
-
-    &:hover {
-      color: use-var(clr-ui-1-def);
-      transform: scale(1.05);
-    }
-
-    transition: 300ms ease-in-out;
   }
+
+  &__link-icon {  pointer-events: none; }
+  .svg-icon__use { pointer-events: fill; }
 }
