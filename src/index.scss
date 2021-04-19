@@ -1,8 +1,8 @@
 // 🧱
 @use "./element/slider";
-@use "./element/animal-card";
-@use "./element/testimonial-card";
-@use "./element/donate-card";
+@use "./element/card-animal";
+@use "./element/card-testimonial";
+@use "./element/card-feed-animal";
 
 // ⚜️
 @use "./block/hero";
@@ -11,7 +11,7 @@
 @use "./block/pets-in-zoo";
 @use "./block/pay-and-feed";
 @use "./block/testimonials";
-@use "./block/care-for-animals";
+@use "./block/feed-animals";
 
 /*
    👑 👑 👑 👑 👑

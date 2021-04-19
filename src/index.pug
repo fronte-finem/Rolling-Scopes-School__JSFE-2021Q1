@@ -6,7 +6,7 @@ include ./block/_quick-donation.pug
 include ./block/_pets-in-zoo.pug
 include ./block/_pay-and-feed.pug
 include ./block/_testimonials.pug
-include ./block/_care-for-animals.pug
+include ./block/_feed-animals.pug
 
 
 block page-vars
@@ -16,15 +16,21 @@ block page-vars
   - var root = ".";
 
 block main
+  //- const Bem = require('../_lib/_bem.js')
+  include ./_lib/_bem.js.pug
+  //- const dataAnimals = require('./_content/_data-animals.js')
+  //- const dataTestimonials = require('./_content/_data-testimonials.js')
+  //- const dataFeedAnimals = require('./_content/_data-feed-animals.js')
+  include ./_content/_data-animals.js.pug
+  include ./_content/_data-testimonials.js.pug
+  include ./_content/_data-feed-animals.js.pug
+
   +hero(root)
   +intro(root)
   +quick-donation(root)
-  +pets-in-zoo(root)
+  +pets-in-zoo(root, dataAnimals)
   +pay-and-feed(root)
-  +testimonials(root)
-  +care-for-animals(root)
+  +testimonials(root, dataTestimonials)
+  +feed-animals(root, dataFeedAnimals)
 
-//- block dev
-//-   - var h = "--h-dev-overlay: 12330px"
-  //- .dev-overlay.dev-grid
-  //- .dev-overlay.dev-pixelperfect(style = h)
+
