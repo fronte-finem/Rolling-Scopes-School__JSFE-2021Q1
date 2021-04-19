@@ -10,28 +10,32 @@
 */
 
 .main {
-  @include set-vars((
-    c1-g1: grid.col-gap(1, 1),
-  ));
-}
-
-.btns {
   background-color: #333;
 }
 
-.btns-cont {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px var(--c1-g1);
-}
-
-.map-pins-cont {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px var(--c1-g1);
+.elements {
+  display: grid;
+  grid-template-columns: 1fr 10fr 1fr;
+  column-gap: var(--page-gap);
 
   .btns-cont {
-    flex-direction: column;
-    padding: 0;
+    grid-column: 2;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    padding: 20px 0;
+  }
+
+  .map-pins-cont {
+    grid-column: 2;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    padding: 10px 0;
+
+    .btns-cont {
+      flex-direction: column;
+      padding: 0;
+    }
   }
 }

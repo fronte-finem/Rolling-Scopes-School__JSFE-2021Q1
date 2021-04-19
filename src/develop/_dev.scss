@@ -1,0 +1,57 @@
+@use '../_lib/css-var' as *;
+@use '../_lib/grid';
+
+.layout-page {
+  position: relative;
+  height: 100%;
+}
+
+.dev-overlay {
+  top: 0;
+  width: 100%;
+  background-position: top center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+.dev-grid {
+  position: fixed;
+  z-index: 3;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%);
+
+  display: grid;
+  grid-template-columns: repeat(var(--page-col), 1fr);
+  grid-template-rows: 1fr;
+  column-gap: var(--page-w-gap);
+  max-width: var(--page-w);
+}
+.dev-col {
+  position: relative;
+  opacity: .2;
+  background: #0008;
+  overflow-x: hidden;
+}
+.dev-cell {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  font-size: 80px;
+  line-height: 100px;
+  text-align: center;
+
+  &:nth-child(1) { top: 0; }
+  &:nth-child(2) { bottom: 0; }
+}
+
+.dev-pixelperfect {
+  position: absolute;
+  z-index: 2;
+
+  height: var(--h-dev-overlay);
+  background-image: url("../assets/pp/1920/first-page.jpg");
+  background-size: 1920px 100%;
+  opacity: .5;
+  filter: invert(1);
+}

@@ -5,6 +5,8 @@ include ../element/_button.pug
 include ../element/_control-arrows.pug
 include ../element/_control-donation.pug
 
+include ./_dev.pug
+
 block page-vars
   - var page = 'elements';
   - var file = 'elements';
@@ -18,11 +20,9 @@ mixin genBtns(txt, mods)
     +btn-div(data, mods)
     +btn-link(root, data, mods)
 
-block dev
-  .dev-overlay.dev-grid
 
 block main
-  +layout-block("section", "btns")
+  +layout-block("elements")
     h3 Btns
 
     +genBtns('donate now', ['orange'])

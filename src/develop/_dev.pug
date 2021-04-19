@@ -1,0 +1,8 @@
+
+mixin dev-grid(cols)
+  .dev-overlay.dev-grid
+    - let n = 1;
+    while n <= cols
+      .dev-col
+        .dev-cell= n
+        .dev-cell= n++
