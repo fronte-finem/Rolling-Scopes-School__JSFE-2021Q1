@@ -1,0 +1,124 @@
+@charset "UTF-8";
+/*
+  🧱 ELEMENT: CONTROL-DONATION 🧱
+*/
+.control-donation {
+  --ctrl-h: 74px;
+  position: relative;
+  border-radius: 5px;
+  width: 320px;
+  height: var(--ctrl-h);
+  border: 1px solid var(--color-main-light);
+  display: flex;
+  align-items: stretch;
+  /* 🔽🔠🔽 */
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: var(--font-weight--ui-text);
+  font-size: var(--font-size--ui-text);
+  line-height: var(--line-height--ui-text);
+  /* 🆎 */
+  text-transform: uppercase;
+  /* 🔼🔠🔼 */
+  color: var(--color-main-light);
+}
+.control-donation__sign {
+  padding-left: 14px;
+  line-height: var(--ctrl-h);
+}
+.control-donation__input-container {
+  flex-grow: 1;
+}
+.control-donation__input {
+  display: block;
+  width: 100%;
+  padding: 0 5px;
+  border: none;
+  outline: none;
+  background: none;
+  /* 🔽🔠🔽 */
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: var(--font-weight--ui-text);
+  font-size: var(--font-size--ui-text);
+  line-height: var(--line-height--ui-text);
+  /* 🆎 */
+  text-transform: uppercase;
+  /* 🔼🔠🔼 */
+  line-height: var(--ctrl-h);
+  color: var(--color-main-light);
+  /* Chrome, Safari, Edge, Opera */
+  /* Firefox */
+}
+.control-donation__input::placeholder {
+  color: var(--color-main-light);
+  opacity: 1;
+}
+.control-donation__input::-webkit-outer-spin-button, .control-donation__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.control-donation__input[type=number] {
+  -moz-appearance: textfield;
+}
+.control-donation .btn {
+  height: 100%;
+}
+
+@media screen and (max-width: 900px) {
+  .control-donation {
+    width: 363px;
+  }
+  .control-donation__sign {
+    padding-left: 37px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .control-donation {
+    --ctrl-h: 45px;
+    width: 100%;
+    --font-size--ui-text: 16px;
+    --line-height--ui-text: 20px;
+  }
+  .control-donation__sign {
+    padding-left: 25px;
+  }
+  .control-donation__btn-container {
+    width: 59px;
+  }
+  .control-donation .btn {
+    padding: 0;
+  }
+}
+/*
+   👑 👑 👑 👑 👑 👑
+  👑 PAGE: ELEMENTS 👑
+   👑 👑 👑 👑 👑 👑
+*/
+.main {
+  background-color: #333;
+}
+
+.elements {
+  display: grid;
+  grid-template-columns: 1fr 10fr 1fr;
+  column-gap: var(--page-gap);
+}
+.elements .btns-cont {
+  grid-column: 2;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding: 20px 0;
+}
+.elements .map-pins-cont {
+  grid-column: 2;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+.elements .map-pins-cont .btns-cont {
+  flex-direction: column;
+  padding: 0;
+}
