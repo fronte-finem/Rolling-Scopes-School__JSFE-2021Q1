@@ -4,63 +4,196 @@
   ⚜️ BLOCK: SIDE-BAR ⚜️
 */
 
-.side-bar {
-  --w: 220px;
-  --offcet: calc(50% - 960px);
+.side-bar-rail {
+  --side-bar-rail-self-w: var(--side-bar-rail-w, 220px);
+  --side-bar-rail-self-off:
+      var(--side-bar-rail-off: calc(50% - 960px));
+
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--side-bar-rail-self-w);
+
+  @media screen and (max-width: 1900px) {
+    --side-bar-rail-self-w: var(--side-bar-rail-w, 115px);
+  }
+  @media screen and (max-width: 1000px) {
+    --side-bar-rail-self-w: var(--side-bar-rail-w, 78px);
+  }
+  @media screen and (max-width: 800px) {
+    top: calc(-1 * var(--page-h-header));
+  }
+  @media screen and (max-width: 600px) {
+    --side-bar-rail-self-w: var(--side-bar-rail-w, 50px);
+  }
 }
 
 .side-bar {
-  z-index: 999;
-  position: absolute;
-  width: var(--w);
+  --color-main-self-bg: var(--color-main-bg, var(--color-main-navy));
+  --color-main-self-def: var(--color-main-def, var(--color-main-light));
+  --color-main-self-hov: var(--color-main-hov, var(--color-ui-1-def));
+  --side-bar-self-w: var(--side-bar-w, 100%);
+  --side-bar-self-border: 1px solid var(--color-main-self-def);
+
+  position: sticky;
   top: 0;
-  bottom: 0;
-  left: max(-10px, var(--offcet));
+  left: 0;
+
+  @media screen and (max-width: 800px) {
+    top: var(--page-h-header);
+  }
+
+  border: var(--side-bar-self-border);
+  border-top: none;
+  border-left: none;
+  background-color: var(--color-main-self-bg);
 
   &__menu {
-    position: sticky;
-    top: 0;
-    left: 0;
-
-    border: 1px solid var(--clr-main-light);
-    border-top: none;
-    background-color: var(--clr-main-navy);
+    display: flex;
+    flex-direction: column;
   }
 
-  &__control {
-    position: relative;
-    height: 80px;
+  &__container {
+    &--bage {
+      position: absolute;
+      top: 0;
+      left: 0;
 
-    .btn-icon {
-      --color-icon-def: var(--clr-main-light);
-      --color-icon-hov: var(--clr-ui-1-def);
-      &:hover { transform: scale(1.1); }
-    }
-
-    &-expand {
-      .btn-icon {
-        position: absolute;
-        right: 30px;
-        top: 30px;
-
+      @media screen and (max-width: 1900px) {
+        display: none;
       }
     }
-    &-scroll-down {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+
+    &--control {
+      height: 80px;
+
+      --w-btn-icon: 100%;
+      --h-btn-icon: 100%;
+      --color-icon-def: var(--color-main-self-def);
+      --color-icon-hov: var(--color-main-self-hov);
+
+      box-shadow: inset 0 0 0 #0000;
+      transition: box-shadow 500ms;
+
+      &:hover { box-shadow: inset 0 0 25px #0005; }
+
+      @media screen and (max-width: 1000px) {
+        height: 50px;
+      }
+
+      .btn-icon:hover .svg-icon { transform: scale(1.5); }
+
+      &-expand {
+        order: 1;
+        .btn-icon {
+          justify-content: flex-end;
+          padding-right: 30px;
+
+          @media screen and (max-width: 1900px) {
+            justify-content: center;
+            padding-right: 0;
+          }
+        }
+      }
+
+      &-scroll-down {
+        order: 3;
+      }
     }
   }
 
-  .cam-selector {
+  &__selector {
+    order: 2;
+    display: flex;
+    flex-direction: column;
+    border-top: var(--side-bar-self-border);
+  }
+
+  &__slot {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 172px;
-    border-top: 1px solid var(--clr-main-light);
-  }
-  &__control:last-child {
-    border-top: 1px solid var(--clr-main-light);
+
+    height: 171px;
+    border-bottom: var(--side-bar-self-border);
+
+    --w-btn-icon: 104px;
+    --h-btn-icon: 104px;
+    --w-svg-icon: 70px;
+    --h-svg-icon: 70px;
+    --color-btn-def: var(--color-main-self-hov);
+    --color-btn-hov: var(--color-main-self-hov);
+    --color-icon-def: var(--color-main-self-bg);
+    --color-icon-hov: var(--color-main-self-def);
+
+    @media screen and (max-width: 1900px) {
+      --w-btn-icon: 100%;
+      --h-btn-icon: 100%;
+      --w-svg-icon: 50px;
+      --h-svg-icon: 50px;
+      --color-btn-def: transparent;
+      --color-btn-hov: transparent;
+      --color-icon-def: var(--color-main-self-hov);
+      --color-icon-hov: var(--color-main-self-def);
+    }
+    @media screen and (max-width: 1000px) {
+      height: 100px;
+      --w-svg-icon: 35px;
+      --h-svg-icon: 35px;
+    }
+    @media screen and (max-width: 600px) {
+      height: 50px;
+      --w-svg-icon: 25px;
+      --h-svg-icon: 25px;
+    }
+
+    .btn-icon {
+      border-radius: 50%;
+      box-shadow: 0 0 0 0px #000;
+
+      &:hover {
+        box-shadow:
+            0 0 0 5px var(--color-main-self-bg),
+            0 0 0 8px var(--color-main-self-hov);
+      }
+
+      @media screen and (max-width: 1900px) {
+        border-radius: unset;
+        box-shadow: none;
+        &:hover {
+          box-shadow: none;
+
+          .svg-icon { transform: scale(1.1); }
+        }
+      }
+    }
+
+    &--active {
+      pointer-events: none;
+      --color-btn-def: var(--color-main-self-def);
+      --color-btn-hov: var(--color-main-self-def);
+
+      @media screen and (max-width: 1900px) {
+        --color-btn-def: transparent;
+        --color-btn-hov: transparent;
+        --color-icon-def: var(--color-main-self-def);
+        --color-icon-hov: var(--color-main-self-def);
+      }
+
+      .btn-icon {
+        box-shadow:
+            0 0 0 5px var(--color-main-self-bg),
+            0 0 0 8px var(--color-main-self-def);
+
+        @media screen and (max-width: 1900px) {
+          box-shadow: none;
+          &:hover { box-shadow: none; }
+        }
+      }
+
+    }
   }
 
   .cam-icon {
@@ -70,8 +203,8 @@
     width: 104px;
     height: 104px;
     border-radius: 50%;
-    background-color: var(--clr-ui-1-def);
-    fill: var(--clr-main-navy);
+    background-color: var(--color-ui-1-def);
+    fill: var(--color-main-navy);
 
     svg { transition: transform 300ms ease-in-out; }
     &:hover svg { transform: scale(1.2); }
@@ -83,9 +216,9 @@
   .icon-gorilla svg { width: 69px; }
 
   .cam-icon.cam-self {
-    fill: var(--clr-main-navy);
-    background-color: var(--clr-main-light);
-    box-shadow: 0 0 0 5px var(--clr-main-navy), 0 0 0 8px var(--clr-main-light);
+    fill: var(--color-main-navy);
+    background-color: var(--color-main-light);
+    box-shadow: 0 0 0 5px var(--color-main-navy), 0 0 0 8px var(--color-main-light);
     svg { transform: scale(1); }
   }
 }

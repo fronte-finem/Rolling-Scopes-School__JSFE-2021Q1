@@ -1,9 +1,13 @@
 include ../layout/_layout-block.pug
 include ../element/_button.pug
+include ../element/_article.pug
+include ../element/_img.pug
 
 mixin facts(root, animal)
+  include ../_lib/_bem.js.pug
   -
-    var animals = [
+    const facts = new Bem('facts', animal);
+    const animals = [
       {
         name: 'panda',
         didYouKnow: 'Pandas are often seen eating in a relaxed sitting posture, with their hind legs stretched out before them. They may appear sedentary, but they are skilled tree-climbers and efficient swimmers.',
@@ -14,8 +18,9 @@ mixin facts(root, animal)
           { name: 'Size:',            value: '4 to 5 feet' },
           { name: 'Diet:',            value: 'Omnivore' },
           { name: 'Habitat:',         value: 'Forests' },
-          { name: 'Range:',           value: 'Eastern Asia', link: 'pages/map.html#panda' },
+          { name: 'Range:',           value: 'Eastern Asia' },
         ],
+        link: 'pages/map.html#panda',
         imgSrc: 'assets/img/facts-panda.jpg',
         descr: 'Giant pandas are very unusual animals that eat almost exclusively bamboo, which is very low in nutrients. Because of this, they have many unique adaptations for their low-energy lifestyle. Giant pandas are solitary. They have a highly developed sense of smell that males use to avoid each other and to find females for mating in the spring. After a five-month pregnancy, females give birth to a cub or two, though they cannot care for both twins. The blind infants weigh only 5 ounces at birth and cannot crawl until they reach three months of age. They are born white, and develop their much loved coloring later. Habitat loss is the primary threat to this species. Its popularity around the world has helped the giant panda become the focus of successful conservation programs.',
       },
@@ -29,8 +34,9 @@ mixin facts(root, animal)
           { name: 'Size:',            value: 'Body: 34 to 43 inches; wingspan: 6 to 8 feet' },
           { name: 'Diet:',            value: 'Carnivore' },
           { name: 'Habitat:',         value: 'Seacoasts, rivers, large lakes or marshes ' },
-          { name: 'Range:',           value: 'Continental United States', link: 'pages/map.html#eagle' },
+          { name: 'Range:',           value: 'Continental United States' },
         ],
+        link: 'pages/map.html#eagle',
         imgSrc: 'assets/img/facts-eagle.jpg',
         descr: 'The bald eagle, with its snowy-feathered (not bald) head and white tail, is the proud national bird symbol of the United States—yet the bird was nearly wiped out there. For many decades, bald eagles were hunted for sport and for the "protection" of fishing grounds.  These powerful birds of prey use their talons to fish, but they get many of their meals by scavenging carrion or stealing the kills of other animals. They live near water and favor coasts and lakes where fish are plentiful, though they will also snare and eat small mammals. Bald eagles are believed to mate for life. A pair constructs an enormous stick nest—one of the bird-world\'s biggest—high above the ground and tends to a pair of eggs each year. Immature eagles are dark, and until they are about five years old, they lack the distinctive white markings that make their parents so easy to identify.',
       },
@@ -44,8 +50,9 @@ mixin facts(root, animal)
           { name: 'Size:',            value: 'Standing height, four to six feet' },
           { name: 'Diet:',            value: 'Omnivore' },
           { name: 'Habitat:',         value: 'Rainforests' },
-          { name: 'Range:',           value: 'Western Africa', link: 'pages/map.html#gorilla' },
+          { name: 'Range:',           value: 'Western Africa' },
         ],
+        link: 'pages/map.html#gorilla',
         imgSrc: 'assets/img/facts-gorilla.jpg',
         descr: "Western lowland gorillas are the smallest of the four subspecies. They live in thick tropical rainforests, where they find plenty of food for their vegetarian diet. They eat roots, shoots, fruit, wild celery, and tree bark and pulp. Gorillas can climb trees, but they’re usually found on the ground in communities—known as troops. Troops are led by one dominant, older adult male, often called a silverback because of the swath of silver hair that adorns his otherwise dark fur. Troops also include several other young males, some females, and their offspring. The leader organizes troop activities, such as eating, nesting in leaves, and moving about the group's home range. Gorillas prefer traveling on all fours, pushing themselves forward with their knuckles and soles of their feet. Female gorillas give birth to one infant after a pregnancy of nearly nine months. These infants ride on their mothers’ backs from the age of four months through the first two or three years of their lives.",
       },
@@ -59,33 +66,45 @@ mixin facts(root, animal)
           { name: 'Size:',            value: 'Head and body: 17.75 inches; tail: 21.75 inches' },
           { name: 'Diet:',            value: 'Herbivore' },
           { name: 'Habitat:',         value: 'Arid, open areas and forests' },
-          { name: 'Range:',           value: 'Southeast Asia', link: 'pages/map.html#lemur' },
+          { name: 'Range:',           value: 'Southeast Asia' },
         ],
+        link: 'pages/map.html#lemur',
         imgSrc: 'assets/img/facts-lemur.jpg',
         descr: "Ring-tailed lemurs are named for the 13 alternating black and white bands that adorn their tails. Unlike most other lemurs, ringtails spend 40 percent of their time on the ground, moving quadrupedally along the forest floor. Ring-tailed lemurs live in southwestern Madagascar, in arid, open areas and forests in territories that range from 15 to 57 acres (0.06 to 0.2 square kilometers) in size. As with all lemurs, olfactory communication is important for ringtails. Ring-tailed lemurs have scent glands on their wrists and chests that they use to mark their foraging routes. Ringtails eat leaves, flowers and insects. They can also eat fruit, herbs and small vertebrates. Females usually give birth to their first baby when they are three years old, and usually once a year every year after that. All adult females participate in raising the offspring of the group. The median life expectancy for a ring-tailed lemur is about 16 years.",
       },
     ];
 
-    data = animals.filter(a => a.name == animal)[0];
+    const data = animals.filter(a => a.name == animal)[0];
+    const btnData = { text: "view map", link: data.link };
+    const txtData = {
+      lvl: 3,
+      text: data.didYouKnow,
+      head: 'did you know?',
+    }
 
   // ⚜️ BLOCK: FACTS ⚜️
-  +layout-block("div", `facts facts--${animal}`)
 
-    .facts__did-you-know
-      h3.facts__title= "did you know?"
-      .facts__sub-title= data.didYouKnow
+  +layout-block(facts.self)
 
-    dl.facts__specs
-      each spec in data.specs
-        .facts__spec
-          dt.facts__spec-name= spec.name
-          dd.facts__spec-value= spec.value
-          if spec.link
-            dd.facts__spec-link
-              -const data = {text: "view map", link: spec.link}
-              +btn-link(root, data, ['text'])
+    div(class = facts.elem('container', 'article'))
+      +article(txtData, facts.self, animal)
 
-    figure.facts__picture
-      img.facts__img(src = data.imgSrc, alt = data.name)
+    div(class = facts.elem('container', 'specs'))
+      dl(class = facts.elem('specs'))
+        each spec in data.specs
+          div(class = facts.elem('container', 'spec'))
+            dt(class = facts.elem('spec-name'))= spec.name
+            dd(class = facts.elem('spec-value'))= spec.value
+            if spec.name == 'Range:'
+              dd(class = facts.elem('spec-link'))
+                div(class = facts.elem('container', ['btn', 'btn-spec']))
+                  +btn-link(root, btnData, 'text', facts.self)
 
-    p.facts__descr= data.descr
+      div(class = facts.elem('container', ['btn', 'btn-320']))
+        +btn-link(root, btnData, 'text', facts.self)
+
+      div(class = facts.elem('container', 'spec-pic'))
+        +img(root, {link: data.imgSrc, alt: animal}, facts)
+
+    div(class = facts.elem('container', 'descr'))
+      p(class = facts.elem('description'))= data.descr
