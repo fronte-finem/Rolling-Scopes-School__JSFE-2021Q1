@@ -6,7 +6,7 @@
 */
 
 .btn-icon {
-  --time: 200ms;
+  --time: 333ms;
 
   display: flex;
   justify-content: center;
@@ -20,15 +20,23 @@
 
   border: none;
   outline: none;
-  background-color: transparent;
+  background-color: var(--color-btn-def, transparent);
+  fill: var(--color-icon-def, #f00);
+
+  transition: var(--time) ease-in-out;
+
+  &:hover {
+    background-color: var(--color-btn-hov, transparent);
+    fill: var(--color-icon-hov, #f00);;
+  }
 
   cursor: pointer;
   user-select: none;
 
-  transition: var(--time) ease-in-out;
-
-  fill: var(--color-icon-def);
-  &:hover { fill: var(--color-icon-hov); }
+  &--not-active {
+    cursor: default;
+    --color-icon-hov: var(--color-icon-def);
+  }
 }
 
 /* 📍 🗺️ 📍 */
@@ -43,34 +51,34 @@
   &.btn-link { cursor: pointer; }
 
   & {
-    --color-icon-def: var(--clr-ui-1-def);
-    --color-icon-hov: var(--clr-ui-1-def);
+    --color-icon-def: var(--color-ui-1-def);
+    --color-icon-hov: var(--color-ui-1-def);
     color: transparent;
-    filter: drop-shadow(0px 4px 30px var(--clr-ui-1-def));
+    filter: drop-shadow(0px 4px 30px var(--color-ui-1-def));
   }
   &.btn-link:hover {
-    --color-icon-hov: var(--clr-main-light);
-    color: var(--clr-main-light);
-    filter: drop-shadow(0px 4px 30px var(--clr-main-light));
+    --color-icon-hov: var(--color-main-light);
+    color: var(--color-main-light);
+    filter: drop-shadow(0px 4px 30px var(--color-main-light));
   }
 
   & {
-    --color-icon-def: var(--clr-ui-1-def);
-    --color-icon-hov: var(--clr-ui-1-def);
+    --color-icon-def: var(--color-ui-1-def);
+    --color-icon-hov: var(--color-ui-1-def);
     color: transparent;
-    filter: drop-shadow(0px 4px 30px var(--clr-ui-1-def));
+    filter: drop-shadow(0px 4px 30px var(--color-ui-1-def));
   }
   &.btn-link:hover {
-    --color-icon-hov: var(--clr-main-light);
-    color: var(--clr-main-light);
-    filter: drop-shadow(0px 4px 30px var(--clr-main-light));
+    --color-icon-hov: var(--color-main-light);
+    color: var(--color-main-light);
+    filter: drop-shadow(0px 4px 30px var(--color-main-light));
   }
 
   .svg-icon--map-icon {
     position: absolute;
     left: var(--x);
     top: var(--y);
-    fill: var(--clr-main-navy);
+    fill: var(--color-main-navy);
   }
 
   .svg-icon--map-icon-tiger     { --x: 18.6px;  --y: 20.4px;  }

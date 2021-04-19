@@ -6,45 +6,94 @@
 */
 
 .svg-icon {
+  display: block;
   width: var(--w-svg-icon, auto);
   height: var(--h-svg-icon, auto);
+  transition: 100ms;
 }
 
-.svg-icon--arrow-to-left,
-.svg-icon--arrow-to-right {
-  --w-svg-icon: 25px;
-  --h-svg-icon: 22px;
+.svg-icon {
+  &--online-zoo {
+    --w-svg-icon: 96px;
+    --h-svg-icon: 50px;
+  }
+
+  &--yem-digital {
+    --w-svg-icon: 50px;
+    --h-svg-icon: 50px;
+  }
+
+  &--rs-school-js {
+    --w-svg-icon: 138px;
+    --h-svg-icon: 51px;
+  }
+
+  &--youtube,
+  &--instagram,
+  &--facebook {
+    --w-svg-icon: 40px;
+    --h-svg-icon: 40px;
+  }
+
+  &--arrow-to-left,
+  &--arrow-to-right {
+    --w-svg-icon: 25px;
+    --h-svg-icon: 22px;
+  }
+
+  &--live-cam {
+    --w-svg-icon: 18px;
+    --h-svg-icon: 18px;
+  }
+
+  &--icon-expand {
+    --w-svg-icon: 16px;
+    --h-svg-icon: 15px;
+  }
+
+  &--icon-scroll-down {
+    --w-svg-icon: 15px;
+    --h-svg-icon: 19px;
+  }
+
+  &--icon-hamburger {
+    --w-svg-icon: 30px;
+    --h-svg-icon: 30px;
+  }
+
+  &--heart-in-hands {
+    --w-svg-icon: 106px;
+    --h-svg-icon: 80px;
+  }
+  &--donate-box {
+    --w-svg-icon: 100px;
+    --h-svg-icon: 80px;
+  }
+  &--food-box {
+    --w-svg-icon: 80px;
+    --h-svg-icon: 80px;
+  }
+
+  &--map-pin {
+    --w-svg-icon: 100px;
+    --h-svg-icon: 144px;
+  }
+
+  &--map-icon  {
+    --w-svg-icon: var(--w);
+    --h-svg-icon: var(--h);
+  }
+  &--map-icon-tiger     { --w: 62.6px;  --h: 52.61px; }
+  &--map-icon-lion      { --w: 52.04px; --h: 46.7px; }
+  &--map-icon-eagle     { --w: 48.16px; --h: 46.7px; }
+  &--map-icon-alligator { --w: 57.76px; --h: 46.7px; }
+  &--map-icon-lemur     { --w: 33px;    --h: 56px; }
+  &--map-icon-panda     { --w: 58.91px; --h: 43.59px; }
+  &--map-icon-coala     { --w: 42.64px; --h: 53.92px; }
+  &--map-icon-gorilla   { --w: 54.86px; --h: 46.7px; }
 }
 
-.svg-icon--live-cam {
-  --w-svg-icon: 18px;
-  --h-svg-icon: 18px;
-}
 
-.svg-icon--icon-expand {
-  --w-svg-icon: 16px;
-  --h-svg-icon: 15px;
-}
 
-.svg-icon--icon-scroll-down {
-  --w-svg-icon: 15px;
-  --h-svg-icon: 19px;
-}
 
-.svg-icon--map-pin {
-  --w-svg-icon: 100px;
-  --h-svg-icon: 144px;
-}
 
-.svg-icon--map-icon  {
-  --w-svg-icon: var(--w);
-  --h-svg-icon: var(--h);
-}
-.svg-icon--map-icon-tiger     { --w: 62.6px;  --h: 52.61px; }
-.svg-icon--map-icon-lion      { --w: 52.04px; --h: 46.7px; }
-.svg-icon--map-icon-eagle     { --w: 48.16px; --h: 46.7px; }
-.svg-icon--map-icon-alligator { --w: 57.76px; --h: 46.7px; }
-.svg-icon--map-icon-lemur     { --w: 33px;    --h: 56px; }
-.svg-icon--map-icon-panda     { --w: 58.91px; --h: 43.59px; }
-.svg-icon--map-icon-coala     { --w: 42.64px; --h: 53.92px; }
-.svg-icon--map-icon-gorilla   { --w: 54.86px; --h: 46.7px; }

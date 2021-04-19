@@ -6,28 +6,35 @@
   🧱 ELEMENT: BUTTON 🧱
 */
 
-:root {
-  --h-btn: 74px;
-}
-
 .btn {
   --time: 300ms;
-  --w-m: calc(2 * (var(--col) + var(--gap)));
-  --w-l: calc(3 * (var(--col) + var(--gap)));
-  --w-s: min-content;
-  --h: var(--h-btn);
-  --p: 0 26px
+  --btn-self-w-meddium: var(--btn-w-meddium, 240px);
+  --btn-self-w-large: var(--btn-w-large, 360px);
+  --btn-self-w-small: var(--btn-w-small, min-content);
+  --btn-self-h: var(--btn-h, 74px);
+  --btn-self-padd-w: var(--btn-padd-w, 26px);
+
+  @media screen and (max-width: 800px) {
+    --btn-self-w-meddium: var(--btn-w-meddium, 285px);
+  }
+  @media screen and (max-width: 500px) {
+    --btn-self-w-meddium: var(--btn-w-meddium, 100%);
+    --btn-self-w-large: var(--btn-w-large, 100%);
+    --btn-self-w-small: var(--btn-w-small, 100%);
+    --btn-self-h: var(--btn-h, 45px);
+  }
 }
 
 .btn {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   column-gap: 10px;
+  width: min-content;
 
-  height: var(--h);
+  height: var(--btn-self-h);
   margin: 0;
-  padding: var(--p);
+  padding: 0 var(--btn-self-padd-w);
   border: none;
   border-radius: 5px;
   outline: none;
@@ -37,12 +44,16 @@
 
   cursor: pointer;
   user-select: none;
+
+  &--not-active {
+    cursor: default;
+  }
 }
 
 .btn {
-  width: var(--w-m);
-  &--long { width: var(--w-l); }
-  &--free { width: var(--w-s); }
+  width: var(--btn-self-w-meddium);
+  &--long { width: var(--btn-self-w-large); }
+  &--free { width: var(--btn-self-w-small); }
 }
 
 .btn {
@@ -52,36 +63,36 @@
 }
 
 .btn {
-  &               { background-color: var(--clr-ui-1-def); }
-  &:hover         { background-color: var(--clr-ui-1-hov); }
+  &               { background-color: var(--color-ui-1-def); }
+  &:hover         { background-color: var(--color-ui-1-hov); }
 
-  &--orange       { background-color: var(--clr-ui-1-def); }
-  &--orange:hover { background-color: var(--clr-ui-1-hov); }
+  &--orange       { background-color: var(--color-ui-1-def); }
+  &--orange:hover { background-color: var(--color-ui-1-hov); }
 
-  &--cyan.btn--active { background-color: var(--clr-ui-2-def); }
-  &--cyan             { background-color: var(--clr-ui-2-off); }
-  &--cyan:hover       { background-color: var(--clr-ui-2-hov); }
+  &--cyan.btn--active { background-color: var(--color-ui-2-def); }
+  &--cyan             { background-color: var(--color-ui-2-off); }
+  &--cyan:hover       { background-color: var(--color-ui-2-hov); }
 
-  &--navy       { border: 1px solid var(--clr-main-navy); }
+  &--navy       { border: 1px solid var(--color-main-navy); }
   &--navy       { background-color: transparent; }
-  &--navy:hover { background-color: var(--clr-main-navy); }
+  &--navy:hover { background-color: var(--color-main-navy); }
 
-  &--white       { border: 1px solid var(--clr-main-light); }
+  &--white       { border: 1px solid var(--color-main-light); }
   &--white       { background-color: transparent; }
-  &--white:hover { background-color: var(--clr-ui-2-def); }
+  &--white:hover { background-color: var(--color-ui-2-def); }
 
   &--text       { background-color: transparent; }
-  &--text:hover { background-color: var(--clr-ui-1-def); }
+  &--text:hover { background-color: var(--color-ui-1-def); }
 }
 
 .btn {
-  color: var(--clr-main-light);
+  color: var(--color-main-light);
 
-  &--navy       { color: var(--clr-main-navy); }
-  &--navy:hover { color: var(--clr-main-light); }
+  &--navy       { color: var(--color-main-navy); }
+  &--navy:hover { color: var(--color-main-light); }
 
-  &--text       { color: var(--clr-ui-1-def); }
-  &--text:hover { color: var(--clr-main-light); }
+  &--text       { color: var(--color-ui-1-def); }
+  &--text:hover { color: var(--color-main-light); }
 }
 
 .btn {
@@ -90,11 +101,11 @@
     height: 22px;
   }
 
-  fill: var(--clr-main-light);
+  fill: var(--color-main-light);
 
-  &--navy       { fill: var(--clr-main-navy); }
-  &--navy:hover { fill: var(--clr-main-light); }
+  &--navy       { fill: var(--color-main-navy); }
+  &--navy:hover { fill: var(--color-main-light); }
 
-  &--text       { fill: var(--clr-ui-1-def); }
-  &--text:hover { fill: var(--clr-main-light); }
+  &--text       { fill: var(--color-ui-1-def); }
+  &--text:hover { fill: var(--color-main-light); }
 }

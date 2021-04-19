@@ -5,6 +5,11 @@ mixin svg-icon(data)
         +gen-svg-icon(icon)
 
 mixin gen-svg-icon(data)
-  - const cls = data.cls ? ` svg-icon--${data.cls}` : '';
-  svg(class = `svg-icon${cls} svg-icon--${data.id}`)
-    use(class = `svg-icon__use`, href = `#${data.id}`)
+  include ../_lib/_bem.js.pug
+  -
+    const mods = [data.id];
+    data.cls && mods.push(data.cls);
+    const icon = new Bem('svg-icon', mods, blks);
+
+  svg(class = icon.fullClass)
+    use(class = icon.elem('use'), href = `#${data.id}`)

@@ -1,8 +1,11 @@
+include ./_svg-icon.pug
 
-mixin bage(text, type)
-  - var cls = type ? `bage bage--${type}` : 'bage';
-  div(class = cls)
-    .bage__text= text
-    .bage__icon
-      svg
-        use(href = `#live-cam`)
+mixin bage(text, mods, blks)
+  include ../_lib/_bem.js.pug
+  -
+    const bage = new Bem('bage', mods, blks);
+
+  div(class = bage.fullClass)
+    div(class = bage.elem('text'))= text
+    div(class = bage.elem('icon'))
+      +svg-icon({id: 'live-cam'})

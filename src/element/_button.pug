@@ -2,36 +2,34 @@ include ./_link.pug
 include ./_svg-icon.pug
 
 
-mixin btn-link(root, data, mods, blks)
+mixin btn-link(root, data, mods, blks, disabled = false)
   - data.id = 'arrow-to-right'
-  +link-gen(root, data, ['btn', 'btn-link'], mods, blks)
+  +gen-link(root, data, ['btn', 'btn-link'], mods, blks, disabled)
     +svg-icon(data)
 
-mixin btn-link-icon(root, data, mods, blks)
-  - data.text = false
-  +link-gen(root, data, ['btn-icon', 'btn-link'], [...(mods || []), data.id], blks)
-    +svg-icon(data)
+mixin btn-link-icon(root, data, mods, blks, disabled = false)
+  +gen-link-icon(root, data, ['btn-icon', 'btn-link'], mods, blks, disabled)
 
 
 mixin btn(data, mods, blks)
   - data.id = 'arrow-to-right'
-  +btn-gen('button', data, 'btn', mods, blks)
+  +gen-btn('button', data, 'btn', mods, blks)
 
 mixin btn-icon(data, mods, blks)
   - data.text = false
-  +btn-gen('button', data, 'btn-icon', [...(mods || []), data.id], blks)
+  +gen-btn('button', data, 'btn-icon', [...(mods || []), data.id], blks)
 
 
 mixin btn-div(data, mods, blks)
   - data.id = 'arrow-to-right'
-  +btn-gen('div', data, 'btn', mods, blks)
+  +gen-btn('div', data, 'btn', mods, blks)
 
 mixin btn-div-icon(data, mods, blks)
   - data.text = false
-  +btn-gen('div', data, 'btn-icon', [...(mods || []), data.id], blks)
+  +gen-btn('div', data, 'btn-icon', [...(mods || []), data.id], blks)
 
 
-mixin btn-gen(tag, data, self, mods, blks)
+mixin gen-btn(tag, data, self, mods, blks)
   include ../_lib/_bem.js.pug
   - const bem = new Bem(self, mods, blks);
   #{tag}(class = bem.fullClass, title = data.title)

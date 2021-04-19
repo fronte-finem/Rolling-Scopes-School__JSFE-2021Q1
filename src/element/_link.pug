@@ -1,16 +1,31 @@
-mixin link(root, data, mods, blks)
-  +link-gen(root, data, 'link', mods, blks)
+include ./_svg-icon.pug
 
-mixin link-gen(root, data, self, mods, blks)
+
+mixin link(root, data, mods, blks, disabled = false)
+  +gen-link(root, data, 'link', mods, blks, disabled)
+
+mixin link-icon(root, data, mods, blks, disabled = false)
+  +gen-link-icon(root, data, ['link-icon'], mods, blks)
+
+
+mixin gen-link-icon(root, data, self, mods, blks, disabled = false)
+  - data.text = false
+  +gen-link(root, data, self, [...(mods || []), data.id], blks, disabled)
+    +svg-icon(data)
+
+
+mixin gen-link(root, data, self, mods, blks, disabled = false)
   include ../_lib/_bem.js.pug
+  include ../_lib/_link.js.pug
   -
     const bem = new Bem(self, mods, blks);
-    const external = data.external || /^[^:]+:\/{2}/.test(data.link);
-    const disabled = (mods || []).includes('disabled');
-    const link = disabled ? null : external ? data.link : `${root}/${data.link}`;
     const tag = disabled ? 'span' : 'a';
+    const link = disabled ? null : getLink(root, data);
+    if (disabled) bem.addMod('not-active');
 
   #{tag}(class = bem.fullClass, href = link, title = data.title)
     if data.text
-      span(class = bem.elem('text'))= data.text
+      |
+      .
+        #[span(class = bem.elem('text'))= data.text]
     block
