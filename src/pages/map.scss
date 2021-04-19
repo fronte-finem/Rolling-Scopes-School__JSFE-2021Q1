@@ -8,50 +8,133 @@
     👑 👑 👑 👑
 */
 
-.map-header {
-  @include set-vars((
-    c3-g4: grid.col-gap(3, 4),
-    c4: grid.col(4),
-  ));
+.title {
+  padding: 40px 0 70px;
 
-  .wrapper {
-    padding: 0 var(--c3-g4);
-    padding-top: 40px;
-    padding-bottom: 70px;
+  @media (max-width: 1400px) {
+    padding: 30px 0 20px;
+  }
+  @media (max-width: 1000px) {
+    padding: 30px 0 70px;
+  }
+  @media (max-width: 500px) {
+    padding: 20px 0 25px;
   }
 
-  .title {
+  &__heading {
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+
     @include font.h2;
     text-align: center;
-    color: var(--clr-main-navy);
+    color: var(--color-main-navy);
+
+    @media (max-width: 1000px) {
+      @include font.h3;
+    }
+
+    @media (max-width: 500px) {
+      text-transform: unset;
+    }
   }
 }
 
+.page__map-wrapper {
+  --map-h: 64.865%;
+  --map-scale: 1.12;
 
-
-.map {
   padding-bottom: 150px;
 
-  .wrapper {
+  @media (max-width: 1400px) {
+    max-width: 100%;
+    padding-bottom: 95px;
+  }
+  @media (max-width: 1000px) {
+    padding-bottom: 100px;
+  }
+  @media (max-width: 500px) {
     position: relative;
+    overflow-x: hidden;
+    padding-bottom: calc(var(--map-scale) * var(--map-h) + 55px);
+  }
+}
+
+.map {
+  position: relative;
+
+  @media (max-width: 500px) {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
+    width: calc(100% * var(--map-scale));
   }
 
   .map-svg {
     display: block;
     width: 100%;
-    fill: var(--clr-main-navy);
+    fill: var(--color-main-navy);
   }
 
   .btn-icon {
-      &--map-pin   { position: absolute; }
+      &--map-pin   {
+        position: absolute;
+        transform-origin: center bottom;
+        transform: translateX(-50%);
+      }
 
-      &--panda     { top: 38.2%; left: 67.5%; }
-      &--tiger     { top: 55.4%; left: 72.0%; }
-      &--lion      { top: 49.6%; left: 40.7%; }
-      &--gorilla   { top: 52.1%; left: 48.9%; }
-      &--eagle     { top: 43.0%; left: 11.3%; }
-      &--alligator { top: 44.4%; left: 20.3%; }
-      &--lemur     { top: 65.2%; left: 56.3%; }
-      &--coala     { top: 67.9%; left: 81.3%; }
+      &--eagle     { bottom: 41%;   left: 14.8%; }
+      &--alligator { bottom: 39.7%; left: 23.7%; }
+      &--lion      { bottom: 34.6%; left: 44.1%; }
+      &--gorilla   { bottom: 31.8%; left: 52.5%; }
+      &--lemur     { bottom: 18.8%; left: 59.7%; }
+      &--panda     { bottom: 45.8%; left: 71.1%; }
+      &--tiger     { bottom: 28.2%; left: 75.6%; }
+      &--coala     { bottom: 15.9%; left: 84.9%; }
+
+    /* 💩 twaking pixel-perfect 💩 */
+    @media (max-width: 1200px) {
+      &--eagle     { bottom: 41%;   left: 14.8%; }
+      &--alligator { bottom: 38.8%; left: 24.5%; }
+      &--lion      { bottom: 35.6%; left: 44.3%; }
+      &--gorilla   { bottom: 32.1%; left: 52.8%; }
+      &--lemur     { bottom: 19.2%; left: 60.3%; }
+      &--panda     { bottom: 49.2%; left: 75.3%; }
+      &--tiger     { bottom: 27.1%; left: 75.6%; }
+      &--coala     { bottom: 16.4%; left: 84.9%; }
+    }
+
+    @media (max-width: 1000px) {
+      transform: translateX(-50%) scale(.45);
+    }
+
+    /* 💩 twaking pixel-perfect 💩 */
+    @media (max-width: 640px) {
+      &--eagle     { bottom: 43.3%; left: 14.7%; }
+      &--alligator { bottom: 39.5%; left: 24.2%; }
+      &--lion      { bottom: 34.6%; left: 44.8%; }
+      &--gorilla   { bottom: 32%;   left: 52.5%; }
+      &--lemur     { bottom: 18.9%; left: 60%; }
+      &--panda     { bottom: 47.8%; left: 75.4%; }
+      &--tiger     { bottom: 26.6%; left: 75.8%; }
+      &--coala     { bottom: 16.7%; left: 83.2%; }
+    }
+
+    @media (max-width: 500px) {
+      transform: translateX(-50%) scale(.35);
+    }
+
+    /* 💩 twaking pixel-perfect 💩 */
+    @media (max-width: 320px) {
+      &--eagle     { bottom: 42.4%; left: 14.7%; }
+      &--alligator { bottom: 36.3%; left: 25.3%; }
+      &--lion      { bottom: 34.6%; left: 45.7%; }
+      &--gorilla   { bottom: 25.9%; left: 53.5%; }
+      &--lemur     { bottom: 15.9%; left: 60.8%; }
+      &--panda     { bottom: 42.2%; left: 72.5%; }
+      &--tiger     { bottom: 23.6%; left: 77.6%; }
+      &--coala     { bottom: 10.7%; left: 85.3%; }
+    }
   }
 }
