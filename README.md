@@ -19,4 +19,5 @@
 >   -- | -- 
 >   [online-zoo](https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/tree/online-zoo) | source: `pug` + `scss`
 >   [online-zoo-deploy](https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/tree/online-zoo-deploy) | generated `html` + `css` prepared for deploy
+> - [x] Неделя 3&4 - Адаптив: [pull-request](https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/13)
 ---
