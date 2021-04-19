@@ -1,0 +1,75 @@
+-
+  const dataAnimals = [
+      getData1Anim().concat(getData2Anim(), getData1Anim(), getData2Anim()),
+      getData2Anim().concat(getData1Anim(), getData2Anim(), getData1Anim()),
+    ];
+
+  function getData1Anim() {
+    return [
+        {
+          id: 'panda',
+          name: 'Lucas',
+          kind: 'Giant Panda',
+          img: { link: 'assets/img/animal-panda.jpg' },
+          link: 'pages/zoos/panda.html',
+          text: 'Native to central China, giant pandas have come to symbolize vulnerable species.',
+        },
+        {
+          id: 'lemur',
+          name: 'Andy',
+          kind: 'Madagascarian Lemur',
+          img: { link: 'assets/img/animal-lemur.jpg' },
+          link: 'pages/zoos/lemur.html',
+          text: 'Lemurs are considered the world’s most endangered group of mammals.',
+        },
+        {
+          id: 'gorilla',
+          name: 'Glen',
+          kind: 'Gorilla in Congo',
+          img: { link: 'assets/img/animal-gorilla.jpg' },
+          link: 'pages/zoos/gorilla.html',
+          text: 'Variety of snacks very important for the healthy life of gorillas and his plenty of babies',
+        },
+        {
+          id: 'alligator',
+          name: 'Mike',
+          kind: 'Chinese Alligator',
+          img: { link: 'assets/img/animal-alligator.jpg' },
+          text: 'From nose to tail, belly to back, hard scales protect this petite alligator.',
+        },
+      ];
+  }
+
+  function getData2Anim() {
+    return [
+        {
+          id: 'eagle',
+          name: 'Sam & Lora',
+          kind: 'West End Bald Eagles',
+          img: { link: 'assets/img/animal-eagle.jpg' },
+          link: 'pages/zoos/eagle.html',
+          text: 'Pair of eagle parents lay and protect eggs, feed their chicks and teach them to hunt and fly.',
+        },
+        {
+          id: 'koala',
+          name: 'Liz',
+          kind: 'Australian Koala',
+          img: { link: 'assets/img/animal-koala.jpg' },
+          text: 'The elevated walkways bring you to eye level with the koalas as they perch in their forest.',
+        },
+        {
+          id: 'lion',
+          name: 'Shake',
+          kind: 'African Lion',
+          img: { link: 'assets/img/animal-lion.jpg' },
+          text: 'Lions roam the savannas and grasslands of Africa, hunting and raising cubs in the pride.',
+        },
+        {
+          id: 'tiger',
+          name: 'Senja',
+          kind: 'Sumatran Tiger',
+          img: { link: 'assets/img/animal-tiger.jpg' },
+          text: 'Sumatran Tigers are the smallest of the five sub-species, and are found in Indonesia.',
+        },
+      ];
+  }
