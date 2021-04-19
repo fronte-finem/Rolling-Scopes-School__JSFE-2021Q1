@@ -1,18 +1,23 @@
 include ./_control-arrows.pug
+include ./_control-dots.pug
+include ./_card-animal.pug
+include ./_card-testimonial.pug
 
-mixin gen-slider(root, gen_card, cards_data, slider_type, control_color)
-  include ../_lib/_bem.js.pug
-  -
-    const self = 'slider';
-    const bem = new Bem(self);
+mixin slider(root, data, rows = 1, mods = null, blk = null)
+  - const slider = new Bem('slider', mods, blk);
 
-  div(class = self)
-    div(class = bem.elem('controls'))
-      +control-arrows(control_color)
-    - const slts = new Bem('slots', ['slider_type'], [self]);
-    ul(class = slts.fullClass)
-      each item in cards_data
-        li(class = slts.elem('slot'))
-          +#{gen_card}(root, bem.elem('card'), item)
-    div(class = bem.elem('overlay'))
+  div(class = slider.fullClass)
 
+    div(class = slider.elem('ctrl-container', 'arrows'))
+      +control-arrows(data.controlColor)
+
+    if data.controlDotsNum
+      div(class = slider.elem('ctrl-container', 'dots'))
+        +control-dots(data.controlDotsNum, data.controlColor, slider.self)
+
+    div(class = slider.elem('slots-container'))
+      each row, ix in data.cardData
+        ul(class = slider.elem('slots', `row-${ix + 1}`))
+          each slot, jx in row
+            li(class = slider.elem('slot'), style=`--slider-slot-num: ${jx + 1};`)
+              +#{data.cardMixin}(root, slot)
