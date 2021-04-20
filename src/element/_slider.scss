@@ -7,22 +7,24 @@
 
 .slider {
   --slider-ctrl-arrows-display: flex;
-  --slider-ctrl-arrows-order: 0;
-  --slider-ctrl-arrows-align: center;
   --slider-ctrl-dots-display: none;
+  --slider-ctrl-arrows-order: 0;
   --slider-ctrl-dots-order: 0;
+  --slider-ctrl-arrows-align: center;
   --slider-ctrl-dots-align: center;
   --slider-ctrl-cont-w: var(--page-w);
   --slider-ctrl-gap-h: 50px;
+
   --slider-slots-rows: 2;
+  --slider-slot-cols: 4;
   --slider-slots-gap-w: var(--page-w-gap);
   --slider-slots-gap-h: var(--page-w-gap);
-  --slider-slot-cols: 4;
-  --slider-slot-cols-relative: calc(var(--page-col) / var(--slider-slot-cols));
   --slider-slot-w: calc(
-      (var(--page-w) - (var(--slider-slot-cols-relative) - 1) * var(--page-w-gap))
-      / var(--slider-slot-cols-relative)
+      var(--page-w-col) * var(--slider-slot-cols)
+      +
+      var(--page-w-gap) * (var(--slider-slot-cols) - 1)
     );
+
   --slider-move-slots: 0;
   --slider-move-offcet: calc(var(--slider-slot-w) + var(--slider-slots-gap-w));
   --slider-move: translate(calc(var(--slider-move-slots) * var(--slider-move-offcet)));
@@ -47,7 +49,6 @@
     }
   }
 
-
   &__slots-container {
     display: flex;
     flex-direction: column;
@@ -63,8 +64,7 @@
 
   &__slot {
     position: relative;
-    flex-basis: var(--slider-slot-w);
-    flex-shrink: 0;
+    flex: 0 0 var(--slider-slot-w, 100%);
 
     &::before {
       counter-increment: card-num;
@@ -80,9 +80,5 @@
       pointer-events: none;
       user-select: none;
     }
-  }
-
-  @media screen and (max-width: 800px) {
-
   }
 }

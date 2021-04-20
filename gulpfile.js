@@ -1,5 +1,5 @@
 const path = require('path');
-const { src, dest, watch, series } = require('gulp');
+const { src, dest, symlink, watch, series } = require('gulp');
 const changed = require('gulp-changed');
 const imagemin = require('gulp-imagemin');
 const pugDependency = require('pug-dependency');
@@ -24,8 +24,13 @@ function getAbsDstDir(absSrcFile) {
   return absDstDir;
 }
 
-function cpyAssets(cb) {
-  src(srcAssets)
+function linkAssets() {
+  return src([`${srcDir}/assets`, `${srcDir}/favicon.*`])
+    .pipe(symlink(dstDir))
+}
+
+function cpyAssets() {
+  return src(srcAssets)
     .pipe(changed(dstAssets))
     .pipe(imagemin([
         imagemin.gifsicle({interlaced: true}),
@@ -40,7 +45,6 @@ function cpyAssets(cb) {
       ],
       {verbose: true}))
     .pipe(dest(dstAssets))
-  cb();
 }
 
 async function cleanDst(cb) {
@@ -100,9 +104,12 @@ async function buildSCSS(cb) {
 }
 
 exports.clean = cleanDst;
+exports['assets:cpy'] = cpyAssets;
+exports['assets:link'] = linkAssets;
 
-exports.build = series(cleanDst, cpyAssets, buildPug, buildSCSS);
+exports['build:dev'] = series(cleanDst, linkAssets, buildPug, buildSCSS);
+exports['build:deploy'] = series(cleanDst, cpyAssets, buildPug, buildSCSS);
 
-exports.watch = function () {
+exports['watch:sass'] = function () {
   watch(srcSCSS, buildSCSS);
 }
