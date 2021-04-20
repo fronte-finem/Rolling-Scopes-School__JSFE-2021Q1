@@ -104,11 +104,11 @@ dist
 .tern-port
 
 # VSCode files
-# .vscode/
+.vscode/
 
 # Task files
 Taskfile.yml
 .task/
 
-# Deploy ouutput
+# Deploy output
 online-zoo/
