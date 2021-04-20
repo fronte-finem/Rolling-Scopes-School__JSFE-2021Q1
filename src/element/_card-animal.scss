@@ -21,9 +21,11 @@
   --card-self-color-bg: var(--card-color-bg, var(--color-main-navy));
   --card-self-color-txt: var(--card-color-text, var(--color-main-light));
 
+  --card-self-article-padd-w-uniform: 44px;
+  --card-self-article-padd-w: var(--card-article-padd-w, var(--card-self-article-padd-w-uniform));
+
   --card-self-article-h: var(--card-article-h, 188px);
   --card-self-article-padd-h: var(--card-article-padd-h, 30px);
-  --card-self-article-padd-w: var(--card-article-padd-w, 44px);
   --card-self-heading-padd-h: var(--card-heading-padd-h, 18px);
   --card-self-text-padd-h: var(--card-text-padd-h, 0);
   --card-self-text-padd-w: var(--card-text-padd-w, 0);
@@ -40,7 +42,7 @@
     --card-self-h-max-abs: var(--card-h-max-abs, 600);
     --card-self-pic-h: var(--card-pic-h, 333px);
     --card-self-article-h: var(--card-article-h, 182px);
-    --card-self-article-padd-w: var(--card-article-padd-w, 12px);
+    --card-self-article-padd-w-uniform: 12px;
     --card-self-heading-padd-h: var(--card-heading-padd-h, 13px);
     --card-self-text-padd-w: var(--card-text-padd-w, 14px);
     --card-self-bott-padd-h: var(--card-bott-padd-h, 10px);
@@ -49,7 +51,7 @@
     --card-self-h-max-abs: var(--card-h-max-abs, 600);
     --card-self-pic-h: var(--card-pic-h, 333px);
     --card-self-article-h: var(--card-article-h, 182px);
-    --card-self-article-padd-w: var(--card-article-padd-w, 17px);
+    --card-self-article-padd-w-uniform: 17px;
     --card-self-heading-padd-h: var(--card-heading-padd-h, 13px);
     --card-self-text-padd-w: var(--card-text-padd-w, 14px);
     --card-self-bott-padd-h: var(--card-bott-padd-h, 25px);
@@ -141,6 +143,14 @@
   @media screen and (max-width: 1300px) {
     &--panda { --card-self-article-padd-w: var(--card-article-padd-w, 10px); }
   }
+
+  @media screen and (max-width: 1100px) {
+      /* 🧹 clear pixel-perfect 🧹 */
+    &--panda { --card-self-article-padd-w: var(--card-self-article-padd-w-uniform) }
+    &--alligator { --card-self-article-padd-w: var(--card-self-article-padd-w-uniform) }
+    &--lion { --card-self-article-padd-w: var(--card-self-article-padd-w-uniform) }
+  }
+
 
   &__btn-container .btn {
     width: 250px;

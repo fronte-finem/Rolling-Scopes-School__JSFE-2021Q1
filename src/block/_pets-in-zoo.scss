@@ -109,7 +109,8 @@
     }
   }
 
-  @media screen and (max-width: 800px) {
+
+  @media screen and (max-width: 1000px) {
     padding: 100px 0;
 
     &__article {
@@ -126,7 +127,6 @@
     &__slider {
       --slider-ctrl-arrows-display: none;
       --slider-slot-cols: 4;
-      --slider-move-slots: -5;
 
       .slider__slots--row-2 {
         display: none;
@@ -134,13 +134,7 @@
     }
   }
 
-  @media screen and (max-width: 700px) {
-    &__slider {
-      --slider-slot-cols: 8;
-    }
-  }
-
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 600px) {
     padding: 50px 0 65px;
 
     &__article {
