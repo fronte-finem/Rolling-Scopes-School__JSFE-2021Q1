@@ -134,6 +134,12 @@
     }
   }
 
+  @media screen and (max-width: 700px) {
+    &__slider {
+      --slider-slot-cols: 8;
+    }
+  }
+
   @media screen and (max-width: 500px) {
     padding: 50px 0 65px;
 
@@ -150,6 +156,7 @@
     }
 
     &__slider {
+      --slider-slot-cols: 4;
       margin-bottom: 0;
     }
 
