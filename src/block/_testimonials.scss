@@ -163,19 +163,25 @@
     --slider-ctrl-arrows-order: 1;
     --slider-ctrl-arrows-align: flex-start;
     --slider-ctrl-gap-h: 55px;
+
+    --slider-slot-w: 515px;
     --slider-slots-gap-w: 30px;
     --slider-slots-gap-h: 30px;
-    --slider-slot-w: var(--card-testimonial-card-w);
+
     grid-column: 6 / span 7;
 
     @media screen and (max-width: 1400px) {
       --slider-ctrl-arrows-align: flex-end;
       --slider-ctrl-gap-h: 100px;
+
       grid-column: 2 / span 11;
       padding-left: 5px;
     }
+
     @media screen and (max-width: 900px) {
       --slider-ctrl-arrows-display: none;
+
+      --slider-slot-w: 523px;
       --slider-slots-gap-w: var(--page-w-gap);
 
       padding-left: 0px;
@@ -184,10 +190,13 @@
         display: none;
       }
     }
-    @media screen and (max-width: 500px) {
+
+    @media screen and (max-width: 600px) {
       --slider-ctrl-dots-display: flex;
       --slider-ctrl-dots-order: 1;
       --slider-ctrl-gap-h: 30px;
+
+      --slider-slot-w: 100%;
     }
   }
 

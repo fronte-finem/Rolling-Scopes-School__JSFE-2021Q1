@@ -64,7 +64,7 @@
 
   &__slot {
     position: relative;
-    flex: 0 0 var(--slider-slot-w);
+    flex: 0 0 var(--slider-slot-w, 100%);
 
     &::before {
       counter-increment: card-num;
