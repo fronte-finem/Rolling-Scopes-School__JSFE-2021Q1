@@ -127,6 +127,7 @@
     &__slider {
       --slider-ctrl-arrows-display: none;
       --slider-slot-cols: 4;
+      --slider-move-slots: -5;
 
       .slider__slots--row-2 {
         display: none;
