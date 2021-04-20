@@ -59,13 +59,9 @@
     color: var(--color-ui-2-def);
   }
 
-  &__article {
-  }
   &__article-heading {
     padding: 0 var(--card-testimonial-heading-padd-w) var(--card-testimonial-heading-padd-h);
     @include font.h-sub;
-  }
-  &__article-text {
   }
 
   &__name {
