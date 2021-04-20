@@ -21,3 +21,13 @@
 >   [online-zoo-deploy](https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/tree/online-zoo-deploy) | generated `html` + `css` prepared for deploy
 > - [x] Неделя 3&4 - Адаптив: [pull-request](https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/13)
 ---
+> # 🎬 self-introduction 🎬
+> - [x] [task](https://rolling-scopes-school.github.io/stage0/#/stage1/tasks/self-introduction/self-introduction)
+> - [x] [pull-request](https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/14)
+> - [x] [deploy](https://youtu.be/53WTc-ddfa4)
+---
+> # 📷 photo-filter 📷
+> - [x] [task](https://rolling-scopes-school.github.io/stage0/#/stage1/tasks/js-projects/photo-filter)
+> - [ ] [pull-request](https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/15)
+> - [ ] [deploy](https://rolling-scopes-school.github.io/fronte-finem-JSFE2021Q1/photo-filter/)
+---
