@@ -13,6 +13,8 @@
   --color-8: rgba(255, 255, 255, 0.5);
   --color-9: #cbd5de;
 
+  --decor-grad-border: 1px solid;
+
   --blur: 0px;
   --invert: 0%;
   --sepia: 0%;

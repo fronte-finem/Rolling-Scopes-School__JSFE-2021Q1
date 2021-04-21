@@ -1,0 +1,9 @@
+
+.decor-grad-border {
+  border-image-slice: 1;
+  border-image-source:
+      linear-gradient(to left,
+          var(--color-2),
+          var(--color-1),
+          var(--color-2));
+}

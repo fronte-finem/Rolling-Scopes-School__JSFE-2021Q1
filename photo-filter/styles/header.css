@@ -1,0 +1,13 @@
+
+.header {
+  text-align: center;
+  width: 100%;
+  background: var(--color-main-bg);
+  border-bottom: var(--decor-grad-border);
+}
+
+.header-title {
+  line-height: 60px;
+  font-weight: 300;
+  color: var(--color-main-font);
+}
