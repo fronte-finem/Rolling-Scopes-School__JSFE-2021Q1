@@ -1,0 +1,21 @@
+:root {
+  --font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+
+  --color-main-bg: #313940;
+  --color-main-font: #fff;
+  --color-1: #a2abb3;
+  --color-2: #38495a;
+  --color-3: #00c9b7;
+  --color-4: #454c53;
+  --color-5: #00b4a4;
+  --color-6: #515961;
+  --color-7: rgba(255, 255, 255, 0.3);
+  --color-8: rgba(255, 255, 255, 0.5);
+  --color-9: #cbd5de;
+
+  --blur: 0px;
+  --invert: 0%;
+  --sepia: 0%;
+  --saturate: 100%;
+  --hue: 0deg;
+}
