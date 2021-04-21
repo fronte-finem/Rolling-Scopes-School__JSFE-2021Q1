@@ -1,4 +1,6 @@
 :root {
+  --page-max-w: 1140px;
+
   --font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 
   --color-main-bg: #313940;

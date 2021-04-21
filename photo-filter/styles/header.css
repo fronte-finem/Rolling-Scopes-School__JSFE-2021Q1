@@ -1,9 +1,5 @@
-
 .header {
   text-align: center;
-  width: 100%;
-  background: var(--color-main-bg);
-  border-bottom: var(--decor-grad-border);
 }
 
 .header-title {
