@@ -1,0 +1,75 @@
+.logo {
+  display: block;
+  text-decoration: none;
+  color: var(--color-9);
+  transition: 300ms;
+}
+
+.logo__text,
+.logo__icon {
+  display: block;
+  transition: 300ms;
+}
+
+.logo__icon {
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: contain;
+}
+
+.logo__text {
+  font-family: var(--font-family);
+}
+
+
+.logo-github {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-github:hover {
+  color: var(--color-main-font);
+}
+
+.logo-github__icon {
+  width: 35px;
+  height: 35px;
+  background-image: url('../assets/svg/github.svg');
+}
+
+.logo-github__text {
+  font-size: 16px;
+  line-height: 45px;
+}
+
+
+.logo-rss {
+  position: relative;
+  width: 111px;
+  height: 32px;
+}
+
+.logo-rss__icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 86px;
+  height: 32px;
+  background-image: url('../assets/svg/rss.svg');
+}
+
+.logo-rss__text {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  letter-spacing: -2px;
+  font-weight: bold;
+  font-size: 21px;
+  line-height: 0.9;
+}
+
+.logo-rss:hover .logo-rss__text {
+  right: -5px;
+  letter-spacing: 0;
+}
