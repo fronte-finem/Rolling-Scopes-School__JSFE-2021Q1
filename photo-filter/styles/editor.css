@@ -25,6 +25,13 @@
   max-width: 830px;
 }
 
+@media (max-width: 1024px) {
+  .editor__container--img {
+    max-width: 100%;
+    max-height: none;
+  }
+}
+
 .editor__img {
   height: 100%;
   width: 100%;

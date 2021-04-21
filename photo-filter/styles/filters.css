@@ -6,6 +6,17 @@
   row-gap: 40px;
 }
 
+@media (max-width: 1024px) {
+  .filters {
+    row-gap: 10px;
+  }
+}
+@media (max-width: 375px) {
+  .filters {
+    row-gap: 5px;
+  }
+}
+
 .filters__io {
   display: flex;
   column-gap: 20px;
