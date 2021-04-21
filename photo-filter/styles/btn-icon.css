@@ -1,0 +1,32 @@
+@charset "utf-8";
+
+.btn-icon {
+  background-size: contain;
+  transition: 300ms;
+}
+
+.btn-icon--fullscreen {
+  --color-bg-def: rgba(255, 255, 255, 0.3);
+  --color-bg-hov: rgba(255, 255, 255, 0.5);
+  --svg-⭕: url('../assets/svg/fullscreen-open.svg');
+  --svg-❌: url('../assets/svg/fullscreen-exit.svg');
+
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-bg-def);
+  background-image: var(--svg-⭕);
+}
+
+.btn-icon--fullscreen:hover {
+  background-color: var(--color-bg-hov);
+}
+
+:-webkit-full-screen .btn-icon--fullscreen {
+  background-image: var(--svg-❌);
+}
+:-moz-full-screen .btn-icon--fullscreen {
+  background-image: var(--svg-❌);
+}
+:fullscreen .btn-icon--fullscreen {
+  background-image: var(--svg-❌);
+}
