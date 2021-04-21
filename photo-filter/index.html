@@ -15,6 +15,7 @@
   <link href="./styles/logo.css" rel="stylesheet" />
   <link href="./styles/btn.css" rel="stylesheet" />
   <link href="./styles/editor.css" rel="stylesheet" />
+  <link href="./styles/filters.css" rel="stylesheet" />
   <link href="style.css" rel="stylesheet" />
   <title>photo-filter</title>
 </head>
@@ -23,32 +24,44 @@
     <h1 class="header-title">Photo-filter</h1>
   </header>
   <main class="main">
-    <div class="filters">
-      <label>
-        Blur:
-        <input name="blur" data-sizing="px" type="range" min="0" max="10" value="0" />
-        <output name="result">0</output>
-      </label>
-      <label>
-        Invert:
-        <input name="invert" data-sizing="%" type="range" min="0" max="100" value="0" />
-        <output name="result">0</output>
-      </label>
-      <label>
-        Sepia:
-        <input name="sepia" data-sizing="%" type="range" min="0" max="100" value="0" />
-        <output name="result">0</output>
-      </label>
-      <label>
-        Saturate:
-        <input name="saturate" data-sizing="%" type="range" min="0" max="200" value="100" />
-        <output name="result">100</output>
-      </label>
-      <label>
-        Hue rotate:
-        <input name="hue" data-sizing="deg" type="range" min="0" max="360" value="0" />
-        <output name="result">0</output>
-      </label>
+    <div class="main__container main__container--filters">
+      <div class="filters">
+        <div class="filters__io">
+          <label class="filters__label">
+            Blur:
+            <input class="filters__input" name="blur" data-sizing="px" type="range" min="0" max="10" value="0" />
+          </label>
+          <output class="filters__output" name="result">0</output>
+        </div>
+        <div class="filters__io">
+          <label class="filters__label">
+            Invert:
+            <input class="filters__input" name="invert" data-sizing="%" type="range" min="0" max="100" value="0" />
+          </label>
+          <output class="filters__output" name="result">0</output>
+        </div>
+        <div class="filters__io">
+          <label class="filters__label">
+            Sepia:
+            <input class="filters__input" name="sepia" data-sizing="%" type="range" min="0" max="100" value="0" />
+          </label>
+          <output class="filters__output" name="result">0</output>
+        </div>
+        <div class="filters__io">
+          <label class="filters__label">
+            Saturate:
+            <input class="filters__input" name="saturate" data-sizing="%" type="range" min="0" max="200" value="100" />
+          </label>
+          <output class="filters__output" name="result">100</output>
+        </div>
+        <div class="filters__io">
+          <label class="filters__label">
+            Hue rotate:
+            <input class="filters__input" name="hue" data-sizing="deg" type="range" min="0" max="360" value="0" />
+          </label>
+          <output class="filters__output" name="result">0</output>
+        </div>
+      </div>
     </div>
     <div class="main__container main__container--editor">
       <div class="editor">
