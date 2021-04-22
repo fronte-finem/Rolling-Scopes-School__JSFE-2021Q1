@@ -33,35 +33,36 @@
 /*
   ⚜️ BLOCK: SIDE-BAR ⚜️
 */
+:root {
+  --side-bar-rail-w: 220px;
+}
+@media screen and (max-width: 1600px) {
+  :root {
+    --side-bar-rail-w: 115px;
+  }
+}
+@media screen and (max-width: 1000px) {
+  :root {
+    --side-bar-rail-w: 78px;
+  }
+}
+@media screen and (max-width: 600px) {
+  :root {
+    --side-bar-rail-w: 50px;
+  }
+}
+
 .side-bar-rail {
-  --side-bar-rail-self-w: var(--side-bar-rail-w, 220px);
-  --side-bar-rail-self-off:
-      var(--side-bar-rail-off: calc(50% - 960px));
   position: absolute;
   z-index: 999;
   top: 0;
   bottom: 0;
   left: 0;
-  width: var(--side-bar-rail-self-w);
-}
-@media screen and (max-width: 1900px) {
-  .side-bar-rail {
-    --side-bar-rail-self-w: var(--side-bar-rail-w, 115px);
-  }
-}
-@media screen and (max-width: 1000px) {
-  .side-bar-rail {
-    --side-bar-rail-self-w: var(--side-bar-rail-w, 78px);
-  }
+  width: var(--side-bar-rail-w);
 }
 @media screen and (max-width: 800px) {
   .side-bar-rail {
     top: calc(-1 * var(--page-h-header));
-  }
-}
-@media screen and (max-width: 600px) {
-  .side-bar-rail {
-    --side-bar-rail-self-w: var(--side-bar-rail-w, 50px);
   }
 }
 
@@ -93,7 +94,7 @@
   top: 0;
   left: 0;
 }
-@media screen and (max-width: 1900px) {
+@media screen and (max-width: 1600px) {
   .side-bar__container--bage {
     display: none;
   }
@@ -125,7 +126,7 @@
   justify-content: flex-end;
   padding-right: 30px;
 }
-@media screen and (max-width: 1900px) {
+@media screen and (max-width: 1600px) {
   .side-bar__container--control-expand .btn-icon {
     justify-content: center;
     padding-right: 0;
@@ -155,7 +156,7 @@
   --color-icon-def: var(--color-main-self-bg);
   --color-icon-hov: var(--color-main-self-def);
 }
-@media screen and (max-width: 1900px) {
+@media screen and (max-width: 1600px) {
   .side-bar__slot {
     --w-btn-icon: 100%;
     --h-btn-icon: 100%;
@@ -188,7 +189,7 @@
 .side-bar__slot .btn-icon:hover {
   box-shadow: 0 0 0 5px var(--color-main-self-bg), 0 0 0 8px var(--color-main-self-hov);
 }
-@media screen and (max-width: 1900px) {
+@media screen and (max-width: 1600px) {
   .side-bar__slot .btn-icon {
     border-radius: unset;
     box-shadow: none;
@@ -205,7 +206,7 @@
   --color-btn-def: var(--color-main-self-def);
   --color-btn-hov: var(--color-main-self-def);
 }
-@media screen and (max-width: 1900px) {
+@media screen and (max-width: 1600px) {
   .side-bar__slot--active {
     --color-btn-def: transparent;
     --color-btn-hov: transparent;
@@ -216,7 +217,7 @@
 .side-bar__slot--active .btn-icon {
   box-shadow: 0 0 0 5px var(--color-main-self-bg), 0 0 0 8px var(--color-main-self-def);
 }
-@media screen and (max-width: 1900px) {
+@media screen and (max-width: 1600px) {
   .side-bar__slot--active .btn-icon {
     box-shadow: none;
   }
@@ -326,7 +327,7 @@
     padding: 30px 0;
   }
 }
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1100px) {
   .live-cams__wrapper--header {
     justify-content: center;
     padding: 27px 0 20px;
@@ -347,7 +348,7 @@
     flex: 11 1;
   }
 }
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1100px) {
   .live-cams__separator--header {
     display: none;
   }
@@ -365,7 +366,7 @@
     --btn-h: 56px;
   }
 }
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1100px) {
   .live-cams__container--btn-first {
     display: none;
   }
@@ -416,22 +417,27 @@
   }
 }
 .live-cams__wrapper--main-cam {
+  --page-w-off-real: calc((100vw - var(--page-w)) / 2);
+  --max-off: max(var(--page-w-off), var(--page-w-off-real));
+  --correct-off: 8px;
+  --self-off: calc(var(--side-bar-rail-w) - var(--max-off) + var(--correct-off));
   width: 100%;
+  padding-left: var(--self-off);
 }
 @media screen and (max-width: 1500px) {
   .live-cams__wrapper--main-cam {
     --youtube-player-h: 74.1%;
-    padding-left: calc(var(--page-w-col) + var(--page-w-gap));
+    --correct-off: 20px;
   }
 }
 @media screen and (max-width: 1000px) {
   .live-cams__wrapper--main-cam {
-    padding-left: calc(var(--page-w-col));
+    --correct-off: 0px;
   }
 }
 @media screen and (max-width: 600px) {
   .live-cams__wrapper--main-cam {
-    padding-left: 50px;
+    --correct-off: 10px;
   }
 }
 .live-cams__wrapper--cam-slider {
