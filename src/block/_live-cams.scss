@@ -41,7 +41,7 @@
     @media screen and (max-width: 1500px) {
       padding: 30px 0;
     }
-    @media screen and (max-width: 1000px) {
+    @media screen and (max-width: 1100px) {
       justify-content: center;
       padding: 27px 0 20px;
       padding-left: calc(var(--page-w-col));
@@ -58,7 +58,7 @@
     @media screen and (max-width: 1500px) {
       flex: 11 1;
     }
-    @media screen and (max-width: 1000px) {
+    @media screen and (max-width: 1100px) {
       display: none;
     }
   }
@@ -75,7 +75,7 @@
     @media screen and (max-width: 1500px) {
       --btn-h: 56px;
     }
-    @media screen and (max-width: 1000px) {
+    @media screen and (max-width: 1100px) {
       &-first { display: none; }
 
       &-second {
@@ -112,17 +112,23 @@
   }
 
   &__wrapper--main-cam {
+    --page-w-off-real: calc((100vw - var(--page-w)) / 2);
+    --max-off: max(var(--page-w-off),  var(--page-w-off-real));
+    --correct-off: 8px;
+    --self-off: calc(var(--side-bar-rail-w) - var(--max-off) + var(--correct-off));
+
     width: 100%;
+    padding-left: var(--self-off);
 
     @media screen and (max-width: 1500px) {
       --youtube-player-h: 74.1%;
-      padding-left: calc(var(--page-w-col) + var(--page-w-gap));
+      --correct-off: 20px;
     }
     @media screen and (max-width: 1000px) {
-      padding-left: calc(var(--page-w-col));
+      --correct-off: 0px;
     }
     @media screen and (max-width: 600px) {
-      padding-left: 50px;
+      --correct-off: 10px;
     }
   }
 
