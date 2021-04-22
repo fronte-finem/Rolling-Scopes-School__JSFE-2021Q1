@@ -1,0 +1,42 @@
+/* 🧱 EDITOR 🧱 */
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.editor__container--btn {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 375px) {
+  .editor__container--btn {
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+}
+
+.editor__container--img {
+  max-height: 520px;
+  max-width: 830px;
+}
+
+@media (max-width: 1024px) {
+  .editor__container--img {
+    max-width: 100%;
+    max-height: none;
+  }
+}
+
+.editor__img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  filter: var(--filter);
+}
