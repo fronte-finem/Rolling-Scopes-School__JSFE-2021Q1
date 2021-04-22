@@ -1,0 +1,26 @@
+{
+  "name": "photo-filter",
+  "version": "1.0.0",
+  "description": "📷 photo-filter 📷",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/issues"
+  },
+  "homepage": "https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1#readme",
+  "devDependencies": {
+    "del": "^6.0.0",
+    "execa": "^5.0.0",
+    "gulp": "^4.0.2",
+    "gulp-changed": "^4.0.2",
+    "gulp-imagemin": "^7.1.0"
+  }
+}
