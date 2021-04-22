@@ -1272,7 +1272,7 @@
   grid-template-columns: repeat(var(--page-col), 1fr);
   column-gap: var(--page-w-gap);
 }
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1000px) {
   .pay-and-feed__step-container {
     display: flex;
     flex-direction: column;
@@ -1287,6 +1287,11 @@
   }
   .pay-and-feed__step-picture--1 {
     padding-top: 45px;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .pay-and-feed__step-picture {
+    grid-column: 1/span 4;
   }
 }
 @media screen and (max-width: 900px) {
@@ -1310,6 +1315,11 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .pay-and-feed__step-info {
+    grid-column: 5/span 4;
   }
 }
 @media screen and (max-width: 900px) {
@@ -1385,7 +1395,7 @@
   grid-template-columns: repeat(var(--page-col), 1fr);
   column-gap: var(--page-w-gap);
 }
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1000px) {
   .pay-and-feed__btn-container {
     display: flex;
     justify-content: center;
@@ -1401,7 +1411,7 @@
     --btn-w-meddium: 265px;
   }
 }
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1000px) {
   .pay-and-feed__btn-cell {
     --btn-w-meddium: 285px;
   }
