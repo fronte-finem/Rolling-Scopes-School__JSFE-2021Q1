@@ -4,29 +4,30 @@
   ⚜️ BLOCK: SIDE-BAR ⚜️
 */
 
-.side-bar-rail {
-  --side-bar-rail-self-w: var(--side-bar-rail-w, 220px);
-  --side-bar-rail-self-off:
-      var(--side-bar-rail-off: calc(50% - 960px));
+:root {
+  --side-bar-rail-w: 220px;
 
+  @media screen and (max-width: 1600px) {
+    --side-bar-rail-w: 115px;
+  }
+  @media screen and (max-width: 1000px) {
+    --side-bar-rail-w: 78px;
+  }
+  @media screen and (max-width: 600px) {
+    --side-bar-rail-w: 50px;
+  }
+}
+
+.side-bar-rail {
   position: absolute;
   z-index: 999;
   top: 0;
   bottom: 0;
   left: 0;
-  width: var(--side-bar-rail-self-w);
+  width: var(--side-bar-rail-w);
 
-  @media screen and (max-width: 1900px) {
-    --side-bar-rail-self-w: var(--side-bar-rail-w, 115px);
-  }
-  @media screen and (max-width: 1000px) {
-    --side-bar-rail-self-w: var(--side-bar-rail-w, 78px);
-  }
   @media screen and (max-width: 800px) {
     top: calc(-1 * var(--page-h-header));
-  }
-  @media screen and (max-width: 600px) {
-    --side-bar-rail-self-w: var(--side-bar-rail-w, 50px);
   }
 }
 
@@ -61,7 +62,7 @@
       top: 0;
       left: 0;
 
-      @media screen and (max-width: 1900px) {
+      @media screen and (max-width: 1600px) {
         display: none;
       }
     }
@@ -91,7 +92,7 @@
           justify-content: flex-end;
           padding-right: 30px;
 
-          @media screen and (max-width: 1900px) {
+          @media screen and (max-width: 1600px) {
             justify-content: center;
             padding-right: 0;
           }
@@ -128,7 +129,7 @@
     --color-icon-def: var(--color-main-self-bg);
     --color-icon-hov: var(--color-main-self-def);
 
-    @media screen and (max-width: 1900px) {
+    @media screen and (max-width: 1600px) {
       --w-btn-icon: 100%;
       --h-btn-icon: 100%;
       --w-svg-icon: 50px;
@@ -159,7 +160,7 @@
             0 0 0 8px var(--color-main-self-hov);
       }
 
-      @media screen and (max-width: 1900px) {
+      @media screen and (max-width: 1600px) {
         border-radius: unset;
         box-shadow: none;
         &:hover {
@@ -175,7 +176,7 @@
       --color-btn-def: var(--color-main-self-def);
       --color-btn-hov: var(--color-main-self-def);
 
-      @media screen and (max-width: 1900px) {
+      @media screen and (max-width: 1600px) {
         --color-btn-def: transparent;
         --color-btn-hov: transparent;
         --color-icon-def: var(--color-main-self-def);
@@ -187,7 +188,7 @@
             0 0 0 5px var(--color-main-self-bg),
             0 0 0 8px var(--color-main-self-def);
 
-        @media screen and (max-width: 1900px) {
+        @media screen and (max-width: 1600px) {
           box-shadow: none;
           &:hover { box-shadow: none; }
         }

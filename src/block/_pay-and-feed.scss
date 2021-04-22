@@ -146,7 +146,7 @@
     grid-template-columns: repeat(var(--page-col), 1fr);
     column-gap: var(--page-w-gap);
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1000px) {
       display: flex;
       flex-direction: column;
     }
@@ -158,6 +158,9 @@
     @media screen and (max-width: 1400px) {
       grid-column: 1 / span 6;
       &--1 { padding-top: 45px; }
+    }
+    @media screen and (max-width: 1000px) {
+      grid-column: 1 / span 4;
     }
     @media screen and (max-width: 900px) {
       &--1 { padding-top: 0; }
@@ -182,6 +185,9 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
+    }
+    @media screen and (max-width: 1000px) {
+      grid-column: 5 / span 4;
     }
     @media screen and (max-width: 900px) {
       padding: 0 var(--page-w-off);
@@ -243,7 +249,7 @@
 
     @media screen and (max-width: 1400px) {
     }
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1000px) {
       display: flex;
       justify-content: center;
       width: 100%;
@@ -259,7 +265,7 @@
     @media screen and (max-width: 1400px) {
       --btn-w-meddium: 265px;
     }
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1000px) {
       --btn-w-meddium: 285px;
     }
     @media screen and (max-width: 500px) {
