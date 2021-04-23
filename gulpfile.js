@@ -7,19 +7,17 @@ const del = require('del');
 const srcDir = 'src';
 // const dstDir = 'photo-filter';
 const dstDir = 'r:/photo-filter';
-const srcSCSS = `${srcDir}/**/*.scss`;
 
-function linkStatic() {
-  return src([
-      `${srcDir}/assets`,
-      `${srcDir}/pages/**/*.html`,
-    ])
-    .pipe(symlink(dstDir))
-}
 
 function cpyStatic() {
-  return src(`${srcDir}/pages/**/*.html`)
+  return src(`${srcDir}/app/index.html`)
     .pipe(dest(dstDir))
+}
+function linkAssets() {
+  return src([
+      `${srcDir}/assets`,
+    ])
+    .pipe(symlink(dstDir))
 }
 
 function optimizeAssets() {
@@ -53,10 +51,34 @@ async function cleanDst(cb) {
   }
 }
 
-async function buildSCSS(cb) {
+/**
+ * @param {string} cmd
+ * @param {readonly string[]} [args]
+ */
+function genShellTask(cmd, args) {
+  return async function (/** @type {(arg0: undefined) => void} */ cb) {
+    try {
+      const {stdout} = await execa(cmd, args);
+      console.log(stdout);
+      cb();
+    } catch (error) {
+      console.log(error);
+      cb(error);
+    }
+  }
+}
+
+// const buildSCSS = genShellTask('sass', ['--update', '--stop-on-error', '--embed-sources', `${srcDir}/app/index.scss:${dstDir}/index.css`]);
+const buildSCSS = genShellTask('sass', ['--update', '--stop-on-error', '--no-source-map', `${srcDir}/app/index.scss:${dstDir}/index.css`]);
+
+const checkTS = genShellTask('tsc');
+// const compileTS = genShellTask('spack');
+const compileTS = genShellTask('swc', [srcDir, '--out-dir', dstDir]);
+
+async function buildTS(cb) {
   try {
-    const {stdout} = await execa('sass', ['--update', '--stop-on-error', '--no-source-map', `${srcDir}/pages:${dstDir}`]);
-    console.log(stdout);
+    await checkTS(cb);
+    await compileTS(cb);
     cb();
   } catch (error) {
     console.log(error);
@@ -64,13 +86,17 @@ async function buildSCSS(cb) {
   }
 }
 
-exports.clean = cleanDst;
-exports['assets:cpy'] = cpyStatic;
-exports['assets:link'] = linkStatic;
-
-exports['build:dev'] = series(cleanDst, linkStatic, buildSCSS);
-exports['build:deploy'] = series(cleanDst, cpyStatic, optimizeAssets, buildSCSS);
+exports['build:dev'] = series(cleanDst, cpyStatic, linkAssets, buildSCSS, buildTS);
+exports['build:deploy'] = series(cleanDst, cpyStatic, optimizeAssets, buildSCSS, buildTS);
 
 exports['watch:sass'] = function () {
-  watch(srcSCSS, buildSCSS);
+  watch(`${srcDir}/**/*.scss`, buildSCSS);
+}
+exports['watch:ts'] = function () {
+  watch(`${srcDir}/**/*.ts`, compileTS);
+}
+
+exports['watch:all'] = function () {
+  watch(`${srcDir}/**/*.scss`, buildSCSS);
+  watch(`${srcDir}/**/*.ts`, compileTS);
 }

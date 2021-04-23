@@ -17,10 +17,13 @@
   },
   "homepage": "https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1#readme",
   "devDependencies": {
+    "@swc/cli": "^0.1.39",
+    "@swc/core": "^1.2.54",
     "del": "^6.0.0",
     "execa": "^5.0.0",
     "gulp": "^4.0.2",
     "gulp-changed": "^4.0.2",
-    "gulp-imagemin": "^7.1.0"
+    "gulp-imagemin": "^7.1.0",
+    "typescript": "^4.2.4"
   }
 }
