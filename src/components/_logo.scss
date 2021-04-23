@@ -1,4 +1,6 @@
-/* 🧱 LOGO 🧱 */
+/*
+  ♻️ LOGO ♻️
+*/
 
 .logo {
   display: block;
@@ -37,7 +39,7 @@
 .logo-github__icon {
   width: 35px;
   height: 35px;
-  background-image: url('../assets/svg/github.svg');
+  background-image: url('./assets/svg/github.svg');
 }
 
 .logo-github__text {
@@ -58,7 +60,7 @@
   left: 0;
   width: 86px;
   height: 32px;
-  background-image: url('../assets/svg/rss.svg');
+  background-image: url('./assets/svg/rss.svg');
 }
 
 .logo-rss__text {

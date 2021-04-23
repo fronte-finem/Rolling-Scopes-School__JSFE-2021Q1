@@ -19,43 +19,8 @@
     <div class="page__container page__container--app">
       <main class="app page__block">
         <div class="app__container app__container--filters">
-          <div class="filters">
-            <div class="filters__io">
-              <label class="filters__label">
-                Blur:
-                <input class="filters__input" name="blur" data-sizing="px" type="range" min="0" max="10" value="0">
-              </label>
-              <output class="filters__output" name="result">0</output>
-            </div>
-            <div class="filters__io">
-              <label class="filters__label">
-                Invert:
-                <input class="filters__input" name="invert" data-sizing="%" type="range" min="0" max="100" value="0">
-              </label>
-              <output class="filters__output" name="result">0</output>
-            </div>
-            <div class="filters__io">
-              <label class="filters__label">
-                Sepia:
-                <input class="filters__input" name="sepia" data-sizing="%" type="range" min="0" max="100" value="0">
-              </label>
-              <output class="filters__output" name="result">0</output>
-            </div>
-            <div class="filters__io">
-              <label class="filters__label">
-                Saturate:
-                <input class="filters__input" name="saturate" data-sizing="%" type="range" min="0" max="200" value="100">
-              </label>
-              <output class="filters__output" name="result">100</output>
-            </div>
-            <div class="filters__io">
-              <label class="filters__label">
-                Hue rotate:
-                <input class="filters__input" name="hue" data-sizing="deg" type="range" min="0" max="360" value="0">
-              </label>
-              <output class="filters__output" name="result">0</output>
-            </div>
-          </div>
+          <ul class="filters">
+          </ul>
         </div>
         <div class="app__container app__container--editor">
           <div class="editor">
@@ -90,5 +55,6 @@
     <div class="page__container page__container--btn">
       <button class="page__btn btn-icon btn-icon--fullscreen btn-icon--fullscreen-open"></button>
     </div>
+    <script src="./app/index.js" type="module"></script>
   </body>
 </html>

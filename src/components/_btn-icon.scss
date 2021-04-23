@@ -1,4 +1,6 @@
-/* 🧱 BUTTON ICON 🧱 */
+/*
+  ♻️ BUTTON ICON ♻️
+*/
 
 .btn-icon {
   background-size: contain;
@@ -8,8 +10,8 @@
 .btn-icon--fullscreen {
   --color-bg-def: rgba(255, 255, 255, 0.3);
   --color-bg-hov: rgba(255, 255, 255, 0.5);
-  --svg-⭕: url('../assets/svg/fullscreen-open.svg');
-  --svg-❌: url('../assets/svg/fullscreen-exit.svg');
+  --svg-⭕: url('./assets/svg/fullscreen-open.svg');
+  --svg-❌: url('./assets/svg/fullscreen-exit.svg');
 
   width: 40px;
   height: 40px;
