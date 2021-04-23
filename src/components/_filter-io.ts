@@ -1,10 +1,4 @@
-// <div class="filter-io">
-//   <label class="filter-io__label">
-//     Blur:
-//     <input class="filter-io__input" name="blur" data-sizing="px" type="range" min="0" max="10" value="0">
-//   </label>
-//   <output class="filter-io__output" name="result">0</output>
-// </div>
+import { newElem, newDiv } from '../lib/dom-helpers.js';
 
 export { FilterIOView, FilterIOViewSettings };
 
@@ -17,26 +11,21 @@ class FilterIOView {
   constructor(settings: FilterIOViewSettings) {
     this.settings = settings;
 
-    this.view = document.createElement('div');
+    this.view = newDiv('filter-io');
 
-    this.input = document.createElement('input');
+    this.input = newElem('input', `${this.view.className}__input`) as HTMLInputElement;
     this.input.name = settings.name;
     this.input.type = 'range';
     this.input.value = String(settings.value);
     this.input.min = String(settings.min);
     this.input.max = String(settings.max);
 
-    this.output = document.createElement('output');
+    this.output = newElem('output', `${this.view.className}__output`) as HTMLOutputElement;
     this.output.name = 'result';
     this.output.value = this.input.value;
 
-    const label = document.createElement('label');
+    const label = newElem('label', `${this.view.className}__label`);
     label.textContent = `${settings.prettyName}:`
-
-    this.view.className = 'filter-io';
-    label.className = `${this.view.className}__label`;
-    this.input.className = `${this.view.className}__input`;
-    this.output.className = `${this.view.className}__output`;
 
     label.append(this.input);
     this.view.append(label, this.output);
