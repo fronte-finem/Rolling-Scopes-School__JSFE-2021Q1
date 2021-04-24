@@ -1,4 +1,4 @@
-import { newElem, newDiv, newBtn, newImg, loadImg } from '../lib/dom-helpers.js';
+import { htmlToElem, newElem, newDiv, newBtn, loadImg } from '../lib/dom-helpers.js';
 import { ViewBEM, ImageLinksRoll } from '../lib/types.js';
 import { observer } from '../lib/observer.js';
 import { resolve } from 'node:path';
@@ -29,43 +29,38 @@ class Editor extends ViewBEM {
     this.imgCont = newDiv(Editor.bem('container', 'img'));
     this.view.append(btnCont, this.imgCont);
 
-    btnCont.append(this.initBtnReset(),
-                   this.initBtnNext(),
-                   this.initBtnLoad(),
-                   this.initBtnSave());
+    btnCont.append(this.initBtnReset('Reset'),
+                   this.initBtnNext('Next picture'),
+                   this.initBtnLoad('Load picture'),
+                   this.initBtnSave('Save picture'));
 
     this.initImg();
   }
 
-  initBtnLoad() {
-    const btnLoad = newElem('label', 'btn btn-load');
-    btnLoad.textContent = 'Load picture';
-    const btnLoadInput = newElem('input', 'btn-load__input') as HTMLInputElement;
-    btnLoadInput.name = "upload";
-    btnLoadInput.type = "file";
-    btnLoadInput.placeholder = 'Load picture';
+  initBtnLoad(text: string) {
+    const btnLoad = htmlToElem(`<label class="btn btn-load">${text}</label>`);
+    const btnLoadInput = htmlToElem(
+      `<input class="btn-load__input" type="file" name="upload" placeholder="${text}">`
+      ) as HTMLInputElement;
     btnLoad.append(btnLoadInput);
     btnLoad.addEventListener('click', () => console.log('load'));
     return btnLoad;
   }
 
-  initBtnSave() {
-    const btnSave = newBtn('btn btn-save');
-    btnSave.textContent = 'Save picture';
+  initBtnSave(text: string) {
+    const btnSave = htmlToElem(`<button class="btn btn-load">${text}</button>`);
     btnSave.addEventListener('click', () => console.log('save', this.img));
     return btnSave;
   }
 
-  initBtnReset() {
-    const btnReset = newBtn('btn btn-reset');
-    btnReset.textContent = 'Reset';
+  initBtnReset(text: string) {
+    const btnReset = htmlToElem(`<button class="btn btn-reset">${text}</button>`);
     btnReset.addEventListener('click', () => observer.fire(`${Editor.ViewName}:reset`));
     return btnReset;
   }
 
-  initBtnNext() {
-    const btnNext = newBtn('btn btn-next btn--active');
-    btnNext.textContent = 'Next picture';
+  initBtnNext(text: string) {
+    const btnNext = htmlToElem(`<button class="btn btn-next btn--active">${text}</button>`);
     btnNext.addEventListener('click', async () => {
       let newImg = await Editor.loadImg(this.imgLinkGen.next());
       this.imgCont.replaceChild(newImg, this.img);
