@@ -21,3 +21,9 @@ export function loadImg(className: string, src: string, alt: string = 'image'): 
     img.addEventListener('load', () => resolve(img));
   });
 }
+
+export function htmlToElem(template: string): Element {
+  const tmp = document.createElement('template');
+  tmp.innerHTML = template;
+  return tmp.content.firstElementChild;
+}
