@@ -1,5 +1,5 @@
 import { htmlToElem, newElem, newDiv, newBtn, loadImg, saveImg } from '../lib/dom-helpers.js';
-import { ViewBEM, ImageLinksRoll } from '../lib/types.js';
+import { ViewBEM, ImageLinksRoll, CssFilters } from '../lib/types.js';
 import { observer } from '../lib/observer.js';
 import { resolve } from 'node:path';
 
@@ -57,8 +57,9 @@ class Editor extends ViewBEM {
 
   initBtnSave(text: string) {
     const btnSave = htmlToElem(`<button class="btn btn-load">${text}</button>`);
-    btnSave.addEventListener('click', () => {
-      saveImg(this.img);
+    btnSave.addEventListener('click', () => observer.fire(`${Editor.ViewName}:save`));
+    observer.sub(`${Editor.ViewName}:filter`, (filters: CssFilters) => {
+      saveImg(this.img, filters);
     });
     return btnSave;
   }

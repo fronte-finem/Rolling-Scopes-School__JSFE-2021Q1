@@ -1,6 +1,6 @@
 import { newElem, newDiv } from '../lib/dom-helpers.js';
 import { observer } from '../lib/observer.js';
-import { ViewBEM, CssVar } from '../lib/types.js';
+import { ViewBEM, CssVar, CssFilter } from '../lib/types.js';
 
 export { FilterIO, FilterIOSettings };
 
@@ -84,6 +84,14 @@ class FilterIOSettings {
     return {
       name: `--${this.name}`,
       value: `${this.value}${this.units}`
+    };
+  }
+
+  cssFilter() : CssFilter {
+    return {
+      name: this.name,
+      value: this.value,
+      units: this.units,
     };
   }
 }

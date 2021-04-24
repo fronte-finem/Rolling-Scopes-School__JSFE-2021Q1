@@ -5,6 +5,22 @@ export type CssVar = {
   value: string;
 }
 
+export type CssFilter = {
+  name: string;
+  value: number;
+  units: string;
+}
+
+export type CssFilterName = string;
+
+export type CssFilterValue = {
+  value: number;
+  units: string;
+}
+
+export type CssFilters = Map<CssFilterName, CssFilterValue>
+
+
 export abstract class ViewBEM {
   static ViewName: string;
 

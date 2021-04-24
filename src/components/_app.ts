@@ -1,6 +1,6 @@
 import { newElem, newDiv } from '../lib/dom-helpers.js';
 import { observer } from '../lib/observer.js';
-import { ViewBEM, CssVar } from '../lib/types.js';
+import { ViewBEM, CssVar, CssFilters } from '../lib/types.js';
 import { FilterIOSettings } from './_filter-io.js';
 import { Filters } from './_filters.js';
 import { Editor, EditorSettings } from './_editor.js';
@@ -27,11 +27,12 @@ class App extends ViewBEM {
     editorCont.append(this.editor.view);
     filtersCont.append(this.filters.view);
 
-    observer.sub(Filters.ViewName, (cssVar: CssVar) => {
-      console.log(cssVar)
-      this.view.style.setProperty(cssVar.name, cssVar.value)
-    });
+    observer.sub(Filters.ViewName, (cssVar: CssVar) => this.view.style.setProperty(cssVar.name, cssVar.value));
 
     observer.sub(`${Editor.ViewName}:reset`, () => observer.fire(`${Filters.ViewName}:reset`));
+
+    observer.sub(`${Editor.ViewName}:save`, () => observer.fire(`${Filters.ViewName}:save`));
+
+    observer.sub(`${Filters.ViewName}:filter`, (filters: CssFilters) => observer.fire(`${Editor.ViewName}:filter`, filters));
   }
 }
