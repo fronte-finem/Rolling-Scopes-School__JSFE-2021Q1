@@ -1,6 +1,7 @@
-import { newElem, newDiv, newBtn } from '../lib/dom-helpers.js';
-import { ViewBEM } from '../lib/types.js';
+import { newElem, newDiv, newBtn, newImg, loadImg } from '../lib/dom-helpers.js';
+import { ViewBEM, ImageLinksRoll } from '../lib/types.js';
 import { observer } from '../lib/observer.js';
+import { resolve } from 'node:path';
 
 export { Editor, EditorSettings };
 
@@ -16,23 +17,27 @@ class Editor extends ViewBEM {
   imgCont: HTMLDivElement;
   img: HTMLImageElement;
   settings: EditorSettings;
+  imgLinkGen: ImageLinksRoll;
 
   constructor(settings: EditorSettings) {
     super();
     this.settings = settings;
+    this.imgLinkGen = new ImageLinksRoll();
 
     this.view = newDiv(Editor.ViewName);
     const btnCont = newDiv(Editor.bem('container', 'btn'));
     this.imgCont = newDiv(Editor.bem('container', 'img'));
     this.view.append(btnCont, this.imgCont);
 
-    const btnReset = newBtn('btn btn-reset');
-    const btnNext = newBtn('btn btn-next btn--active');
-    const btnSave = newBtn('btn btn-save');
-    btnReset.textContent = 'Reset';
-    btnNext.textContent = 'Next picture';
-    btnSave.textContent = 'Save picture';
+    btnCont.append(this.initBtnReset(),
+                   this.initBtnNext(),
+                   this.initBtnLoad(),
+                   this.initBtnSave());
 
+    this.initImg();
+  }
+
+  initBtnLoad() {
     const btnLoad = newElem('label', 'btn btn-load');
     btnLoad.textContent = 'Load picture';
     const btnLoadInput = newElem('input', 'btn-load__input') as HTMLInputElement;
@@ -40,14 +45,41 @@ class Editor extends ViewBEM {
     btnLoadInput.type = "file";
     btnLoadInput.placeholder = 'Load picture';
     btnLoad.append(btnLoadInput);
+    btnLoad.addEventListener('click', () => console.log('load'));
+    return btnLoad;
+  }
 
-    btnCont.append(btnReset, btnNext, btnLoad, btnSave);
+  initBtnSave() {
+    const btnSave = newBtn('btn btn-save');
+    btnSave.textContent = 'Save picture';
+    btnSave.addEventListener('click', () => console.log('save', this.img));
+    return btnSave;
+  }
 
-    this.img = newElem('img', 'editor__img') as HTMLImageElement;
-    this.img.src = './assets/img/img.jpg';
-    this.img.alt = 'image';
-    this.img.onload = e => this.imgCont.append(this.img);
-
+  initBtnReset() {
+    const btnReset = newBtn('btn btn-reset');
+    btnReset.textContent = 'Reset';
     btnReset.addEventListener('click', () => observer.fire(`${Editor.ViewName}:reset`));
+    return btnReset;
+  }
+
+  initBtnNext() {
+    const btnNext = newBtn('btn btn-next btn--active');
+    btnNext.textContent = 'Next picture';
+    btnNext.addEventListener('click', async () => {
+      let newImg = await Editor.loadImg(this.imgLinkGen.next());
+      this.imgCont.replaceChild(newImg, this.img);
+      this.img = newImg;
+    });
+    return btnNext;
+  }
+
+  async initImg() {
+    this.img = await Editor.loadImg(this.imgLinkGen.init);
+    this.imgCont.append(this.img);
+  }
+
+  static loadImg(src: string, alt: string = 'image'): Promise<HTMLImageElement> {
+    return loadImg(Editor.bem('img'), src, alt);
   }
 }
