@@ -16,6 +16,8 @@ class Filters extends ViewBEM {
     this.view.append(...settings.map(st => Filters.wrapper(new FilterIO(st).view)));
 
     observer.sub(FilterIO.ViewName, (cssVar: CssVar) => observer.fire(Filters.ViewName, cssVar));
+
+    observer.sub(`${Filters.ViewName}:reset`, () => observer.fire(`${FilterIO.ViewName}:reset`));
   }
 
   static wrapper (el: HTMLElement): HTMLLIElement {

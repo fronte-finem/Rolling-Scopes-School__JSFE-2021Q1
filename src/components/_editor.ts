@@ -1,6 +1,7 @@
 import { newElem, newDiv, newBtn } from '../lib/dom-helpers.js';
 import { ViewBEM } from '../lib/types.js';
 import { observer } from '../lib/observer.js';
+import { Filters } from './_filters.js';
 
 export { Editor, EditorSettings };
 
@@ -47,6 +48,7 @@ class Editor extends ViewBEM {
     this.img.src = './assets/img/img.jpg';
     this.img.alt = 'image';
     this.img.onload = e => this.imgCont.append(this.img);
+
+    btnReset.addEventListener('click', () => observer.fire(`${Filters.ViewName}:reset`));
   }
 }
-

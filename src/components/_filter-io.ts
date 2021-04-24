@@ -35,16 +35,23 @@ class FilterIO extends ViewBEM  {
     label.append(this.input);
     this.view.append(label, this.output);
 
-    this.input.addEventListener('input', () => {
-      this.output.value = this.input.value;
-      observer.fire(this.settings.name, Number(this.input.value));
+    observer.sub(`${FilterIO.ViewName}:reset`, () => observer.fire(`${this.settings.name}:reset`));
+
+    observer.sub(`${this.settings.name}:set`, (value: number) => {
+      this.output.value = String(value);
+      this.input.value = String(value);
       observer.fire(FilterIO.ViewName, this.settings.cssVar);
+    });
+
+    this.input.addEventListener('input', () => {
+      observer.fire(`${this.settings.name}:new`, Number(this.input.value));
     })
   }
 }
 
 class FilterIOSettings {
   name: string;
+  initValue: number;
   value: number;
   min: number;
   max: number;
@@ -52,12 +59,21 @@ class FilterIOSettings {
 
   constructor(name: string, value: number, min: number, max: number, units: string) {
     this.name = name.toLowerCase();
+    this.initValue = value;
     this.value = value;
     this.min = min;
     this.max = max;
     this.units = units;
 
-    observer.sub(this.name, (value: number) => this.value = value);
+    observer.sub(`${this.name}:new`, (value: number) => {
+      this.value = value;
+      observer.fire(`${this.name}:set`, this.value);
+    });
+
+    observer.sub(`${this.name}:reset`, () => {
+      this.value = this.initValue;
+      observer.fire(`${this.name}:set`, this.value);
+    });
   }
 
   get prettyName() : string {
