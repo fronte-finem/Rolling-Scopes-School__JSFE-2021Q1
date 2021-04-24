@@ -22,6 +22,34 @@ export function loadImg(className: string, src: string, alt: string = 'image'): 
   });
 }
 
+// https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob
+
+export function saveImg(img: HTMLImageElement) {
+  const canvas = drawImg(img);
+  canvas.toBlob(function(blob) {
+    const url = URL.createObjectURL(blob);
+
+    var link = document.createElement('a');
+    link.download = 'download.png';
+    link.href = url;
+    link.click();
+    // ! ⚠️ prevent memory leak ⚠️
+    // no longer need to read the blob so it's revoked
+    link.onload = () => URL.revokeObjectURL(url);
+  });
+}
+
+// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage#understanding_source_element_size
+
+export function drawImg(img: HTMLImageElement) {
+  const canvas = document.createElement('canvas');
+  canvas.width = img.naturalWidth;
+  canvas.height = img.naturalHeight;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0);
+  return canvas;
+}
+
 export function htmlToElem(template: string): Element {
   const tmp = document.createElement('template');
   tmp.innerHTML = template;
