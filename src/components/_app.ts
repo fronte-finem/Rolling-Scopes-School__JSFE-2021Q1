@@ -1,25 +1,35 @@
 import { newElem, newDiv } from '../lib/dom-helpers.js';
-import { FilterIOViewSettings } from './_filter-io.js';
-import { FiltersView } from './_filters.js';
-import { EditorView, EditorViewSettings } from './_editor.js';
+import { observer } from '../lib/observer.js';
+import { ViewBEM, CssVar } from '../lib/types.js';
+import { FilterIOSettings } from './_filter-io.js';
+import { Filters } from './_filters.js';
+import { Editor, EditorSettings } from './_editor.js';
 
-export { AppView };
+export { App };
 
-class AppView {
+class App extends ViewBEM {
+  static ViewName = 'app';
+
   view: HTMLElement;
-  editorView: EditorView;
-  filtersView: FiltersView;
+  editor: Editor;
+  filters: Filters;
 
-  constructor(editorViewSettings: EditorViewSettings, filterIOViewSettings: FilterIOViewSettings[]) {
-    this.view = newElem('main', 'app page__block');
-    const filtersCont = newDiv('app__container app__container--filters');
-    const editorCont = newDiv('app__container app__container--editor');
+  constructor(editorSettings: EditorSettings, filterIOSettings: FilterIOSettings[]) {
+    super();
+    this.view = newElem('main', `${App.ViewName} page__block`);
+    const filtersCont = newDiv(App.bem('container', 'filters'));
+    const editorCont = newDiv(App.bem('container', 'editor'));
     this.view.append(filtersCont, editorCont);
 
-    this.editorView = new EditorView(editorViewSettings);
-    this.filtersView = new FiltersView(filterIOViewSettings);
+    this.editor = new Editor(editorSettings);
+    this.filters = new Filters(filterIOSettings);
 
-    editorCont.append(this.editorView.view);
-    filtersCont.append(this.filtersView.view);
+    editorCont.append(this.editor.view);
+    filtersCont.append(this.filters.view);
+
+    observer.sub(Filters.ViewName, (cssVar: CssVar) => {
+      console.log(cssVar)
+      this.view.style.setProperty(cssVar.name, cssVar.value)
+    });
   }
 }
