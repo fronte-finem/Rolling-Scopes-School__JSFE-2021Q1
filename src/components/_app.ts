@@ -31,5 +31,7 @@ class App extends ViewBEM {
       console.log(cssVar)
       this.view.style.setProperty(cssVar.name, cssVar.value)
     });
+
+    observer.sub(`${Editor.ViewName}:reset`, () => observer.fire(`${Filters.ViewName}:reset`));
   }
 }
