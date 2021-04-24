@@ -7,3 +7,17 @@ export function newElem(tag: string, className: string): HTMLElement {
   elem.className = className;
   return elem;
 }
+
+export function newImg(className: string, src: string, alt: string = 'image'): HTMLImageElement {
+  const img = newElem('img', className) as HTMLImageElement;
+  img.setAttribute('src', src);
+  img.setAttribute('alt', alt);
+  return img;
+}
+
+export function loadImg(className: string, src: string, alt: string = 'image'): Promise<HTMLImageElement> {
+  return new Promise((resolve) => {
+    const img = newImg(className, src, alt);
+    img.addEventListener('load', () => resolve(img));
+  });
+}
