@@ -37,13 +37,21 @@ class Editor extends ViewBEM {
     this.initImg();
   }
 
+  // https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications#example_using_object_urls_to_display_images
+
   initBtnLoad(text: string) {
     const btnLoad = htmlToElem(`<label class="btn btn-load">${text}</label>`);
     const btnLoadInput = htmlToElem(
       `<input class="btn-load__input" type="file" name="upload" placeholder="${text}">`
       ) as HTMLInputElement;
     btnLoad.append(btnLoadInput);
-    btnLoad.addEventListener('click', () => console.log('load'));
+    btnLoadInput.addEventListener('input', async () => {
+      const src = URL.createObjectURL(btnLoadInput.files[0]);
+      await this.replaceImg(() => src);
+      btnLoadInput.value = '';
+      // ! ⚠️ prevent memory leak ⚠️
+      URL.revokeObjectURL(src);
+    });
     return btnLoad;
   }
 
@@ -61,17 +69,19 @@ class Editor extends ViewBEM {
 
   initBtnNext(text: string) {
     const btnNext = htmlToElem(`<button class="btn btn-next btn--active">${text}</button>`);
-    btnNext.addEventListener('click', async () => {
-      let newImg = await Editor.loadImg(this.imgLinkGen.next());
-      this.imgCont.replaceChild(newImg, this.img);
-      this.img = newImg;
-    });
+    btnNext.addEventListener('click', this.replaceImg.bind(this, () => this.imgLinkGen.next()));
     return btnNext;
   }
 
   async initImg() {
     this.img = await Editor.loadImg(this.imgLinkGen.init);
     this.imgCont.append(this.img);
+  }
+
+  async replaceImg(getSrc: () => string) {
+    const newImg = await Editor.loadImg(getSrc());
+    this.imgCont.replaceChild(newImg, this.img);
+    this.img = newImg;
   }
 
   static loadImg(src: string, alt: string = 'image'): Promise<HTMLImageElement> {
