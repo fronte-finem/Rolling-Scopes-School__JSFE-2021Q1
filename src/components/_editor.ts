@@ -1,24 +1,29 @@
 import { newElem, newDiv, newBtn } from '../lib/dom-helpers.js';
+import { ViewBEM } from '../lib/types.js';
+import { observer } from '../lib/observer.js';
 
-export { EditorView, EditorViewSettings };
+export { Editor, EditorSettings };
 
-type  EditorViewSettings = {
+type EditorSettings = {
   reset: EventHandlerNonNull;
   save: EventHandlerNonNull;
 }
 
-class EditorView {
+class Editor extends ViewBEM {
+  static ViewName = 'editor';
+
   view: HTMLDivElement;
   imgCont: HTMLDivElement;
   img: HTMLImageElement;
-  settings: EditorViewSettings;
+  settings: EditorSettings;
 
-  constructor(settings: EditorViewSettings) {
+  constructor(settings: EditorSettings) {
+    super();
     this.settings = settings;
 
-    this.view = newDiv('editor');
-    const btnCont = newDiv('editor__container editor__container--btn');
-    this.imgCont = newDiv('editor__container editor__container--img');
+    this.view = newDiv(Editor.ViewName);
+    const btnCont = newDiv(Editor.bem('container', 'btn'));
+    this.imgCont = newDiv(Editor.bem('container', 'img'));
     this.view.append(btnCont, this.imgCont);
 
     const btnReset = newBtn('btn btn-reset');
