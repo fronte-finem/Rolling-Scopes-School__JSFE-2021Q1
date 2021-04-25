@@ -72,8 +72,8 @@ function genShellTask(cmd, args) {
 const buildSCSS = genShellTask('sass', ['--update', '--stop-on-error', '--no-source-map', `${srcDir}/app/index.scss:${dstDir}/index.css`]);
 
 const checkTS = genShellTask('tsc');
-// const compileTS = genShellTask('spack');
-const compileTS = genShellTask('swc', [srcDir, '--out-dir', dstDir]);
+const compileTS = genShellTask('spack');
+// const compileTS = genShellTask('swc', [srcDir, '--out-dir', dstDir]);
 
 async function buildTS(cb) {
   try {

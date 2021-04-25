@@ -53,11 +53,12 @@ export function saveImg(img: HTMLImageElement, filters: CssFilters) {
 
 export function drawImg(img: HTMLImageElement, filters: CssFilters) {
   const canvas = document.createElement('canvas');
+  const blur = filters['blur'].value;
   const k = img.naturalWidth / img.width;
+  filters['blur'].value = Math.ceil(blur * k);
   canvas.width = img.naturalWidth;
   canvas.height = img.naturalHeight;
   console.log(filters);
-  filters['blur'].value *= k;
   const ctx = canvas.getContext('2d');
   const filtersString = Object.entries(filters)
       .map(([name, {value, units}]) => `${name}(${value}${units})`).join(' ');
