@@ -26,7 +26,7 @@ class FilterIO extends ViewBEM  {
       <output class="${FilterIO.bem('output')}" name="result">${settings.value}</output>
     `) as HTMLOutputElement;
 
-    const label = htmlToElem(`<label class="${FilterIO.bem('label')}">${settings.prettyName}</label>`);
+    const label = htmlToElem(`<label class="${FilterIO.bem('label')}">${settings.prettyName}:</label>`);
 
     label.append(this.input);
     this.view.append(label, this.output);
