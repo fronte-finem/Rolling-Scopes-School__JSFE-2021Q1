@@ -28,6 +28,6 @@
 ---
 > # 📷 photo-filter 📷
 > - [x] [task](https://rolling-scopes-school.github.io/stage0/#/stage1/tasks/js-projects/photo-filter)
-> - [ ] [pull-request](https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/15)
-> - [ ] [deploy](https://rolling-scopes-school.github.io/fronte-finem-JSFE2021Q1/photo-filter/)
+> - [x] [pull-request](https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/15)
+> - [x] [deploy](https://rolling-scopes-school.github.io/fronte-finem-JSFE2021Q1/photo-filter/)
 ---
