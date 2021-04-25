@@ -18,5 +18,5 @@
 
 > ### 📷 photo-filter 📷
 > - [x] [task](https://rolling-scopes-school.github.io/stage0/#/stage1/tasks/js-projects/photo-filter)
-> - [ ] [deploy](https://rolling-scopes-school.github.io/fronte-finem-JSFE2021Q1/photo-filter/)
+> - [x] [deploy](https://rolling-scopes-school.github.io/fronte-finem-JSFE2021Q1/photo-filter/)
 
