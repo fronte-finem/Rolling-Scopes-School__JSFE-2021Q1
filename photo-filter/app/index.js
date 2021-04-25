@@ -1,43 +1,45 @@
-let ViewBEM = class ViewBEM1 {
+class ViewBEM {
   static bem(element, modificator) {
-    const mods = Array.isArray(modificator)
-      ? modificator
-      : modificator
-      ? [modificator]
-      : [];
+    const mods = Array.isArray(modificator) ? modificator : (modificator ? [modificator] : []);
     const elem = element ? `${this.ViewName}__${element}` : this.ViewName;
     return [elem, ...mods.map((mod) => `${elem}--${mod}`)].join(' ');
   }
 };
-let ImageLinksRoll1 = class ImageLinksRoll {
+
+class ImageLinksRoll {
   constructor() {
     this.counter = 0;
   }
+
   get init() {
     return ImageLinksRoll.init;
   }
+
   next(date) {
     const num = String(1 + (this.counter++ % 20)).padStart(2, '0');
     const i = Math.floor((date ?? new Date()).getHours() / 6);
     const period = ImageLinksRoll.periods[i];
     return `${ImageLinksRoll.base}/${period}/${num}.jpg`;
   }
-};
-ImageLinksRoll1.init = './assets/img/img.jpg';
-ImageLinksRoll1.base =
-  'https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images';
-ImageLinksRoll1.periods = ['night', 'morning', 'day', 'evening'];
+}
+ImageLinksRoll.init = './assets/img/img.jpg';
+ImageLinksRoll.base = 'https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images';
+ImageLinksRoll.periods = ['night', 'morning', 'day', 'evening'];
+
 const newDiv = (className) => newElem('div', className);
+
 function newElem(tag, className) {
   const elem = document.createElement(tag);
   elem.className = className;
   return elem;
 }
+
 function htmlToElem(template) {
   const tmp = document.createElement('template');
   tmp.innerHTML = template;
   return tmp.content.firstElementChild;
 }
+
 function newImg(className, src, alt = 'image') {
   const img = newElem('img', className);
   img.setAttribute('crossOrigin', 'anonymous');
@@ -45,12 +47,14 @@ function newImg(className, src, alt = 'image') {
   img.setAttribute('alt', alt);
   return img;
 }
+
 function loadImg(className, src, alt = 'image') {
   return new Promise((resolve) => {
     const img = newImg(className, src, alt);
     img.addEventListener('load', () => resolve(img));
   });
 }
+
 function saveImg(img, filters) {
   const canvas = drawImg(img, filters);
   canvas.toBlob(function (blob) {
@@ -64,11 +68,13 @@ function saveImg(img, filters) {
     URL.revokeObjectURL(uri);
   });
 }
+
 function drawImg(img, filters) {
   const canvas = document.createElement('canvas');
   const blur = filters['blur'].value;
-  const k = img.naturalHeight / img.height;
-  filters['blur'].value = Math.ceil(blur * k);
+  const kW = img.naturalWidth / img.width;
+  const kH = img.naturalHeight / img.height;
+  filters['blur'].value = (blur * Math.max(kW, kH)).toFixed(2);
   canvas.width = img.naturalWidth;
   canvas.height = img.naturalHeight;
   console.log(filters);
@@ -81,66 +87,77 @@ function drawImg(img, filters) {
   ctx.drawImage(img, 0, 0);
   return canvas;
 }
-let Observer1 = class Observer {
+
+class Observer {
   constructor() {
     this.listeners = {};
     console.log('Observer constructor called!', this);
   }
+
   static getInstance() {
     if (!Observer.singleton) Observer.singleton = new Observer();
     return Observer.singleton;
   }
+
   sub(type, handler) {
     this.listeners[type] || (this.listeners[type] = []);
     this.listeners[type].push(handler);
   }
+
   unsub(type, handler) {
     if (!this.listeners[type]) return;
     this.listeners[type] = this.listeners[type].filter(
       (obs) => obs !== handler
     );
   }
+
   fire(type, ...args) {
     if (!this.listeners[type]) return;
     this.listeners[type].forEach((handler) => handler.apply(null, args));
   }
 };
-const observer = Observer1.getInstance();
-let FilterIO1 = class FilterIO extends ViewBEM {
+
+const observer = Observer.getInstance();
+
+class FilterIO extends ViewBEM {
   constructor(settings) {
     super();
     this.settings = settings;
     this.view = newDiv(FilterIO.ViewName);
+
     this.input = htmlToElem(
-      `\r\n      <input class="${FilterIO.bem('input')}" type="range" value="${
-        settings.value
-      }" min="${settings.min}" max="${settings.max}">\r\n    `
+      `<input class="${FilterIO.bem('input')}" type="range" value="${settings.value}" min="${settings.min}" max="${settings.max}">`
     );
+
     this.output = htmlToElem(
-      `\r\n      <output class="${FilterIO.bem('output')}" name="result">${
-        settings.value
-      }</output>\r\n    `
+      `<output class="${FilterIO.bem('output')}" name="result">${settings.value}</output>`
     );
+
     const label = htmlToElem(
       `<label class="${FilterIO.bem('label')}">${settings.prettyName}:</label>`
     );
+
     label.append(this.input);
     this.view.append(label, this.output);
+
     observer.sub(`${FilterIO.ViewName}:reset`, () =>
       observer.fire(`${this.settings.name}:reset`)
     );
+
     observer.sub(`${this.settings.name}:set`, (value) => {
       this.output.value = String(value);
       this.input.value = String(value);
       observer.fire(FilterIO.ViewName, this.settings.cssVar);
     });
+
     this.input.addEventListener('input', () => {
       observer.fire(`${this.settings.name}:new`, Number(this.input.value));
     });
   }
 };
-FilterIO1.ViewName = 'filter-io';
-let FilterIOSettings = class FilterIOSettings1 {
+FilterIO.ViewName = 'filter-io';
+
+class FilterIOSettings {
   constructor(name, value, min, max, units) {
     this.name = name.toLowerCase();
     this.initValue = value;
@@ -148,24 +165,29 @@ let FilterIOSettings = class FilterIOSettings1 {
     this.min = min;
     this.max = max;
     this.units = units;
+
     observer.sub(`${this.name}:new`, (value1) => {
       this.value = value1;
       observer.fire(`${this.name}:set`, this.value);
     });
+
     observer.sub(`${this.name}:reset`, () => {
       this.value = this.initValue;
       observer.fire(`${this.name}:set`, this.value);
     });
   }
+
   get prettyName() {
     return `${this.name[0].toUpperCase()}${this.name.substring(1)}`;
   }
+
   get cssVar() {
     return {
       name: `--${this.name}`,
       value: `${this.value}${this.units}`,
     };
   }
+
   cssFilter() {
     return {
       name: this.name,
@@ -174,19 +196,23 @@ let FilterIOSettings = class FilterIOSettings1 {
     };
   }
 };
-let Filters1 = class Filters extends ViewBEM {
+
+class Filters extends ViewBEM {
   constructor(settings1) {
     super();
     this.view = newElem('ul', Filters.ViewName);
     this.view.append(
-      ...settings1.map((st) => Filters.wrapper(new FilterIO1(st).view))
+      ...settings1.map((st) => Filters.wrapper(new FilterIO(st).view))
     );
-    observer.sub(FilterIO1.ViewName, (cssVar) =>
+
+    observer.sub(FilterIO.ViewName, (cssVar) =>
       observer.fire(Filters.ViewName, cssVar)
     );
+
     observer.sub(`${Filters.ViewName}:reset`, () =>
-      observer.fire(`${FilterIO1.ViewName}:reset`)
+      observer.fire(`${FilterIO.ViewName}:reset`)
     );
+
     observer.sub(`${Filters.ViewName}:save`, () => {
       const filters = settings1.reduce((acc, st) => {
         const cssFilter = st.cssFilter();
@@ -199,17 +225,19 @@ let Filters1 = class Filters extends ViewBEM {
       observer.fire(`${Filters.ViewName}:filter`, filters);
     });
   }
+
   static wrapper(el) {
     const li = newElem('li', Filters.bem('item'));
     li.append(el);
     return li;
   }
 };
-Filters1.ViewName = 'filters';
-let Editor1 = class Editor extends ViewBEM {
+Filters.ViewName = 'filters';
+
+class Editor extends ViewBEM {
   constructor() {
     super();
-    this.imgLinkGen = new ImageLinksRoll1();
+    this.imgLinkGen = new ImageLinksRoll();
     this.view = newDiv(Editor.ViewName);
     const btnCont = newDiv(Editor.bem('container', 'btn'));
     this.imgCont = newDiv(Editor.bem('container', 'img'));
@@ -222,6 +250,7 @@ let Editor1 = class Editor extends ViewBEM {
     );
     this.initImg();
   }
+
   // https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications#example_using_object_urls_to_display_images
   initBtnLoad(text) {
     const btnLoad = htmlToElem(`<label class="btn btn-load">${text}</label>`);
@@ -239,6 +268,7 @@ let Editor1 = class Editor extends ViewBEM {
     });
     return btnLoad;
   }
+
   initBtnSave(text) {
     const btnSave = htmlToElem(`<button class="btn btn-load">${text}</button>`);
     btnSave.addEventListener('click', () =>
@@ -250,16 +280,16 @@ let Editor1 = class Editor extends ViewBEM {
     });
     return btnSave;
   }
+
   initBtnReset(text) {
-    const btnReset = htmlToElem(
-      `<button class="btn btn-reset">${text}</button>`
-    );
+    const btnReset = htmlToElem(`<button class="btn btn-reset">${text}</button>`);
     btnReset.addEventListener('click', () => {
       observer.fire(`${Editor.ViewName}:reset`);
       this.setActiveBtn(btnReset);
     });
     return btnReset;
   }
+
   initBtnNext(text) {
     const btnNext = htmlToElem(`<button class="btn btn-next">${text}</button>`);
     btnNext.addEventListener('click', () => {
@@ -268,6 +298,7 @@ let Editor1 = class Editor extends ViewBEM {
     });
     return btnNext;
   }
+
   setActiveBtn(btn) {
     if (btn === this.activeBtn) return;
     this.activeBtn?.classList.remove('btn--active');
@@ -275,62 +306,80 @@ let Editor1 = class Editor extends ViewBEM {
     this.activeBtn.classList.add('btn--active');
     return btn;
   }
+
   async initImg() {
     this.img = await Editor.loadImg(this.imgLinkGen.init);
     this.imgCont.append(this.img);
   }
+
   async replaceImg(getSrc) {
     const newImg1 = await Editor.loadImg(getSrc());
     this.imgCont.replaceChild(newImg1, this.img);
     this.img = newImg1;
   }
+
   static loadImg(src, alt = 'image') {
     return loadImg(Editor.bem('img'), src, alt);
   }
 };
-Editor1.ViewName = 'editor';
-let App1 = class App extends ViewBEM {
+Editor.ViewName = 'editor';
+
+class App extends ViewBEM {
   constructor(filterIOSettings) {
     super();
     this.view = newElem('main', `${App.ViewName} page__block`);
     const filtersCont = newDiv(App.bem('container', 'filters'));
     const editorCont = newDiv(App.bem('container', 'editor'));
     this.view.append(filtersCont, editorCont);
-    this.editor = new Editor1();
-    this.filters = new Filters1(filterIOSettings);
+    this.editor = new Editor();
+    this.filters = new Filters(filterIOSettings);
     editorCont.append(this.editor.view);
     filtersCont.append(this.filters.view);
-    observer.sub(Filters1.ViewName, (cssVar) =>
+
+    observer.sub(Filters.ViewName, (cssVar) =>
       this.view.style.setProperty(cssVar.name, cssVar.value)
     );
-    observer.sub(`${Editor1.ViewName}:reset`, () =>
-      observer.fire(`${Filters1.ViewName}:reset`)
+
+    observer.sub(`${Editor.ViewName}:reset`, () =>
+      observer.fire(`${Filters.ViewName}:reset`)
     );
-    observer.sub(`${Editor1.ViewName}:save`, () =>
-      observer.fire(`${Filters1.ViewName}:save`)
+
+    observer.sub(`${Editor.ViewName}:save`, () =>
+      observer.fire(`${Filters.ViewName}:save`)
     );
-    observer.sub(`${Filters1.ViewName}:filter`, (filters) =>
-      observer.fire(`${Editor1.ViewName}:filter`, filters)
+
+    observer.sub(`${Filters.ViewName}:filter`, (filters) =>
+      observer.fire(`${Editor.ViewName}:filter`, filters)
     );
   }
 };
-App1.ViewName = 'app';
+App.ViewName = 'app';
+
 window.addEventListener('load', (e) => {
   initFullscreanBtn();
   initThemeToggleBtn();
+
   const appCont = document.querySelector('.page__container--app');
+
   const filterIOViewSettings = [
     new FilterIOSettings('blur', 0, 0, 10, 'px'),
     new FilterIOSettings('invert', 0, 0, 100, '%'),
     new FilterIOSettings('sepia', 0, 0, 100, '%'),
     new FilterIOSettings('saturate', 100, 0, 200, '%'),
     new FilterIOSettings('hue-rotate', 0, 0, 360, 'deg'),
+    new FilterIOSettings('opacity', 100, 0, 100, '%'),
+    new FilterIOSettings('contrast', 100, 0, 200, '%'),
+    new FilterIOSettings('brightness', 100, 0, 200, '%'),
+    new FilterIOSettings('grayscale', 0, 0, 100, '%'),
   ];
-  const app = new App1(filterIOViewSettings);
+
+  const app = new App(filterIOViewSettings);
   appCont.append(app.view);
+
   // testImageLinksRoll();
+
   function testImageLinksRoll() {
-    const imageLinksRoll = new ImageLinksRoll1();
+    const imageLinksRoll = new ImageLinksRoll();
     for (let h = 0; h < 24; h++)
       for (let m = 0; m < 60; m++) {
         const date = new Date(2021, 0, 0, h, m);
@@ -341,14 +390,17 @@ window.addEventListener('load', (e) => {
       }
   }
 });
+
 function initFullscreanBtn() {
   const btn = document.querySelector('.btn-icon--fullscreen');
   btn.addEventListener('click', toggleFullScreen);
 }
+
 function toggleFullScreen() {
   if (!document.fullscreenElement) document.documentElement.requestFullscreen();
   else document.exitFullscreen && document.exitFullscreen();
 }
+
 function initThemeToggleBtn() {
   const toggle = {
     dark: {
@@ -374,8 +426,10 @@ function initThemeToggleBtn() {
       },
     },
   };
+
   const page = document.querySelector('.page');
   const btn = document.querySelector('.btn-icon--theme');
+
   btn.addEventListener('click', () => {
     const state = toggle[page.dataset.theme];
     page.dataset.theme = state.theme;
