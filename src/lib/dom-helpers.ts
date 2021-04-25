@@ -18,6 +18,7 @@ export function htmlToElem(template: string): HTMLElement {
 
 export function newImg(className: string, src: string, alt: string = 'image'): HTMLImageElement {
   const img = newElem('img', className) as HTMLImageElement;
+  img.setAttribute('crossOrigin', 'anonymous');
   img.setAttribute('src', src);
   img.setAttribute('alt', alt);
   return img;
