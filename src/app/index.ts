@@ -6,6 +6,7 @@ import { App } from '../components/_app.js';
 
 window.addEventListener('load', (e) => {
   initFullscreanBtn();
+  initThemeToggleBtn();
 
   const appCont = document.querySelector('.page__container--app');
 
@@ -45,4 +46,27 @@ function toggleFullScreen() {
   } else {
     document.exitFullscreen && document.exitFullscreen();
   }
+}
+
+function initThemeToggleBtn() {
+  const toggle = {
+    'dark': {
+      theme: 'light',
+      page: {old: 'page--dark', new: 'page--light'},
+      btn: {old: 'btn-icon--theme-to-light', new: 'btn-icon--theme-to-dark'}
+    },
+    'light': {
+      theme: 'dark',
+      page: {old: 'page--light', new: 'page--dark'},
+      btn: {old: 'btn-icon--theme-to-dark', new: 'btn-icon--theme-to-light'}
+    },
+  };
+  const page = document.querySelector('.page') as HTMLElement;
+  const btn = document.querySelector('.btn-icon--theme') as HTMLButtonElement;
+  btn.addEventListener('click', () => {
+    const state = toggle[page.dataset.theme];
+    page.dataset.theme = state.theme;
+    page.classList.replace(state.page.old, state.page.new);
+    btn.classList.replace(state.btn.old, state.btn.new);
+  });
 }
