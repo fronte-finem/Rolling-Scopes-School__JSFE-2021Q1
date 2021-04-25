@@ -2,21 +2,9 @@
   🌐 GLOBAL VARIABLES 🌐
 */
 
-:root {
+.page {
   --page-max-w: 1140px;
-
   --font-family: 'Open Sans', Arial, Helvetica, sans-serif;
-
-  --color-main-bg: #313940;
-  --color-main-font: #fff;
-  --color-1: #a2abb3;
-  --color-2: #38495a;
-  --color-3: #00c9b7;
-  --color-4: #454c53;
-  --color-5: #00b4a4;
-  --color-6: #515961;
-  --color-9: #cbd5de;
-
   --decor-grad-border: 1px solid;
 
   --blur: 0px;
@@ -24,4 +12,52 @@
   --sepia: 0%;
   --saturate: 100%;
   --hue-rotate: 0deg;
+}
+
+.page--dark {
+  --color-main-bg: #313940;
+  --color-main-font: #fff;
+
+  --color-1: #a2abb3;
+  --color-2: #38495a;
+  --color-io-text: #cbd5de;
+
+  --color-btn-def: #454c53;
+  --color-btn-hov: #515961;
+  --color-btn-act: #00c9b7;
+
+  --color-btn-act-def: #00b4a4;
+  --color-btn-act-hov: #00c9b7;
+  --color-btn-act-act: #00fefa;
+
+  --color-btn-icon-def: rgba(255, 255, 255, 0.1);
+  --color-btn-icon-hov: rgba(255, 255, 255, 0.2);
+  --color-btn-icon-act: rgba(255, 255, 255, 0.5);
+
+  --color-logo-def: rgba(255, 255, 255, 0.4);
+  --color-logo-hov: #fff;
+}
+
+.page--light {
+  --color-main-bg: #999;
+  --color-main-font: #333;
+
+  --color-1: #666;
+  --color-2: #969696;
+  --color-io-text: #444;
+
+  --color-btn-def: hsl(0, 0%, 70%);
+  --color-btn-hov: hsl(0, 0%, 80%);
+  --color-btn-act: hsl(0, 0%, 90%);
+
+  --color-btn-act-def: hsl(30, 75%, 75%);
+  --color-btn-act-hov: hsl(30, 85%, 65%);
+  --color-btn-act-act: hsl(30, 95%, 55%);
+
+  --color-btn-icon-def: rgba(0, 0, 0, 0.2);
+  --color-btn-icon-hov: rgba(0, 0, 0, 0.3);
+  --color-btn-icon-act: rgba(0, 0, 0, 0.5);
+
+  --color-logo-def: rgba(0, 0, 0, 0.6);
+  --color-logo-hov: #111;
 }
