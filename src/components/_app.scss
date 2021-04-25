@@ -4,36 +4,39 @@
 
 .app {
   display: flex;
-  column-gap: 60px;
+  justify-content: space-between;
   row-gap: 40px;
 
   max-width: var(--page-max-w);
   width: 100%;
   margin: 0 auto;
   padding: 0 10px;
-}
-@media (max-width: 1024px) {
-  .app {
+
+  @media (max-width: 1024px) {
     flex-direction: column;
+    padding: 0;
   }
 }
 
+
 .app__container--filters {
-  flex: 10;
+  flex: 1 1;
+  max-width: 40%;
   padding-top: 60px;
 }
 @media (max-width: 1024px) {
   .app__container--filters {
-    flex: 1;
+    max-width: 100%;
     padding-top: 0px;
   }
 }
 
 .app__container--editor {
-  flex: 18;
+  flex: 1 1;
+  max-width: 60%;
 }
 @media (max-width: 1024px) {
   .app__container--editor {
-    flex: 1;
+    max-width: 100%;
   }
 }
