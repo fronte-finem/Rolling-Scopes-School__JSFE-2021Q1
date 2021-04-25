@@ -10,6 +10,12 @@ export function newElem(tag: string, className: string): HTMLElement {
   return elem;
 }
 
+export function htmlToElem(template: string): HTMLElement {
+  const tmp = document.createElement('template');
+  tmp.innerHTML = template;
+  return tmp.content.firstElementChild as HTMLElement;
+}
+
 export function newImg(className: string, src: string, alt: string = 'image'): HTMLImageElement {
   const img = newElem('img', className) as HTMLImageElement;
   img.setAttribute('src', src);
@@ -58,10 +64,4 @@ export function drawImg(img: HTMLImageElement, filters: CssFilters) {
   ctx.filter = filtersString;
   ctx.drawImage(img, 0, 0);
   return canvas;
-}
-
-export function htmlToElem(template: string): Element {
-  const tmp = document.createElement('template');
-  tmp.innerHTML = template;
-  return tmp.content.firstElementChild;
 }
