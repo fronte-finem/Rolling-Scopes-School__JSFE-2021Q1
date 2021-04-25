@@ -10,11 +10,11 @@
     <link href="./index.css" rel="stylesheet">
     <title>photo-filter</title>
   </head>
-  <body class="page">
+  <body class="page page--dark" data-theme="dark">
     <div class="page__container page__container--header decor-grad-border">
       <header class="header page__block decor-grad-border">
         <div class="header__container header__container--btn-1">
-          <button class="header__btn btn-icon btn-icon--fullscreen btn-icon--fullscreen-open"></button>
+          <button class="header__btn btn-icon btn-icon--theme btn-icon--theme-to-light"></button>
         </div>
         <h1 class="header-title">Photo-filter</h1>
         <div class="header__container header__container--btn-2">
@@ -26,13 +26,17 @@
     </div>
     <div class="page__container page__container--footer decor-grad-border">
       <footer class="footer page__block">
-        <a class="logo logo-github" href="https://github.com/fronte-finem/" target="_blank" rel="noopener noreferrer">
-          <span class="logo__icon logo-github__icon"></span>
-          <span class="logo__text logo-github__text">fronte-finem</span>
+        <a class="logo logo--github" href="https://github.com/fronte-finem/" target="_blank" rel="noopener noreferrer">
+          <svg class="logo__svg-icon logo__svg-icon--github">
+            <use href="./assets/svg/logo-github.svg#logo-github">
+          </svg>
+          <span class="logo__text logo__text--github">fronte-finem</span>
         </a>
-        <a class="logo logo-rss" href="https://rs.school/js/" target="_blank" rel="noopener">
-          <span class="logo__icon logo-rss__icon"></span>
-          <span class="logo__text logo-rss__text">'21</span>
+        <a class="logo logo--rss" href="https://rs.school/js/" target="_blank" rel="noopener">
+          <svg class="logo__svg-icon logo__svg-icon--rss">
+            <use href="./assets/svg/logo-rss.svg#logo-rss">
+          </svg>
+          <span class="logo__text logo__text--rss">'21</span>
         </a>
       </footer>
     </div>
