@@ -1,14 +1,9 @@
-import { htmlToElem, newElem, newDiv, newBtn, loadImg, saveImg } from '../lib/dom-helpers.js';
+import { htmlToElem, newDiv, loadImg, saveImg } from '../lib/dom-helpers.js';
 import { ViewBEM, ImageLinksRoll, CssFilters } from '../lib/types.js';
 import { observer } from '../lib/observer.js';
 import { resolve } from 'node:path';
 
-export { Editor, EditorSettings };
-
-type EditorSettings = {
-  reset: EventHandlerNonNull;
-  save: EventHandlerNonNull;
-}
+export { Editor };
 
 class Editor extends ViewBEM {
   static ViewName = 'editor';
@@ -16,12 +11,10 @@ class Editor extends ViewBEM {
   view: HTMLDivElement;
   imgCont: HTMLDivElement;
   img: HTMLImageElement;
-  settings: EditorSettings;
   imgLinkGen: ImageLinksRoll;
 
-  constructor(settings: EditorSettings) {
+  constructor() {
     super();
-    this.settings = settings;
     this.imgLinkGen = new ImageLinksRoll();
 
     this.view = newDiv(Editor.ViewName);

@@ -20,7 +20,6 @@ class Filters extends ViewBEM {
     observer.sub(`${Filters.ViewName}:reset`, () => observer.fire(`${FilterIO.ViewName}:reset`));
 
     observer.sub(`${Filters.ViewName}:save`, () => {
-      // const filters = settings.map(st => st.cssFilter);
       const filters = settings.reduce((acc: CssFilters, st: FilterIOSettings) => {
         const cssFilter = st.cssFilter();
         acc[cssFilter.name] = { value: cssFilter.value, units: cssFilter.units };

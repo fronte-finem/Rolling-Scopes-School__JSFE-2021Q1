@@ -1,4 +1,4 @@
-import { newElem, newDiv } from '../lib/dom-helpers.js';
+import { htmlToElem, newElem, newDiv } from '../lib/dom-helpers.js';
 import { observer } from '../lib/observer.js';
 import { ViewBEM, CssVar, CssFilter } from '../lib/types.js';
 
@@ -18,19 +18,15 @@ class FilterIO extends ViewBEM  {
 
     this.view = newDiv(FilterIO.ViewName);
 
-    this.input = newElem('input', FilterIO.bem('input')) as HTMLInputElement;
-    this.input.name = settings.name;
-    this.input.type = 'range';
-    this.input.value = String(settings.value);
-    this.input.min = String(settings.min);
-    this.input.max = String(settings.max);
+    this.input = htmlToElem(`
+      <input class="${FilterIO.bem('input')}" type="range" value="${settings.value}" min="${settings.min}" max="${settings.max}">
+    `) as HTMLInputElement;
 
-    this.output = newElem('output', FilterIO.bem('output')) as HTMLOutputElement;
-    this.output.name = 'result';
-    this.output.value = this.input.value;
+    this.output = htmlToElem(`
+      <output class="${FilterIO.bem('output')}" name="result">${settings.value}</output>
+    `) as HTMLOutputElement;
 
-    const label = newElem('label', FilterIO.bem('label'));
-    label.textContent = `${settings.prettyName}:`
+    const label = htmlToElem(`<label class="${FilterIO.bem('label')}">${settings.prettyName}</label>`);
 
     label.append(this.input);
     this.view.append(label, this.output);

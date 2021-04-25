@@ -1,5 +1,3 @@
-import { close } from "node:inspector";
-
 export type CssVar = {
   name: string;
   value: string;

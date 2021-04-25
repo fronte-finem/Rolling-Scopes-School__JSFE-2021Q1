@@ -2,7 +2,6 @@ import { newElem } from '../lib/dom-helpers.js';
 import { observer } from '../lib/observer.js';
 import { ViewBEM, ImageLinksRoll } from '../lib/types.js';
 import { FilterIOSettings } from '../components/_filter-io.js';
-import { EditorSettings } from '../components/_editor.js';
 import { App } from '../components/_app.js';
 
 window.addEventListener('load', (e) => {
@@ -16,21 +15,19 @@ window.addEventListener('load', (e) => {
     new FilterIOSettings('hue-rotate', 0, 0, 360, 'deg'),
   ];
 
-  const editorViewSettings: EditorSettings = {
-    reset: () => null,
-    save: () => null,
-  };
-
-  const app = new App(editorViewSettings, filterIOViewSettings);
+  const app = new App(filterIOViewSettings);
 
   appCont.append(app.view);
 
-  // const imageLinksRoll = new ImageLinksRoll();
+  // testImageLinksRoll();
 
-  // for (let h=0; h<24; h++) {
-  //   for (let m=0; m<60; m++) {
-  //     const date = new Date(2021, 0, 0, h, m);
-  //     console.log(imageLinksRoll.next(date).replace(/.*images./, ''), date.toTimeString());
-  //   }
-  // }
+  function testImageLinksRoll() {
+    const imageLinksRoll = new ImageLinksRoll();
+    for (let h=0; h<24; h++) {
+      for (let m=0; m<60; m++) {
+        const date = new Date(2021, 0, 0, h, m);
+        console.log(imageLinksRoll.next(date).replace(/.*images./, ''), date.toTimeString());
+      }
+    }
+  }
 });

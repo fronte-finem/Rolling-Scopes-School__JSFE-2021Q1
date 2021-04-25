@@ -3,7 +3,7 @@ import { observer } from '../lib/observer.js';
 import { ViewBEM, CssVar, CssFilters } from '../lib/types.js';
 import { FilterIOSettings } from './_filter-io.js';
 import { Filters } from './_filters.js';
-import { Editor, EditorSettings } from './_editor.js';
+import { Editor } from './_editor.js';
 
 export { App };
 
@@ -14,14 +14,14 @@ class App extends ViewBEM {
   editor: Editor;
   filters: Filters;
 
-  constructor(editorSettings: EditorSettings, filterIOSettings: FilterIOSettings[]) {
+  constructor(filterIOSettings: FilterIOSettings[]) {
     super();
     this.view = newElem('main', `${App.ViewName} page__block`);
     const filtersCont = newDiv(App.bem('container', 'filters'));
     const editorCont = newDiv(App.bem('container', 'editor'));
     this.view.append(filtersCont, editorCont);
 
-    this.editor = new Editor(editorSettings);
+    this.editor = new Editor();
     this.filters = new Filters(filterIOSettings);
 
     editorCont.append(this.editor.view);
