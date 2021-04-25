@@ -54,7 +54,7 @@ export function saveImg(img: HTMLImageElement, filters: CssFilters) {
 export function drawImg(img: HTMLImageElement, filters: CssFilters) {
   const canvas = document.createElement('canvas');
   const blur = filters['blur'].value;
-  const k = img.naturalWidth / img.width;
+  const k = img.naturalHeight / img.height;
   filters['blur'].value = Math.ceil(blur * k);
   canvas.width = img.naturalWidth;
   canvas.height = img.naturalHeight;
