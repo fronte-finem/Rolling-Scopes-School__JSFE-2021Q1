@@ -12,6 +12,7 @@ class Editor extends ViewBEM {
   imgCont: HTMLDivElement;
   img: HTMLImageElement;
   imgLinkGen: ImageLinksRoll;
+  activeBtn: HTMLElement;
 
   constructor() {
     super();
@@ -23,7 +24,7 @@ class Editor extends ViewBEM {
     this.view.append(btnCont, this.imgCont);
 
     btnCont.append(this.initBtnReset('Reset'),
-                   this.initBtnNext('Next picture'),
+                   this.setActiveBtn(this.initBtnNext('Next picture')),
                    this.initBtnLoad('Load picture'),
                    this.initBtnSave('Save picture'));
 
@@ -44,6 +45,7 @@ class Editor extends ViewBEM {
       btnLoadInput.value = '';
       // ! ⚠️ prevent memory leak ⚠️
       URL.revokeObjectURL(src);
+      this.setActiveBtn(btnLoad);
     });
     return btnLoad;
   }
@@ -53,20 +55,35 @@ class Editor extends ViewBEM {
     btnSave.addEventListener('click', () => observer.fire(`${Editor.ViewName}:save`));
     observer.sub(`${Editor.ViewName}:filter`, (filters: CssFilters) => {
       saveImg(this.img, filters);
+      this.setActiveBtn(btnSave);
     });
     return btnSave;
   }
 
   initBtnReset(text: string) {
     const btnReset = htmlToElem(`<button class="btn btn-reset">${text}</button>`);
-    btnReset.addEventListener('click', () => observer.fire(`${Editor.ViewName}:reset`));
+    btnReset.addEventListener('click', () => {
+      observer.fire(`${Editor.ViewName}:reset`);
+      this.setActiveBtn(btnReset);
+    });
     return btnReset;
   }
 
   initBtnNext(text: string) {
-    const btnNext = htmlToElem(`<button class="btn btn-next btn--active">${text}</button>`);
-    btnNext.addEventListener('click', this.replaceImg.bind(this, () => this.imgLinkGen.next()));
+    const btnNext = htmlToElem(`<button class="btn btn-next">${text}</button>`);
+    btnNext.addEventListener('click', () => {
+      this.replaceImg(() => this.imgLinkGen.next());
+      this.setActiveBtn(btnNext);
+    });
     return btnNext;
+  }
+
+  setActiveBtn(btn: HTMLElement) {
+    if (btn === this.activeBtn) return;
+    this.activeBtn?.classList.remove('btn--active');
+    this.activeBtn = btn;
+    this.activeBtn.classList.add('btn--active');
+    return btn;
   }
 
   async initImg() {
