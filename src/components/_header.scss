@@ -3,11 +3,42 @@
 */
 
 .header {
+  display: grid;
+  grid-template-columns: min-content 1fr min-content;
+  align-items: center;
   text-align: center;
+
+  @media (max-width: 375px) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
 }
 
 .header-title {
+  flex: 10;
   line-height: 60px;
   font-weight: 300;
   color: var(--color-main-font);
+
+  @media (max-width: 375px) {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+  }
+}
+
+.header__container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+
+  @media (max-width: 375px) {
+    &--btn-1 {
+      justify-content: flex-end;
+    }
+    &--btn-2 {
+      justify-content: flex-start;
+    }
+  }
 }
