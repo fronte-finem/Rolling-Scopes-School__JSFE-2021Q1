@@ -3,14 +3,28 @@
 */
 .btn-icon {
   display: block;
-  width: 40px;
-  height: 40px;
-  background-size: contain;
+  width: 50px;
+  height: 50px;
+
+  border-radius: 50%;
+
+  background-size: 40px 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+
   transition: 300ms;
 
+  box-shadow: 0 0 5px 0 #0004;
   background-color: var(--color-btn-icon-def);
-  &:hover { background-color: var(--color-btn-icon-hov); }
-  &:active { background-color: var(--color-btn-icon-act); }
+
+  &:hover {
+    background-color: var(--color-btn-icon-hov);
+  }
+  &:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 2px 0 #0008;
+    background-color: var(--color-btn-icon-act);
+  }
 }
 
 .btn-icon--theme {

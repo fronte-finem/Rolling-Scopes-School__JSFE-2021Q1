@@ -4,12 +4,14 @@
 
 .btn {
   --⚠️--btn-min-w: 120px;
+  --⚠️--btn-max-w: 145px;
   --⚠️--btn-h: 40px;
 
-  @media (max-width: 1024px) { --⚠️--btn-min-w: 45%; }
-  @media (max-width: 375px) { --⚠️--btn-min-w: 145px; }
+  // @media (max-width: 1024px) { --⚠️--btn-min-w: 45%; }
+  // @media (max-width: 375px) { --⚠️--btn-min-w: 145px; }
 
   flex: 1;
+  max-width: var(--btn-max-w, var(--⚠️--btn-max-w));
   min-width: var(--btn-min-w, var(--⚠️--btn-min-w));
   height: var(--btn-h, var(--⚠️--btn-h));
   padding: 0 10px;
@@ -21,6 +23,7 @@
   font-weight: 300;
   color: var(--color-main-font);
 
+  backdrop-filter: blur(5px);
   cursor: pointer;
   transition: 0.3s;
 
