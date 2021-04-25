@@ -1,68 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="assets/favicon.ico" rel="shortcut icon" />
-  <link href="https://fonts.gstatic.com" rel="preconnect" />
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;800&display=swap" rel="stylesheet" />
-  <link href="style.css" rel="stylesheet" />
-  <title>photo-filter</title>
-</head>
-<body>
-  <header class="header">
-    <h1 class="header-title">Photo-filter</h1>
-  </header>
-  <main class="main">
-    <div class="filters">
-      <label>
-        Blur:
-        <input name="blur" data-sizing="px" type="range" min="0" max="10" value="0" />
-        <output name="result">0</output>
-      </label>
-      <label>
-        Invert:
-        <input name="invert" data-sizing="%" type="range" min="0" max="100" value="0" />
-        <output name="result">0</output>
-      </label>
-      <label>
-        Sepia:
-        <input name="sepia" data-sizing="%" type="range" min="0" max="100" value="0" />
-        <output name="result">0</output>
-      </label>
-      <label>
-        Saturate:
-        <input name="saturate" data-sizing="%" type="range" min="0" max="200" value="100" />
-        <output name="result">100</output>
-      </label>
-      <label>
-        Hue rotate:
-        <input name="hue" data-sizing="deg" type="range" min="0" max="360" value="0" />
-        <output name="result">0</output>
-      </label>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./assets/favicon.ico" rel="shortcut icon">
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;800&display=swap" rel="stylesheet">
+    <link href="./index.css" rel="stylesheet">
+    <title>photo-filter</title>
+  </head>
+  <body class="page page--dark" data-theme="dark">
+    <div class="page__container page__container--header decor-grad-border">
+      <header class="header page__block decor-grad-border">
+        <div class="header__container header__container--btn-1">
+          <button class="header__btn btn-icon btn-icon--theme btn-icon--theme-to-light"></button>
+        </div>
+        <h1 class="header-title">Photo-filter</h1>
+        <div class="header__container header__container--btn-2">
+          <button class="header__btn btn-icon btn-icon--fullscreen btn-icon--fullscreen-open"></button>
+        </div>
+      </header>
     </div>
-    <div class="editor">
-      <div class="btn-container">
-        <button class="btn btn-reset">Reset</button>
-        <button class="btn btn-next btn-active">Next picture</button>
-        <label class="btn btn-load" for="btnInput">
-          Load picture
-          <input class="btn-load--input" id="btnInput" name="upload" type="file" placeholder="Load picture" />
-        </label>
-        <button class="btn btn-save">Save picture</button>
-      </div>
-      <img src="assets/img/img.jpg" alt="image" />
+    <div class="page__container page__container--app">
     </div>
-  </main>
-  <footer class="footer">
-    <div class="footer-container">
-      <a class="github" href="#" target="_blank" rel="noopener noreferrer">github</a>
-      <a class="rss" href="https://rs.school/js/" target="_blank" rel="noopener">
-        <span class="rss-year">'21</span>
-      </a>
+    <div class="page__container page__container--footer decor-grad-border">
+      <footer class="footer page__block">
+        <a class="logo logo--github" href="https://github.com/fronte-finem/" target="_blank" rel="noopener noreferrer">
+          <svg class="logo__svg-icon logo__svg-icon--github">
+            <use href="./assets/svg/logo-github.svg#logo-github">
+          </svg>
+          <span class="logo__text logo__text--github">fronte-finem</span>
+        </a>
+        <a class="logo logo--rss" href="https://rs.school/js/" target="_blank" rel="noopener">
+          <svg class="logo__svg-icon logo__svg-icon--rss">
+            <use href="./assets/svg/logo-rss.svg#logo-rss">
+          </svg>
+          <span class="logo__text logo__text--rss">'21</span>
+        </a>
+      </footer>
     </div>
-  </footer>
-  <button class="fullscreen openfullscreen"></button>
-</body>
+    <script src="./app/index.js" type="module"></script>
+  </body>
 </html>
