@@ -16,6 +16,10 @@ window.addEventListener('load', (e) => {
     new FilterIOSettings('sepia', 0, 0, 100, '%'),
     new FilterIOSettings('saturate', 100, 0, 200, '%'),
     new FilterIOSettings('hue-rotate', 0, 0, 360, 'deg'),
+    new FilterIOSettings('opacity', 100, 0, 100, '%'),
+    new FilterIOSettings('contrast', 100, 0, 200, '%'),
+    new FilterIOSettings('brightness', 100, 0, 200, '%'),
+    new FilterIOSettings('grayscale', 0, 0, 100, '%'),
   ];
 
   const app = new App(filterIOViewSettings);
