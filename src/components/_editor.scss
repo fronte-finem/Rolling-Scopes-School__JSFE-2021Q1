@@ -7,7 +7,11 @@
             invert(var(--invert, 0%))
             sepia(var(--sepia, 0%))
             saturate(var(--saturate, 100%))
-            hue-rotate(var(--hue-rotate, 0deg));
+            hue-rotate(var(--hue-rotate, 0deg))
+            opacity(var(--opacity, 100))
+            contrast(var(--contrast, 100))
+            brightness(var(--brightness, 100))
+            grayscale(var(--grayscale, 100));
 
   display: flex;
   flex-direction: column;
