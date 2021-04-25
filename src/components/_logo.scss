@@ -5,12 +5,21 @@
 .logo {
   display: block;
   text-decoration: none;
-  color: var(--color-9);
-  transition: 300ms;
+  transition: 200ms;
+
+  color: var(--color-logo-def);
+  fill: var(--color-logo-def);
+
+  &:hover {
+    color: var(--color-logo-hov);
+    fill: var(--color-logo-hov);
+  }
 }
 
+
 .logo__text,
-.logo__icon {
+.logo__icon,
+.logo__svg-icon {
   display: block;
   transition: 300ms;
 }
@@ -26,44 +35,34 @@
 }
 
 
-.logo-github {
+.logo--github {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.logo-github:hover {
-  color: var(--color-main-font);
-}
-
-.logo-github__icon {
+.logo__svg-icon--github {
   width: 35px;
   height: 35px;
-  background-image: url('./assets/svg/github.svg');
 }
-
-.logo-github__text {
+.logo__text--github {
   font-size: 16px;
   line-height: 45px;
 }
 
-
-.logo-rss {
+.logo--rss {
   position: relative;
   width: 111px;
   height: 32px;
 }
-
-.logo-rss__icon {
+.logo__svg-icon--rss {
   position: absolute;
   top: 0;
   left: 0;
   width: 86px;
   height: 32px;
-  background-image: url('./assets/svg/rss.svg');
 }
-
-.logo-rss__text {
+.logo__text--rss {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -72,8 +71,7 @@
   font-size: 21px;
   line-height: 0.9;
 }
-
-.logo-rss:hover .logo-rss__text {
+.logo:hover .logo__text--rss {
   right: -5px;
   letter-spacing: 0;
 }

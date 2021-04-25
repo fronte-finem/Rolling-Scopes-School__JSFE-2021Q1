@@ -6,6 +6,9 @@
   --⚠️--btn-min-w: 120px;
   --⚠️--btn-h: 40px;
 
+  @media (max-width: 1024px) { --⚠️--btn-min-w: 45%; }
+  @media (max-width: 375px) { --⚠️--btn-min-w: 145px; }
+
   flex: 1;
   min-width: var(--btn-min-w, var(--⚠️--btn-min-w));
   height: var(--btn-h, var(--⚠️--btn-h));
@@ -13,34 +16,20 @@
 
   border-radius: 5px;
 
-  background-color: var(--color-4);
-  color: var(--color-main-font);
-
   font-family: var(--font-family);
   font-size: 16px;
   font-weight: 300;
+  color: var(--color-main-font);
 
   cursor: pointer;
   transition: 0.3s;
-}
-@media (max-width: 1024px) {
-  .btn { --⚠️--btn-min-w: 45%; }
-}
-@media (max-width: 375px) {
-  .btn { --⚠️--btn-min-w: 145px; }
-}
 
-.btn:hover {
-  background-color: var(--color-6);
-}
-.btn:active {
-  background-color: var(--color-3);
-}
-.btn--active {
-  background-color: var(--color-5);
-}
-.btn--active:hover {
-  background-color: var(--color-3);
+  background-color: var(--color-btn-def);
+  &:hover { background-color: var(--color-btn-hov); }
+  &:active { background-color: var(--color-btn-act); }
+  &--active { background-color: var(--color-btn-act-def); }
+  &--active:hover { background-color: var(--color-btn-act-hov); }
+  &--active:active { background-color: var(--color-btn-act-act); }
 }
 
 .btn-load {
