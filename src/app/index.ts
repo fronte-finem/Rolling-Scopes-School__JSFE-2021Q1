@@ -5,6 +5,8 @@ import { FilterIOSettings } from '../components/_filter-io.js';
 import { App } from '../components/_app.js';
 
 window.addEventListener('load', (e) => {
+  initFullscreanBtn();
+
   const appCont = document.querySelector('.page__container--app');
 
   const filterIOViewSettings = [
@@ -31,3 +33,16 @@ window.addEventListener('load', (e) => {
     }
   }
 });
+
+function initFullscreanBtn() {
+  const btn = document.querySelector('.btn-icon--fullscreen') as HTMLButtonElement;
+  btn.addEventListener('click', toggleFullScreen);
+}
+
+function toggleFullScreen() {
+  if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen && document.exitFullscreen();
+  }
+}
