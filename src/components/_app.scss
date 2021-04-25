@@ -1,13 +1,16 @@
-/* 🧱 APP 🧱 */
+/*
+  ♻️ APP ♻️
+*/
 
 .app {
   display: flex;
-  column-gap: 40px;
+  column-gap: 60px;
   row-gap: 40px;
 
   max-width: var(--page-max-w);
   width: 100%;
   margin: 0 auto;
+  padding: 0 10px;
 }
 @media (max-width: 1024px) {
   .app {
@@ -15,22 +18,22 @@
   }
 }
 
-.app__container--editor {
-  flex: 3;
-}
-@media (max-width: 1024px) {
-  .app__container--editor {
-    flex: 1;
-  }
-}
-
 .app__container--filters {
-  flex: 2;
+  flex: 10;
   padding-top: 60px;
 }
 @media (max-width: 1024px) {
   .app__container--filters {
     flex: 1;
     padding-top: 0px;
+  }
+}
+
+.app__container--editor {
+  flex: 18;
+}
+@media (max-width: 1024px) {
+  .app__container--editor {
+    flex: 1;
   }
 }

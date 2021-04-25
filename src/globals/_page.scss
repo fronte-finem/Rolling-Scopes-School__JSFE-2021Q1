@@ -1,0 +1,35 @@
+/*
+  🏠 PAGE 🏠
+*/
+.page {
+  min-height: 100vh;
+  background-color: var(--color-main-bg);
+  font-family: var(--font-family);
+  overflow-x: hidden;
+}
+
+.page__container--header {
+  border-bottom: var(--decor-grad-border);
+  background: var(--color-main-bg);
+}
+.page__container--footer {
+  border-top: var(--decor-grad-border);
+  background-color: var(--color-main-bg);
+}
+
+.page__container--app {
+  min-height: calc(100vh - 110px);
+  padding: 58px 10px 0;
+}
+
+@media (max-width: 1024px) {
+  .page__container--app {
+    padding: 20px 20px 0;
+  }
+}
+
+.page__block {
+  max-width: var(--page-max-w);
+  width: 100%;
+  margin: 0 auto;
+}
