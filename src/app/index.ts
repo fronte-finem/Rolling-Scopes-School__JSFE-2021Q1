@@ -11,7 +11,7 @@ window.addEventListener('load', (e) => {
   const appCont = document.querySelector('.page__container--app');
 
   const filterIOViewSettings = [
-    new FilterIOSettings('blur', 0, 0, 10, 'px'),
+    new FilterIOSettings('blur', 0, 0, 50, 'px'),
     new FilterIOSettings('invert', 0, 0, 100, '%'),
     new FilterIOSettings('sepia', 0, 0, 100, '%'),
     new FilterIOSettings('saturate', 100, 0, 200, '%'),
@@ -33,7 +33,7 @@ window.addEventListener('load', (e) => {
     for (let h=0; h<24; h++) {
       for (let m=0; m<60; m++) {
         const date = new Date(2021, 0, 0, h, m);
-        console.log(imageLinksRoll.next(date).replace(/.*images./, ''), date.toTimeString());
+        console.log(imageLinksRoll.nextLink(date).replace(/.*images./, ''), date.toTimeString());
       }
     }
   }
