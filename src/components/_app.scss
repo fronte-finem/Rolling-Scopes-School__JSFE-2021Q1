@@ -18,25 +18,22 @@
   }
 }
 
-
 .app__container--filters {
   flex: 1 1;
   max-width: 40%;
-  padding-top: 60px;
-}
-@media (max-width: 1024px) {
-  .app__container--filters {
+
+  @media (max-width: 1024px) {
+    order: 2;
     max-width: 100%;
-    padding-top: 0px;
   }
 }
 
 .app__container--editor {
   flex: 1 1;
   max-width: 60%;
-}
-@media (max-width: 1024px) {
-  .app__container--editor {
+
+  @media (max-width: 1024px) {
+    order: 1;
     max-width: 100%;
   }
 }
