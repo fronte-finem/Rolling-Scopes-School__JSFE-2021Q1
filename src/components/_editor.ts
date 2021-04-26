@@ -1,7 +1,8 @@
 import { htmlToElem, newDiv, loadImg, saveImg } from '../lib/dom-helpers.js';
 import { ViewBEM, ImageLinksRoll, CssFilters } from '../lib/types.js';
 import { observer } from '../lib/observer.js';
-import { resolve } from 'node:path';
+import { Btn } from './_btn.js';
+import { BtnIcon } from './_btn-icon.js';
 
 export { Editor };
 
@@ -19,14 +20,20 @@ class Editor extends ViewBEM {
     this.imgLinkGen = new ImageLinksRoll();
 
     this.view = newDiv(Editor.ViewName);
-    const btnCont = newDiv(Editor.bem('container', 'btn'));
-    this.imgCont = newDiv(Editor.bem('container', 'img'));
-    this.view.append(btnCont, this.imgCont);
 
-    btnCont.append(this.initBtnReset('Reset'),
-                   this.setActiveBtn(this.initBtnNext('Next picture')),
-                   this.initBtnLoad('Load picture'),
-                   this.initBtnSave('Save picture'));
+    const btnCont1 = newDiv(Editor.bem('container', ['btn', 'btn-files']));
+    const btnCont2 = newDiv(Editor.bem('container', ['btn', 'btn-slider']));
+
+    btnCont1.append(this.initBtnLoad('Load picture'),
+                    this.initBtnSave('Save picture'));
+
+    btnCont2.append(this.initBtnPrev('prev'),
+                    this.initBtnNext('next'));
+
+    this.imgCont = newDiv(Editor.bem('container', 'img'));
+    this.imgCont.append(btnCont2);
+
+    this.view.append(btnCont1, this.imgCont);
 
     this.initImg();
   }
@@ -45,45 +52,28 @@ class Editor extends ViewBEM {
       btnLoadInput.value = '';
       // ! ⚠️ prevent memory leak ⚠️
       URL.revokeObjectURL(src);
-      this.setActiveBtn(btnLoad);
+      // this.setActiveBtn(btnLoad);
     });
     return btnLoad;
   }
 
   initBtnSave(text: string) {
-    const btnSave = htmlToElem(`<button class="btn btn-load">${text}</button>`);
+    const btnSave = new Btn('load', text).view;
     btnSave.addEventListener('click', () => observer.fire(`${Editor.ViewName}:save`));
-    observer.sub(`${Editor.ViewName}:filter`, (filters: CssFilters) => {
-      saveImg(this.img, filters);
-      this.setActiveBtn(btnSave);
-    });
+    observer.sub(`${Editor.ViewName}:filter`, (filters: CssFilters) => saveImg(this.img, filters));
     return btnSave;
   }
 
-  initBtnReset(text: string) {
-    const btnReset = htmlToElem(`<button class="btn btn-reset">${text}</button>`);
-    btnReset.addEventListener('click', () => {
-      observer.fire(`${Editor.ViewName}:reset`);
-      this.setActiveBtn(btnReset);
-    });
-    return btnReset;
-  }
-
-  initBtnNext(text: string) {
-    const btnNext = htmlToElem(`<button class="btn btn-next">${text}</button>`);
-    btnNext.addEventListener('click', () => {
-      this.replaceImg(() => this.imgLinkGen.next());
-      this.setActiveBtn(btnNext);
-    });
+  initBtnNext(id: string) {
+    const btnNext = new BtnIcon(id).view;
+    btnNext.addEventListener('click', () => this.replaceImg(() => this.imgLinkGen.nextLinkPreload()));
     return btnNext;
   }
 
-  setActiveBtn(btn: HTMLElement) {
-    if (btn === this.activeBtn) return;
-    this.activeBtn?.classList.remove('btn--active');
-    this.activeBtn = btn;
-    this.activeBtn.classList.add('btn--active');
-    return btn;
+  initBtnPrev(id: string) {
+    const btnPrev = new BtnIcon(id).view;
+    btnPrev.addEventListener('click', () => this.replaceImg(() => this.imgLinkGen.prevLinkPreload()));
+    return btnPrev;
   }
 
   async initImg() {

@@ -9,6 +9,8 @@
   --decor-grad-border: 1px solid;
   --decor-grad-angle: 135deg;
 
+  --trans-time: 200ms;
+
   --blur: 0px;
   --invert: 0%;
   --sepia: 0%;
@@ -21,29 +23,22 @@
 }
 
 .page--dark {
-  --color-main-bg: #313940;
-  --color-main-font: #fff;
+  --color-main-bg: #333;
+  --color-main-text: #fff;
 
-  --color-head-foot-bg: rgba(255, 255, 255, 0.1);
+  --color-btn-def: hsla(200, 100%, 60%, 0.4);
+  --color-btn-hov: hsla(210, 100%, 60%, 0.4);
+  --color-btn-act: hsla(220, 100%, 60%, 0.4);
 
-  --color-1: #a2abb3;
-  --color-2: #38495a;
-  --color-io-text: #cbd5de;
+  --color-btn-act-def: hsla(40, 100%, 60%, 0.4);
+  --color-btn-act-hov: hsla(30, 100%, 60%, 0.4);
+  --color-btn-act-act: hsla(20, 100%, 60%, 0.4);
 
-  --color-btn-def: hsla(200, 50%, 50%, 0.5);
-  --color-btn-hov: hsla(210, 50%, 50%, 0.5);
-  --color-btn-act: hsla(220, 50%, 50%, 0.5);
-
-  --color-btn-act-def: hsla(35, 50%, 50%, 0.5);
-  --color-btn-act-hov: hsla(30, 50%, 50%, 0.5);
-  --color-btn-act-act: hsla(25, 50%, 50%, 0.5);
-
-  --color-btn-icon-def: rgba(255, 255, 255, 0.1);
-  --color-btn-icon-hov: rgba(255, 255, 255, 0.2);
-  --color-btn-icon-act: rgba(255, 255, 255, 0.5);
+  --color-thumb-def: hsla(210, 100%, 60%, 0.4);
+  --color-thumb-hov: hsla(30, 100%, 60%, 0.4);
 
   --color-logo-def: rgba(255, 255, 255, 0.4);
-  --color-logo-hov: #fff;
+  --color-logo-hov: rgba(255, 255, 255, 0.9);
 
   --color-grad-1: rgba(255, 255, 255, 0.00);
   --color-grad-2: rgba(255, 255, 255, 0.05);
@@ -54,29 +49,22 @@
 }
 
 .page--light {
-  --color-main-bg: #eee;
-  --color-main-font: #333;
+  --color-main-bg: #fff;
+  --color-main-text: #333;
 
-  --color-head-foot-bg: rgba(0, 0, 0, 0.2);
+  --color-btn-def: hsla(200, 100%, 40%, 0.4);
+  --color-btn-hov: hsla(210, 100%, 40%, 0.4);
+  --color-btn-act: hsla(220, 100%, 40%, 0.4);
 
-  --color-1: #666;
-  --color-2: #969696;
-  --color-io-text: #444;
+  --color-btn-act-def: hsla(40, 100%, 40%, 0.4);
+  --color-btn-act-hov: hsla(30, 100%, 40%, 0.4);
+  --color-btn-act-act: hsla(20, 100%, 40%, 0.4);
 
-  --color-btn-def: hsla(200, 100%, 50%, 0.5);
-  --color-btn-hov: hsla(210, 100%, 50%, 0.5);
-  --color-btn-act: hsla(220, 100%, 50%, 0.5);
-
-  --color-btn-act-def: hsla(35, 100%, 50%, 0.5);
-  --color-btn-act-hov: hsla(30, 100%, 50%, 0.5);
-  --color-btn-act-act: hsla(25, 100%, 50%, 0.5);
-
-  --color-btn-icon-def: rgba(0, 0, 0, 0.2);
-  --color-btn-icon-hov: rgba(0, 0, 0, 0.3);
-  --color-btn-icon-act: rgba(0, 0, 0, 0.5);
+  --color-thumb-def: hsla(210, 100%, 40%, 0.4);
+  --color-thumb-hov: hsla(30, 100%, 40%, 0.4);
 
   --color-logo-def: rgba(0, 0, 0, 0.6);
-  --color-logo-hov: #111;
+  --color-logo-hov: rgba(0, 0, 0, 0.9);
 
   --color-grad-1: rgba(0, 0, 0, 0.00);
   --color-grad-2: rgba(0, 0, 0, 0.05);

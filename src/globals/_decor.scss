@@ -6,12 +6,18 @@
   border-image-slice: 1;
   border-image-source:
       linear-gradient(to left,
-          var(--color-2),
-          var(--color-1),
-          var(--color-2));
+          var(--color-grad-3),
+          var(--color-logo-def),
+          var(--color-grad-3));
 }
 
 .decor-grad-background {
+  --decor-fib-1: 5%;
+  --decor-fib-2: 13%;
+  --decor-fib-3: 26%;
+  --decor-fib-4: 47%;
+  --decor-fib-5: 81%;
+
   background-image:
     linear-gradient(var(--decor-grad-angle, 135deg),
         var(--color-grad-1) 0%                 var(--decor-fib-1),
@@ -40,12 +46,20 @@
   to { --decor-grad-angle: 145deg; }
 }
 
+@mixin grad-step($a: 5%, $b: 13%, $c: 26%, $d: 47%, $e: 81%) {
+  --decor-fib-1: #{$a};
+  --decor-fib-2: #{$b};
+  --decor-fib-3: #{$c};
+  --decor-fib-4: #{$d};
+  --decor-fib-5: #{$e};
+}
+
 @keyframes grad-move {
-  0%   { --decor-fib-1: 5%; --decor-fib-2: 13%; --decor-fib-3: 26%; --decor-fib-4: 47%; --decor-fib-5: 81%; }
-  5%   { --decor-fib-1: 9%; --decor-fib-2: 13%; --decor-fib-3: 26%; --decor-fib-4: 47%; --decor-fib-5: 81%; }
-  13%  { --decor-fib-1: 5%; --decor-fib-2: 19%; --decor-fib-3: 26%; --decor-fib-4: 47%; --decor-fib-5: 81%; }
-  26%  { --decor-fib-1: 5%; --decor-fib-2: 13%; --decor-fib-3: 36%; --decor-fib-4: 47%; --decor-fib-5: 81%; }
-  47%  { --decor-fib-1: 5%; --decor-fib-2: 13%; --decor-fib-3: 26%; --decor-fib-4: 64%; --decor-fib-5: 81%; }
-  81%  { --decor-fib-1: 5%; --decor-fib-2: 13%; --decor-fib-3: 26%; --decor-fib-4: 47%; --decor-fib-5: 100%; }
-  100% { --decor-fib-1: 5%; --decor-fib-2: 13%; --decor-fib-3: 26%; --decor-fib-4: 47%; --decor-fib-5: 81%; }
+  0%   { @include grad-step(); }
+  5%   { @include grad-step($a: 9%); }
+  13%  { @include grad-step($b: 19%); }
+  26%  { @include grad-step($c: 36%); }
+  47%  { @include grad-step($d: 64%); }
+  81%  { @include grad-step($e: 100%); }
+  100% { @include grad-step(); }
 }

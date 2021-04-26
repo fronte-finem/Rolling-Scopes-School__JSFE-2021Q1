@@ -5,7 +5,7 @@
 .logo {
   display: block;
   text-decoration: none;
-  transition: 200ms;
+  transition: 100ms;
 
   color: var(--color-logo-def);
   fill: var(--color-logo-def);
@@ -18,16 +18,9 @@
 
 
 .logo__text,
-.logo__icon,
 .logo__svg-icon {
   display: block;
   transition: 300ms;
-}
-
-.logo__icon {
-  background-repeat: no-repeat;
-  background-position: left center;
-  background-size: contain;
 }
 
 .logo__text {
@@ -41,10 +34,6 @@
   gap: 10px;
 }
 
-.logo__svg-icon--github {
-  width: 35px;
-  height: 35px;
-}
 .logo__text--github {
   font-size: 16px;
   line-height: 45px;
@@ -55,12 +44,10 @@
   width: 111px;
   height: 32px;
 }
-.logo__svg-icon--rss {
+.svg-logo--rss {
   position: absolute;
   top: 0;
   left: 0;
-  width: 86px;
-  height: 32px;
 }
 .logo__text--rss {
   position: absolute;

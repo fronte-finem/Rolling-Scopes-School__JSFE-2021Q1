@@ -1,3 +1,5 @@
+import { loadImg } from './dom-helpers';
+
 export type CssVar = {
   name: string;
   value: string;
@@ -30,22 +32,74 @@ export abstract class ViewBEM {
 }
 
 export class ImageLinksRoll {
-  static init = './assets/img/img.jpg';
-  static base = 'https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images';
-  static periods = ['night', 'morning', 'day', 'evening'];
-
+  limit: number;
   counter: number;
 
-  constructor() {
+  constructor(limit = 20) {
+    this.limit = limit;
     this.counter = 0;
+    this.preloadImages();
   }
 
-  get init() { return ImageLinksRoll.init; }
+  // preload <amount> images before and after current img
+  preloadImages(amount = 5) {
+    const saveCount = this.counter;
+    const amount2 = amount * 2;
+    for (let i = 0; i < amount; i++) { this.prev }
+    for (let i = 0; i < (10); i++) {
+      loadImg('img-preload', this.nextLink(), '');
+    }
+    this.counter = saveCount;
+  }
 
-  next(date?: Date): string {
-    const num = String(1 + this.counter++ % 20).padStart(2, '0');
+  get next() {
+    this.counter++;
+    if (this.counter > this.limit) this.counter = 1;
+    return this.counter;
+  }
+
+  get prev() {
+    this.counter--;
+    if (this.counter < 1) this.counter = this.limit;
+    return this.counter;
+  }
+
+  get init() { return './assets/img/img.jpg'; }
+
+  get base() { return 'https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images'; }
+
+  get periods() { return ['night', 'morning', 'day', 'evening']; }
+
+  nextLinkPreload(date?: Date) {
+    const link = this.nextLink(date);
+    this.preloadImages();
+    return link;
+  }
+
+  prevLinkPreload(date?: Date) {
+    const link = this.prevLink(date);
+    this.preloadImages();
+    return link;
+  }
+
+  nextLink(date?: Date) {
+    return this.getLink(this.fmt(this.next), date);
+  }
+
+  prevLink(date?: Date) {
+    return this.getLink(this.fmt(this.prev), date);
+  }
+
+  fmt(num: number) {
+    return String(num).padStart(2, '0');
+  }
+
+  getLink(num: string, date?: Date) {
+    return `${this.base}/${this.period(date)}/${num}.jpg`;
+  }
+
+  period(date?: Date) {
     const i = Math.floor((date ?? new Date()).getHours() / 6);
-    const period = ImageLinksRoll.periods[i];
-    return `${ImageLinksRoll.base}/${period}/${num}.jpg`;
+    return this.periods[i];
   }
 }

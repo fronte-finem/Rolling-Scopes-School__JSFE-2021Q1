@@ -12,11 +12,17 @@
             contrast(var(--contrast, 100))
             brightness(var(--brightness, 100))
             grayscale(var(--grayscale, 100));
+  --chess-size: 50px;
 
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  row-gap: 20px;
   width: 100%;
+
+  @media (max-width: 375px) {
+    row-gap: 10px;
+  }
 }
 
 .editor__container--btn {
@@ -24,23 +30,27 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 20px;
 }
 
 @media (max-width: 375px) {
   .editor__container--btn {
     gap: 5px;
-    margin-bottom: 10px;
   }
 }
 
 .editor__container--img {
+  position: relative;
   display: flex;
   justify-content: center;
-}
+  background-color: var(--color-grad-3);
+  /* https://css-tricks.com/background-patterns-simplified-by-conic-gradients/ */
+  background-image:
+    repeating-conic-gradient(from 0deg, var(--color-grad-2) 0% 25%, transparent 0% 50%);
+  background-size: var(--chess-size) var(--chess-size);
+  background-position: center;
+  backdrop-filter: blur(5px);
 
-@media (max-width: 1024px) {
-  .editor__container--img {
+  @media (max-width: 1024px) {
     max-width: 100%;
   }
 }
@@ -53,4 +63,20 @@
   height: 100%;
   object-fit: contain;
   filter: var(--filter);
+  outline: none;
+}
+
+.editor__container--btn-slider {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: -25px;
+  right: -25px;
+  transform: translateY(-50%);
+  justify-content: space-between;
+
+  @media (max-width: 1024px) {
+    left: -5px;
+    right: -5px;
+  }
 }

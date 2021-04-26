@@ -10,12 +10,12 @@
 
 .page__container--header {
   border-bottom: var(--decor-grad-border);
-  background: var(--color-head-foot-bg);
+  background: var(--color-grad-3);
   backdrop-filter: blur(5px);
 }
 .page__container--footer {
   border-top: var(--decor-grad-border);
-  background-color: var(--color-head-foot-bg);
+  background-color: var(--color-grad-3);
   backdrop-filter: blur(5px);
 }
 
