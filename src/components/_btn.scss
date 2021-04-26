@@ -3,8 +3,8 @@
 */
 
 .btn {
-  --⚠️--btn-min-w: 120px;
-  --⚠️--btn-max-w: 145px;
+  --⚠️--btn-min-w: 150px;
+  --⚠️--btn-max-w: 200px;
   --⚠️--btn-h: 40px;
 
   // @media (max-width: 1024px) { --⚠️--btn-min-w: 45%; }
@@ -21,7 +21,7 @@
   font-family: var(--font-family);
   font-size: 16px;
   font-weight: 300;
-  color: var(--color-main-font);
+  color: var(--color-main-text);
 
   backdrop-filter: blur(5px);
   cursor: pointer;
