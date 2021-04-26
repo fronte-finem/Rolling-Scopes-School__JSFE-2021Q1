@@ -1,0 +1,33 @@
+.svg-icon,
+.svg-logo {
+  display: block;
+  transition: 100ms;
+}
+
+.svg-icon--minimize,
+.svg-icon--maximize {
+  width: 30px;
+  height: 30px;
+}
+
+.svg-icon--sun,
+.svg-icon--moon {
+  width: 35px;
+  height: 35px;
+}
+
+.svg-icon--next,
+.svg-icon--prev {
+  width: 40px;
+  height: 40px;
+}
+
+.svg-logo--github {
+  width: 35px;
+  height: 35px;
+}
+
+.svg-logo--rss {
+  width: 86px;
+  height: 32px;
+}
