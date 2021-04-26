@@ -6,12 +6,18 @@
   border-image-slice: 1;
   border-image-source:
       linear-gradient(to left,
-          var(--color-2),
-          var(--color-1),
-          var(--color-2));
+          var(--color-grad-3),
+          var(--color-logo-def),
+          var(--color-grad-3));
 }
 
 .decor-grad-background {
+  --decor-fib-1: 5%;
+  --decor-fib-2: 13%;
+  --decor-fib-3: 26%;
+  --decor-fib-4: 47%;
+  --decor-fib-5: 81%;
+
   background-image:
     linear-gradient(var(--decor-grad-angle, 135deg),
         var(--color-grad-1) 0%                 var(--decor-fib-1),
