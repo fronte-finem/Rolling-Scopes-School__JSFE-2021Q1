@@ -25,7 +25,7 @@ function getAbsDstDir(absSrcFile) {
 }
 
 function linkAssets() {
-  return src([`${srcDir}/assets`, `${srcDir}/favicon.*`])
+  return src([`${srcDir}/assets`, `${srcDir}/script`,`${srcDir}/favicon.*`])
     .pipe(symlink(dstDir))
 }
 
