@@ -22,7 +22,7 @@
   transform: translate(-50%);
 
   display: grid;
-  grid-template-columns: repeat(var(--page-col), 1fr);
+  grid-template-columns: repeat(var(--page-cols), 1fr);
   grid-template-rows: 1fr;
   column-gap: var(--page-w-gap);
   max-width: var(--page-w);

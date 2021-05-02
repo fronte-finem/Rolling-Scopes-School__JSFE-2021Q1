@@ -95,7 +95,7 @@
 
   &__main-container {
     display: grid;
-    grid-template-columns: repeat(var(--page-col), minmax(0, 1fr));
+    grid-template-columns: repeat(var(--page-cols), minmax(0, 1fr));
     column-gap: var(--page-w-gap);
     width: 100%;
     flex-grow: 2;
