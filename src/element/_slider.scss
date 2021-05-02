@@ -28,6 +28,7 @@
   --slider-move-slots: 0;
   --slider-move-offcet: calc(var(--slider-slot-w) + var(--slider-slots-gap-w));
   --slider-move: translate(calc(var(--slider-move-slots) * var(--slider-move-offcet)));
+  --slider-move-time: 500ms;
 
   display: flex;
   flex-direction: column;
@@ -60,6 +61,7 @@
     column-gap: var(--slider-slots-gap-w);
     counter-reset: card-num;
     transform: var(--slider-move);
+    transition: var(--slider-move-time);
   }
 
   &__slot {
@@ -68,7 +70,7 @@
 
     &::before {
       counter-increment: card-num;
-      /* content: counter(card-num); */
+      content: counter(card-num);
       position: absolute;
       z-index: 5;
       top: 0;
@@ -76,9 +78,13 @@
       display: block;
       font-size: 100px;
       line-height: 100px;
-      color: #0003;
+      color: #0006;
       pointer-events: none;
       user-select: none;
+    }
+
+    &:nth-child(n + 9) .card-animal__img {
+      filter: grayscale(1);
     }
   }
 }
