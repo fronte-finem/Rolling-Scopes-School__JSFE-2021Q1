@@ -1,0 +1,46 @@
+include ../element/_button.pug
+include ../element/_img.pug
+include ../element/_article.pug
+
+mixin pop-up-1()
+  -
+    const imgData = {
+        link: 'assets/img/popup-1-1400.jpg',
+        alt: 'Hands touch the screen, which shows a lemur close-up',
+        sources: [
+          {link: 'assets/img/popup-1-640.jpg 640w', media: '(max-width: 640px)'},
+          {link: 'assets/img/popup-1-1200.jpg 1200w', media: '(max-width: 1200px)'},
+          {link: 'assets/img/popup-1-1400.jpg 1400w', media: '(max-width: 1400px)'},
+        ]
+      };
+    const articleData = {
+      lvl: 2,
+      head: 'together we care, save and protect!',
+      text: "Your most generous gift not only cares for countless animals, but it also offers hope and a vital lifeline to the world’s most endangered wildlife relying on us to survive.",
+    };
+    const btnsData = [20, 30, 50, 80, 100];
+
+  div(class = 'modal-wrapper pop-up pop-up-first pop-up--hidden')
+    div(class = 'pop-up-first__pic-container')
+      +img(root, imgData, new Bem('pop-up-first'))
+
+    div(class = 'pop-up-first__txt-container')
+      +article(articleData, 'pop-up-first')
+
+    div(class = 'pop-up-first__selector')
+      ul(class = 'pop-up-first__btn-list')
+        each x in btnsData
+          li(class = 'pop-up-first__btn-slot')
+            button(class = 'pop-up-first__btn', data-amount = x)
+              span(class = 'pop-up-first__btn-text')= `$${x}`
+
+        li(class = 'pop-up-first__btn-slot pop-up-first__btn-slot--long')
+          button(class = 'pop-up-first__btn pop-up-first__btn--xl', data-amount = '')
+            span(class = 'pop-up-first__btn-text')= 'Other amount'
+          button(class = 'pop-up-first__btn pop-up-first__btn--xs', data-amount = '')
+            span(class = 'pop-up-first__btn-text')= 'Other'
+
+    div(class = 'pop-up-first__btn-container')
+      button(class = 'pop-up-first__btn-close')
+        div(class = 'pop-up-first__btn-line pop-up-first__btn-line--1')
+        div(class = 'pop-up-first__btn-line pop-up-first__btn-line--2')
