@@ -16,11 +16,6 @@ block page-vars
   - var root = ".";
 
 block main
-  //- const Bem = require('../_lib/_bem.js')
-  include ./_lib/_bem.js.pug
-  //- const dataAnimals = require('./_content/_data-animals.js')
-  //- const dataTestimonials = require('./_content/_data-testimonials.js')
-  //- const dataFeedAnimals = require('./_content/_data-feed-animals.js')
   include ./_content/_data-animals.js.pug
   include ./_content/_data-testimonials.js.pug
   include ./_content/_data-feed-animals.js.pug
@@ -32,5 +27,3 @@ block main
   +pay-and-feed(root)
   +testimonials(root, dataTestimonials)
   +feed-animals(root, dataFeedAnimals)
-
-
