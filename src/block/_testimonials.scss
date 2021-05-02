@@ -168,11 +168,15 @@
     --slider-slots-gap-w: 30px;
     --slider-slots-gap-h: 30px;
 
+    clip-path: inset( -100% -100% -100% 0 );
+
     grid-column: 6 / span 7;
 
     @media screen and (max-width: 1400px) {
       --slider-ctrl-arrows-align: flex-end;
       --slider-ctrl-gap-h: 100px;
+
+      clip-path: unset;
 
       grid-column: 2 / span 11;
       padding-left: 5px;
@@ -198,6 +202,10 @@
       --slider-ctrl-gap-h: 30px;
 
       --slider-slot-w: 100%;
+    }
+
+    .slider__slot::before {
+        color: #0002;
     }
   }
 

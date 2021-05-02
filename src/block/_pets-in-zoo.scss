@@ -78,6 +78,16 @@
 
   &__slider {
     margin-bottom: 100px;
+
+    .slider__slot:nth-child(n + 5) .card-animal__img {
+      filter: grayscale(1) contrast(1.5);
+    }
+    .slider__slot:nth-child(n + 9) .card-animal__img {
+      filter: hue-rotate(180deg) saturate(2);
+    }
+    .slider__slot:nth-child(n + 13) .card-animal__img {
+      filter: sepia(1) invert(1);
+    }
   }
 
   &__btn-container {
