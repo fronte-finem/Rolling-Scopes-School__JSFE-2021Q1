@@ -59,7 +59,7 @@
 
   &__article {
     display: grid;
-    grid-template-columns: repeat(var(--page-col), 1fr);
+    grid-template-columns: repeat(var(--page-cols), 1fr);
     column-gap: var(--page-w-gap);
     row-gap: 50px;
 
@@ -98,7 +98,7 @@
       padding-left: 0;
     }
     &__article-text {
-      grid-column: 1 / span var(--page-col);
+      grid-column: 1 / span var(--page-cols);
       padding: 0 calc(185px - var(--page-w-off));
     }
 

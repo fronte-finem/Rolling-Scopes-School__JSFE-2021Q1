@@ -95,7 +95,7 @@
 
   &__main-container {
     display: grid;
-    grid-template-columns: repeat(var(--page-col), minmax(0, 1fr));
+    grid-template-columns: repeat(var(--page-cols), minmax(0, 1fr));
     column-gap: var(--page-w-gap);
     width: 100%;
     flex-grow: 2;
@@ -104,9 +104,8 @@
       row-gap: 55px;
     }
     @media screen and (max-width: 900px) {
+      grid-template-columns: minmax(0, 1fr);
       flex-grow: 0;
-      display: flex;
-      flex-direction: column;
     }
     @media screen and (max-width: 500px) {
       row-gap: 40px;
@@ -122,6 +121,7 @@
       padding-right: 70px;
     }
     @media screen and (max-width: 900px) {
+      grid-column: 1;
       padding-right: 25px;
     }
     @media screen and (max-width: 500px) {
@@ -184,6 +184,7 @@
       --slider-slot-w: 523px;
       --slider-slots-gap-w: var(--page-w-gap);
 
+      grid-column: 1;
       padding-left: 0px;
 
       .slider__slots--row-2 {

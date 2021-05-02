@@ -33,30 +33,30 @@
   --page-w-max: 1400px;
   --page-w-off: 0px;
   --page-w-gap: 40px;
-  --page-col: 12;
+  --page-cols: 12;
 
   --page-w: calc(var(--page-w-max) - 2 * var(--page-w-off));
 
-  --page-w-gaps: calc((var(--page-col) - 1) * var(--page-w-gap));
-  --page-w-col: calc((var(--page-w) - var(--page-w-gaps)) / var(--page-col));
+  --page-w-gaps: calc((var(--page-cols) - 1) * var(--page-w-gap));
+  --page-w-col: calc((var(--page-w) - var(--page-w-gaps)) / var(--page-cols));
 
   @media screen and (max-width: 1500px) {
     --page-w-off: 40px;
     --page-w-gap: 20px;
-    --page-col: 12;
+    --page-cols: 12;
     --page-w-max: 100vw;
   }
 
   @media screen and (max-width: 1000px) {
     --page-w-off: 20px;
     --page-w-gap: 20px;
-    --page-col: 8;
+    --page-cols: 8;
   }
 
   @media screen and (max-width: 600px) {
-    --page-w-off: 10px;
+    --page-w-off: 20px;
     --page-w-gap: 20px;
-    --page-col: 4;
+    --page-cols: 4;
   }
 }
 

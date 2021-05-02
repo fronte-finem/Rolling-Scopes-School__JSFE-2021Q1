@@ -43,8 +43,6 @@
       padding-bottom: 150px;
 
       @media (max-width: 1400px) {
-        width: var(--page-w);
-        margin: auto;
         padding-bottom: 100px;
       }
 
@@ -77,6 +75,7 @@
 
       @media (max-width: 1400px) {
         grid-column: 3 / span 8;
+        padding: var(--page-w-off);
       }
 
       @media (max-width: 500px) {
