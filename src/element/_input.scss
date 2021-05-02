@@ -24,13 +24,34 @@
   }
 
   &__error {
-    display: none;
     position: absolute;
-    bottom: -25px;
+    z-index: 1;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 10px;
+
+    display: none;
+    width: 90%;
+    background-color: #fff;
     color: var(--color-ui-1-def);
+    filter: drop-shadow(0 0 1px #000);
+
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: calc(0% - 10px);
+      left: calc(50% - 10px);
+      width: 20px;
+      border-width: 0 10px 10px;
+      border-color: transparent;
+      border-bottom-color: #fff;
+      border-style: solid;
+    }
 
     &-msg {
-      text-transform: capitalize;
+      // text-transform: capitalize;
     }
   }
 
@@ -57,7 +78,7 @@
     display: block;
   }
 
-  &__base {
+  .input__base {
     background: rgba(245, 128, 33, 0.2);
     border: 1px solid var(--color-ui-1-def);
   }

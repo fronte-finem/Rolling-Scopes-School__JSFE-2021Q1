@@ -5,7 +5,6 @@ mixin control-donation()
   -
     const self = 'control-donation';
     const bem = new Bem(self);
-    const h = 'this.value = this.value.substring(0,4)';
 
   div(class = self)
     div(class = bem.elem('sign'))= "$"
@@ -14,7 +13,6 @@ mixin control-donation()
             type = "number",
             placeholder = "donation amount",
             min = "1",
-            max = "9999",
-            oninput = h)
+            max = "9999")
     div(class = bem.elem('btn-container'))
       +btn({}, ['orange', 'free'])
