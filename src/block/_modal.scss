@@ -1,0 +1,31 @@
+.modal-cover {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  justify-items: center;
+  align-items: center;
+
+  padding: 0 var(--page-w-off);
+
+  background-color: #000c;
+  backdrop-filter: blur(10px);
+}
+
+.modal--hidden {
+  display: none;
+}
+
+.pop-up--hidden {
+  display: none;
+}
+
+.modal-mode {
+  overflow: hidden;
+}
