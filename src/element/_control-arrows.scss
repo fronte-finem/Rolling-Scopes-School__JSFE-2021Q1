@@ -13,6 +13,9 @@
 }
 
 .control-arrows {
+  --color-btn-def: transparent;
+  --color-btn-hov: var(--color-ui-1-def);
+
   &__btn-icon {
     border: 1px;
     border-style: solid;
@@ -22,24 +25,30 @@
       --color-icon-def: var(--color-ui-1-def);
       --color-icon-hov: var(--color-main-light);
 
-      &       { border-color: var(--color-ui-1-def); }
-      &:hover { background-color: var(--color-ui-1-def); }
+      border-color: var(--color-btn-hov);
+      background-color: var(--color-btn-def);
+
+      &:hover { background-color: var(--color-btn-hov); }
     }
 
     &--white {
       --color-icon-def: var(--color-main-light);
       --color-icon-hov: var(--color-main-navy);
-
-      &       { border-color: var(--color-main-light) }
-      &:hover { background-color: var(--color-main-light); }
+      --color-btn-hov: var(--color-main-light);
     }
 
     &--navy {
       --color-icon-def: var(--color-main-navy);
       --color-icon-hov: var(--color-main-light);
+      --color-btn-hov: var(--color-main-navy);
+    }
 
-      &       { border-color: var(--color-main-navy) }
-      &:hover { background-color: var(--color-main-navy); }
+    &:disabled {
+      --color-icon-hov: var(--color-icon-def);
+      opacity: 0.6;
+      cursor: not-allowed;
+
+      &:hover { background-color: var(--color-btn-def); }
     }
   }
 }
