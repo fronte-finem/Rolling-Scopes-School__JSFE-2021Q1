@@ -82,9 +82,5 @@
       pointer-events: none;
       user-select: none;
     }
-
-    &:nth-child(n + 9) .card-animal__img {
-      filter: grayscale(1);
-    }
   }
 }
