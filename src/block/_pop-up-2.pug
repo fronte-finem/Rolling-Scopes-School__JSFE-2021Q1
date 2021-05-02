@@ -1,0 +1,113 @@
+include ../element/_button.pug
+include ../element/_input.pug
+include ../element/_svg-icon.pug
+
+mixin pop-up-2()
+  -
+    const btnsData = [10, 20, 30, 50, 80, 100];
+    const inputData = {
+      name: {
+        text: 'your name',
+        tip: 'First and last name',
+        error: ''
+      },
+      email: {
+        text: 'your email address',
+        tip: 'Enter your email',
+        error: '',
+        note: 'You will receive emails from the Online Zoo, including updates and news on the latest discoveries and translations. You can unsubscribe at any time.'
+      },
+      card: {
+        text: 'Credit Card Number',
+        error: '',
+      },
+      cvv: {
+        text: 'CVV Number',
+        error: '',
+      },
+      expiration: {
+        text: 'Expiration Date',
+        error: 'Expiration Date required',
+      },
+    };
+
+  div(class = 'modal-wrapper pop-up pop-up-second pop-up--hidden pop-up-second--step-1')
+    header(class = 'pop-up-second__header')
+      h3(class = 'pop-up-second__heading')= 'make your donation'
+
+    form(class = 'pop-up-second__form')
+
+      div(class = 'pop-up-second__step pop-up-second__step--1')
+        div(class = 'pop-up-second__step-info')
+          div(class = 'pop-up-second__step-info-text')= 'donation information:'
+        div(class = 'pop-up-second__step-controls')
+          div(class = 'pop-up-second__amount-selector')
+            label(class = 'pop-up-second__amount-label')= '* Choose your donation amount:'
+            ul(class = 'pop-up-second__btn-list')
+              each x in btnsData
+                li(class = 'pop-up-second__btn-slot')
+                  button(class = 'pop-up-second__btn', type = 'button', data-amount = x)
+                    span(class = 'pop-up-second__btn-text')= `$${x}`
+          div(class = 'pop-up-second__custom-amount')
+            div(class = 'pop-up-second__custom-btn-slot')
+              button(class = 'pop-up-second__btn pop-up-second__btn--reset-amount pop-up-second__btn--long', type = 'button', data-amount = 0)
+                span(class = 'pop-up-second__btn-text')= 'Other amount'
+              button(class = 'pop-up-second__btn pop-up-second__btn--reset-amount pop-up-second__btn--short', type = 'button', data-amount = 0)
+                span(class = 'pop-up-second__btn-text')= 'Other'
+            div(class = 'pop-up-second__custom-input-slot')
+              input(class = 'input__base input__base--number pop-up-second__amount-input', type='number', name='amount', required)
+          div(class = 'pop-up-second__pet-selector')
+            div(class = 'pop-up-second__pet-btn-slot')
+              button(class = 'pop-up-second__btn pop-up-second__btn--reset-pets', type = 'button')
+                span(class = 'pop-up-second__btn-text')= 'for special pet'
+            div(class = 'pop-up-second__pet-select-slot')
+              select(class = 'pop-up-second__select pop-up-second__select-pet', name='pets', required)
+                option(class = 'pop-up-second__option pop-up-second__option--placeholder', value = '', selected, disabled)= 'Choose your favourite'
+          div(class = 'pop-up-second__suggestion')
+            input(class = 'pop-up-second__suggestion-check', name = 'monthly-gift', id = 'monthly-gift', type = 'checkbox')
+            label(class = 'pop-up-second__suggestion-label', for = 'monthly-gift')= 'Make this a monthly recurring gift'
+
+      div(class = 'pop-up-second__step pop-up-second__step--2')
+        div(class = 'pop-up-second__step-info')
+          div(class = 'pop-up-second__step-info-text')= 'billing information:'
+        div(class = 'pop-up-second__step-controls')
+          div(class = 'pop-up-second__input-slot')
+            +input('pop-up-second', 'name', 'name', 'text', inputData.name, required = true)
+          div(class = 'pop-up-second__input-slot')
+            +input('pop-up-second', 'email', 'email', 'email', inputData.email, required = true)
+            p(class = 'pop-up-second__email-note')= inputData.email.note
+
+      div(class = 'pop-up-second__step pop-up-second__step--3')
+        div(class = 'pop-up-second__step-info')
+          div(class = 'pop-up-second__step-info-text')= 'payment information:'
+        div(class = 'pop-up-second__step-controls')
+          div(class = 'pop-up-second__input-slot pop-up-second__input-slot--card')
+            +input('pop-up-second', 'card', 'card', 'text', inputData.card, required = true)
+            +input('pop-up-second', 'cvv', 'cvv', 'text', inputData.cvv, required = true)
+          div(class = 'pop-up-second__input-slot pop-up-second__input-slot--expiration')
+            +input-wrapper('pop-up-second', 'expiration-date', 'select', inputData.expiration)
+              div(class = 'pop-up-second__select-slot pop-up-second__select-slot--expiration')
+                select(class = 'pop-up-second__select pop-up-second__select-month', required)
+                  option(class = 'pop-up-second__option pop-up-second__option--placeholder', value = '', selected, disabled)= 'Month'
+                select(class = 'pop-up-second__select pop-up-second__select-year', required)
+                  option(class = 'pop-up-second__option pop-up-second__option--placeholder', value = '', selected, disabled)= 'Year'
+
+      div(class = 'pop-up-second__step pop-up-second__step--4')
+        h2(class = 'pop-up-second__done-heading')!= '🐼'
+        h2(class = 'pop-up-second__done-heading')= 'Thank you for your donation!'
+        h2(class = 'pop-up-second__done-heading')!= '🐼'
+
+      div(class = 'pop-up-second__step-navigation')
+        div(class = 'pop-up-second__step-nav-slot pop-up-second__step-nav-slot--counter')
+          ul(class = 'pop-up-second__step-counter')
+            each step in [1,2,3]
+              li(class = `pop-up-second__step-mark pop-up-second__step-mark--${step}`)
+        div(class = 'pop-up-second__step-nav-slot pop-up-second__step-nav-slot--back')
+          button(class = 'pop-up-second__btn-back', type = 'button')= 'back'
+        div(class = 'pop-up-second__step-nav-slot pop-up-second__step-nav-slot--next')
+          button(class = 'btn btn--next btn--cyan', type = 'button')
+            span(class = 'btn-text')= 'next'
+            +svg-icon({id: 'arrow-to-right'})
+          button(class = 'btn btn--complete btn--hidden', type = 'submit', disabled)
+            span(class = 'btn-text')= 'complete donation'
+            +svg-icon({id: 'arrow-to-right'})

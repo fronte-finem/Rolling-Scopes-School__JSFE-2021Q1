@@ -6,10 +6,19 @@
 */
 
 .nav-menu {
+  --⚙️--nav-menu-flex-dir: var(--nav-menu-flex-dir, row);
+  --⚙️--nav-menu-justify-content: var(--nav-menu-justify-content, space-between);
+  --⚙️--nav-menu-align-items: var(--nav-menu-align-items, flex-start);
+  --⚙️--nav-menu-column-gap: var(--nav-menu-column-gap, 10px);
+  --⚙️--nav-menu-row-gap: var(--nav-menu-row-gap, 10px);
+
   &__items {
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    column-gap: 10px;
+    flex-direction: var(--⚙️--nav-menu-flex-dir);
+    justify-content: var(--⚙️--nav-menu-justify-content);
+    align-items: var(--⚙️--nav-menu-align-items);
+    column-gap: var(--⚙️--nav-menu-column-gap);
+    row-gap: var(--⚙️--nav-menu-row-gap);
   }
 }

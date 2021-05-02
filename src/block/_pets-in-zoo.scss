@@ -34,13 +34,13 @@
     &--right { right: 0; }
 
     &--wall {
-      z-index: 100101;
+      z-index: 10;
       width: calc(var(--mask-w) - var(--mask-grad-w));
       background-color: var(--color-bg);
       pointer-events: all;
     }
     &--grad {
-      z-index: 100100;
+      z-index: 10;
       width: var(--mask-w);
       pointer-events: none;
     }

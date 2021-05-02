@@ -1,22 +1,22 @@
-mixin input(cls, name, type, data, required = false, ...args)
+mixin input(blkCls, cls, name, type, data, required = false, ...args)
   - var req = required ? 'required' : '';
-  +input-wrapper(cls, name, type, data)
-    input.input__base(name = name, type = type, required = req, placeholder = data.tip)
+  +input-wrapper(blkCls, cls, type, data)
+    input(class = `input__base input__base--${type}`, name = name, type = type, required = req, placeholder = data.tip)
 
-mixin textarea(cls, name, data, required = false, rows = "10")
+mixin textarea(blkCls, cls, name, data, required = false, rows = "10")
   - var req = required ? 'required' : '';
-  +input-wrapper(cls, name, 'textarea', data)
-    textarea.input__base(name = name, required = req, placeholder = data.tip, rows = rows)
+  +input-wrapper(blkCls, cls, 'textarea', data)
+    textarea(class = `input__base input__base--textarea`, name = name, required = req, placeholder = data.tip, rows = rows)
 
 
-mixin input-wrapper(cls, name, type, data)
-  div(class = `input input-${cls} input-${type}`)
+mixin input-wrapper(blkCls, cls, type, data)
+  div(class = `input input-${cls} input-${type} ${blkCls}__input-${cls} ${blkCls}__input-${cls}--${type}`)
     .input__descr
       if required
         .input__required= '*'
-      label.input__descr-msg= data.descr
+      label.input__descr-msg= data.text
 
     block
 
     .input__error
-      label.input__error-msg= data.errMsg
+      label.input__error-msg= data.error

@@ -8,6 +8,7 @@
 @use '../element/link';
 @use '../element/button';
 @use '../element/button-icon';
+@use '../element/input';
 @use '../element/logo';
 @use '../element/nav-menu';
 @use '../element/social-media-links';
@@ -17,3 +18,6 @@
 // ⚜️
 @use '../block/header';
 @use '../block/footer';
+@use '../block/modal';
+@use '../block/pop-up-1';
+@use '../block/pop-up-2';

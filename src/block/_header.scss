@@ -19,7 +19,7 @@
     right: 0;
     height: var(--page-h-header);
     max-width: 100%;
-    z-index: 999999;
+    z-index: 20;
     background-color: var(--header-color-bg);
     box-shadow: 0 0 10px 5px #0008;
   }
@@ -60,7 +60,10 @@
     flex: 24 1;
     width: 100%;
 
-    &--menu         { max-width: 556px; }
+    &--menu {
+      max-width: 556px;
+      transform-origin: right top;
+    }
     &--social-links { max-width: 180px; }
     &--logo         { max-width: min-content; }
     &--hamburger    { max-width: min-content; }
@@ -75,11 +78,28 @@
     }
 
     @media screen and (max-width: 800px) {
-      &--menu         { display: none; }
       &--social-links { display: none; }
-      &--hamburger    {
+      &--menu  {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 311px;
+        min-height: 754px;
+        padding: 150px 0;
+        background-color: var(--color-main-navy);
+        box-shadow: 0 0 10px 5px #0008;
+        opacity: 0;
+        transform: scaleY(0);
+        transition: 500ms;
+
+        &-open {
+          opacity: 1;
+          transform: scaleY(1);
+        }
+      }
+      &--hamburger {
         display: block;
-        padding: 0 27px;
+        height: 100%;
       }
     }
 
@@ -87,10 +107,10 @@
       &--logo {
         padding: 0 10px;
       }
-      &--hamburger {
-        .svg-icon--icon-hamburger {
-          --w-svg-icon: 20px;
-        }
+      &--menu  {
+        width: 233px;
+        min-height: 600px;
+        padding: 130px 0;
       }
     }
   }
@@ -103,6 +123,13 @@
     --color-link-def: var(--color-main-dark);
     --color-link-hov: var(--color-ui-2-def);
     --color-link--not-active: var(--color-ui-2-def);
+
+    @media screen and (max-width: 800px) {
+      --color-link-def: var(--color-main-light);
+      --nav-menu-flex-dir: column;
+      --nav-menu-align-items: center;
+      --nav-menu-row-gap: 50px;
+    }
   }
 
   &__btn-container {
@@ -113,10 +140,69 @@
       padding: 0 12px;
     }
   }
-  &__btn-icon {
-    --color-icon-def: var(--color-main-dark);
-    --color-icon-hov: var(--color-main-navy);
 
-    &:hover { transform: scale(1.1); }
+  &__btn {
+    --⚙️--transition: 500ms;
+    --⚙️--line-hamburger-color: var(--color-main-dark);
+    --⚙️--line-cross-color: var(--color-main-light);
+    --⚙️--line-hamburger-w: 100%;
+    --⚙️--line-cross-w: 0%;
+
+    position: absolute;
+    right: 27px;
+    top: 50%;
+    transform: translateY(-50%) scale(1);
+
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    overflow: hidden;
+    background: transparent;
+    cursor: pointer;
+    transition: var(--⚙️--transition);
+
+    &:hover {
+      --⚙️--line-hamburger-color: var(--color-main-light);
+      --⚙️--line-cross-color: var(--color-ui-1-def);
+    }
+
+    &--hamburger-close {
+      --⚙️--line-hamburger-color: var(--color-main-light);
+      --⚙️--line-animation-fill-mode: forwards;
+      --⚙️--line-hamburger-w: 0%;
+      --⚙️--line-cross-w: 130%;
+    }
+  }
+
+  &__btn-line {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: var(--⚙️--line-hamburger-w);
+    height: 3px;
+    background-color: var(--⚙️--line-hamburger-color);
+    transition: var(--⚙️--transition);
+
+    &--1 {
+      top: 0%;
+      transform: translate(-50%, 0%);
+    }
+    &--3 {
+      bottom: 0%;
+    }
+    &--2, &--4, &--5 {
+      top: 50%;
+    }
+    &--4, &--5 {
+      width: var(--⚙️--line-cross-w);
+      background-color: var(--⚙️--line-cross-color);
+    }
+    &--2 { transform: translate(-50%, -50%); }
+    &--4 { transform: translate(-50%, -50%) rotate(45deg); }
+    &--5 { transform: translate(-50%, -50%) rotate(-45deg); }
   }
 }
