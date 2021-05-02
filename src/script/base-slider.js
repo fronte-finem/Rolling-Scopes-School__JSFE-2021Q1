@@ -1,4 +1,3 @@
-// slider pets-in-zoo__slider
 import { Observer } from './obsesrver.js'
 import { getCssVar, setCssVar } from './dom-lib.js'
 
@@ -13,6 +12,9 @@ class Slider extends Observer {
 
     this.btnPrev = view.querySelector('.btn-icon--prev');
     this.btnNext = view.querySelector('.btn-icon--next');
+    this.row1 = view.querySelector('.slider__slots--row-1');
+    this.row2 = view.querySelector('.slider__slots--row-2');
+
     this.validate();
 
     this.btnPrev.addEventListener('click', () => this.moveLeft());
@@ -36,13 +38,9 @@ class Slider extends Observer {
 
   get moveNum() { return Math.min(this._moveNum, this.slotsOnPage) }
 
-  get slotsNum() {
-    return this.view.querySelectorAll('.slider__slots--row-1 .slider__slot').length;
-  }
+  get slotsNum() { return this.row1.querySelectorAll('.slider__slot').length; }
 
-  get limit() {
-    return -1 * (this.slotsNum - this.slotsOnPage);
-  }
+  get limit() { return -1 * (this.slotsNum - this.slotsOnPage); }
 
   validate() {
     const limit = this.limit;
