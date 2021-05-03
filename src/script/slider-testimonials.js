@@ -4,13 +4,33 @@ import { getCssVar, setCssVar } from './dom-lib.js'
 export { TestimonialsSlider }
 
 class TestimonialsSlider extends Slider {
-  constructor(view) {
+  constructor(view, autoTime = 1, pauseTime = 5) {
     super(view, 1);
+    this.autoTime = autoTime;
+    this.pauseTime = pauseTime;
+    this.timer = null;
+    this.pause = null;
 
     this.rows = view.querySelectorAll('.slider__slots');
     this.initSlots();
 
     this.onMoveEnd(() => this.disableAnimation());
+
+    this.startAutoMove();
+
+    this.btnPrev.addEventListener('click', () => this.pauseTimer());
+    this.btnNext.addEventListener('click', () => this.pauseTimer());
+  }
+
+  startAutoMove() {
+    this.moveLeft();
+    this.timer = setInterval(() => this.moveLeft(), 1000 * this.autoTime);
+  }
+
+  pauseTimer() {
+    clearInterval(this.timer);
+    clearTimeout(this.pause);
+    this.pause = setTimeout(() => this.startAutoMove(), 1000 * this.pauseTime);
   }
 
   enableAnimation() { this.view.classList.add('slider--transition') }
@@ -22,7 +42,10 @@ class TestimonialsSlider extends Slider {
     this.firstSlot = 0;
     this.lastSlot = slotsNum - 1;
 
-    this.rows.forEach(row => [...row.children].forEach(slot => slot.style.order = 0));
+    this.rows.forEach(row => [...row.children].forEach(slot => {
+      slot.style.order = 0;
+      slot.addEventListener('click', () => this.pauseTimer());
+    }));
   }
 
   setSlotOrder(slot, order) {
@@ -52,7 +75,7 @@ class TestimonialsSlider extends Slider {
     }
 
     this.onMoveEnd(handler);
-    this.enableAnimation()
+    this.enableAnimation();
     this.move(-1);
   }
 
@@ -63,7 +86,7 @@ class TestimonialsSlider extends Slider {
     this.changeOrderToRight();
 
     setTimeout(() => {
-      this.enableAnimation()
+      this.enableAnimation();
       this.move(1);
     });
   }

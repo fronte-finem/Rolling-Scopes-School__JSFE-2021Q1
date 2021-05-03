@@ -18,7 +18,7 @@ window.addEventListener('load', () => {
   );
 
   const petsSlider = new PetsSlider(document.querySelector('.pets-in-zoo__slider'));
-  const testimonialsSlider = new TestimonialsSlider(document.querySelector('.testimonials__slider'));
+  const testimonialsSlider = new TestimonialsSlider(document.querySelector('.testimonials__slider'), 15, 60);
 });
 
 function initHambButton() {
