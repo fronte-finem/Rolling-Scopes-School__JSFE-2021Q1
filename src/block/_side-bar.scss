@@ -32,11 +32,10 @@
 }
 
 .side-bar {
-  --color-main-self-bg: var(--color-main-bg, var(--color-main-navy));
-  --color-main-self-def: var(--color-main-def, var(--color-main-light));
-  --color-main-self-hov: var(--color-main-hov, var(--color-ui-1-def));
-  --side-bar-self-w: var(--side-bar-w, 100%);
-  --side-bar-self-border: 1px solid var(--color-main-self-def);
+  --⚙️--side-bar-color-bg: var(--side-bar-color-bg, var(--color-main-navy));
+  --⚙️--side-bar-color-def: var(--side-bar-color-def, var(--color-main-light));
+  --⚙️--side-bar-color-hov: var(--side-bar-color-hov, var(--color-ui-1-def));
+  --⚙️--side-bar-border: 1px solid var(--⚙️--side-bar-color-def);
 
   position: sticky;
   top: 0;
@@ -46,10 +45,10 @@
     top: var(--page-h-header);
   }
 
-  border: var(--side-bar-self-border);
+  border: var(--⚙️--side-bar-border);
   border-top: none;
   border-left: none;
-  background-color: var(--color-main-self-bg);
+  background-color: var(--⚙️--side-bar-color-bg);
 
   &__menu {
     display: flex;
@@ -72,8 +71,8 @@
 
       --w-btn-icon: 100%;
       --h-btn-icon: 100%;
-      --color-icon-def: var(--color-main-self-def);
-      --color-icon-hov: var(--color-main-self-hov);
+      --color-icon-def: var(--⚙️--side-bar-color-def);
+      --color-icon-hov: var(--⚙️--side-bar-color-hov);
 
       box-shadow: inset 0 0 0 #0000;
       transition: box-shadow 500ms;
@@ -109,7 +108,7 @@
     order: 2;
     display: flex;
     flex-direction: column;
-    border-top: var(--side-bar-self-border);
+    border-top: var(--⚙️--side-bar-border);
   }
 
   &__slot {
@@ -118,16 +117,16 @@
     align-items: center;
 
     height: 171px;
-    border-bottom: var(--side-bar-self-border);
+    border-bottom: var(--⚙️--side-bar-border);
 
     --w-btn-icon: 104px;
     --h-btn-icon: 104px;
     --w-svg-icon: 70px;
     --h-svg-icon: 70px;
-    --color-btn-def: var(--color-main-self-hov);
-    --color-btn-hov: var(--color-main-self-hov);
-    --color-icon-def: var(--color-main-self-bg);
-    --color-icon-hov: var(--color-main-self-def);
+    --color-btn-def: var(--⚙️--side-bar-color-hov);
+    --color-btn-hov: var(--⚙️--side-bar-color-hov);
+    --color-icon-def: var(--⚙️--side-bar-color-bg);
+    --color-icon-hov: var(--⚙️--side-bar-color-def);
 
     @media screen and (max-width: 1600px) {
       --w-btn-icon: 100%;
@@ -136,8 +135,8 @@
       --h-svg-icon: 50px;
       --color-btn-def: transparent;
       --color-btn-hov: transparent;
-      --color-icon-def: var(--color-main-self-hov);
-      --color-icon-hov: var(--color-main-self-def);
+      --color-icon-def: var(--⚙️--side-bar-color-hov);
+      --color-icon-hov: var(--⚙️--side-bar-color-def);
     }
     @media screen and (max-width: 1000px) {
       height: 100px;
@@ -156,8 +155,8 @@
 
       &:hover {
         box-shadow:
-            0 0 0 5px var(--color-main-self-bg),
-            0 0 0 8px var(--color-main-self-hov);
+            0 0 0 5px var(--⚙️--side-bar-color-bg),
+            0 0 0 8px var(--⚙️--side-bar-color-hov);
       }
 
       @media screen and (max-width: 1600px) {
@@ -173,20 +172,20 @@
 
     &--active {
       pointer-events: none;
-      --color-btn-def: var(--color-main-self-def);
-      --color-btn-hov: var(--color-main-self-def);
+      --color-btn-def: var(--⚙️--side-bar-color-def);
+      --color-btn-hov: var(--⚙️--side-bar-color-def);
 
       @media screen and (max-width: 1600px) {
         --color-btn-def: transparent;
         --color-btn-hov: transparent;
-        --color-icon-def: var(--color-main-self-def);
-        --color-icon-hov: var(--color-main-self-def);
+        --color-icon-def: var(--⚙️--side-bar-color-def);
+        --color-icon-hov: var(--⚙️--side-bar-color-def);
       }
 
       .btn-icon {
         box-shadow:
-            0 0 0 5px var(--color-main-self-bg),
-            0 0 0 8px var(--color-main-self-def);
+            0 0 0 5px var(--⚙️--side-bar-color-bg),
+            0 0 0 8px var(--⚙️--side-bar-color-def);
 
         @media screen and (max-width: 1600px) {
           box-shadow: none;
@@ -204,8 +203,8 @@
     width: 104px;
     height: 104px;
     border-radius: 50%;
-    background-color: var(--color-ui-1-def);
-    fill: var(--color-main-navy);
+    background-color: var(--⚙️--side-bar-color-hov);
+    fill: var(--⚙️--side-bar-color-bg);
 
     svg { transition: transform 300ms ease-in-out; }
     &:hover svg { transform: scale(1.2); }
@@ -217,9 +216,16 @@
   .icon-gorilla svg { width: 69px; }
 
   .cam-icon.cam-self {
-    fill: var(--color-main-navy);
-    background-color: var(--color-main-light);
-    box-shadow: 0 0 0 5px var(--color-main-navy), 0 0 0 8px var(--color-main-light);
+    fill: var(--⚙️--side-bar-color-bg);
+    background-color: var(--⚙️--side-bar-color-def);
+    box-shadow: 0 0 0 5px var(--⚙️--side-bar-color-bg), 0 0 0 8px var(--⚙️--side-bar-color-def);
     svg { transform: scale(1); }
+  }
+}
+
+
+.side-bar--open {
+  .side-bar {
+    width: 300px;
   }
 }
