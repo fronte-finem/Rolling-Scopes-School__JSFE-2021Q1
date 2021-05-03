@@ -16,7 +16,6 @@ mixin btn(data, mods, blks)
   +gen-btn('button', data, 'btn', mods, blks)
 
 mixin btn-icon(data, mods, blks)
-  - data.text = false
   +gen-btn('button', data, 'btn-icon', [...(mods || []), data.id], blks)
 
 
@@ -25,12 +24,10 @@ mixin btn-div(data, mods, blks)
   +gen-btn('div', data, 'btn', mods, blks)
 
 mixin btn-div-icon(data, mods, blks)
-  - data.text = false
   +gen-btn('div', data, 'btn-icon', [...(mods || []), data.id], blks)
 
 
 mixin gen-btn(tag, data, self, mods, blks)
-  include ../_lib/_bem.js.pug
   - const bem = new Bem(self, mods, blks);
   #{tag}(class = bem.fullClass, title = data.title)
     if data.text
