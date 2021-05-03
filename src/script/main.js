@@ -3,8 +3,8 @@ import { Modal } from './modal.js'
 import { Popup1 } from './donate-popup1.js'
 import { Popup2 } from './donate-popup2.js'
 import { DonateApp } from './donate-app.js'
-import { Slider } from './base-slider.js'
-import { TestimonialSlider } from './testimonial-slider.js'
+import { PetsSlider } from './slider-pets.js'
+import { TestimonialsSlider } from './slider-testimonials.js'
 
 window.addEventListener('load', () => {
   initHambButton();
@@ -17,8 +17,8 @@ window.addEventListener('load', () => {
       document.querySelector('.control-donation')
   );
 
-  const petsSlider = new Slider(document.querySelector('.pets-in-zoo__slider'));
-  const testimonialsSlider = new TestimonialSlider(document.querySelector('.testimonials__slider'));
+  const petsSlider = new PetsSlider(document.querySelector('.pets-in-zoo__slider'));
+  const testimonialsSlider = new TestimonialsSlider(document.querySelector('.testimonials__slider'), 15, 60);
 });
 
 function initHambButton() {

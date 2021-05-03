@@ -29,7 +29,7 @@ mixin pets-in-zoo(root, dataAnimals)
 
     +article(articleData, petsInZoo.fullClass)
 
-    +slider(root, sliderData, 2, [], petsInZoo.fullClass)
+    +slider(root, sliderData, 2, ['transition', 'counts'], petsInZoo.fullClass)
 
     div(class = petsInZoo.elem('btn-container'))
       +btn-link(root, btnData, [controlColor, 'long'])

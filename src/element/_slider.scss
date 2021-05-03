@@ -28,7 +28,6 @@
   --slider-move-slots: 0;
   --slider-move-offcet: calc(var(--slider-slot-w) + var(--slider-slots-gap-w));
   --slider-move: translate(calc(var(--slider-move-slots) * var(--slider-move-offcet)));
-  --slider-move-time: 500ms;
 
   display: flex;
   flex-direction: column;
@@ -61,26 +60,35 @@
     column-gap: var(--slider-slots-gap-w);
     counter-reset: card-num;
     transform: var(--slider-move);
-    transition: var(--slider-move-time);
   }
 
   &__slot {
     position: relative;
     flex: 0 0 var(--slider-slot-w, 100%);
+  }
+}
 
-    &::before {
-      counter-increment: card-num;
-      content: counter(card-num);
-      position: absolute;
-      z-index: 5;
-      top: 0;
-      right: 0;
-      display: block;
-      font-size: 100px;
-      line-height: 100px;
-      color: #0006;
-      pointer-events: none;
-      user-select: none;
-    }
+.slider--transition {
+  --slider-move-time: 500ms;
+
+  .slider__slots {
+    transition: var(--slider-move-time);
+  }
+}
+
+.slider--counts {
+  .slider__slot::before {
+    counter-increment: card-num;
+    content: counter(card-num);
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    right: 0;
+    display: block;
+    font-size: 100px;
+    line-height: 100px;
+    color: #0006;
+    pointer-events: none;
+    user-select: none;
   }
 }
