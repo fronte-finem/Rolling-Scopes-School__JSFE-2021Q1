@@ -17,8 +17,10 @@ window.addEventListener('load', () => {
       document.querySelector('.control-donation')
   );
 
-  const petsSlider = new PetsSlider(document.querySelector('.pets-in-zoo__slider'));
-  const testimonialsSlider = new TestimonialsSlider(document.querySelector('.testimonials__slider'), 15, 60);
+  const petsSliderView = document.querySelector('.pets-in-zoo__slider');
+  const testimonialsSliderView = document.querySelector('.testimonials__slider');
+  const petsSlider = petsSliderView && new PetsSlider(petsSliderView, 2);
+  const testimonialsSlider = testimonialsSliderView && new TestimonialsSlider(testimonialsSliderView, 15, 60);
 });
 
 function initHambButton() {
