@@ -57,10 +57,8 @@ block main
 
     .map-pins-cont
       each id in ids
-        - const item = {id:'map-pin', link:'#', icons: [{id: `map-icon-${id}`, cls: 'map-icon'}]};
+        - const item = {id:'map-pin', link:'#', icons: [{id: `icon-${id}`, cls: 'map-icon'}]};
         .btns-cont
           +btn-icon(item, [id])
           +btn-link-icon(root, item, [id])
 
-block svg-sprite
-  include ../svg/_sprite-map-pin.svg.pug
