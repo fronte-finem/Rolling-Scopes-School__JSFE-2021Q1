@@ -241,8 +241,11 @@
 
     background: #0003;
     border-radius: 5px;
+    box-shadow: inset 0 0 0 0 transparent;
+    transition: 300ms;
+    cursor: pointer;
 
-    &--active {
+    &:hover {
       box-shadow: inset 0 0 0 3px var(--color-ui-1-def);
     }
   }

@@ -61,13 +61,10 @@ mixin live-cams(root, animal)
         div(class = bem.elem('container', 'slots'))
           ul(class = bem.elem('slots'))
             each id, ix in data.cams.slice(1)
-              - const slotMods = [`${ix+1}`];
-              - const active = (ix === 0 ? 'active' : false);
-              - active && slotMods.push(active);
               li(class = bem.elem('slot', slotMods))
                 - const playerMods = ['slider-cam', `slider-cam-${ix+1}`];
                 +youtube-player(id, playerMods, bem.self)
-                div(class = bem.elem('slot-overlay', active))
+                div(class = bem.elem('slot-overlay'))
                 - const txt = `cam ${ix+1}`
                 +bage(txt, txt, bem.self)
 
