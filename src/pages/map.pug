@@ -38,7 +38,7 @@ block main
             title: item.title,
             icons: [
               {
-                id: `map-icon-${item.id}`,
+                id: `icon-${item.id}`,
                 cls: 'map-icon'
               }
             ]
@@ -48,5 +48,3 @@ block main
       else
         +btn-icon(svgData, [item.id])
 
-block svg-sprite
-  include ../svg/_sprite-map-pin.svg.pug

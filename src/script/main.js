@@ -5,6 +5,7 @@ import { Popup2 } from './donate-popup2.js'
 import { DonateApp } from './donate-app.js'
 import { PetsSlider } from './slider-pets.js'
 import { TestimonialsSlider } from './slider-testimonials.js'
+import { SideBar } from './side-bar.js'
 
 window.addEventListener('load', () => {
   initHambButton();
@@ -17,8 +18,14 @@ window.addEventListener('load', () => {
       document.querySelector('.control-donation')
   );
 
-  const petsSlider = new PetsSlider(document.querySelector('.pets-in-zoo__slider'));
-  const testimonialsSlider = new TestimonialsSlider(document.querySelector('.testimonials__slider'), 15, 60);
+  const petsSliderView = document.querySelector('.pets-in-zoo__slider');
+  const petsSlider = petsSliderView && new PetsSlider(petsSliderView, 2);
+
+  const testimonialsSliderView = document.querySelector('.testimonials__slider');
+  const testimonialsSlider = testimonialsSliderView && new TestimonialsSlider(testimonialsSliderView, 15, 60);
+
+  const sideBarView = document.querySelector('.side-bar');
+  const sideBar = sideBarView && new SideBar(sideBarView);
 });
 
 function initHambButton() {

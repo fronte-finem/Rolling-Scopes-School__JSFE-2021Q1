@@ -78,22 +78,4 @@
     --w-svg-icon: 100px;
     --h-svg-icon: 144px;
   }
-
-  &--map-icon  {
-    --w-svg-icon: var(--w);
-    --h-svg-icon: var(--h);
-  }
-  &--map-icon-tiger     { --w: 62.6px;  --h: 52.61px; }
-  &--map-icon-lion      { --w: 52.04px; --h: 46.7px; }
-  &--map-icon-eagle     { --w: 48.16px; --h: 46.7px; }
-  &--map-icon-alligator { --w: 57.76px; --h: 46.7px; }
-  &--map-icon-lemur     { --w: 33px;    --h: 56px; }
-  &--map-icon-panda     { --w: 58.91px; --h: 43.59px; }
-  &--map-icon-coala     { --w: 42.64px; --h: 53.92px; }
-  &--map-icon-gorilla   { --w: 54.86px; --h: 46.7px; }
 }
-
-
-
-
-

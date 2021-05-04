@@ -9,13 +9,11 @@ mixin link-icon(root, data, mods, blks, disabled = false)
 
 
 mixin gen-link-icon(root, data, self, mods, blks, disabled = false)
-  - data.text = false
   +gen-link(root, data, self, [...(mods || []), data.id], blks, disabled)
     +svg-icon(data)
 
 
 mixin gen-link(root, data, self, mods, blks, disabled = false)
-  include ../_lib/_bem.js.pug
   include ../_lib/_link.js.pug
   -
     const bem = new Bem(self, mods, blks);

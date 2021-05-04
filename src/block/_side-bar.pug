@@ -8,16 +8,20 @@ mixin side-bar(root, animal)
   -
     const sidebar = new Bem('side-bar');
     const data = [
-      { title: 'panda',   id: 'icon-panda',   link: 'pages/zoos/panda.html' },
-      { title: 'eagle',   id: 'icon-eagle',   link: 'pages/zoos/eagle.html' },
-      { title: 'gorilla', id: 'icon-gorilla', link: 'pages/zoos/gorilla.html' },
-      { title: 'lemur',   id: 'icon-lemur',   link: 'pages/zoos/lemur.html' },
-    ];
+      { name: 'panda',     id: 'icon-panda',     link: 'pages/zoos/panda.html',   text: "Watch live from China's Panda Center " },
+      { name: 'eagle',     id: 'icon-eagle',     link: 'pages/zoos/eagle.html',   text: "Watch The Bald Eagles Nest from West End cam" },
+      { name: 'gorilla',   id: 'icon-gorilla',   link: 'pages/zoos/gorilla.html', text: "Livestream from Gorilla Forest Corridor habitat cam" },
+      { name: 'lemur',     id: 'icon-lemur',     link: 'pages/zoos/lemur.html',   text: "The ring-tailed lemurs play in Madagascar, Lemuria Land" },
+      { name: 'tiger',     id: 'icon-tiger',     link: 'pages/contact-us.html',   text: "Watch the tiger in tropical forests on the Sumatra." },
+      { name: 'lion',      id: 'icon-lion',      link: 'pages/contact-us.html',   text: "Livestream from the Lion savanna cam." },
+      { name: 'alligator', id: 'icon-alligator', link: 'pages/contact-us.html',   text: "Watch the alligator in Florida's live stream." },
+      { name: 'coala',     id: 'icon-coala',     link: 'pages/contact-us.html',   text: "The koala resting on Australia forest habitat cam." },
+    ]
 
     function round(x, {head, tail} = barrel) {
-      if (x == head.title) return {head:head, tail:tail};
-      if (tail.every(y => y.title != x)) throw new Error(`'${x}' not found in ${tail}`);
-      while (x != head.title) {
+      if (x == head.name) return {head:head, tail:tail};
+      if (tail.every(y => y.name != x)) throw new Error(`'${x}' not found in ${tail}`);
+      while (x != head.name) {
         tail.push(head);
         head = tail.shift();
       }
@@ -39,11 +43,12 @@ mixin side-bar(root, animal)
 
         - const {head, tail} = round(animal, {head: data.shift(), tail: data});
 
-        ul(class = sidebar.elem('selector'))
-          li(class = sidebar.elem('slot', 'active'))
-            +btn-link-icon(root, head, ['cam', 'self'], sidebar.self, disabled = true)
-          each item in tail
-            li(class = sidebar.elem('slot'))
-              +btn-link-icon(root, item, 'cam', sidebar.self)
+        div(class = sidebar.elem('container', 'selector'))
+          ul(class = sidebar.elem('selector'))
+            li(class = sidebar.elem('slot', 'not-active'))
+              +btn-link-icon(root, head, ['cam', 'self'], sidebar.fullClass, disabled = true)
+            each item in tail
+              li(class = sidebar.elem('slot'))
+                +btn-link-icon(root, item, ['cam'], sidebar.fullClass)
 
 
