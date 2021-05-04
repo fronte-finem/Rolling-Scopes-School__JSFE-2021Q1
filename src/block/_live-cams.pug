@@ -12,22 +12,22 @@ mixin live-cams(root, animal)
       {
         name: 'panda',
         title: 'live panda cams',
-        cams: ['OObOQ2GElhA', 'YgFFo1-X8zY', '65JHo3Cy2tY', 'D0eqnda8dOk'],
+        cams: ['OObOQ2GElhA', 'YgFFo1-X8zY', '65JHo3Cy2tY', 'D0eqnda8dOk', '6WF8zgsHiBM', 'WR9qY3-feHM', '6OhGfgjGTYo', 'V7MUP69nLqA'],
       },
       {
         name: 'eagle',
         title: 'bald eagle cams',
-        cams: ['XfoUF8YkB7A', 'eY0dvOvGM1A', 'bVTsOWFonmw', '7utMaDb1W08'],
+        cams: ['XfoUF8YkB7A', 'eY0dvOvGM1A', 'bVTsOWFonmw', '7utMaDb1W08', 'BEgEIEfSuvU', 'cPMjnRp4l_o', 'QkwFHhuecmw', 'kOwT2bkuU4k'],
       },
       {
         name: 'gorilla',
         title: 'gorillas cams',
-        cams: ['sapfpA9z5PQ', '0P3w8mHiVy0', 'rgXWDk7rh4w', '672cUSe69J0'],
+        cams: ['sapfpA9z5PQ', '0P3w8mHiVy0', 'rgXWDk7rh4w', '672cUSe69J0', '3NkW-V_veng', 'rh9PwFvMS0I', 'PbMbtQ9hgEY', 'tz0avWZoqjg'],
       },
       {
         name: 'lemur',
         title: 'lemurs cams',
-        cams: ['vw2Spqhk4AY', '2M1BmfHlOEI', '2w-8DnczSLI', 'euyoFTuitI8'],
+        cams: ['vw2Spqhk4AY', '2M1BmfHlOEI', '2w-8DnczSLI', 'euyoFTuitI8', '6eaTBoqpNEg', 'UjSiq53nJBo', 'jcjDrE1ye-E', 'vSwm65ycHck'],
       },
     ];
     const data = animals.filter(a => a.name == animal)[0];
@@ -42,13 +42,13 @@ mixin live-cams(root, animal)
       div(class = bem.elem('container', 'heading'))
         h2(class = bem.elem('heading'))= data.title
       div(class = bem.elem('container', ['btn', 'btn-first', 'header']))
-        +btn({text: 'donate now'})
+        +btn({text: 'donate now'}, 'js-donate-step-0')
 
     div(class = bem.elem('wrapper', 'main-cam'))
       +youtube-player(data.cams[0], 'main-cam', bem.self)
 
     div(class = bem.elem('container', ['btn', 'btn-second']))
-      +btn({text: 'donate now'})
+      +btn({text: 'donate now'}, 'js-donate-step-0')
 
     div(class = bem.elem('wrapper', 'cam-slider'))
       div(class = bem.elem('container', 'sub-heading'))
@@ -69,4 +69,4 @@ mixin live-cams(root, animal)
                 +bage(txt, txt, bem.self)
 
     div(class = bem.elem('container', ['btn', 'btn-third']))
-      +btn({text: 'donate now'})
+      +btn({text: 'donate now'}, 'js-donate-step-0')
