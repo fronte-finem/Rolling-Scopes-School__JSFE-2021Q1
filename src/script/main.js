@@ -6,6 +6,7 @@ import { DonateApp } from './donate-app.js'
 import { PetsSlider } from './slider-pets.js'
 import { TestimonialsSlider } from './slider-testimonials.js'
 import { SideBar } from './side-bar.js'
+import { LiveCams } from './live-cams.js'
 
 window.addEventListener('load', () => {
   initHambButton();
@@ -26,6 +27,9 @@ window.addEventListener('load', () => {
 
   const sideBarView = document.querySelector('.side-bar');
   const sideBar = sideBarView && new SideBar(sideBarView);
+
+  const liveCamsView = document.querySelector('.live-cams');
+  const liveCams = liveCamsView && new LiveCams(liveCamsView);
 });
 
 function initHambButton() {

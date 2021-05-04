@@ -3,6 +3,11 @@
 */
 
 .youtube-player {
+  --z0: var(--color-ui-1-def);
+  --z1: var(--color-main-navy);
+  --c0: var(--z0);
+  --c1: var(--z1);
+
   position: relative;
   width: 100%;
   height: 0;
@@ -16,5 +21,22 @@
     height: 100%;
     left: 0;
     top: 0;
+    /* https://css-tricks.com/the-state-of-changing-gradients-with-css-transitions-and-animations/ */
+    background-color: var(--color-main-navy);
+    background-image: conic-gradient(var(--c0) var(--pos, 0%), var(--c1) 0);
+    animation-iteration-count: infinite;
+    animation-name: c0, pos, c1;
+    animation-duration: 6s, 3s;
+    animation-timing-function: steps(1), linear;
   }
 }
+//  version='1.1' height='50px' width='120px'
+
+
+@property --pos { syntax: '<length-percentage>'; inherits: true; initial-value: 0%; }
+@property --c0 { syntax: '<color>'; inherits: true; initial-value: #fff; }
+@property --c1 { syntax: '<color>'; inherits: true; initial-value: #000; }
+
+@keyframes pos { 0% { --pos: 0% } 100% { --pos: 100% } }
+@keyframes c0 { 0% { --c0: var(--z1) } 50% { --c0: var(--z0) } 100% { --c0: var(--z1) } }
+@keyframes c1 { 0% { --c1: var(--z0) } 50% { --c1: var(--z1) } 100% { --c1: var(--z0) } }

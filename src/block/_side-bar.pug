@@ -41,7 +41,8 @@ mixin side-bar(root, animal)
         div(class = sidebar.elem('container', ['control', 'control-scroll-down']))
           +btn-icon({id: 'icon-scroll-down'})
 
-        - const {head, tail} = round(animal, {head: data.shift(), tail: data});
+        - const head = data.filter(x => x.name === animal)[0];
+        - const tail = data.filter(x => x.name !== animal);
 
         div(class = sidebar.elem('container', 'selector'))
           ul(class = sidebar.elem('selector'))
