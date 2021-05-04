@@ -12,22 +12,22 @@ mixin live-cams(root, animal)
       {
         name: 'panda',
         title: 'live panda cams',
-        cams: ['OObOQ2GElhA', 'YgFFo1-X8zY', '65JHo3Cy2tY'],
+        cams: ['OObOQ2GElhA', 'YgFFo1-X8zY', '65JHo3Cy2tY', 'D0eqnda8dOk'],
       },
       {
         name: 'eagle',
         title: 'bald eagle cams',
-        cams: ['XfoUF8YkB7A', 'eTAsANPVqB8', 'nmJKl8iKI1Q'],
+        cams: ['XfoUF8YkB7A', 'eY0dvOvGM1A', 'bVTsOWFonmw', '7utMaDb1W08'],
       },
       {
         name: 'gorilla',
         title: 'gorillas cams',
-        cams: ['sapfpA9z5PQ', '0P3w8mHiVy0', 'rgXWDk7rh4w'],
+        cams: ['sapfpA9z5PQ', '0P3w8mHiVy0', 'rgXWDk7rh4w', '672cUSe69J0'],
       },
       {
         name: 'lemur',
         title: 'lemurs cams',
-        cams: ['vw2Spqhk4AY', '2M1BmfHlOEI', '2w-8DnczSLI'],
+        cams: ['vw2Spqhk4AY', '2M1BmfHlOEI', '2w-8DnczSLI', 'euyoFTuitI8'],
       },
     ];
     const data = animals.filter(a => a.name == animal)[0];
@@ -60,7 +60,7 @@ mixin live-cams(root, animal)
           +btn-icon({id: 'arrow-to-right'}, ['navy', 'next'], bem.self)
         div(class = bem.elem('container', 'slots'))
           ul(class = bem.elem('slots'))
-            each id, ix in data.cams
+            each id, ix in data.cams.slice(1)
               - const slotMods = [`${ix+1}`];
               - const active = (ix === 0 ? 'active' : false);
               - active && slotMods.push(active);
