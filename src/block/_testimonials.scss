@@ -168,6 +168,10 @@
     --slider-slots-gap-w: 30px;
     --slider-slots-gap-h: 30px;
 
+    &.slider--transition {
+      --slider-move-time: 200ms;
+    }
+
     clip-path: inset( -100% -100% -100% 0 );
 
     grid-column: 6 / span 7;
