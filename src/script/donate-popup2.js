@@ -19,6 +19,7 @@ class Popup2 extends Popup {
     this.card = new CreditCard();
 
     this.form = this.view.querySelector('.pop-up-second__form');
+    this.form.addEventListener('submit', (e) => e.preventDefault());
 
     this.btnNext = this.initBtnNext();
     this.btnBack = this.initBtnBack();
@@ -47,7 +48,7 @@ class Popup2 extends Popup {
     if (this.step === 4 || this.doneTimerId) {
       clearTimeout(this.doneTimerId);
       this.doneTimerId = null;
-      this.form.submit();
+      this.form.requestSubmit();
     }
     this.btnBack.click();
     this.btnBack.click();
@@ -142,7 +143,11 @@ class Popup2 extends Popup {
       return acc;
     }, new Map());
 
-    amountSelector.forEach(btn => btn.addEventListener('click', () => this.setAmount(btn.dataset.amount)));
+    amountSelector.forEach(btn => btn.addEventListener('click', () => {
+      this.setAmount(btn.dataset.amount);
+      this.deactivateAllBtn();
+      this.activateBtn(btn);
+    }));
     return amountSelector;
   }
 
@@ -160,12 +165,11 @@ class Popup2 extends Popup {
     }
     this.amount = Number(value);
     this.amountInput.value = value;
-    this.activateAmountSelector(value) || this.activateBtn(this.amountResetBtn);
+    this.activateAmountSelector(value);
   }
 
   resetAmount() {
     this.deactivateAllBtn();
-    this.activateBtn(this.amountResetBtn);
     this.amount = 0;
     this.amountInput.value = '';
     this.amountInput.focus();
@@ -190,7 +194,10 @@ class Popup2 extends Popup {
   initAmountInput() {
     const input = this.view.querySelector('.pop-up-second__amount-input');
     this.setInputLimit(input, 4);
-    input.addEventListener('input', () => this.setAmount(input.value));
+    input.addEventListener('input', () => {
+      this.deactivateAllBtn();
+      this.setAmount(input.value);
+    });
     return input;
   }
 
