@@ -1,161 +1,257 @@
+import { Observer } from './obsesrver.js'
 import { CreditCard } from './credit-card.js'
-import { htmlToElem } from './dom-lib.js'
+import { petsData } from './pets-config.js'
 import { Popup } from './base-popup.js'
 import { Input } from './input.js'
+import { Select } from './select.js'
 
 export { Popup2 };
 
+ /** @typedef {import('./pets-config.js').PetsData} PetsData */
+
+class Popup2Utils {
+  static activateBtn(btn) { btn.classList.add('pop-up-second__btn--active') }
+  static deactivateBtn(btn) { btn.classList.remove('pop-up-second__btn--active') }
+  static deactivateAllBtn(btns) { btns.forEach(btn => Popup2Utils.deactivateBtn(btn)) }
+
+  static hideBtn(btn) { btn.classList.add('btn--hidden') }
+  static showBtn(btn) { btn.classList.remove('btn--hidden') }
+
+  static hideStep(step) { step.classList.add('pop-up-second__step--hidden') }
+  static showStep(step) { step.classList.remove('pop-up-second__step--hidden') }
+}
 
 class Popup2 extends Popup {
-  DEFAULT_AMOUNTS = [10, 20, 30, 50, 80, 100];
-
-  constructor(view, petsData) {
+  constructor(view) {
     super(view);
 
     this.doneTimerId = null;
-    this.step = 1;
-    this.amount = 0;
-    this.choosedPet = 0;
-    this.card = new CreditCard();
 
-    this.form = this.view.querySelector('.pop-up-second__form');
-    this.form.addEventListener('submit', (e) => e.preventDefault());
+    /**@type HTMLFormElement */
+    this.initForm(view.querySelector('.pop-up-second__form'));
 
-    this.btnNext = this.initBtnNext();
-    this.btnBack = this.initBtnBack();
-    this.btnDone = this.initBtnDone();
+    this.initBtnNext(this.view.querySelector('.btn--next'));
+    this.initBtnBack(this.view.querySelector('.pop-up-second__btn-back'));
+    this.initBtnDone(this.view.querySelector('.btn--complete'));
 
-    this.amountSelector = this.initAmountSelector();
-    this.amountInput = this.initAmountInput();
-    this.petsSelect = this.initPetsSelect(petsData);
+    const onValidate = (valid) => valid ? this.activateNextStepBtn() : this.deactivateNextStepBtn();
 
-    this.amountResetBtn = this.initAmountResetBtn();
-    this.petsResetBtn = this.initPetsResetBtn();
-
-    this.btns = [this.btnNext, this.btnBack, this.amountResetBtn, this.petsResetBtn];
-
-    this.nameInput = new Input(this.view.querySelector('.pop-up-second__input-name'));
-    this.emailInput = new Input(this.view.querySelector('.pop-up-second__input-email'));
-
-    this.cardNumberInput = this.initCardNumberInput();
-    this.cardCvvInput = this.initCardCvvInput();
-
-    this.monthSelect = this.initMonthSelect();
-    this.yearSelect = this.initYearSelect();
+    /** @type {AbstractPopup2Step[]} */
+    this.steps = [
+      new Popup2Step1(view.querySelector('.pop-up-second__step--1'), onValidate, petsData),
+      new Popup2Step2(view.querySelector('.pop-up-second__step--2'), onValidate),
+      new Popup2Step3(view.querySelector('.pop-up-second__step--3'), onValidate, new CreditCard()),
+      new Popup2Step4(view.querySelector('.pop-up-second__step--4'), onValidate),
+    ];
+    this.nextStepAllowed = false;
+    this.stepNum = 0;
+    this.activateStep();
   }
 
-  close() {
-    if (this.step === 4 || this.doneTimerId) {
-      clearTimeout(this.doneTimerId);
-      this.doneTimerId = null;
-      this.form.requestSubmit();
+  setAmount(value) { this.steps[0].setAmount(value) }
+
+  activateStep() {
+    this.step = this.steps[this.stepNum];
+    this.step.startWatch();
+    this.step.show();
+  }
+  deactivateStep() {
+    this.step.stopWatch();
+    this.step.hide();
+  }
+
+  activateNextStepBtn() {
+    this.nextStepAllowed = true;
+    if (this.stepNum < 2) {
+      Popup2Utils.activateBtn(this.btnNext);
+    } else {
+      this.btnDone.disabled = true;
     }
-    this.btnBack.click();
-    this.btnBack.click();
-    this.btnBack.click();
-    this.nameInput.setValid();
-    this.emailInput.setValid();
-    this.cardNumberInput.setValid();
-    this.cardCvvInput.setValid();
-    this.form.reset();
-    super.close();
   }
-
-  submit() {
-    this.doneTimerId = setTimeout(() => this.close(), 3000);
-  }
-
-  activateBtn(btn) { btn.classList.add('pop-up-second__btn--active') }
-  deactivateBtn(btn) { btn.classList.remove('pop-up-second__btn--active') }
-
-  deactivateAllBtn() {
-    this.btns.forEach(btn => this.deactivateBtn(btn));
-    this.amountSelector.forEach(btn => this.deactivateBtn(btn));
-  }
-
-  genClsSteps([oldStep, newStep]) { return [this.genClsStep(oldStep), this.genClsStep(newStep)]; }
-  genClsStep(num) { return `pop-up-second--step-${num}`; }
-
-  inc() { return this.step == 4 ? [this.step, this.step] : [this.step++, this.step]; }
-  dec() { return this.step == 1 ? [this.step, this.step] : [this.step--, this.step]; }
-
-  initBtnNext() {
-    const btn = this.view.querySelector('.btn--next');
-    btn.addEventListener('click', () => this.stepNext());
-    return btn;
-  }
-
-  initBtnBack() {
-    const btn = this.view.querySelector('.pop-up-second__btn-back');
-    btn.addEventListener('click', () => this.stepBack());
-    return btn;
+  deactivateNextStepBtn() {
+    this.nextStepAllowed = false;
+    if (this.stepNum < 2) {
+      Popup2Utils.deactivateBtn(this.btnNext)
+    } else {
+      this.btnDone.disabled = false;
+    }
   }
 
   stepNext() {
-    if (!this.validateStep()) return;
-    this.view.classList.replace(...this.genClsSteps(this.inc()));
-    if (this.step === 3) {
-      this.btnNext.classList.add('btn--hidden');
-      this.btnDone.classList.remove('btn--hidden');
+    if (!this.nextStepAllowed) {
+      this.stepNum === 0 ? this.step.validateForce() : this.step.validate();
+      return;
+    }
+    this.deactivateStep();
+    this.stepNum++;
+    this.activateStep();
+
+    if (this.stepNum === 2) {
+      Popup2Utils.hideBtn(this.btnNext);
+      Popup2Utils.showBtn(this.btnDone);
     }
   }
 
   stepBack() {
-    this.view.classList.replace(...this.genClsSteps(this.dec()));
-    if (this.step === 2) {
-      this.btnNext.classList.remove('btn--hidden');
-      this.btnDone.classList.add('btn--hidden');
+    this.deactivateStep();
+    this.stepNum--;
+    this.activateStep();
+
+    if (this.stepNum === 1) {
+      Popup2Utils.hideBtn(this.btnDone);
+      Popup2Utils.showBtn(this.btnNext);
     }
   };
 
-  validateStep() {
-    switch (this.step) {
-      case 1:
-          return this.amountInput.reportValidity()
-              && this.petsSelect.reportValidity();
-      case 2:
-          return this.nameInput.validate()
-              && this.emailInput.validate();
-      case 3:
-          const valid = this.card.validate();
-          valid ? this.activateBtnDone() : this.deactivateBtnDone();
-          return valid;
-    }
+  initForm(form) {
+    this.form = form;
+    form.addEventListener('submit', (e) => e.preventDefault(), true);
+    form.addEventListener('formdata', (e) => {
+      console.log('Form data:');
+      for (const [key, value] of e.formData) console.log(`\t${key}: ${value}`);
+    });
   }
 
-  initBtnDone() {
-    const btn = this.view.querySelector('.btn--complete');
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
+  close() {
+    if (this.stepNum === 3 || this.doneTimerId) {
+      clearTimeout(this.doneTimerId);
+      this.doneTimerId = null;
+      this.form.requestSubmit();
+    }
+    this.reset();
+    super.close();
+  }
+
+  reset() {
+    this.form.reset();
+    this.steps.forEach(step => step.reset());
+    this.stepNum = 0;
+    this.activateStep();
+  }
+
+  submit() {
+    this.doneTimerId = setTimeout(() => this.close(), 5000);
+  }
+
+  initBtnNext(btn) {
+    this.btnNext = btn;
+    btn.addEventListener('click', () => this.stepNext());
+  }
+
+  initBtnBack(btn) {
+    this.btnBack = btn;
+    btn.addEventListener('click', () => this.stepBack());
+  }
+
+  initBtnDone(btn) {
+    this.btnDone = btn;
+    btn.addEventListener('click', () => {
       this.stepNext();
       this.submit();
     });
-    return btn;
   }
-  activateBtnDone() { this.btnDone.disabled = false }
-  deactivateBtnDone() { this.btnDone.disabled = true }
+}
 
-  initAmountSelector() {
-    const btns = this.view.querySelectorAll('.pop-up-second__amount-selector .pop-up-second__btn');
 
-    const amountSelector = [...btns].reduce((acc, btn) => {
-      acc.set(btn.dataset.amount, btn);
-      return acc;
-    }, new Map());
 
-    amountSelector.forEach(btn => btn.addEventListener('click', () => {
-      this.setAmount(btn.dataset.amount);
-      this.deactivateAllBtn();
-      this.activateBtn(btn);
+class AmountSelector extends Observer {
+  /**
+   * @param {NodeList} btns
+   */
+  constructor(btns) {
+    super();
+    this.selector = [...btns].reduce((acc, btn) => acc.set(btn.dataset.amount, btn), new Map());
+    this.init();
+  }
+
+  init() {
+    this.selector.forEach(btn => btn.addEventListener('click', () => {
+      this.dispatch('Selected', btn.dataset.amount);
+      this.reset();
+      Popup2Utils.activateBtn(btn);
     }));
-    return amountSelector;
   }
 
-  activateAmountSelector(amount) {
-    if (!this.amountSelector.has(amount)) return false;
-    this.deactivateAllBtn();
-    this.activateBtn(this.amountSelector.get(amount));
+  activate(amount) {
+    if (!this.selector.has(amount)) return false;
+    this.reset();
+    Popup2Utils.activateBtn(this.selector.get(amount));
     return true;
+  }
+
+  reset() { Popup2Utils.deactivateAllBtn(this.selector); }
+
+  onSelected(listener) { this.addListener('Selected', listener) }
+}
+
+class AbstractPopup2Step extends Observer {
+  /**
+   * @param {HTMLElement} view
+   * @param {(valid: boolean) => void} listener
+   */
+  constructor(view, listener, ...args) {
+    super();
+    this.view = view;
+    this.listener = listener;
+  }
+
+  init() { throw new Error('Method not implemented.') }
+
+  hide() { Popup2Utils.hideStep(this.view) }
+  show() { Popup2Utils.showStep(this.view) }
+
+  validate() { throw new Error('Method not implemented.') }
+  reset() { throw new Error('Method not implemented.') }
+
+  startWatch() { this.addListener('Validate', this.listener) }
+  stopWatch() { this.delListener('Validate', this.listener) }
+}
+
+class Popup2Step1 extends AbstractPopup2Step {
+  /**
+   * @param {HTMLElement} view
+   * @param {(valid: boolean) => void} listener
+   * @param {PetsData} petsData
+   */
+  constructor(view, listener, petsData) {
+    super(view, listener);
+    this.amount = 0;
+    this.choosedPet = '';
+    this.petsData = petsData;
+    this.init();
+  }
+
+  init() {
+    this.amountSelector = new AmountSelector(this.view.querySelectorAll('.pop-up-second__amount-selector .pop-up-second__btn'));
+    this.initAmountResetBtn(this.view.querySelector('.pop-up-second__btn--reset-amount'));
+    this.initAmountInput(this.view.querySelector('.pop-up-second__amount-input'));
+
+    this.initPetsResetBtn(this.view.querySelector('.pop-up-second__btn--reset-pets'));
+    this.initPetsSelect(this.view.querySelector('.pop-up-second__select-pet'));
+
+    this.btns = [this.amountResetBtn, this.petsResetBtn];
+    this.amountSelector.onSelected((value) => {
+      Popup2Utils.deactivateBtn(this.amountResetBtn);
+      this.amount = Number(value);
+      this.amountInput.value = value;
+    });
+  }
+
+  validateForce() {
+    return this.amountInput.reportValidity()
+        && this.petsSelect.reportValidity();
+  }
+
+  validate() {
+    const valid = this.amountInput.checkValidity()
+               && this.petsSelect.checkValidity();
+    this.dispatch('Validate', valid);
+    return valid;
+  }
+
+  reset() {
+    this.resetAmount();
+    Popup2Utils.deactivateAllBtn(this.btns);
   }
 
   setAmount(value) {
@@ -165,23 +261,32 @@ class Popup2 extends Popup {
     }
     this.amount = Number(value);
     this.amountInput.value = value;
-    this.activateAmountSelector(value);
+    this.amountSelector.activate(value);
+    this.validate();
   }
 
   resetAmount() {
-    this.deactivateAllBtn();
+    this.amountSelector.reset();
+    Popup2Utils.deactivateAllBtn(this.btns);
+    Popup2Utils.activateBtn(this.amountResetBtn);
     this.amount = 0;
     this.amountInput.value = '';
     this.amountInput.focus();
   }
 
-  initAmountResetBtn() {
-    const btn = this.view.querySelector('.pop-up-second__btn--reset-amount');
-    btn.addEventListener('click', () => {
-      this.resetAmount();
-      this.activateBtn(btn);
+  initAmountResetBtn(btn) {
+    this.amountResetBtn = btn;
+    btn.addEventListener('click', () => this.resetAmount());
+  }
+
+  initAmountInput(input) {
+    this.amountInput = input;
+    this.setInputLimit(input, 4);
+    input.addEventListener('input', () => {
+      Popup2Utils.deactivateAllBtn(this.btns);
+      this.amountSelector.reset();
+      this.setAmount(input.value);
     });
-    return btn;
   }
 
   setInputLimit(input, limit) {
@@ -191,89 +296,146 @@ class Popup2 extends Popup {
     });
   }
 
-  initAmountInput() {
-    const input = this.view.querySelector('.pop-up-second__amount-input');
-    this.setInputLimit(input, 4);
-    input.addEventListener('input', () => {
-      this.deactivateAllBtn();
-      this.setAmount(input.value);
-    });
-    return input;
-  }
-
-  initCardNumberInput(limit = 16) {
-    const input = new Input(this.view.querySelector('.pop-up-second__input-card'),
-      { limit: limit,
-        pattern: `\\d{${limit}}`,
-        errorMsg: `must contain ${limit} digits`,
-      });
-    input.onInput((value) => {
-      this.card.setNumber(value);
-      this.validateStep();
-    })
-    return input;
-  }
-
-  initCardCvvInput(limit = 3) {
-    const input = new Input(this.view.querySelector('.pop-up-second__input-cvv'),
-      { limit: limit,
-        pattern: `\\d{${limit}}`,
-        errorMsg: `must contain ${limit} digits`,
-      });
-    input.onInput((value) => {
-      this.card.setCvv(value);
-      this.validateStep();
-    })
-    return input;
-  }
-
-  initPetsResetBtn() {
-    const btn = this.view.querySelector('.pop-up-second__btn--reset-pets');
+  initPetsResetBtn(btn) {
+    this.petsResetBtn = btn;
     btn.addEventListener('click', () => {
+      Popup2Utils.deactivateAllBtn(this.btns);
+      Popup2Utils.activateBtn(btn);
       this.petsSelect.selectedIndex = this.choosedPet;
-      this.activateBtn(btn);
     });
-    return btn;
   }
 
-  initPetsSelect(petsData) {
-    const select = this.view.querySelector('.pop-up-second__select-pet');
+  initPetsSelect(view) {
+    this.petsSelect = view;
+    new Select(view, this.petsData, 'pop-up-second__option')
+      .onSelect((value) => {
+        this.choosedPet = this.petsSelect.selectedIndex;
+        this.validate();
+      });
+  }
+}
 
-    petsData.forEach(pet => {
-      const opt = htmlToElem(`<option class="pop-up-second__option" value="${pet.value}">${pet.text}</option>`);
-      select.add(opt);
-    });
-    select.addEventListener('input', () => {
-      this.choosedPet = this.petsSelect.selectedIndex;
-      console.log(select.value);
-    });
-    return select;
+class Popup2Step2 extends AbstractPopup2Step {
+  /**
+   * @param {HTMLElement} view
+   * @param {(valid: boolean) => void} listener
+   */
+  constructor(view, listener) {
+    super(view, listener);
+    this.init();
   }
 
-  initMonthSelect() {
-    const select = this.view.querySelector('.pop-up-second__select-month');
-    this.card.months.forEach((num) => {
-      const opt = htmlToElem(
-        `<option class="pop-up-second__option" value="${this.card.formatMonth(num)}">${this.card.prettyMonth(num)}</option>`);
-      select.add(opt);
-    });
-    select.addEventListener('input', () => {
-      this.card.setMonth(select.value);
-      this.validateStep();
-    });
-    return select;
+  init() {
+    this.nameInput = new Input(this.view.querySelector('.pop-up-second__input-name'));
+    this.emailInput = new Input(this.view.querySelector('.pop-up-second__input-email'));
+    this.nameInput.onInput(() => this.validate());
+    this.emailInput.onInput(() => this.validate());
   }
 
-  initYearSelect() {
-    const select = this.view.querySelector('.pop-up-second__select-year');
-    this.card.validYears.forEach((year) => {
-      const opt = htmlToElem(`<option class="pop-up-second__option" value="${year}">${year}</option>`);
-      select.add(opt);
-    });
-    select.addEventListener('input', () => {
-      this.card.setYear(select.value);
-      this.validateStep();
-    });
-    return select;
+  validate() {
+    const valid = this.nameInput.validate()
+               && this.emailInput.validate();
+    this.dispatch('Validate', valid);
+    return valid;
   }
+
+  reset() {
+    this.nameInput.setValid();
+    this.emailInput.setValid();
+  }
+}
+
+class Popup2Step3 extends AbstractPopup2Step {
+  /**
+   * @param {HTMLElement} view
+   * @param {(valid: boolean) => void} listener
+   * @param {CreditCard} creditCard
+   */
+  constructor(view, listener, creditCard) {
+    super(view, listener);
+    this.creditCard = creditCard;
+    this.init();
+  }
+
+  init() {
+    this.initCardNumberInput(this.view.querySelector('.pop-up-second__input-card'), 16);
+    this.initCardCvvInput(this.view.querySelector('.pop-up-second__input-cvv'), 3);
+    this.initMonthSelect(this.view.querySelector('.pop-up-second__select-month'));
+    this.initYearSelect(this.view.querySelector('.pop-up-second__select-year'));
+  }
+
+  validate() {
+    const valid = this.creditCard.validate();
+    this.dispatch('Validate', valid);
+    return valid;
+  }
+
+  reset() {
+    this.cardNumberInput.setValid();
+    this.cardCvvInput.setValid();
+  }
+
+  generateConfig(limit) {
+    return {
+      limit: limit,
+      pattern: `\\d{${limit}}`,
+      errorMsg: `must contain ${limit} digits`,
+    };
+  }
+
+  initCardNumberInput(view, limit = 16) {
+    this.cardNumberInput = new Input(view, this.generateConfig(limit));
+    this.cardNumberInput.onInput((value) => {
+      this.creditCard.setNumber(value);
+      this.validate();
+    })
+  }
+
+  initCardCvvInput(view, limit = 3) {
+    this.cardCvvInput = new Input(view, this.generateConfig(limit));
+    this.cardCvvInput.onInput((value) => {
+      this.creditCard.setCvv(value);
+      this.validate();
+    })
+  }
+
+  initMonthSelect(view) {
+    new Select(view, this.creditCard.prettyMonths, 'pop-up-second__option')
+      .onSelect((value) => {
+        this.creditCard.setMonth(value);
+        this.validate();
+      });
+  }
+
+  initYearSelect(view) {
+    new Select(view, this.creditCard.validYears, 'pop-up-second__option')
+      .onSelect((value) => {
+        this.creditCard.setYear(value);
+        this.validate();
+      });
+  }
+}
+
+class Popup2Step4 extends AbstractPopup2Step {
+  /**
+   * @param {HTMLElement} view
+   * @param {(valid: boolean) => void} listener
+   */
+  constructor(view, listener) {
+    super(view, listener);
+    this.init();
+  }
+
+  init() {
+    this.initBtnClose(this.view.querySelector('.pop-up-first__btn-close'));
+  }
+
+  initBtnClose(btn) {
+    this.btnClose = btn;
+    btn.addEventListener('click', () => this.dispatch('Close'));
+  }
+
+  validate() { return true; }
+
+  reset() {}
 }

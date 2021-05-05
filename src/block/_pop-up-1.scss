@@ -150,7 +150,7 @@
   }
 
   &__btn-close {
-    --⚙️--transition: 500ms;
+    --⚙️--transition: 200ms;
     --⚙️--line-color: var(--color-main-light);
     --⚙️--line-w: 130%;
     --⚙️--line-h: 3px;
@@ -168,7 +168,8 @@
     transition: var(--⚙️--transition);
 
     &:hover {
-      --⚙️--line-color: var(--color-ui-1-def);
+      --⚙️--line-w: 200%;
+      --⚙️--line-h: 5px;
     }
   }
 

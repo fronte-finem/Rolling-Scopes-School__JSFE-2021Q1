@@ -33,10 +33,11 @@ class CreditCard {
 
   get validYears() {
     const year = new Date().getFullYear();
-    return Array.from({length: this._yearsLimit}).map((_, i) => String(year + i));
+    const initArr = Array.from({length: this._yearsLimit});
+    return new Map(initArr.map((_, i) => [year + i, String(year + i)]));
   }
 
-  get months() {
+  get initMonths() {
     return Array.from({length: 12}).map((_, i) => i + 1);
   }
 
@@ -49,10 +50,10 @@ class CreditCard {
   }
 
   get validMonths() {
-    return this.months.map(num => this.formatMonth(num));
+    return new Map(this.initMonths.map((_, i) => [i, this.formatMonth(i)]));
   }
 
   get prettyMonths() {
-    return this.months.map(num => `${this.formatMonth(num)} ▪️ ${this.prettyMonth(num)}`);
+    return new Map(this.initMonths.map((_, i) => [this.formatMonth(i), `${this.formatMonth(i)} ▪️ ${this.prettyMonth(i)}`]));
   }
 }
