@@ -56,9 +56,17 @@
   position: relative;
   flex: 0 0 var(--slider-slot-w, 100%);
 }
-.slider__slot::before {
+
+.slider--transition {
+  --slider-move-time: 500ms;
+}
+.slider--transition .slider__slots {
+  transition: var(--slider-move-time);
+}
+
+.slider--counts .slider__slot::before {
   counter-increment: card-num;
-  /* content: counter(card-num); */
+  content: counter(card-num);
   position: absolute;
   z-index: 5;
   top: 0;
@@ -66,7 +74,7 @@
   display: block;
   font-size: 100px;
   line-height: 100px;
-  color: #0003;
+  color: #0006;
   pointer-events: none;
   user-select: none;
 }
@@ -951,13 +959,13 @@
     right: 0;
   }
   .page__pets-in-zoo-mask--wall {
-    z-index: 100101;
+    z-index: 10;
     width: calc(var(--mask-w) - var(--mask-grad-w));
     background-color: var(--color-bg);
     pointer-events: all;
   }
   .page__pets-in-zoo-mask--grad {
-    z-index: 100100;
+    z-index: 10;
     width: var(--mask-w);
     pointer-events: none;
   }
@@ -973,7 +981,7 @@
 }
 .pets-in-zoo__article {
   display: grid;
-  grid-template-columns: repeat(var(--page-col), 1fr);
+  grid-template-columns: repeat(var(--page-cols), 1fr);
   column-gap: var(--page-w-gap);
   row-gap: 50px;
   margin-bottom: 103px;
@@ -1010,6 +1018,15 @@
 .pets-in-zoo__slider {
   margin-bottom: 100px;
 }
+.pets-in-zoo__slider .slider__slot:nth-child(n+5) .card-animal__img {
+  filter: grayscale(1) contrast(1.5);
+}
+.pets-in-zoo__slider .slider__slot:nth-child(n+9) .card-animal__img {
+  filter: hue-rotate(180deg) saturate(2);
+}
+.pets-in-zoo__slider .slider__slot:nth-child(n+13) .card-animal__img {
+  filter: sepia(1) invert(1);
+}
 .pets-in-zoo__btn-container {
   display: flex;
   justify-content: center;
@@ -1027,7 +1044,7 @@
     padding-left: 0;
   }
   .pets-in-zoo__article-text {
-    grid-column: 1/span var(--page-col);
+    grid-column: 1/span var(--page-cols);
     padding: 0 calc(185px - var(--page-w-off));
   }
   .pets-in-zoo__slider {
@@ -1217,7 +1234,7 @@
 }
 .pay-and-feed__step-prefix {
   display: grid;
-  grid-template-columns: repeat(var(--page-col), 1fr);
+  grid-template-columns: repeat(var(--page-cols), 1fr);
   column-gap: var(--page-w-gap);
   height: 34px;
   margin-bottom: 80px;
@@ -1269,7 +1286,7 @@
 }
 .pay-and-feed__step-container {
   display: grid;
-  grid-template-columns: repeat(var(--page-col), 1fr);
+  grid-template-columns: repeat(var(--page-cols), 1fr);
   column-gap: var(--page-w-gap);
 }
 @media screen and (max-width: 1000px) {
@@ -1392,7 +1409,7 @@
 }
 .pay-and-feed__btn-container {
   display: grid;
-  grid-template-columns: repeat(var(--page-col), 1fr);
+  grid-template-columns: repeat(var(--page-cols), 1fr);
   column-gap: var(--page-w-gap);
 }
 @media screen and (max-width: 1000px) {
@@ -1465,7 +1482,7 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    z-index: 100100;
+    z-index: 10;
     width: var(--mask-w);
   }
   .page__testimonials-mask--left {
@@ -1522,7 +1539,7 @@
 }
 .testimonials__main-container {
   display: grid;
-  grid-template-columns: repeat(var(--page-col), minmax(0, 1fr));
+  grid-template-columns: repeat(var(--page-cols), minmax(0, 1fr));
   column-gap: var(--page-w-gap);
   width: 100%;
   flex-grow: 2;
@@ -1534,9 +1551,8 @@
 }
 @media screen and (max-width: 900px) {
   .testimonials__main-container {
+    grid-template-columns: minmax(0, 1fr);
     flex-grow: 0;
-    display: flex;
-    flex-direction: column;
   }
 }
 @media screen and (max-width: 500px) {
@@ -1556,6 +1572,7 @@
 }
 @media screen and (max-width: 900px) {
   .testimonials__article {
+    grid-column: 1;
     padding-right: 25px;
   }
 }
@@ -1618,12 +1635,17 @@
   --slider-slot-w: 515px;
   --slider-slots-gap-w: 30px;
   --slider-slots-gap-h: 30px;
+  clip-path: inset(-100% -100% -100% 0);
   grid-column: 6/span 7;
+}
+.testimonials__slider.slider--transition {
+  --slider-move-time: 200ms;
 }
 @media screen and (max-width: 1400px) {
   .testimonials__slider {
     --slider-ctrl-arrows-align: flex-end;
     --slider-ctrl-gap-h: 100px;
+    clip-path: unset;
     grid-column: 2/span 11;
     padding-left: 5px;
   }
@@ -1633,6 +1655,7 @@
     --slider-ctrl-arrows-display: none;
     --slider-slot-w: 523px;
     --slider-slots-gap-w: var(--page-w-gap);
+    grid-column: 1;
     padding-left: 0px;
   }
   .testimonials__slider .slider__slots--row-2 {
@@ -1646,6 +1669,9 @@
     --slider-ctrl-gap-h: 30px;
     --slider-slot-w: 100%;
   }
+}
+.testimonials__slider .slider__slot::before {
+  color: #0002;
 }
 @media screen and (max-width: 1400px) {
   .testimonials__btn-container {
