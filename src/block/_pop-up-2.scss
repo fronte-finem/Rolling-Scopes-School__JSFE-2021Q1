@@ -4,10 +4,6 @@
 .pop-up-second {
   --pp2-color-placeholder: #a4a8ae;
   --pp2-w-max: 920px;
-  --pp2-step-1: none;
-  --pp2-step-2: none;
-  --pp2-step-3: none;
-  --pp2-step-4: none;
   --pp2-step-mark-1-color: transparent;
   --pp2-step-mark-2-color: transparent;
   --pp2-step-mark-3-color: transparent;
@@ -72,10 +68,9 @@
   }
 
   &__step {
-    &--1 { display: var(--pp2-step-1); }
-    &--2 { display: var(--pp2-step-2); }
-    &--3 { display: var(--pp2-step-3); }
-    &--4 { display: var(--pp2-step-4); }
+    &--hidden {
+      display: none;
+    }
   }
 
   &__step-info {
@@ -611,13 +606,17 @@
 
 
 .pop-up-second--step-4 {
+  position: relative;
+
   .pop-up-second {
     &__header {
       display: none;
     }
+
     &__step-navigation {
       display: none;
     }
+
     &__done-heading {
       padding: 20px 40px;
 
@@ -626,6 +625,12 @@
 
       @include font.h2;
       text-align: center;
+    }
+
+    &__btn-container {
+      position: absolute;
+      right: 30px;
+      top: 30px;
     }
   }
 }

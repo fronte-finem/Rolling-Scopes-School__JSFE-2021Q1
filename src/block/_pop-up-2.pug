@@ -35,7 +35,7 @@ mixin pop-up-2()
     header(class = 'pop-up-second__header')
       h3(class = 'pop-up-second__heading')= 'make your donation'
 
-    form(class = 'pop-up-second__form')
+    form(class = 'pop-up-second__form', method = 'post', action = 'donate')
 
       div(class = 'pop-up-second__step pop-up-second__step--1')
         div(class = 'pop-up-second__step-info')
@@ -67,7 +67,7 @@ mixin pop-up-2()
             input(class = 'pop-up-second__suggestion-check', name = 'monthly-gift', id = 'monthly-gift', type = 'checkbox')
             label(class = 'pop-up-second__suggestion-label', for = 'monthly-gift')= 'Make this a monthly recurring gift'
 
-      div(class = 'pop-up-second__step pop-up-second__step--2')
+      div(class = 'pop-up-second__step pop-up-second__step--2 pop-up-second__step--hidden')
         div(class = 'pop-up-second__step-info')
           div(class = 'pop-up-second__step-info-text')= 'billing information:'
         div(class = 'pop-up-second__step-controls')
@@ -77,7 +77,7 @@ mixin pop-up-2()
             +input('pop-up-second', 'email', 'email', 'email', inputData.email, required = true)
             p(class = 'pop-up-second__email-note')= inputData.email.note
 
-      div(class = 'pop-up-second__step pop-up-second__step--3')
+      div(class = 'pop-up-second__step pop-up-second__step--3 pop-up-second__step--hidden')
         div(class = 'pop-up-second__step-info')
           div(class = 'pop-up-second__step-info-text')= 'payment information:'
         div(class = 'pop-up-second__step-controls')
@@ -92,10 +92,14 @@ mixin pop-up-2()
                 select(class = 'pop-up-second__select pop-up-second__select-year', required)
                   option(class = 'pop-up-second__option pop-up-second__option--placeholder', value = '', selected, disabled)= 'Year'
 
-      div(class = 'pop-up-second__step pop-up-second__step--4')
+      div(class = 'pop-up-second__step pop-up-second__step--4 pop-up-second__step--hidden')
         h2(class = 'pop-up-second__done-heading')!= '🐼'
         h2(class = 'pop-up-second__done-heading')= 'Thank you for your donation!'
         h2(class = 'pop-up-second__done-heading')!= '🐼'
+        div(class = 'pop-up-second__btn-container')
+          button(class = 'pop-up-first__btn-close')
+            div(class = 'pop-up-first__btn-line pop-up-first__btn-line--1')
+            div(class = 'pop-up-first__btn-line pop-up-first__btn-line--2')
 
       div(class = 'pop-up-second__step-navigation')
         div(class = 'pop-up-second__step-nav-slot pop-up-second__step-nav-slot--counter')
@@ -108,6 +112,6 @@ mixin pop-up-2()
           button(class = 'btn btn--next btn--cyan', type = 'button')
             span(class = 'btn-text')= 'next'
             +svg-icon({id: 'arrow-to-right'})
-          button(class = 'btn btn--complete btn--hidden', type = 'submit', disabled)
+          button(class = 'btn btn--complete btn--hidden', type = 'button', disabled)
             span(class = 'btn-text')= 'complete donation'
             +svg-icon({id: 'arrow-to-right'})
