@@ -343,7 +343,7 @@
                   <path d="M769.991 775.303C765.696 772.925 766.792 771.005 769.169 769.45C770.083 768.81 771.545 768.993 772.824 768.719C771.819 770.914 770.905 773.108 769.991 775.303Z"></path>
                 </g>
               </svg>
-              <a class="btn-icon btn-link btn-icon--eagle btn-icon--map-pin btn-link--eagle btn-link--map-pin" title="Bald eagle 🦅
+              <a class="btn-icon btn-link btn-icon--eagle btn-icon--map-pin btn-link--eagle btn-link--map-pin" href="../pages/zoos/eagle.html" title="Bald eagle 🦅
 North America">
                 <svg class="svg-icon svg-icon--map-pin">
                   <use class="svg-icon__use" href="#map-pin"></use>
@@ -370,7 +370,7 @@ Africa ">
                   <use class="svg-icon__use" href="#icon-lion"></use>
                 </svg>
               </button>
-              <a class="btn-icon btn-link btn-icon--gorilla btn-icon--map-pin btn-link--gorilla btn-link--map-pin" title="Gorilla 🦍
+              <a class="btn-icon btn-link btn-icon--gorilla btn-icon--map-pin btn-link--gorilla btn-link--map-pin" href="../pages/zoos/gorilla.html" title="Gorilla 🦍
 Rainforests in Africa">
                 <svg class="svg-icon svg-icon--map-pin">
                   <use class="svg-icon__use" href="#map-pin"></use>
@@ -379,7 +379,7 @@ Rainforests in Africa">
                   <use class="svg-icon__use" href="#icon-gorilla"></use>
                 </svg>
               </a>
-              <a class="btn-icon btn-link btn-icon--lemur btn-icon--map-pin btn-link--lemur btn-link--map-pin" title="Lemur
+              <a class="btn-icon btn-link btn-icon--lemur btn-icon--map-pin btn-link--lemur btn-link--map-pin" href="../pages/zoos/lemur.html" title="Lemur
 Madagascar">
                 <svg class="svg-icon svg-icon--map-pin">
                   <use class="svg-icon__use" href="#map-pin"></use>
@@ -388,7 +388,7 @@ Madagascar">
                   <use class="svg-icon__use" href="#icon-lemur"></use>
                 </svg>
               </a>
-              <a class="btn-icon btn-link btn-icon--panda btn-icon--map-pin btn-link--panda btn-link--map-pin" title="Giant panda 🐼
+              <a class="btn-icon btn-link btn-icon--panda btn-icon--map-pin btn-link--panda btn-link--map-pin" href="../pages/zoos/panda.html" title="Giant panda 🐼
 South Central China">
                 <svg class="svg-icon svg-icon--map-pin">
                   <use class="svg-icon__use" href="#map-pin"></use>
@@ -575,7 +575,7 @@ Australia">
           <header class="pop-up-second__header">
             <h3 class="pop-up-second__heading">make your donation</h3>
           </header>
-          <form class="pop-up-second__form">
+          <form class="pop-up-second__form" method="post" action="donate">
             <div class="pop-up-second__step pop-up-second__step--1">
               <div class="pop-up-second__step-info">
                 <div class="pop-up-second__step-info-text">donation information:</div>
@@ -629,7 +629,7 @@ Australia">
                 </div>
               </div>
             </div>
-            <div class="pop-up-second__step pop-up-second__step--2">
+            <div class="pop-up-second__step pop-up-second__step--2 pop-up-second__step--hidden">
               <div class="pop-up-second__step-info">
                 <div class="pop-up-second__step-info-text">billing information:</div>
               </div>
@@ -661,7 +661,7 @@ Australia">
                 </div>
               </div>
             </div>
-            <div class="pop-up-second__step pop-up-second__step--3">
+            <div class="pop-up-second__step pop-up-second__step--3 pop-up-second__step--hidden">
               <div class="pop-up-second__step-info">
                 <div class="pop-up-second__step-info-text">payment information:</div>
               </div>
@@ -709,10 +709,16 @@ Australia">
                 </div>
               </div>
             </div>
-            <div class="pop-up-second__step pop-up-second__step--4">
+            <div class="pop-up-second__step pop-up-second__step--4 pop-up-second__step--hidden">
               <h2 class="pop-up-second__done-heading">🐼</h2>
               <h2 class="pop-up-second__done-heading">Thank you for your donation!</h2>
               <h2 class="pop-up-second__done-heading">🐼</h2>
+              <div class="pop-up-second__btn-container">
+                <button class="pop-up-first__btn-close">
+                  <div class="pop-up-first__btn-line pop-up-first__btn-line--1"></div>
+                  <div class="pop-up-first__btn-line pop-up-first__btn-line--2"></div>
+                </button>
+              </div>
             </div>
             <div class="pop-up-second__step-navigation">
               <div class="pop-up-second__step-nav-slot pop-up-second__step-nav-slot--counter">
@@ -731,7 +737,7 @@ Australia">
                     <use class="svg-icon__use" href="#arrow-to-right"></use>
                   </svg>
                 </button>
-                <button class="btn btn--complete btn--hidden" type="submit" disabled="disabled"><span class="btn-text">complete donation</span>
+                <button class="btn btn--complete btn--hidden" type="button" disabled="disabled"><span class="btn-text">complete donation</span>
                   <svg class="svg-icon svg-icon--arrow-to-right">
                     <use class="svg-icon__use" href="#arrow-to-right"></use>
                   </svg>
