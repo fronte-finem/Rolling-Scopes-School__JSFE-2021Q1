@@ -27,7 +27,7 @@ block main
       { id: 'tiger',     title: 'Tiger 🐯\n Southeast Asia' },
       { id: 'coala',     title: 'Koala \nAustralia' },
     ];
-    data.forEach(x => linked.has(x.id) && (x.link = `pages/zoos/${x.id}`));
+    data.forEach(x => linked.has(x.id) && (x.link = `pages/zoos/${x.id}.html`));
 
   +layout-block(self)
     include ../svg/_map.svg.pug
@@ -36,12 +36,8 @@ block main
         const svgData = {
             id: 'map-pin',
             title: item.title,
-            icons: [
-              {
-                id: `icon-${item.id}`,
-                cls: 'map-icon'
-              }
-            ]
+            link: item.link,
+            icons: [ { id: `icon-${item.id}`, cls: 'map-icon' } ]
           }
       if item.link
         +btn-link-icon(root, svgData, [item.id])

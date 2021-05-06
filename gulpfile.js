@@ -33,10 +33,9 @@ function copyTasks() {
   return series(
     () => src(`${srcDir}/favicon.*`).pipe(dest(dstDir)),
     () => src(`${srcDir}/assets/**/*.*`).pipe(dest(`${dstDir}/assets`)),
-    () => src(`${srcDir}/script/**/*.*`).pipe(dest(`${dstDir}/script`))
+    // () => src(`${srcDir}/script/**/*.*`).pipe(dest(`${dstDir}/script`))
   );
 }
-
 
 function processAssets() {
   return src(srcAssets)
@@ -112,12 +111,23 @@ async function buildSCSS(cb) {
   }
 }
 
+async function buildJS(cb) {
+  try {
+    const {stdout} = await execa('rollup', [`${srcDir}/script/main.js`, '--file', `${dstDir}/script/main.js`, '--format', 'es']);
+    console.log(stdout);
+    cb();
+  } catch (error) {
+    console.log(error);
+    cb(error);
+  }
+}
+
 exports.clean = cleanDst;
 exports['build:copy'] = copyTasks();
 exports['build:link'] = linkAssets;
 
-exports['build:dev'] = series(cleanDst, linkAssets, buildPug, buildSCSS);
-exports['build:deploy'] = series(cleanDst, copyTasks(), buildPug, buildSCSS);
+exports['build:dev'] = series(cleanDst, linkAssets, buildPug, buildSCSS, buildJS);
+exports['build:deploy'] = series(cleanDst, copyTasks(), buildPug, buildSCSS, buildJS);
 
 exports['watch:sass'] = function () {
   watch(srcSCSS, buildSCSS);
