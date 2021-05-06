@@ -29,7 +29,7 @@ class CreditCard {
   validateNumber() { return /\d{16}/.test(this._number) }
   validateCvv() { return /\d{3}/.test(this._cvv) }
   validateMonth() { return /0[1-9]|1[0-2]/.test(this._month) }
-  validateYear() { return this.validYears.includes(this._year) }
+  validateYear() { return this.validYears.has(Number(this._year)) }
 
   get validYears() {
     const year = new Date().getFullYear();
