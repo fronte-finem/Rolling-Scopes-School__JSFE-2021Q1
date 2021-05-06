@@ -19,6 +19,9 @@ class Popup2Utils {
 
   static hideStep(step) { step.classList.add('pop-up-second__step--hidden') }
   static showStep(step) { step.classList.remove('pop-up-second__step--hidden') }
+
+  static addStepNum(popup, stepNum) { popup.classList.add(`pop-up-second--step-${stepNum}`) }
+  static delStepNum(popup, stepNum) { popup.classList.remove(`pop-up-second--step-${stepNum}`) }
 }
 
 class Popup2 extends Popup {
@@ -46,16 +49,22 @@ class Popup2 extends Popup {
     this.nextStepAllowed = false;
     this.stepNum = 0;
     this.activateStep();
+    this.steps[3].onClose(() => this.close());
   }
 
   setAmount(value) { this.steps[0].setAmount(value) }
 
   activateStep() {
+    Popup2Utils.addStepNum(this.view, this.stepNum + 1);
     this.step = this.steps[this.stepNum];
     this.step.startWatch();
     this.step.show();
+    Popup2Utils.hideBtn(this.stepNum < 2 ? this.btnDone : this.btnNext);
+    Popup2Utils.showBtn(this.stepNum < 2 ? this.btnNext : this.btnDone);
+    this.step.validate() || this.deactivateNextStepBtn();
   }
   deactivateStep() {
+    Popup2Utils.delStepNum(this.view, this.stepNum + 1);
     this.step.stopWatch();
     this.step.hide();
   }
@@ -65,7 +74,7 @@ class Popup2 extends Popup {
     if (this.stepNum < 2) {
       Popup2Utils.activateBtn(this.btnNext);
     } else {
-      this.btnDone.disabled = true;
+      this.btnDone.disabled = false;
     }
   }
   deactivateNextStepBtn() {
@@ -73,7 +82,7 @@ class Popup2 extends Popup {
     if (this.stepNum < 2) {
       Popup2Utils.deactivateBtn(this.btnNext)
     } else {
-      this.btnDone.disabled = false;
+      this.btnDone.disabled = true;
     }
   }
 
@@ -85,27 +94,21 @@ class Popup2 extends Popup {
     this.deactivateStep();
     this.stepNum++;
     this.activateStep();
-
-    if (this.stepNum === 2) {
-      Popup2Utils.hideBtn(this.btnNext);
-      Popup2Utils.showBtn(this.btnDone);
-    }
   }
 
   stepBack() {
     this.deactivateStep();
     this.stepNum--;
     this.activateStep();
-
-    if (this.stepNum === 1) {
-      Popup2Utils.hideBtn(this.btnDone);
-      Popup2Utils.showBtn(this.btnNext);
-    }
+    this.activateNextStepBtn();
   };
 
   initForm(form) {
     this.form = form;
-    form.addEventListener('submit', (e) => e.preventDefault(), true);
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      new FormData(this.form);
+    }, true);
     form.addEventListener('formdata', (e) => {
       console.log('Form data:');
       for (const [key, value] of e.formData) console.log(`\t${key}: ${value}`);
@@ -123,6 +126,7 @@ class Popup2 extends Popup {
   }
 
   reset() {
+    this.deactivateStep();
     this.form.reset();
     this.steps.forEach(step => step.reset());
     this.stepNum = 0;
@@ -145,7 +149,9 @@ class Popup2 extends Popup {
 
   initBtnDone(btn) {
     this.btnDone = btn;
+    btn.disabled = true;
     btn.addEventListener('click', () => {
+      if (!this.step.validateForce()) return;
       this.stepNext();
       this.submit();
     });
@@ -200,8 +206,8 @@ class AbstractPopup2Step extends Observer {
   hide() { Popup2Utils.hideStep(this.view) }
   show() { Popup2Utils.showStep(this.view) }
 
-  validate() { throw new Error('Method not implemented.') }
-  reset() { throw new Error('Method not implemented.') }
+  validate() { return true; }
+  reset() { this.hide() }
 
   startWatch() { this.addListener('Validate', this.listener) }
   stopWatch() { this.delListener('Validate', this.listener) }
@@ -250,6 +256,7 @@ class Popup2Step1 extends AbstractPopup2Step {
   }
 
   reset() {
+    super.reset();
     this.resetAmount();
     Popup2Utils.deactivateAllBtn(this.btns);
   }
@@ -302,6 +309,7 @@ class Popup2Step1 extends AbstractPopup2Step {
       Popup2Utils.deactivateAllBtn(this.btns);
       Popup2Utils.activateBtn(btn);
       this.petsSelect.selectedIndex = this.choosedPet;
+      this.validate();
     });
   }
 
@@ -340,6 +348,7 @@ class Popup2Step2 extends AbstractPopup2Step {
   }
 
   reset() {
+    super.reset();
     this.nameInput.setValid();
     this.emailInput.setValid();
   }
@@ -365,12 +374,25 @@ class Popup2Step3 extends AbstractPopup2Step {
   }
 
   validate() {
-    const valid = this.creditCard.validate();
+    const valid = this.cardNumberInput.validate()
+               && this.cardCvvInput.validate()
+               && this.monthSelect.checkValidity()
+               && this.yearSelect.checkValidity()
+               && this.creditCard.validate();
     this.dispatch('Validate', valid);
     return valid;
   }
 
+  validateForce() {
+    return this.cardNumberInput.validate()
+        && this.cardCvvInput.validate()
+        && this.monthSelect.reportValidity()
+        && this.yearSelect.reportValidity()
+        && this.creditCard.validate();
+  }
+
   reset() {
+    super.reset();
     this.cardNumberInput.setValid();
     this.cardCvvInput.setValid();
   }
@@ -400,6 +422,7 @@ class Popup2Step3 extends AbstractPopup2Step {
   }
 
   initMonthSelect(view) {
+    this.monthSelect = view;
     new Select(view, this.creditCard.prettyMonths, 'pop-up-second__option')
       .onSelect((value) => {
         this.creditCard.setMonth(value);
@@ -408,6 +431,7 @@ class Popup2Step3 extends AbstractPopup2Step {
   }
 
   initYearSelect(view) {
+    this.yearSelect = view;
     new Select(view, this.creditCard.validYears, 'pop-up-second__option')
       .onSelect((value) => {
         this.creditCard.setYear(value);
@@ -435,7 +459,5 @@ class Popup2Step4 extends AbstractPopup2Step {
     btn.addEventListener('click', () => this.dispatch('Close'));
   }
 
-  validate() { return true; }
-
-  reset() {}
+  onClose(listener) { this.addListener('Close', listener) }
 }

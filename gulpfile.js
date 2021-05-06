@@ -29,7 +29,16 @@ function linkAssets() {
     .pipe(symlink(dstDir))
 }
 
-function cpyAssets() {
+function copyTasks() {
+  return series(
+    () => src(`${srcDir}/favicon.*`).pipe(dest(dstDir)),
+    () => src(`${srcDir}/assets/**/*.*`).pipe(dest(`${dstDir}/assets`)),
+    () => src(`${srcDir}/script/**/*.*`).pipe(dest(`${dstDir}/script`))
+  );
+}
+
+
+function processAssets() {
   return src(srcAssets)
     .pipe(changed(dstAssets))
     .pipe(imagemin([
@@ -104,11 +113,11 @@ async function buildSCSS(cb) {
 }
 
 exports.clean = cleanDst;
-exports['assets:cpy'] = cpyAssets;
-exports['assets:link'] = linkAssets;
+exports['build:copy'] = copyTasks();
+exports['build:link'] = linkAssets;
 
 exports['build:dev'] = series(cleanDst, linkAssets, buildPug, buildSCSS);
-exports['build:deploy'] = series(cleanDst, cpyAssets, buildPug, buildSCSS);
+exports['build:deploy'] = series(cleanDst, copyTasks(), buildPug, buildSCSS);
 
 exports['watch:sass'] = function () {
   watch(srcSCSS, buildSCSS);
