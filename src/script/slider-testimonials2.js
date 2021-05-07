@@ -90,7 +90,7 @@ class TestimonialsSlider2 extends Slider {
   moveLeft(enableAnimation = true) {
     this.moveTimeout && this.moveLeftCorrection();
     enableAnimation && this.enableAnimation();
-    if (this.step === -this.slotsNum - this.slotsCloneNum) {
+    if (this.step === -this.slotsNum - this.slotsCloneNum + 1) {
       this.disableAnimation();
       this.move(this.slotsNum);
       this.moveTimeout = setTimeout(() => this.moveLeftCorrection());
