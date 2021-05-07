@@ -50,10 +50,10 @@ class CreditCard {
   }
 
   get validMonths() {
-    return new Map(this.initMonths.map((_, i) => [i, this.formatMonth(i)]));
+    return new Map(this.initMonths.map((i) => [i, this.formatMonth(i)]));
   }
 
   get prettyMonths() {
-    return new Map(this.initMonths.map((_, i) => [this.formatMonth(i), `${this.formatMonth(i)} ▪️ ${this.prettyMonth(i)}`]));
+    return new Map(this.initMonths.map((i) => [this.formatMonth(i), `${this.formatMonth(i)} ▪️ ${this.prettyMonth(i)}`]));
   }
 }
