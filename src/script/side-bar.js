@@ -1,5 +1,5 @@
 import { Observer } from './obsesrver.js'
-import { getCssVar, setCssVar } from './dom-lib.js'
+import { DomUtils } from './dom-lib.js'
 
 export { SideBar }
 
@@ -15,7 +15,7 @@ class SideBar extends Observer {
     this.btnScroll = view.querySelector('.btn-icon--icon-scroll-down');
 
     const slots = view.querySelector('.side-bar__selector').childElementCount;
-    const visibleSlots = +getCssVar(this.view, '--⚙️--side-bar-visible-slots');
+    const visibleSlots = +DomUtils.getCssVar(this.view, '--⚙️--side-bar-visible-slots');
     this.limit = slots - visibleSlots;
 
     this.btnExpand.addEventListener('click', () => this.isExpanded ? this.shrink() : this.expand());
@@ -34,7 +34,7 @@ class SideBar extends Observer {
   move() {
     this.step += this.moveNum;
     this.correction();
-    setCssVar(this.view, '--side-bar-move-slots', this.step);
+    DomUtils.setCssVar(this.view, '--side-bar-move-slots', String(this.step));
   }
 
   correction() {

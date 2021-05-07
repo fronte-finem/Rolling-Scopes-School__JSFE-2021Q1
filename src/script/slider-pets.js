@@ -1,5 +1,5 @@
 import { LimitedSlider } from './base-slider.js'
-import { getCssVar } from './dom-lib.js'
+import { DomUtils } from './dom-lib.js'
 
 export { PetsSlider }
 
@@ -26,8 +26,8 @@ class PetsSlider extends LimitedSlider {
   }
 
   calcSlotsOnPage() {
-    const pageCols = +getCssVar(this.view, this.cssVarPageCols);
-    const slotCols = +getCssVar(this.view, this.cssVarSlotCols);
+    const pageCols = +DomUtils.getCssVar(this.view, this.cssVarPageCols);
+    const slotCols = +DomUtils.getCssVar(this.view, this.cssVarSlotCols);
     return pageCols / slotCols;
   }
 

@@ -1,5 +1,5 @@
 import { Observer } from './obsesrver.js'
-import { setCssVar } from './dom-lib.js'
+import { DomUtils } from './dom-lib.js'
 
 export { Slider, LimitedSlider, SyncSlider }
 
@@ -43,7 +43,7 @@ class Slider extends Observer {
   move(num) {
     this.step += num;
     this.correction();
-    setCssVar(this.view, this.cssVarMoveSlots, this.step);
+    DomUtils.setCssVar(this.view, this.cssVarMoveSlots, String(this.step));
   }
 
   correction() {}
@@ -102,19 +102,13 @@ class SyncSlider extends Slider {
   }
 
   /**
-   * @callback handler
+   * @callback TransitionEventHandler
    * @param {HTMLElement} this
    * @param {TransitionEvent} ev
    */
 
-  /**
-   * @param {handler} handler
-   */
-  onMoveEnd(handler) { this.slots.addEventListener('transitionend', handler) }
-  /**
-   * @param {handler} handler
-   */
-  onMoveEndRemove(handler) { this.slots.removeEventListener('transitionend', handler) }
+  onMoveEnd(/** @type {TransitionEventHandler} */ handler) { this.slots.addEventListener('transitionend', handler) }
+  onMoveEndRemove(/** @type {TransitionEventHandler} */ handler) { this.slots.removeEventListener('transitionend', handler) }
 
   moveLeft() {
     if (this.isMoving) return;
