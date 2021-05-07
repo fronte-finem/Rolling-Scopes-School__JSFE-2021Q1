@@ -249,7 +249,8 @@ class Popup2Step1 extends AbstractPopup2Step {
   }
 
   validate() {
-    const valid = this.amountInput.checkValidity()
+    const valid = this.amount > 0
+               && this.amountInput.checkValidity()
                && this.petsSelect.checkValidity();
     this.dispatch('Validate', valid);
     return valid;
