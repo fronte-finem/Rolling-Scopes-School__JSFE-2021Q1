@@ -200,28 +200,94 @@ class Input extends Observer {
   }
 }
 
-newElem.bind(null, 'div');
-newElem.bind(null, 'button');
+class DomUtils {
+  /**
+   * @param {Element} element
+   * @param {string} name     - css variable name
+   * @returns {string}
+   */
+  static getCssVar(element, name) {
+    return getComputedStyle(element).getPropertyValue(name);
+  }
 
-function newElem(tag, className, parent) {
-  const elem = document.createElement(tag);
-  elem.className = className;
-  parent && parent.append(elem);
-  return elem;
-}
+  /**
+   * @param {HTMLElement} element
+   * @param {string} name     - css variable name
+   * @param {string} value    - css variable name
+   * @returns {void}
+   */
+  static setCssVar(element, name, value) {
+    element.style.setProperty(name, value);
+  }
 
-function htmlToElem(template) {
-  const tmp = document.createElement('template');
-  tmp.innerHTML = template;
-  return tmp.content.firstElementChild;
-}
+  /**
+   * @param {string} tag
+   * @param {string} className
+   * @param {Element} parent
+   * @returns {Element}
+   */
+   static newElem(tag, className, parent) {
+    const elem = document.createElement(tag);
+    elem.className = className;
+    parent && parent.append(elem);
+    return elem;
+  }
 
-function getCssVar(element, name) {
-  return getComputedStyle(element).getPropertyValue(name);
-}
+  /**
+   * @param {string} template
+   * @returns {Element}
+   */
+  static htmlToElem(template) {
+    const tmp = document.createElement('template');
+    tmp.innerHTML = template;
+    return tmp.content.firstElementChild;
+  }
 
-function setCssVar(element, name, value) {
-  element.style.setProperty(name, value);
+  /**
+   * @param {number} num
+   * @param {Element} parent
+   * @returns {Node[]}
+   */
+  static cloneFirstChilds(num, parent) {
+    return DomUtils
+      .getFirstChilds(num, [parent.firstElementChild])
+      .map(slot => slot.cloneNode(true));
+  }
+
+  /**
+   * @param {number} num
+   * @param {Element} parent
+   * @returns {Node[]}
+   */
+  static cloneLastChilds(num, parent) {
+    return DomUtils
+      .getLastChilds(num, [parent.lastElementChild])
+      .map(slot => slot.cloneNode(true));
+  }
+
+  /**
+   * @param {number} num
+   * @param {Element[]} acc
+   * @returns {Element[]}
+   */
+  static getFirstChilds(num, acc) {
+    if (num <= 1) return acc;
+    const elem = acc[acc.length - 1];
+    acc.push(elem.nextElementSibling);
+    return DomUtils.getFirstChilds(num - 1, acc);
+  }
+
+  /**
+   * @param {number} num
+   * @param {Element[]} acc
+   * @returns {Element[]}
+   */
+  static getLastChilds(num, acc) {
+    if (num <= 1) return acc;
+    const elem = acc[0];
+    acc.unshift(elem.previousElementSibling);
+    return DomUtils.getLastChilds(num - 1, acc);
+  }
 }
 
 class Select extends Observer {
@@ -243,7 +309,7 @@ class Select extends Observer {
   init(config, bemClass) {
     config.forEach((value, key) => {
       /** @type {HTMLOptionElement} */
-      const opt = htmlToElem(`<option class="${bemClass}" value="${key}">${value}</option>`);
+      const opt = DomUtils.htmlToElem(`<option class="${bemClass}" value="${key}">${value}</option>`);
       this.view.add(opt);
     });
   }
@@ -808,7 +874,7 @@ class Slider extends Observer {
   move(num) {
     this.step += num;
     this.correction();
-    setCssVar(this.view, this.cssVarMoveSlots, this.step);
+    DomUtils.setCssVar(this.view, this.cssVarMoveSlots, String(this.step));
   }
 
   correction() {}
@@ -853,47 +919,6 @@ class LimitedSlider extends Slider {
   calcMoveNum() { return Math.min(this._moveNum, this.calcSlotsOnPage()) }
 }
 
-class SyncSlider extends Slider {
-  /**
-   * @param {HTMLElement} view
-   * @param {SliderConfig} config
-   * @param {number} moveNum
-   */
-  constructor(view, config, moveNum = 3) {
-    super(view, config, moveNum);
-    this.isMoving = false;
-
-    this.onMoveEnd(() => this.isMoving = false);
-  }
-
-  /**
-   * @callback handler
-   * @param {HTMLElement} this
-   * @param {TransitionEvent} ev
-   */
-
-  /**
-   * @param {handler} handler
-   */
-  onMoveEnd(handler) { this.slots.addEventListener('transitionend', handler); }
-  /**
-   * @param {handler} handler
-   */
-  onMoveEndRemove(handler) { this.slots.removeEventListener('transitionend', handler); }
-
-  moveLeft() {
-    if (this.isMoving) return;
-    this.isMoving = true;
-    super.moveLeft();
-  }
-
-  moveRight() {
-    if (this.isMoving) return;
-    this.isMoving = true;
-    super.moveRight();
-  }
-}
-
 /**
  * @typedef {import('./base-slider.js').SliderConfig} SliderConfig
  *
@@ -917,8 +942,8 @@ class PetsSlider extends LimitedSlider {
   }
 
   calcSlotsOnPage() {
-    const pageCols = +getCssVar(this.view, this.cssVarPageCols);
-    const slotCols = +getCssVar(this.view, this.cssVarSlotCols);
+    const pageCols = +DomUtils.getCssVar(this.view, this.cssVarPageCols);
+    const slotCols = +DomUtils.getCssVar(this.view, this.cssVarSlotCols);
     return pageCols / slotCols;
   }
 
@@ -931,107 +956,146 @@ class PetsSlider extends LimitedSlider {
  * @typedef {SliderConfig & Addon} TestimonialsSliderConfig
  *
  * @typedef {object} Addon
- * @property {NodeList} rows              - all slots containers
- * @property {string} cssClassTransition  - css-variable for set slots index
+ * @property {NodeListOf<Element>} rows        - all slots containers
+ * @property {string} cssClassTransition       - css-class for toggle transition animation
+ * @property {number} [autoMoveTime = 3]       - time interval for auto-move
+ * @property {number} [pauseAutoMoveTime = 10] - time interval for pause auto-move
  */
 
-class TestimonialsSlider extends SyncSlider {
+class TestimonialsSlider2 extends Slider {
   /**
    * @param {HTMLElement} view
    * @param {TestimonialsSliderConfig} testimonialsSliderConfig
    */
-  constructor(view, {rows, cssClassTransition, ...config}, autoTime = 1, pauseTime = 5) {
+  constructor(view, {rows, cssClassTransition, autoMoveTime = 3, pauseAutoMoveTime = 10, ...config}) {
     super(view, config, 1);
-    this.autoTime = autoTime;
-    this.pauseTime = pauseTime;
+    this.autoTime = autoMoveTime;
+    this.pauseTime = pauseAutoMoveTime;
+    this.autoTimeDefault = autoMoveTime;
+    this.pauseTimeDefault = pauseAutoMoveTime;
+    this.autoTimeTest = 3;
+    this.pauseTimeTest = 10;
+    this.timeCounter = 0;
+    this.maxTime = autoMoveTime;
     this.timer = null;
     this.pause = null;
     this.cssClassTransition = cssClassTransition;
-
+    this.slotsCloneNum = 3;
+    this.slotsNum = this.slots.childElementCount + 1;
+    /** @type {NodeListOf<Element>} */
     this.rows = rows;
-    this.initSlots();
+    this.initSlots(this.slotsCloneNum);
+    this.initProgress();
+    this.initSwitch();
 
-    this.onMoveEnd(() => this.disableAnimation());
+    this.mainTimer = setInterval(() => this.updateCounter(), 1000);
+    this.resetTimer();
 
-    this.startAutoMove();
+    this.moveTimeout = null;
 
-    this.btnPrev.addEventListener('click', () => this.pauseTimer());
-    this.btnNext.addEventListener('click', () => this.pauseTimer());
+    this.btnPrev.addEventListener('click', () => this.pauseAutoMove());
+    this.btnNext.addEventListener('click', () => this.pauseAutoMove());
+
   }
 
-  moveLeft() {
-    if (this.isMoving) return;
-    this.isMoving = true;
-
-    const handler = () => {
-      this.onMoveEndRemove(handler);
-      this.move(1);
-      this.changeOrderToLeft();
-    };
-
-    this.onMoveEnd(handler);
-    this.enableAnimation();
-    this.move(-1);
+  resetTimer() {
+    this.timeCounter = 0;
+    this.updateProgressMaxTime();
+    this.updateProgressTime();
   }
 
-  moveRight() {
-    if (this.isMoving) return;
-    this.isMoving = true;
+  pauseAutoMove() {
+    this.maxTime = this.pauseTime;
+    this.resetTimer();
+  }
 
-    this.move(-1);
-    this.changeOrderToRight();
+  updateCounter() {
+    this.timeCounter = (this.timeCounter + 1) % (this.maxTime + 1);
+    this.updateProgressTime();
+    if (this.timeCounter === 0) {
+      if (this.maxTime === this.pauseTime) {
+        this.maxTime = this.autoTime;
+        this.updateProgressMaxTime();
+      }
+    } else if (this.timeCounter === this.maxTime) {
+      this.moveLeft();
+    }
+  }
 
-    setTimeout(() => {
-      this.enableAnimation();
-      this.move(1);
+  initSlots(cloneNum) {
+    this.rows.forEach((row) => {
+      const firsts = DomUtils.cloneFirstChilds(cloneNum, row);
+      const lasts = DomUtils.cloneLastChilds(cloneNum, row);
+      row.append(...firsts);
+      row.prepend(...lasts);
+      [...row.children].forEach((slot) => slot.addEventListener('click', () => this.pauseAutoMove()));
     });
+    this.disableAnimation();
+    this.move(-cloneNum);
   }
 
-  startAutoMove() {
+  moveLeft(enableAnimation = true) {
+    this.moveTimeout && this.moveLeftCorrection();
+    enableAnimation && this.enableAnimation();
+    if (this.step === -this.slotsNum - this.slotsCloneNum + 1) {
+      this.disableAnimation();
+      this.move(this.slotsNum);
+      this.moveTimeout = setTimeout(() => this.moveLeftCorrection());
+    }
+    super.moveLeft();
+  }
+
+  moveRight(enableAnimation = true) {
+    this.moveTimeout && this.moveRightCorrection();
+    enableAnimation && this.enableAnimation();
+    if (this.step === -this.slotsCloneNum) {
+      this.disableAnimation();
+      this.move(-this.slotsNum);
+      this.moveTimeout = setTimeout(() => this.moveRightCorrection());
+    }
+    super.moveRight();
+  }
+
+  resetMoveTimeout() {
+    clearTimeout(this.moveTimeout);
+    this.moveTimeout = null;
+  }
+
+  moveLeftCorrection() {
+    this.resetMoveTimeout();
     this.moveLeft();
-    this.timer = setInterval(() => this.moveLeft(), 1000 * this.autoTime);
   }
 
-  pauseTimer() {
-    clearInterval(this.timer);
-    clearTimeout(this.pause);
-    this.pause = setTimeout(() => this.startAutoMove(), 1000 * this.pauseTime);
+  moveRightCorrection() {
+    this.resetMoveTimeout();
+    this.moveRight();
   }
 
   enableAnimation() { this.view.classList.add(this.cssClassTransition); }
   disableAnimation() { this.view.classList.remove(this.cssClassTransition); }
 
-  initSlots() {
-    const slotsNum = this.slots.childElementCount;
-    this.slotsOrders = Array(slotsNum).fill(0);
-    this.firstSlot = 0;
-    this.lastSlot = slotsNum - 1;
-
-    this.rows.forEach((row) => [...row.children].forEach(slot => {
-      slot.style.order = 0;
-      slot.addEventListener('click', () => this.pauseTimer());
-    }));
+  initProgress() {
+    /** @type {HTMLElement} */
+    this.progress = this.view.querySelector('.slider__progress');
   }
 
-  /**
-   * @param {number} slot
-   * @param {number} order
-   */
-  setSlotOrder(slot, order) {
-    this.rows.forEach((row) => row.children[slot].style.order = order);
-  }
+  updateProgressTime() { DomUtils.setCssVar(this.progress, '--progress-time', String(this.timeCounter)); }
+  updateProgressMaxTime() { DomUtils.setCssVar(this.progress, '--max-time', String(this.maxTime)); }
 
-  changeOrderToLeft() {
-    this.slotsOrders[this.firstSlot] += 1;
-    this.setSlotOrder(this.firstSlot, this.slotsOrders[this.firstSlot]);
-    this.lastSlot = this.firstSlot;
-    this.firstSlot = (this.firstSlot + 1) % this.slotsOrders.length;
-  }
-  changeOrderToRight() {
-    this.slotsOrders[this.lastSlot] -= 1;
-    this.setSlotOrder(this.lastSlot, this.slotsOrders[this.lastSlot]);
-    this.firstSlot = this.lastSlot;
-    this.lastSlot = (this.lastSlot - 1 < 0) ? (this.slotsOrders.length - 1) : (this.lastSlot - 1);
+  initSwitch() {
+    /** @type {HTMLInputElement} */
+    this.timeSwitch = this.view.querySelector('.slider__time-switch-check');
+    this.timeSwitch.addEventListener('input', (e) => {
+      if (this.timeSwitch.checked) {
+        this.autoTime = this.autoTimeTest;
+        this.pauseTime = this.pauseTimeTest;
+      } else {
+        this.autoTime = this.autoTimeDefault;
+        this.pauseTime = this.pauseTimeDefault;
+      }
+      this.maxTime = this.autoTime;
+      this.resetTimer();
+    });
   }
 }
 
@@ -1047,7 +1111,7 @@ class SideBar extends Observer {
     this.btnScroll = view.querySelector('.btn-icon--icon-scroll-down');
 
     const slots = view.querySelector('.side-bar__selector').childElementCount;
-    const visibleSlots = +getCssVar(this.view, '--⚙️--side-bar-visible-slots');
+    const visibleSlots = +DomUtils.getCssVar(this.view, '--⚙️--side-bar-visible-slots');
     this.limit = slots - visibleSlots;
 
     this.btnExpand.addEventListener('click', () => this.isExpanded ? this.shrink() : this.expand());
@@ -1066,7 +1130,7 @@ class SideBar extends Observer {
   move() {
     this.step += this.moveNum;
     this.correction();
-    setCssVar(this.view, '--side-bar-move-slots', this.step);
+    DomUtils.setCssVar(this.view, '--side-bar-move-slots', String(this.step));
   }
 
   correction() {
@@ -1152,14 +1216,16 @@ function initPetsSlider(petsSliderView) {
 
 function initTimonialsSlider(testimonialsSliderView) {
   if (testimonialsSliderView) {
-    new TestimonialsSlider(testimonialsSliderView, {
+    new TestimonialsSlider2(testimonialsSliderView, {
       btnPrev: testimonialsSliderView.querySelector('.btn-icon--prev'),
       btnNext: testimonialsSliderView.querySelector('.btn-icon--next'),
       slots: testimonialsSliderView.querySelector('.slider__slots'),
       rows: testimonialsSliderView.querySelectorAll('.slider__slots'),
       cssVarMoveSlots: '--slider-move-slots',
       cssClassTransition: 'slider--transition',
-    }, 15, 60);
+      autoMoveTime: 15,
+      pauseAutoMoveTime: 60,
+    });
   }
 }
 
