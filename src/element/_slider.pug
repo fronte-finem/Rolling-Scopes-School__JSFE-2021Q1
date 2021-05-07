@@ -8,11 +8,14 @@ mixin slider(root, data, rows = 1, mods = null, blk = null)
 
   div(class = slider.fullClass)
 
+    div(class = slider.elem('ctrl-container', ['progress', 'hidden']))
+      div(class = slider.elem('progress', ['stopped']))
+
     div(class = slider.elem('ctrl-container', 'arrows'))
       +control-arrows(data.controlColor)
 
     if data.controlDotsNum
-      div(class = slider.elem('ctrl-container', 'dots'))
+      div(class = slider.elem('ctrl-container', ['dots', 'hidden']))
         +control-dots(data.controlDotsNum, data.controlColor, slider.self)
 
     div(class = slider.elem('slots-container'))

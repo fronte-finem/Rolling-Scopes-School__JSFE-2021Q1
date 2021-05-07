@@ -37,6 +37,9 @@
     max-width: var(--slider-ctrl-cont-w);
     width: 100%;
 
+    &--hidden {
+      display: none;
+    }
     &--arrows {
       order: var(--slider-ctrl-arrows-order);
       display: var(--slider-ctrl-arrows-display);
