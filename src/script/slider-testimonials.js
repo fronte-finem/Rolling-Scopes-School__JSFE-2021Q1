@@ -1,5 +1,4 @@
 import { SyncSlider } from './base-slider.js'
-import { getCssVar, setCssVar } from './dom-lib.js'
 
 export { TestimonialsSlider }
 

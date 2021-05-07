@@ -4,6 +4,7 @@ import { Popup2 } from './donate-popup2.js'
 import { DonateApp } from './donate-app.js'
 import { PetsSlider } from './slider-pets.js'
 import { TestimonialsSlider } from './slider-testimonials.js'
+import { TestimonialsSlider2 } from './slider-testimonials2.js'
 import { SideBar } from './side-bar.js'
 import { LiveCams } from './live-cams.js'
 
@@ -50,14 +51,16 @@ function initPetsSlider(petsSliderView) {
 
 function initTimonialsSlider(testimonialsSliderView) {
   if (testimonialsSliderView) {
-    new TestimonialsSlider(testimonialsSliderView, {
+    new TestimonialsSlider2(testimonialsSliderView, {
       btnPrev: testimonialsSliderView.querySelector('.btn-icon--prev'),
       btnNext: testimonialsSliderView.querySelector('.btn-icon--next'),
       slots: testimonialsSliderView.querySelector('.slider__slots'),
       rows: testimonialsSliderView.querySelectorAll('.slider__slots'),
       cssVarMoveSlots: '--slider-move-slots',
       cssClassTransition: 'slider--transition',
-    }, 15, 60);
+      autoMoveTime: 15,
+      pauseAutoMoveTime: 60,
+    });
   }
 }
 

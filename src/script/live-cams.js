@@ -1,5 +1,4 @@
 import { LimitedSlider } from './base-slider.js'
-import { getCssVar, setCssVar } from './dom-lib.js'
 
 export { LiveCams }
 

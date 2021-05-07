@@ -1,5 +1,5 @@
 import { Observer } from './obsesrver.js'
-import { htmlToElem } from './dom-lib.js'
+import { DomUtils } from './dom-lib.js'
 
 export { Select }
 
@@ -22,7 +22,7 @@ class Select extends Observer {
   init(config, bemClass) {
     config.forEach((value, key) => {
       /** @type {HTMLOptionElement} */
-      const opt = htmlToElem(`<option class="${bemClass}" value="${key}">${value}</option>`);
+      const opt = DomUtils.htmlToElem(`<option class="${bemClass}" value="${key}">${value}</option>`);
       this.view.add(opt);
     });
   }
