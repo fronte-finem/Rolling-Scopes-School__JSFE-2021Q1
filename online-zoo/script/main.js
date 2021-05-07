@@ -135,11 +135,11 @@ class CreditCard {
   }
 
   get validMonths() {
-    return new Map(this.initMonths.map((_, i) => [i, this.formatMonth(i)]));
+    return new Map(this.initMonths.map((i) => [i, this.formatMonth(i)]));
   }
 
   get prettyMonths() {
-    return new Map(this.initMonths.map((_, i) => [this.formatMonth(i), `${this.formatMonth(i)} ▪️ ${this.prettyMonth(i)}`]));
+    return new Map(this.initMonths.map((i) => [this.formatMonth(i), `${this.formatMonth(i)} ▪️ ${this.prettyMonth(i)}`]));
   }
 }
 
@@ -559,7 +559,8 @@ class Popup2Step1 extends AbstractPopup2Step {
   }
 
   validate() {
-    const valid = this.amountInput.checkValidity()
+    const valid = this.amount > 0
+               && this.amountInput.checkValidity()
                && this.petsSelect.checkValidity();
     this.dispatch('Validate', valid);
     return valid;
