@@ -218,8 +218,10 @@
 
       &__time-switch {
         display: flex;
+        align-items: center;
         column-gap: 10px;
         margin-top: 10px;
+        padding: 2px;
         border-radius: 15px;
         background-color: #0004;
         backdrop-filter: blur(10px);
@@ -232,16 +234,16 @@
           display: block;
           height: 30px;
           width: 60px;
-          border: 1px solid #fff4;
           border-radius: 15px;
           background-image:
-            radial-gradient(circle farthest-corner at var(--switch-x) 50%, #fff8 25%, #fff4 26%);
+            radial-gradient(circle farthest-corner at var(--switch-x) 50%, #0004 25%, #fff2 27%);
           background-repeat: no-repeat;
         }
         &-text {
+          display: block;
           user-select: none;
-          font-size: 20px;
-          line-height: 30px;
+          font-size: 16px;
+          line-height: 16px;
           color: #fff8;
         }
         &-check:not(:checked) ~ .slider__time-switch-text--default { display: none; }
