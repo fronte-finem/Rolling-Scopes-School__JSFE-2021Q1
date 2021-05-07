@@ -9,7 +9,12 @@ mixin slider(root, data, rows = 1, mods = null, blk = null)
   div(class = slider.fullClass)
 
     div(class = slider.elem('ctrl-container', ['progress', 'hidden']))
-      div(class = slider.elem('progress', ['stopped']))
+      div(class = slider.elem('progress'))
+      label(class = slider.elem('time-switch'))
+        input(class = slider.elem('time-switch-check'), type = 'checkbox')
+        span(class = slider.elem('time-switch-button'))
+        span(class = slider.elem('time-switch-text', ['default']))!= 'Switch to <b>Default</b>: Auto-move [3s ▷ 15s], Pause [10s ▷ 60s]'
+        span(class = slider.elem('time-switch-text', ['test']))!= 'Switch to <b>Test</b>: Auto-move [15s ▷ 3s], Pause [60s ▷ 10s]'
 
     div(class = slider.elem('ctrl-container', 'arrows'))
       +control-arrows(data.controlColor)
