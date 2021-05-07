@@ -55,7 +55,7 @@ mixin pop-up-2()
               button(class = 'pop-up-second__btn pop-up-second__btn--reset-amount pop-up-second__btn--short', type = 'button', data-amount = 0)
                 span(class = 'pop-up-second__btn-text')= 'Other'
             div(class = 'pop-up-second__custom-input-slot')
-              input(class = 'input__base input__base--number pop-up-second__amount-input', type='number', name='amount', required)
+              input(class = 'input__base input__base--number pop-up-second__amount-input', type='number', name='amount', min='1', max='9999', required)
           div(class = 'pop-up-second__pet-selector')
             div(class = 'pop-up-second__pet-btn-slot')
               button(class = 'pop-up-second__btn pop-up-second__btn--reset-pets', type = 'button')
