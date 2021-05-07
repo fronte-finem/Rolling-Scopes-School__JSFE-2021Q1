@@ -24,6 +24,10 @@ class TestimonialsSlider2 extends Slider {
     super(view, config, 1);
     this.autoTime = autoMoveTime;
     this.pauseTime = pauseAutoMoveTime;
+    this.autoTimeDefault = autoMoveTime;
+    this.pauseTimeDefault = pauseAutoMoveTime;
+    this.autoTimeTest = 3;
+    this.pauseTimeTest = 10;
     this.timeCounter = 0;
     this.maxTime = autoMoveTime;
     this.timer = null;
@@ -35,12 +39,16 @@ class TestimonialsSlider2 extends Slider {
     this.rows = rows;
     this.initSlots(this.slotsCloneNum);
     this.initProgress();
+    this.initSwitch();
 
     this.mainTimer = setInterval(() => this.updateCounter(), 1000);
     this.resetTimer();
 
+    this.moveTimeout = null;
+
     this.btnPrev.addEventListener('click', () => this.pauseAutoMove());
     this.btnNext.addEventListener('click', () => this.pauseAutoMove());
+
   }
 
   resetTimer() {
@@ -62,6 +70,7 @@ class TestimonialsSlider2 extends Slider {
         this.maxTime = this.autoTime;
         this.updateProgressMaxTime();
       }
+    } else if (this.timeCounter === this.maxTime) {
       this.moveLeft();
     }
   }
@@ -79,23 +88,40 @@ class TestimonialsSlider2 extends Slider {
   }
 
   moveLeft(enableAnimation = true) {
+    this.moveTimeout && this.moveLeftCorrection();
     enableAnimation && this.enableAnimation();
-    super.moveLeft();
-    if (this.step === -this.slotsNum) {
+    if (this.step === -this.slotsNum - this.slotsCloneNum + 1) {
       this.disableAnimation();
       this.move(this.slotsNum);
-      setTimeout(() => this.moveLeft());
+      this.moveTimeout = setTimeout(() => this.moveLeftCorrection());
     }
+    super.moveLeft();
   }
 
   moveRight(enableAnimation = true) {
+    this.moveTimeout && this.moveRightCorrection();
     enableAnimation && this.enableAnimation();
-    super.moveRight();
-    if (this.step === 0) {
+    if (this.step === -this.slotsCloneNum) {
       this.disableAnimation();
       this.move(-this.slotsNum);
-      setTimeout(() => this.moveRight());
+      this.moveTimeout = setTimeout(() => this.moveRightCorrection());
     }
+    super.moveRight();
+  }
+
+  resetMoveTimeout() {
+    clearTimeout(this.moveTimeout);
+    this.moveTimeout = null;
+  }
+
+  moveLeftCorrection() {
+    this.resetMoveTimeout();
+    this.moveLeft();
+  }
+
+  moveRightCorrection() {
+    this.resetMoveTimeout();
+    this.moveRight();
   }
 
   enableAnimation() { this.view.classList.add(this.cssClassTransition) }
@@ -108,4 +134,20 @@ class TestimonialsSlider2 extends Slider {
 
   updateProgressTime() { DomUtils.setCssVar(this.progress, '--progress-time', String(this.timeCounter)); }
   updateProgressMaxTime() { DomUtils.setCssVar(this.progress, '--max-time', String(this.maxTime)); }
+
+  initSwitch() {
+    /** @type {HTMLInputElement} */
+    this.timeSwitch = this.view.querySelector('.slider__time-switch-check');
+    this.timeSwitch.addEventListener('input', (e) => {
+      if (this.timeSwitch.checked) {
+        this.autoTime = this.autoTimeTest;
+        this.pauseTime = this.pauseTimeTest;
+      } else {
+        this.autoTime = this.autoTimeDefault;
+        this.pauseTime = this.pauseTimeDefault;
+      }
+      this.maxTime = this.autoTime;
+      this.resetTimer();
+    })
+  }
 }

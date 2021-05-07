@@ -168,17 +168,13 @@
     --slider-slots-gap-w: 30px;
     --slider-slots-gap-h: 30px;
 
-    &.slider--transition {
-      --slider-move-time: 500ms;
-    }
-
     clip-path: inset( -100% -100% -100% 0 );
 
     grid-column: 6 / span 7;
 
     @media screen and (max-width: 1400px) {
       --slider-ctrl-arrows-align: flex-end;
-      --slider-ctrl-gap-h: 50px;
+      --slider-ctrl-gap-h: 30px;
 
       clip-path: unset;
 
@@ -203,17 +199,54 @@
     @media screen and (max-width: 600px) {
       --slider-ctrl-dots-display: flex;
       --slider-ctrl-dots-order: 1;
-      --slider-ctrl-gap-h: 30px;
+      --slider-ctrl-gap-h: 20px;
 
       --slider-slot-w: 100%;
     }
 
     .slider {
+      &--transition {
+        --slider-move-time: 300ms;
+      }
+
       &__ctrl-container {
         &--progress {
           order: 1;
           display: block;
         }
+      }
+
+      &__time-switch {
+        display: flex;
+        column-gap: 10px;
+        margin-top: 10px;
+        border-radius: 15px;
+        background-color: #0004;
+        backdrop-filter: blur(10px);
+        cursor: pointer;
+
+        &-check { display: none; }
+        &-button {
+          --switch-x: 25%;
+          flex: 0 0 60px;
+          display: block;
+          height: 30px;
+          width: 60px;
+          border: 1px solid #fff4;
+          border-radius: 15px;
+          background-image:
+            radial-gradient(circle farthest-corner at var(--switch-x) 50%, #fff8 25%, #fff4 26%);
+          background-repeat: no-repeat;
+        }
+        &-text {
+          user-select: none;
+          font-size: 20px;
+          line-height: 30px;
+          color: #fff8;
+        }
+        &-check:not(:checked) ~ .slider__time-switch-text--default { display: none; }
+        &-check:checked ~ .slider__time-switch-text--test { display: none; }
+        &-check:checked ~ .slider__time-switch-button { --switch-x: 75%; }
       }
 
       &__progress {
@@ -224,10 +257,10 @@
         width: 100%;
         height: 50px;
         border-radius: 5px;
-        background-image: linear-gradient(90deg, #fff4, #fff4 var(--x), transparent var(--x));
-        background-size: 100% 30px;
-        background-position-x: 30%;
-        backdrop-filter: blur(5px);
+        border: 1px solid #fff1;
+        background-image: linear-gradient(90deg, #fff4, #fff4 var(--x), #fff1 var(--x));
+        background-repeat: no-repeat;
+        backdrop-filter: blur(10px);
 
         &::before {
           counter-reset: progress-time var(--progress-time);
