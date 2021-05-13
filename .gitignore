@@ -105,3 +105,6 @@ dist
 
 # VSCode files
 .vscode/
+
+# pnpm files
+pnpm-lock.yaml
