@@ -1,0 +1,67 @@
+.header {
+  padding: 10px 0;
+  background-color: hsla(240, 100%, 75%, 0.5);
+}
+
+.wrapper {
+  max-width: 1200px;
+  width: 100%;
+  margin: auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: block;
+  width: 100px;
+  height: 30px;
+  background-color: #fff;
+}
+
+.nav-menu {
+  max-width: 400px;
+  width: 100%;
+}
+
+.nav-items {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-item {
+  display: block;
+}
+
+.nav-link {
+  --color-default: hsla(30, 100%, 95%, 1);
+  --color-hover: hsla(30, 100%, 75%, 1);
+  --color-active-default: hsla(30, 100%, 15%, 1);
+  --color-active-hover: hsla(30, 100%, 05%, 1);
+
+  font-family: sans-serif;
+  font-size: 20px;
+}
+
+.controls {
+  display: flex;
+  column-gap: 10px;
+}
+
+.btn {
+  padding: 5px 10px;
+  text-transform: capitalize;
+}
+
+.btn-auth {
+  display: block;
+}
+
+.btn-start {
+  display: block;
+}
+
+.btn-avatar {
+  display: block;
+}
