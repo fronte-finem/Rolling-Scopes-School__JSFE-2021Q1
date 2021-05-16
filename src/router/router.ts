@@ -1,37 +1,42 @@
-import Observer, { IListener } from '../shared/observer';
-import RouteChangedEvent from './route-changed-event';
-import { IPageView } from '../pages/base-page';
+import { State } from '../shared/types';
+import ObserverLite, { Listener } from '../shared/observer-lite';
+import { IPage } from '../pages/base-page';
 import { PageError } from '../pages/index';
 
-export default class Router extends Observer<IPageView> {
-  private readonly routes: Map<string, IPageView> = new Map();
+export interface IRouterState extends State {
+  page: IPage;
+}
+
+export default class Router {
+  private readonly observer = new ObserverLite<IRouterState>();
+
+  private readonly routes: Map<string, IPage> = new Map();
 
   private readonly pageError = new PageError();
 
   constructor() {
-    super();
     window.addEventListener('hashchange', () => this.notifyChange());
   }
 
-  onChange(listener: IListener<IPageView>): void {
-    this.subscribe(RouteChangedEvent, listener);
+  onChange(listener: Listener<IRouterState>): void {
+    this.observer.subscribe(listener);
   }
 
   notifyChange(): void {
-    this.notify(new RouteChangedEvent(this.currentRoute()));
+    this.observer.notify({ page: this.currentRoute() });
   }
 
-  currentRoute(): IPageView {
+  currentRoute(): IPage {
     const page = this.getRoute(Router.parseLocation());
     Router.updateTitle(page.titleText);
     return page;
   }
 
-  getRoute(path: string): IPageView {
+  getRoute(path: string): IPage {
     return this.routes.get(path) || this.pageError;
   }
 
-  addRoute(path: string, page: IPageView): void {
+  addRoute(path: string, page: IPage): void {
     this.routes.set(`${path}`, page);
   }
 

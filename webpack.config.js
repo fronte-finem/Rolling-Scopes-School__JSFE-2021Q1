@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const WebpackDevServer = require("webpack-dev-server");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
@@ -130,6 +131,11 @@ function baseConfig() {
       new CleanWebpackPlugin({
         cleanStaleWebpackAssets: false,
       }),
+      new CopyPlugin({
+        patterns: [
+          { from: 'public' },
+        ],
+      })
     ],
   }
 };

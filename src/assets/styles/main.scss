@@ -1,3 +1,5 @@
-.root {
+:global .root {
   background-color: #ccc;
 }
+
+@import '../../shared/views/base-views-styles.scss'
