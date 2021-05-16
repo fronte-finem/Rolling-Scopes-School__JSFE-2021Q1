@@ -1,0 +1,70 @@
+.card-container {
+  --card-state-time: 500ms;
+
+  width: var(--card-w, 100%);
+  height: var(--card-h, 100%);
+  border-radius: 10px;
+  cursor: pointer;
+  perspective: calc(2 * var(--app-w-max) / var(--cards-columns));
+  perspective-origin: center;
+  transition: all var(--card-state-time);
+
+  &:hover {
+    .card {
+      box-shadow: 0 5px 10px hsla(0, 0%, 0%, .5);
+      transform: translateZ(20px);
+    }
+  }
+
+  &--card-flipped {
+    .card,
+    &:hover .card {
+      box-shadow: 0 1px 5px hsla(0, 0%, 0%, .5);
+      transform: rotateX(-180deg);
+      // transform: rotateX(-180deg) translateY(100%);
+      // transform-origin: bottom;
+    }
+  }
+
+  &--card-error {
+    background-color: hsla(0, 100%, 50%, .75);
+    box-shadow: 0 0 0 7px hsla(0, 100%, 50%, .75);
+  }
+
+  &--card-match {
+    background-color: hsla(120, 100%, 50%, .75);
+    box-shadow: 0 0 0 7px hsla(120, 100%, 50%, .75);
+  }
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  box-shadow: 0 1px 5px hsla(0, 0%, 0%, .5);
+  transform-style: preserve-3d;
+  // transform-origin: top;
+  transition: all var(--card-state-time);
+
+  &__side {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    background-position: center;
+    background-size: cover;
+    backface-visibility: hidden;
+
+    &--back {
+      background-color: hsla(0, 0%, 100%, .5);
+    } 
+
+    &--front {
+      background-color: red;
+      transform: rotateY(180deg) rotateZ(180deg);
+    }     
+  }
+}
