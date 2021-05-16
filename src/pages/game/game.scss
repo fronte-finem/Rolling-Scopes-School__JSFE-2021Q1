@@ -1,0 +1,11 @@
+.game {
+  max-height: 100%;
+
+  grid-template-rows: 100px 1fr;
+
+  transition: all 500ms;
+
+  &--solved {
+    background-color: hsla(30deg, 100%, 50%, 0.5);
+  }
+}
