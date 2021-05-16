@@ -1,8 +1,10 @@
-import BasePage from './base-page';
+import BasePage from '../base-page';
+
+const PAGE_TITLE = 'Settings';
 
 export default class PageSettings extends BasePage {
   constructor() {
-    super('settings');
+    super(PAGE_TITLE, { childs: [{ tag: 'h1', text: PAGE_TITLE }]});
   }
 }
 

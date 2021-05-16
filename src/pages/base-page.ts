@@ -1,20 +1,23 @@
-import { IView } from '../shared/types';
-import View from '../shared/view';
 import { capitalize, replaceSpaces } from '../shared/string-utils';
+import View from '../shared/views/view';
+import Factory, { IBuildViewOptions } from '../shared/views/view-factory';
+import style from './base-page.scss'
 
-export interface IPageView extends IView {
+export interface IPage {
+  readonly view: View;
   readonly titleText: string;
   readonly titleSafe: string;
-  readonly titleUrl: string;
+  readonly url: string;
 }
 
-export default abstract class BasePage extends View implements IPageView {
-  constructor(private readonly title: string) {
-    super({
-      tag: 'h1',
-      styles: ['page', `page-${replaceSpaces(title)}`],
-      text: capitalize(title),
-    });
+export default abstract class BasePage implements IPage {
+  private readonly title: string;
+
+  readonly view: View;
+
+  constructor(title: string, { styles, ...options }: IBuildViewOptions) {
+    this.title = title.toLowerCase();
+    this.view = Factory.view({ styles: [style.page].concat(styles || []), ...options });
   }
 
   get titleText(): string {
@@ -25,7 +28,7 @@ export default abstract class BasePage extends View implements IPageView {
     return replaceSpaces(this.title);
   }
 
-  get titleUrl(): string {
+  get url(): string {
     return `#/${this.titleSafe}`;
   }
 }
