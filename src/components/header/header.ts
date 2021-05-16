@@ -1,33 +1,32 @@
-import View from '../../shared/view';
-import BtnView from '../../views/btn/btn';
-import LinkView from '../../views/link/link';
-import Factory from '../../shared/view-factory';
 import appConfig from '../../app/app.config';
+import BtnView from '../../shared/views/btn/btn';
+import LinkView from '../../shared/views/link/link';
+import View from '../../shared/views/view';
+import Factory from '../../shared/views/view-factory';
 import style from './header.scss';
 
 export default class Header {
   readonly view: View;
 
-  navLinks: Map<string, LinkView>;
+  readonly navLinks: Map<string, LinkView>;
 
-  activeNavLink: LinkView | undefined;
+  private activeNavLink: LinkView | undefined;
 
-  logo = new LinkView({ url: '#/about', styles: [style.logo] });
+  readonly logo = new LinkView({ url: '#/about', styles: [style.logo] });
 
-  btnAuth = new BtnView({
+  readonly btnAuth = new BtnView({
     styles: [style.btn, style.btnAuth],
     text: appConfig.header.btnAuth,
   });
 
-  btnStart = new BtnView({
+  readonly btnStart = new BtnView({
     styles: [style.btn, style.btnStart],
     text: appConfig.header.btnStart,
   });
 
-  btnAvatar = <BtnView>Factory.view({
+  readonly btnAvatar = <BtnView>Factory.view({
     tag: 'button',
     styles: [style.btnAvatar],
-    childs: [],
   });
 
   constructor(navData: { url: string; text: string }[]) {
@@ -73,8 +72,8 @@ export default class Header {
   }
 
   setActiveNavLink(url: string): void {
-    this.activeNavLink?.deactivate();
+    this.activeNavLink?.active(false);
     this.activeNavLink = this.navLinks?.get(url);
-    this.activeNavLink?.activate();
+    this.activeNavLink?.active();
   }
 }
