@@ -20,3 +20,6 @@
 > - [x] [task](https://rolling-scopes-school.github.io/stage0/#/stage1/tasks/js-projects/photo-filter)
 > - [x] [deploy](https://rolling-scopes-school.github.io/fronte-finem-JSFE2021Q1/photo-filter/)
 
+> # 🎴 Match-Match Game 🎴
+> - [x] [📃 task](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/match-match-game.md)
+> - [x] [🏠 deploy (preview)](https://rolling-scopes-school.github.io/fronte-finem-JSFE2021Q1/match-match-game/)
