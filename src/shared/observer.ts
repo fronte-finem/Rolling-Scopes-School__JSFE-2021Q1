@@ -1,31 +1,22 @@
-export interface IEvent<T> {
-  data: T;
-}
+export type Listener<T> = (data: T) => void;
 
-type EventType<T> = { new (data: T): IEvent<T> };
+type Listeners = Set<Listener<unknown>>;
 
-export type IListener<T> = (event: IEvent<T>) => void;
+export default class Observer {
+  private readonly listenersMap = new Map<string, Listeners>();
 
-type Listeners<T> = Set<IListener<T>>;
-
-type ListenersMap<T> = Map<EventType<T>, Listeners<T>>;
-
-export default class Observer<T> {
-  private readonly listenersMap: ListenersMap<T> = new Map();
-
-  subscribe(eventType: EventType<T>, listener: IListener<T>): void {
-    if (!this.listenersMap.has(eventType)) {
-      this.listenersMap.set(eventType, new Set());
+  subscribe<T>(event: string, listener: Listener<T>): void {
+    if (!this.listenersMap.has(event)) {
+      this.listenersMap.set(event, new Set());
     }
-    this.listenersMap.get(eventType)?.add(listener);
+    this.listenersMap.get(event)?.add(<Listener<unknown>>listener);
   }
 
-  unsubscribe(eventType: EventType<T>, listener: IListener<T>): void {
-    this.listenersMap.get(eventType)?.delete(listener);
+  unsubscribe<T>(event: string, listener: Listener<T>): void {
+    this.listenersMap.get(event)?.delete(<Listener<unknown>>listener);
   }
 
-  notify(event: IEvent<T>): void {
-    const eventType = <EventType<T>>event.constructor;
-    this.listenersMap.get(eventType)?.forEach((listener) => listener(event));
+  notify<T>(event: string, data: T): void {
+    this.listenersMap.get(event)?.forEach((listener) => listener(data));
   }
 }
