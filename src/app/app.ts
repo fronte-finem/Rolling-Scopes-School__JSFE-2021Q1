@@ -1,11 +1,11 @@
-import RouteChangedEvent from '../router/route-changed-event';
 import Router from '../router/router';
 import { PageAbout, PageGame, PageSettings, PageScore } from '../pages/index';
-import { IPageView } from '../pages/base-page';
+import { IPage } from '../pages/base-page';
 import Header from '../components/header/header';
-import View from '../shared/view';
-import Factory from '../shared/view-factory';
+import View from '../shared/views/view';
+import Factory from '../shared/views/view-factory';
 import style from './app.scss';
+import { CardImagesService } from '../services/card-images-urls';
 
 export default class App {
   readonly view: View;
@@ -16,16 +16,18 @@ export default class App {
 
   readonly router = new Router();
 
+  readonly pages: Record<string, IPage>;
+
   constructor(parent: HTMLElement) {
-    const pages = [
-      new PageAbout(),
-      new PageGame(),
-      new PageSettings(),
-      new PageScore(),
-    ];
+    this.pages = {
+      about: new PageAbout(),
+      game: new PageGame(new CardImagesService()),
+      settings: new PageSettings(),
+      score: new PageScore(),
+    };
 
     this.header = new Header(
-      pages.map((page) => ({ url: page.titleUrl, text: page.titleText }))
+      this.mapPages((page) => ({ url: page.url, text: page.titleText }))
     );
     this.pageContainer = new View({ styles: [style.pageContainer] });
 
@@ -35,20 +37,26 @@ export default class App {
       childs: [this.header.view, this.pageContainer],
     });
 
-    this.router.addRoute('', pages[0]);
-    pages.forEach((page) => this.router.addRoute(page.titleUrl, page));
+    this.router.addRoute('', this.pages.about);
+    this.mapPages((page) => this.router.addRoute(page.url, page));
 
-    this.router.onChange((event: RouteChangedEvent) => this.update(event.data));
+    this.router.onChange(({ page }) => this.update(page));
 
     parent.append(this.view.element);
   }
 
-  update(page: IPageView): void {
-    this.pageContainer.render([page]);
-    this.header.setActiveNavLink(page.titleUrl);
+  mapPages<T>(handler: (page: IPage) => T): T[] {
+    return Object.values(this.pages).map(handler);
   }
 
-  start(): void {
+  update(page: IPage): void {
+    this.pageContainer.render([page.view]);
+    this.header.setActiveNavLink(page.url);
+  }
+
+  async start(): Promise<void> {
+    window.location.hash = this.pages.game.url;
     this.update(this.router.currentRoute());
+    await (<PageGame>this.pages.game).newGame('cats', 12);
   }
 }
