@@ -1,6 +1,5 @@
 import { State } from '../../shared/types';
 import Model from '../../shared/models/model';
-import delay from '../../shared/timer-utils';
 import CardModel from '../../components/card/card-model';
 import { Listener } from '../../shared/observer';
 
@@ -15,7 +14,7 @@ export interface IGameModelState extends State {
 }
 
 export default class GameModel extends Model<IGameModelState> {
-  constructor(readonly cards: CardModel[], readonly startShowTime = 5) {
+  constructor(readonly cards: CardModel[]) {
     super({
       isError: false,
       isStopped: true,
@@ -32,21 +31,18 @@ export default class GameModel extends Model<IGameModelState> {
     this.cards.forEach((card) => card.flip(toFront));
   }
 
-  onDelayedStart(listener: Listener<void>): void {
-    this.observer.subscribe('delayed-start', listener);
-  }
-
   onSolved(listener: Listener<void>): void {
     this.observer.subscribe('game-solved', listener);
   }
 
-  async start(): Promise<void> {
+  showAllCards(): void {
     this.flipAll(true);
-    await delay(this.startShowTime * 1000);
+  }
+
+  async start(): Promise<void> {
     this.flipAll(false);
     this.state.isStopped = false;
     this.state.startTime = new Date();
-    this.observer.notify('delayed-start', this.state);
   }
 
   stop(): void {

@@ -41,13 +41,6 @@ export default class PageGame extends BasePage {
     const urls = await this.cardImagesService.getUrls(category, amount);
     if (!urls) return;
     const cardModels = urls.front.map((url, id) => new CardModel(id, url, urls.back));
-    this.model = new GameModel(cardModels, SHOW_TIME);
-
-    this.model.onDelayedStart(() => this.timer.start());
-    this.model.onSolved(() => {
-      this.timer.stop();
-      this.view.setCssState('solved', true);
-    });
 
     this.cards = cardModels.map((model) => new Card(model));
     this.cards.forEach((card) =>
@@ -55,8 +48,22 @@ export default class PageGame extends BasePage {
     );
 
     this.cardsField.render(this.cards, amount);
-    this.timer.countdown(SHOW_TIME);
+    this.model = new GameModel(cardModels);
+    this.model.showAllCards();
+    await this.timer.countdown(SHOW_TIME);
     this.model.start();
+    this.timer.start();
+
+    this.model.onSolved(() => {
+      this.timer.stop();
+      this.view.setCssState('solved', true);
+    });
+  }
+
+  async stopGame(): Promise<void> {
+    this.timer.reset();
+    this.model?.stop();
+    this.clear();
   }
 
   private async cardClickHandler(card: Card): Promise<boolean> {
