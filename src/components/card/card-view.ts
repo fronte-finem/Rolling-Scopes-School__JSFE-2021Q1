@@ -26,7 +26,7 @@ export default class CardView extends View {
 
     const card = Factory.view({ styles: [style.card], childs: [back, front] });
 
-    this.render([card]);
+    this.render(card);
   }
 
   flip(toFront = true): Promise<void> {
