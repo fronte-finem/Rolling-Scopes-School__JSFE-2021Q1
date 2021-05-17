@@ -10,7 +10,7 @@ import { CardImagesService } from '../services/card-images-urls';
 export default class App {
   readonly view: View;
 
-  readonly header: Header;
+  private header: Header;
 
   readonly pageContainer: View;
 
@@ -29,6 +29,7 @@ export default class App {
     this.header = new Header(
       this.mapPages((page) => ({ url: page.url, text: page.titleText }))
     );
+    this.initHeader();
     this.pageContainer = new View({ styles: [style.pageContainer] });
 
     this.view = Factory.view({
@@ -50,17 +51,32 @@ export default class App {
   }
 
   update(page: IPage): void {
-    this.pageContainer.render([page.view]);
+    this.pageContainer.render(page.view);
     this.header.setActiveNavLink(page.url);
   }
 
   async start(): Promise<void> {
     window.location.hash = this.pages.game.url;
     this.update(this.router.currentRoute());
+  }
+
+  async startGame(): Promise<void> {
+    window.location.hash = this.pages.game.url;
+    this.update(this.router.currentRoute());
     await (<PageGame>this.pages.game).newGame('dogs', 12);
   }
-}
 
+  async stopGame(): Promise<void> {
+    window.location.hash = this.pages.game.url;
+    this.update(this.router.currentRoute());
+    (<PageGame>this.pages.game).stopGame();
+  }
+
+  private initHeader() {
+    this.header.view.observer.subscribe('start', () => this.startGame());
+    this.header.view.observer.subscribe('stop', () => this.stopGame());
+  }
+}
 
 // Todo:
 // При регистрации должна быть следующее правило проверки вводимых значений:
