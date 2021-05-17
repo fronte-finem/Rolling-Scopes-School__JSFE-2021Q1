@@ -30,7 +30,7 @@ export default class CardView extends View {
   }
 
   flip(toFront = true): Promise<void> {
-    this.state('flip', toFront);
+    this.setCssState('flip', toFront);
     return new Promise((resolve) => {
       this.element.addEventListener('transitionend', () => resolve(), {
         once: true,
@@ -39,10 +39,10 @@ export default class CardView extends View {
   }
 
   error(isError = true): void {
-    this.state('error', isError);
+    this.setCssState('error', isError);
   }
 
   match(isMatch = true): void {
-    this.state('match', isMatch);
+    this.setCssState('match', isMatch);
   }
 }

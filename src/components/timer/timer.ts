@@ -17,17 +17,17 @@ export default class Timer {
 
   start(): void {
     this.model.start();
-    this.view.state('stop', false);
-    this.view.state('countdown', false);
+    this.view.setCssState('stop', false);
+    this.view.setCssState('countdown', false);
   }
 
   stop(): void {
     this.model.stop();
-    this.view.state('stop', true);
+    this.view.setCssState('stop', true);
   }
 
   countdown(initialTime = 10): void {
     this.model.countdown(initialTime);
-    this.view.state('countdown', true);
+    this.view.setCssState('countdown', true);
   }
 }

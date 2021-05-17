@@ -6,7 +6,7 @@ export interface IView {
   readonly mapStateStyle: Map<string, string>;
   clear(): IView;
   render(childs: IView[]): IView;
-  state(state: string, force: boolean): void;
+  setCssState(state: string, force: boolean): void;
   onClick(
     listener: EventListenerOrEventListenerObject,
     options?: boolean | AddEventListenerOptions
@@ -42,7 +42,7 @@ export default class View implements IView {
     return this;
   }
 
-  state(state: string, force = true): void {
+  setCssState(state: string, force = true): void {
     const style = this.mapStateStyle.get(state);
     if (style) this.element.classList.toggle(style, force);
   }

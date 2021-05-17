@@ -24,6 +24,6 @@ export default abstract class ViewActivable
   }
 
   active(force = true): void {
-    this.state('active', force);
+    this.setCssState('active', force);
   }
 }
