@@ -52,16 +52,20 @@
 .btn {
   padding: 5px 10px;
   text-transform: capitalize;
-}
 
-.btn-auth {
-  display: block;
-}
+  &-sign-up {
+    display: block;
+  }
 
-.btn-start {
-  display: block;
-}
+  &-start {
+    display: block;
+  }
 
-.btn-avatar {
-  display: block;
+  &-avatar {
+    display: block;
+  }
+
+  &--hidden {
+    display: none;
+  }
 }

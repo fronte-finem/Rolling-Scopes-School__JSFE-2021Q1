@@ -1,7 +1,8 @@
 const appConfig = {
   header: {
-    btnAuth: 'register new player',
+    btnSignUp: 'register new player',
     btnStart: 'start game',
+    btnStop: 'stop game',
   }
 }
 

@@ -1,79 +1,20 @@
-import appConfig from '../../app/app.config';
-import BtnView from '../../shared/views/btn/btn';
-import LinkView from '../../shared/views/link/link';
-import View from '../../shared/views/view';
-import Factory from '../../shared/views/view-factory';
-import style from './header.scss';
+import Observer from '../../shared/observer';
+import HeaderView from './header-view';
 
 export default class Header {
-  readonly view: View;
+  private readonly observer = new Observer();
 
-  readonly navLinks: Map<string, LinkView>;
-
-  private activeNavLink: LinkView | undefined;
-
-  readonly logo = new LinkView({ url: '#/about', styles: [style.logo] });
-
-  readonly btnAuth = new BtnView({
-    styles: [style.btn, style.btnAuth],
-    text: appConfig.header.btnAuth,
-  });
-
-  readonly btnStart = new BtnView({
-    styles: [style.btn, style.btnStart],
-    text: appConfig.header.btnStart,
-  });
-
-  readonly btnAvatar = <BtnView>Factory.view({
-    tag: 'button',
-    styles: [style.btnAvatar],
-  });
+  readonly view: HeaderView;
 
   constructor(navData: { url: string; text: string }[]) {
-    this.navLinks = navData.reduce(
-      (dict, { url, text }) =>
-        dict.set(url, new LinkView({ url, styles: [style.navLink], text })),
-      new Map<string, LinkView>()
-    );
-
-    this.view = Factory.view({
-      tag: 'header',
-      styles: [style.header],
-      childs: [
-        {
-          styles: [style.wrapper],
-          childs: [
-            this.logo,
-            {
-              tag: 'nav',
-              styles: [style.navMenu],
-              childs: [
-                {
-                  tag: 'ul',
-                  styles: [style.navItems],
-                  childs: [...this.navLinks.values()].map((link) =>
-                    Factory.view({
-                      tag: 'li',
-                      styles: [style.navItem],
-                      childs: [link],
-                    })
-                  ),
-                },
-              ],
-            },
-            {
-              styles: [style.controls],
-              childs: [this.btnAuth, this.btnStart, this.btnAvatar],
-            },
-          ],
-        },
-      ],
-    });
+    this.view = new HeaderView(navData);
   }
 
   setActiveNavLink(url: string): void {
-    this.activeNavLink?.active(false);
-    this.activeNavLink = this.navLinks?.get(url);
-    this.activeNavLink?.active();
+    this.view.setActiveNavLink(url);
   }
 }
+
+// После регистрации игрока в header должна появится кнопка позволяющая начать игру
+// После нажатия на кнопку старт должен начинаться игровой цикл
+// У игрока должна быть возможность остановить игру.
