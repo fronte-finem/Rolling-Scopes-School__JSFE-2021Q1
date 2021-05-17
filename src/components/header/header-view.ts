@@ -1,14 +1,19 @@
 import appConfig from '../../app/app.config';
+import Observer from '../../shared/observer';
 import BtnView from '../../shared/views/btn/btn';
 import LinkView from '../../shared/views/link/link';
 import View from '../../shared/views/view';
 import Factory from '../../shared/views/view-factory';
 import style from './header.scss';
 import HeaderState from './state/base-state';
-import HeaderStateSignUp from './state/state-sign-up';
+import HeaderStateInitial from './state/state-initial';
+
+export type HeaderViewEvent = 'initial' | 'sign-in' | 'start' | 'stop';
 
 export default class HeaderView extends View {
-  private state = new HeaderStateSignUp(this);
+  readonly observer = new Observer<HeaderViewEvent>();
+
+  private state = new HeaderStateInitial(this);
 
   readonly navLinks: Map<string, LinkView>;
 
@@ -19,14 +24,14 @@ export default class HeaderView extends View {
   readonly avatar = new LinkView({
     url: '#/score',
     styles: [style.avatar],
-    stateStyle: [['hidden', style.btnHidden]],
+    stateStyle: [['hidden', style.avatarHidden]],
   });
 
-  readonly btns = {
-    signUp: HeaderView.createBtn(style.btnSignUp, appConfig.header.btnSignUp),
-    start: HeaderView.createBtn(style.btnStart, appConfig.header.btnStart),
-    stop: HeaderView.createBtn(style.btnStop, appConfig.header.btnStop),
-  };
+  readonly btnStateSwitch = new BtnView({
+    styles: [style.btn, style.btnStateSwitch],
+    stateStyle: [['hidden', style.btnHidden]],
+    text: appConfig.header.btn.signUp,
+  });
 
   constructor(navData: { url: string; text: string }[]) {
     super({ tag: 'header', styles: [style.header] });
@@ -37,23 +42,20 @@ export default class HeaderView extends View {
       new Map<string, LinkView>()
     );
 
-    this.render([
+    this.render(
       Factory.view({
         styles: [style.wrapper],
         childs: [
           this.logo,
           HeaderView.createNavMenu([...this.navLinks.values()]),
-          {
-            styles: [style.controls],
-            childs: Object.values(this.btns),
-          },
+          this.btnStateSwitch,
           this.avatar,
         ],
       }),
-    ]);
+    );
 
     this.state.update();
-    Object.values(this.btns).forEach(btn => btn.onClick(() => this.state.update()));
+    this.btnStateSwitch.onClick(() => this.state.update());
   }
 
   setState(state: HeaderState): void {
