@@ -1,4 +1,4 @@
-import HeaderView from '../header-view';
+import HeaderView, { HeaderViewEvent } from '../header-view';
 
 export interface IHeaderState {
   headerView: HeaderView;
@@ -19,13 +19,14 @@ export default abstract class HeaderState implements IHeaderState {
   }
 
   protected baseUpdate<T extends HeaderState>(
-    [signUp, start, stop, avatar]: boolean[],
+    event: HeaderViewEvent,
+    btnText: string,
+    hideAvatar: boolean,
     NextState: HeaderStateCostructor<T>
   ): void {
-    this.headerView.btns.signUp.setCssState('hidden', signUp);
-    this.headerView.btns.start.setCssState('hidden', start);
-    this.headerView.btns.stop.setCssState('hidden', stop);
-    this.headerView.avatar.setCssState('hidden', avatar);
+    this.headerView.observer.notify(event, 123);
+    this.headerView.btnStateSwitch.element.textContent = btnText;
+    this.headerView.avatar.setCssState('hidden', hideAvatar);
     this.headerView.setState(new NextState(this.headerView));
   }
 }

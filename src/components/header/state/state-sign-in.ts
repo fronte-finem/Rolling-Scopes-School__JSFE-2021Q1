@@ -2,10 +2,10 @@ import appConfig from '../../../app/app.config';
 import HeaderState from './base-state';
 import HeaderStateStartGame from './state-start-game';
 
-export default class HeaderStateStopGame extends HeaderState {
+export default class HeaderStateSignIn extends HeaderState {
   update(): void {
     this.baseUpdate(
-      'stop',
+      'sign-in',
       appConfig.header.btn.start,
       false,
       HeaderStateStartGame
