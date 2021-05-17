@@ -9,10 +9,6 @@ export const enum CardImagesCategory {
   dogs,
 }
 
-export interface ICardImagesService {
-  getUrls(category: string, amount: number): Promise<string[]>;
-}
-
 export interface ICardImagesDescriptionModel {
   first: number;
   last: number;
@@ -21,11 +17,24 @@ export interface ICardImagesDescriptionModel {
   extension: string;
   width: number;
   height: number;
+  cardCover: string;
 }
 
 export interface ICardImagesCategoryModel {
   category: keyof typeof CardImagesCategory;
   images: ICardImagesDescriptionModel;
+}
+
+export interface ICardImagesUrlsModel {
+  back: string;
+  front: string[];
+}
+
+export interface ICardImagesService {
+  getUrls(
+    category: string,
+    amount: number
+  ): Promise<ICardImagesUrlsModel | undefined>;
 }
 
 export class CardImagesService implements ICardImagesService {
@@ -45,12 +54,12 @@ export class CardImagesService implements ICardImagesService {
     return this.cache;
   }
 
-  async generateUrls(
+  private async generateUrls(
     category: keyof typeof CardImagesCategory
-  ): Promise<string[]> {
+  ): Promise<ICardImagesUrlsModel | undefined> {
     const images = (await this.fetch()).get(category);
-    if (!images) return [];
-    const urls = Array.from(
+    if (!images) return undefined;
+    const front = Array.from(
       { length: images.last - images.first },
       (_, i) =>
         `${category}/${String(i + images.first).padStart(
@@ -58,16 +67,18 @@ export class CardImagesService implements ICardImagesService {
           images.leftPadChar
         )}.${images.extension}`
     );
-    return urls;
+    return { front, back: images.cardCover };
   }
 
   async getUrls(
     category: keyof typeof CardImagesCategory,
     amount: number
-  ): Promise<string[]> {
-    let images = await this.generateUrls(category);
-    images = knuthShuffle(images).slice(0, amount / 2);
-    images = knuthShuffle(images.concat(images));
-    return images;
+  ): Promise<ICardImagesUrlsModel | undefined> {
+    const urls = await this.generateUrls(category);
+    if (!urls) return undefined;
+    let { front } = urls;
+    front = knuthShuffle(front).slice(0, amount / 2);
+    front = knuthShuffle(front.concat(front));
+    return { front, back: urls.back };
   }
 }

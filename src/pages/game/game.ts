@@ -9,7 +9,7 @@ import { CardImagesCategory, ICardImagesService } from '../../services/card-imag
 import { CardFieldTypes } from '../../components/cards-field/card-field-model';
 
 const PAGE_TITLE = 'Game';
-const SHOW_TIME = 10;
+const SHOW_TIME = 5;
 
 export default class PageGame extends BasePage {
   private readonly timer = new Timer();
@@ -38,8 +38,9 @@ export default class PageGame extends BasePage {
   async newGame(category: keyof typeof CardImagesCategory, amount: keyof CardFieldTypes): Promise<void> {
     this.clear();
 
-    const images = await this.cardImagesService.getUrls(category, amount);
-    const cardModels = images.map((url, id) => new CardModel(id, url, ''));
+    const urls = await this.cardImagesService.getUrls(category, amount);
+    if (!urls) return;
+    const cardModels = urls.front.map((url, id) => new CardModel(id, url, urls.back));
     this.model = new GameModel(cardModels, SHOW_TIME);
 
     this.model.onDelayedStart(() => this.timer.start());

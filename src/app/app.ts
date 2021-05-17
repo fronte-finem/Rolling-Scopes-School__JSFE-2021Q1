@@ -57,6 +57,6 @@ export default class App {
   async start(): Promise<void> {
     window.location.hash = this.pages.game.url;
     this.update(this.router.currentRoute());
-    await (<PageGame>this.pages.game).newGame('cats', 12);
+    await (<PageGame>this.pages.game).newGame('dogs', 12);
   }
 }
