@@ -2,11 +2,13 @@ import { ITimeDiffFormat, timeDiffFormat } from '../../shared/date-time-utils';
 import Model from '../../shared/models/model';
 import { State } from '../../shared/types';
 
+
 export interface ITimerModelState extends State {
   startTime: number;
   currentTime: number;
   getTimeDiff(): ITimeDiffFormat;
 }
+export type TimerModelEvent = 'countdown-start' | 'countdown-end' | 'start' | 'stop';
 
 export default class TimerModel extends Model<ITimerModelState> {
   private timerId: number | undefined;
@@ -21,7 +23,7 @@ export default class TimerModel extends Model<ITimerModelState> {
     });
   }
 
-  private reset(initialTime = 0): void {
+  reset(initialTime = 0): void {
     window.clearInterval(this.timerId);
     this.state.startTime = 0;
     this.state.currentTime = initialTime;
@@ -41,15 +43,16 @@ export default class TimerModel extends Model<ITimerModelState> {
     this.state.currentTime += 1;
   }
 
-  countdown(initialTime = 10): void {
-    this.reset(initialTime);
-    this.timerId = window.setInterval(() => this.decrement(), 1000);
-    const stop = (currentTime: number) => {
-      if (currentTime > 0) return;
-      this.stop();
-      this.observer.unsubscribe('currentTime', stop);
-    };
-    this.observer.subscribe('currentTime', stop);
+  async countdown(initialTime = 10): Promise<void> {
+    return new Promise((resolve) => {
+      this.reset(initialTime);  
+      this.timerId = window.setInterval(() => {
+        this.decrement();
+        if (this.state.currentTime > 0) return;
+        this.reset();
+        resolve();
+      }, 1000);
+    });
   }
 
   private decrement(): void {

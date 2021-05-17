@@ -25,7 +25,7 @@ export default class TimerView extends View {
       ],
     });
 
-    this.render([
+    this.render(
       Factory.view({
         styles: [style.timerBox],
         childs: [
@@ -36,7 +36,7 @@ export default class TimerView extends View {
           this.output.seconds,
         ],
       }),
-    ]);
+    );
   }
 
   show(time: ITimeDiffFormat): void {
