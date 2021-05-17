@@ -8,7 +8,8 @@
       "leftPadChar": "0",
       "extension": "jpg",
       "width": 500,
-      "height": 500
+      "height": 500,
+      "cardCover": "covers/dog.svg"
     }
   },
   {
@@ -20,7 +21,8 @@
       "leftPadChar": "0",
       "extension": "jpg",
       "width": 500,
-      "height": 500
+      "height": 500,
+      "cardCover": "covers/cat.svg"
     }
   }
 ]
