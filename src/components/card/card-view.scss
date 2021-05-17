@@ -54,16 +54,18 @@
     right: 0;
     bottom: 0;
     border-radius: inherit;
+    background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
     backface-visibility: hidden;
 
     &--back {
       background-color: hsla(0, 0%, 100%, .5);
+      background-size: 50%;
     } 
 
     &--front {
       background-color: red;
+      background-size: cover;
       transform: rotateY(180deg) rotateZ(180deg);
     }     
   }

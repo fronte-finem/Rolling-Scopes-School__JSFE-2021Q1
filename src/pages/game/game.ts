@@ -9,7 +9,7 @@ import { CardImagesCategory, ICardImagesService } from '../../services/card-imag
 import { CardFieldTypes } from '../../components/cards-field/card-field-model';
 
 const PAGE_TITLE = 'Game';
-const SHOW_TIME = 10;
+const SHOW_TIME = 5;
 
 export default class PageGame extends BasePage {
   private readonly timer = new Timer();
@@ -38,15 +38,9 @@ export default class PageGame extends BasePage {
   async newGame(category: keyof typeof CardImagesCategory, amount: keyof CardFieldTypes): Promise<void> {
     this.clear();
 
-    const images = await this.cardImagesService.getUrls(category, amount);
-    const cardModels = images.map((url, id) => new CardModel(id, url, ''));
-    this.model = new GameModel(cardModels, SHOW_TIME);
-
-    this.model.onDelayedStart(() => this.timer.start());
-    this.model.onSolved(() => {
-      this.timer.stop();
-      this.view.state('solved', true);
-    });
+    const urls = await this.cardImagesService.getUrls(category, amount);
+    if (!urls) return;
+    const cardModels = urls.front.map((url, id) => new CardModel(id, url, urls.back));
 
     this.cards = cardModels.map((model) => new Card(model));
     this.cards.forEach((card) =>
@@ -54,8 +48,22 @@ export default class PageGame extends BasePage {
     );
 
     this.cardsField.render(this.cards, amount);
-    this.timer.countdown(SHOW_TIME);
+    this.model = new GameModel(cardModels);
+    this.model.showAllCards();
+    await this.timer.countdown(SHOW_TIME);
     this.model.start();
+    this.timer.start();
+
+    this.model.onSolved(() => {
+      this.timer.stop();
+      this.view.setCssState('solved', true);
+    });
+  }
+
+  async stopGame(): Promise<void> {
+    this.timer.reset();
+    this.model?.stop();
+    this.clear();
   }
 
   private async cardClickHandler(card: Card): Promise<boolean> {
@@ -64,8 +72,9 @@ export default class PageGame extends BasePage {
   }
 }
 
-// На игровом поле должен присутствовать таймер.
-// В случае несовпадения карточек, неправильная пара должна быть подсвечена красным.
-// Совпавшие пары должны подсвечиваться зеленым.
-// После нахождения всех совпадений необходимо показать модальное окно с поздравлениями.
-// После клика на кнопку "ОК" в этом окне приложение должно перейти на страницу рекордов.
+// ToDo:
+// ✔️ На игровом поле должен присутствовать таймер.
+// ✔️ В случае несовпадения карточек, неправильная пара должна быть подсвечена красным.
+// ✔️ Совпавшие пары должны подсвечиваться зеленым.
+// ⌛ После нахождения всех совпадений необходимо показать модальное окно с поздравлениями.
+// ⌛ После клика на кнопку "ОК" в этом окне приложение должно перейти на страницу рекордов.

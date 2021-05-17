@@ -10,7 +10,7 @@ import { CardImagesService } from '../services/card-images-urls';
 export default class App {
   readonly view: View;
 
-  readonly header: Header;
+  private header: Header;
 
   readonly pageContainer: View;
 
@@ -29,6 +29,7 @@ export default class App {
     this.header = new Header(
       this.mapPages((page) => ({ url: page.url, text: page.titleText }))
     );
+    this.initHeader();
     this.pageContainer = new View({ styles: [style.pageContainer] });
 
     this.view = Factory.view({
@@ -50,13 +51,63 @@ export default class App {
   }
 
   update(page: IPage): void {
-    this.pageContainer.render([page.view]);
+    this.pageContainer.render(page.view);
     this.header.setActiveNavLink(page.url);
   }
 
   async start(): Promise<void> {
     window.location.hash = this.pages.game.url;
     this.update(this.router.currentRoute());
-    await (<PageGame>this.pages.game).newGame('cats', 12);
+  }
+
+  async startGame(): Promise<void> {
+    window.location.hash = this.pages.game.url;
+    this.update(this.router.currentRoute());
+    await (<PageGame>this.pages.game).newGame('dogs', 12);
+  }
+
+  async stopGame(): Promise<void> {
+    window.location.hash = this.pages.game.url;
+    this.update(this.router.currentRoute());
+    (<PageGame>this.pages.game).stopGame();
+  }
+
+  private initHeader() {
+    this.header.view.observer.subscribe('start', () => this.startGame());
+    this.header.view.observer.subscribe('stop', () => this.stopGame());
   }
 }
+
+// Todo:
+// При регистрации должна быть следующее правило проверки вводимых значений:
+
+// Имя:
+// - Имя не может быть пустым.
+// - Имя не может состоять из цифр.
+// - Имя не может содержать служебные символы (~ ! @ # $ % * () _ — + = | : ; " ' ` < > , . ? / ^).
+
+// Фамилия:
+// - Фамилия не может быть пустой.
+// - Фамилия не может состоять из цифр.
+// - Фамилия не может содержать служебные символы. (~ ! @ # $ % * () _ — + = | : ; " ' ` < > , . ? / ^)
+
+// email:
+// - email не может быть пустым.
+// - должен соответствовать стандартному правилу формированию email
+//   [RFC](https://en.wikipedia.org/wiki/Email_address#Standards_documents)
+
+// Форма в целом:
+// - Возможно использование любого языка для ввода имени и фамилии.
+// - Колличество символов не должно превышать 30 символов включая пробелы
+// - В случае несоответствия любого из вышеуказанных правил, необходимо блокировать кнопку создания пользователя
+// - Все неправильные поля должны быть подсвечены и иметь соответствующие сообщения об ошибках.
+// - После нажатия на кнопку создания игрока страница не должна перезагружаться.
+// - После нажатия на кнопку cancel вся ранее заполненная информация должна быть сброшена.
+
+// Если все данные игрока корректны, все правильно заполненные поля должны быть помеченные как правильные.
+
+// После регистрации игрока в header должна появится кнопка позволяющая начать игру
+// После нажатия на кнопку старт должен начинаться игровой цикл
+// У игрока должна быть возможность остановить игру.
+
+// Реализована механика добавления аватара игрока, который хранится в indexedDb в base64 формате и отображается в header и на странице рекордов.
