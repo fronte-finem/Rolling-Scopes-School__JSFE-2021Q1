@@ -9,8 +9,8 @@
   margin: auto;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  column-gap: 20px;
 }
 
 .logo {
@@ -23,6 +23,7 @@
 .nav-menu {
   max-width: 400px;
   width: 100%;
+  margin: 0 auto 0 0;
 }
 
 .nav-items {
@@ -44,26 +45,21 @@
   font-size: 20px;
 }
 
-.controls {
-  display: flex;
-  column-gap: 10px;
-}
-
 .btn {
   padding: 5px 10px;
   text-transform: capitalize;
 
-  &-sign-up {
+  &-state-switch {
     display: block;
   }
 
-  &-start {
-    display: block;
+  &--hidden {
+    display: none;
   }
+}
 
-  &-avatar {
-    display: block;
-  }
+.avatar {
+  display: block;
 
   &--hidden {
     display: none;
