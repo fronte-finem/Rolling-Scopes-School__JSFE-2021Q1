@@ -51,3 +51,18 @@ export function wrappingElements(elements: HTMLElement[]): IWrappedElements {
 
   return { outer, inner };
 }
+
+const SVG_NAMESPACE_URI = 'http://www.w3.org/2000/svg';
+
+export function createSvgSpriteElement(link: string, styles?: string[]): SVGSVGElement {
+    const svg = document.createElementNS(SVG_NAMESPACE_URI, 'svg');
+    const use = document.createElementNS(SVG_NAMESPACE_URI, 'use');
+    use.setAttribute('href', link);
+    svg.append(use);
+
+    svg.classList.add('svg-icon');
+    if (Array.isArray(styles)) {
+      svg.classList.add(...styles);
+    }
+    return svg;
+}
