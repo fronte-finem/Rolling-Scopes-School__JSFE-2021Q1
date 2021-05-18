@@ -8,7 +8,7 @@ import Timer from '../../components/timer/timer';
 import { CardImagesCategory, ICardImagesService } from '../../services/card-images-urls';
 import { CardFieldTypes } from '../../components/cards-field/card-field-model';
 
-const PAGE_TITLE = 'Game';
+const PAGE_TITLE = 'game';
 const SHOW_TIME = 5;
 
 export default class PageGame extends BasePage {

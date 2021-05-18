@@ -1,6 +1,6 @@
 import BasePage from '../base-page';
 
-const PAGE_TITLE = 'Error';
+const PAGE_TITLE = 'error 404';
 
 export default class PageError extends BasePage {
   constructor() {

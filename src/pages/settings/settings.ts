@@ -1,6 +1,6 @@
 import BasePage from '../base-page';
 
-const PAGE_TITLE = 'Settings';
+const PAGE_TITLE = 'game settings';
 
 export default class PageSettings extends BasePage {
   constructor() {

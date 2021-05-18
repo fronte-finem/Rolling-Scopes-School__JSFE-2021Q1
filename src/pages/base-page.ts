@@ -1,4 +1,4 @@
-import { capitalize, replaceSpaces } from '../shared/string-utils';
+import { replaceSpaces } from '../shared/string-utils';
 import View from '../shared/views/view';
 import Factory, { IBuildViewOptions } from '../shared/views/view-factory';
 import style from './base-page.scss'
@@ -21,7 +21,7 @@ export default abstract class BasePage implements IPage {
   }
 
   get titleText(): string {
-    return capitalize(this.title);
+    return this.title;
   }
 
   get titleSafe(): string {

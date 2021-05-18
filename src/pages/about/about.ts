@@ -1,6 +1,6 @@
 import BasePage from '../base-page';
 
-const PAGE_TITLE = 'About';
+const PAGE_TITLE = 'about game';
 
 export default class PageAbout extends BasePage {
   constructor() {

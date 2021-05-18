@@ -1,6 +1,6 @@
 import BasePage from '../base-page';
 
-const PAGE_TITLE = 'Score';
+const PAGE_TITLE = 'best score';
 
 export default class PageScore extends BasePage {
   constructor() {
