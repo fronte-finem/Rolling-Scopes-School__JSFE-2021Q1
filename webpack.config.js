@@ -1,9 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
-const WebpackDevServer = require("webpack-dev-server");
+const WebpackDevServer = require('webpack-dev-server');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyPlugin = require("copy-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
@@ -16,7 +16,9 @@ function genConfig(env) {
   const isMyEnv = Boolean(env && env.myenv);
 
   const config = addCssLoaders(isDevMode, baseConfig());
-  config.output.path = isMyEnv ? `r:/${BUILD_DIST}` : path.resolve(__dirname, BUILD_DIST);
+  config.output.path = isMyEnv
+    ? `r:/${BUILD_DIST}`
+    : path.resolve(__dirname, BUILD_DIST);
 
   if (isDevMode) {
     config.mode = 'development';
@@ -31,18 +33,19 @@ function genConfig(env) {
 
 function addCssLoaders(isDevMode, config) {
   const loaders = [
-    isDevMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+    { loader: isDevMode ? 'style-loader' : MiniCssExtractPlugin.loader },
+    { loader: 'webpack-typings-for-css' },
     {
-      loader: "css-loader",   // https://webpack.js.org/loaders/css-loader/
+      loader: 'css-loader', // https://webpack.js.org/loaders/css-loader/
       options: {
         modules: {
           auto: () => true,
           // localIdentName: "[path][name]__[local]--[contenthash:base64:5]",
-          localIdentName: "[local]--[contenthash:base64:9]",
-          localIdentContext: path.resolve(__dirname, "src"),
-          localIdentHashPrefix: "my-custom-hash",
+          localIdentName: '[local]--[contenthash:base64:9]',
+          localIdentContext: path.resolve(__dirname, 'src'),
+          localIdentHashPrefix: 'my-custom-hash',
           exportGlobals: true,
-          exportLocalsConvention: "camelCase",
+          exportLocalsConvention: 'camelCase',
         },
         importLoaders: 2,
       },
@@ -53,13 +56,14 @@ function addCssLoaders(isDevMode, config) {
         postcssOptions: {
           plugins: [
             [
-              'postcss-preset-env', {
+              'postcss-preset-env',
+              {
                 browsers: 'last 2 versions',
-              }
-            ]
-          ]
-        }
-      }
+              },
+            ],
+          ],
+        },
+      },
     },
     'sass-loader',
   ];
@@ -67,7 +71,7 @@ function addCssLoaders(isDevMode, config) {
   config.module.rules.push({
     test: /\.(sa|sc|c)ss$/,
     use: loaders,
-  })
+  });
 
   if (!isDevMode) {
     config.plugins.push(new MiniCssExtractPlugin());
@@ -79,16 +83,18 @@ function addCssLoaders(isDevMode, config) {
 function addDevServer(isMyEnv, config) {
   config.devServer = {
     contentBase: false,
-    open: !isMyEnv ? true : {
-      app: ['chrome', '--incognito'],
-    },
+    open: !isMyEnv
+      ? true
+      : {
+          app: ['chrome', '--incognito'],
+        },
     hot: true,
     port: 8080,
     overlay: {
       warnings: true,
       errors: true,
-    }
-  }
+    },
+  };
 
   return config;
 }
@@ -97,12 +103,12 @@ function baseConfig() {
   return {
     mode: 'production',
     entry: {
-      app: './src/index.ts'
+      app: './src/index.ts',
     },
     output: {
       clean: true,
       filename: '[name].[contenthash].js',
-      assetModuleFilename: 'assets/[hash][ext]'
+      assetModuleFilename: 'assets/[hash][ext]',
     },
     module: {
       rules: [
@@ -119,7 +125,7 @@ function baseConfig() {
           test: /\.(woff(2)?|eot|ttf|otf)$/i,
           type: 'asset/resource',
         },
-      ]
+      ],
     },
     resolve: {
       extensions: ['.ts', '.js'],
@@ -132,10 +138,8 @@ function baseConfig() {
         cleanStaleWebpackAssets: false,
       }),
       new CopyPlugin({
-        patterns: [
-          { from: 'public' },
-        ],
-      })
+        patterns: [{ from: 'public' }],
+      }),
     ],
-  }
-};
+  };
+}

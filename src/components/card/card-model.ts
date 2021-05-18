@@ -1,18 +1,18 @@
 import { State } from '../../shared/types';
-import Model from '../../shared/models/model';
-import delay from '../../shared/timer-utils';
+import { Model } from '../../shared/models/model';
+import { delay } from '../../shared/timer-utils';
 
 const ERROR_TIME = 2;
 
 export interface ICardModelState extends State {
-    isError: boolean;
-    isMatch: boolean;
-    isFrontSide: boolean;
-    clickedCount: number;
-    errorCount: number;
+  isError: boolean;
+  isMatch: boolean;
+  isFrontSide: boolean;
+  clickedCount: number;
+  errorCount: number;
 }
 
-export default class CardModel extends Model<ICardModelState> {
+export class CardModel extends Model<ICardModelState> {
   constructor(
     readonly id: number,
     readonly frontImage: string,

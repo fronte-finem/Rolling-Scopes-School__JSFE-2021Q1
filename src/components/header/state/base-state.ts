@@ -1,4 +1,4 @@
-import HeaderView, { HeaderViewEvent } from '../header-view';
+import { HeaderView, HeaderViewEvent } from '../header-view';
 
 export interface IHeaderState {
   headerView: HeaderView;
@@ -9,7 +9,7 @@ type HeaderStateCostructor<T extends IHeaderState> = new (
   headerView: HeaderView
 ) => T;
 
-export default abstract class HeaderState implements IHeaderState {
+export abstract class HeaderState implements IHeaderState {
   constructor(readonly headerView: HeaderView) {
     this.headerView = headerView;
   }

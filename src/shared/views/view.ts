@@ -20,7 +20,7 @@ export interface ICreateViewOptions extends ICreateElementOptions {
   hookElement?: (elem: HTMLElement) => void;
 }
 
-export default class View implements IView {
+export class View implements IView {
   readonly element: HTMLElement;
 
   readonly mapStateStyle: Map<string, string>;

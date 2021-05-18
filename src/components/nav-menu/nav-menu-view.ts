@@ -1,10 +1,9 @@
 import { createSvgSpriteElement } from '../../shared/dom-utils';
-import LinkView from '../../shared/views/link/link';
-import View from '../../shared/views/view';
-import Factory from '../../shared/views/view-factory';
+import { LinkView } from '../../shared/views/link/link';
+import { View } from '../../shared/views/view';
+import { Factory } from '../../shared/views/view-factory';
 import style from './nav-menu-view.scss';
 
-// './svg/sprite.svg#icon-gear'
 export interface NavLinkCreateOptions {
   page: string;
   url: string;
@@ -12,7 +11,7 @@ export interface NavLinkCreateOptions {
   svgIconLink: string;
 }
 
-export default class NavMenuView extends View {
+export class NavMenuView extends View {
   private navLinks?: Map<string, LinkView>;
 
   private activeNavLink: LinkView | undefined;
@@ -63,7 +62,8 @@ export default class NavMenuView extends View {
       url,
       styles: [style.navLink],
       text: title,
-      hookElement: (elem) => elem.append(createSvgSpriteElement(svgIconLink, [style.svgIcon])),
+      hookElement: (elem) =>
+        elem.append(createSvgSpriteElement(svgIconLink, [style.svgIcon])),
     });
   }
 }

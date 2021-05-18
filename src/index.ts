@@ -1,9 +1,9 @@
 import './assets/styles/reset.scss';
-import style from './assets/styles/main.scss';
-import App from './app/app';
+import { styles } from './assets/styles/main.scss';
+import { App } from './app/app';
 
 window.addEventListener('load', () => {
-  document.body.classList.add(style.root);
+  document.body.classList.add(styles.root);
   const app = new App(document.body);
   app.start();
 });

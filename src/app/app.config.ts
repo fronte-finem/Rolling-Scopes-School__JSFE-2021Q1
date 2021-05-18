@@ -1,4 +1,4 @@
-const appConfig = {
+export const appConfig = {
   header: {
     navMenu: [
       {
@@ -27,5 +27,3 @@ const appConfig = {
     },
   },
 };
-
-export default appConfig;

@@ -1,14 +1,14 @@
-import Observer from '../../shared/observer';
+import { Observer } from '../../shared/observer';
 import { NavLinkCreateOptions } from '../nav-menu/nav-menu-view';
-import HeaderView from './header-view';
+import { HeaderView } from './header-view';
 
-export default class Header {
+export class Header {
   private readonly observer = new Observer();
 
   readonly view = new HeaderView();
 
   addNavLinks(options: NavLinkCreateOptions[]): void {
-    this.view.menu.addNavLinks(options)
+    this.view.menu.addNavLinks(options);
   }
 
   setActiveNavLink(url: string): void {

@@ -1,17 +1,20 @@
-import BasePage from '../base-page';
-import Card from '../../components/card/card';
-import CardsField from '../../components/cards-field/cards-field';
-import style from './game.scss';
-import GameModel from './game-model';
-import CardModel from '../../components/card/card-model';
-import Timer from '../../components/timer/timer';
-import { CardImagesCategory, ICardImagesService } from '../../services/card-images-urls';
+import { BasePage } from '../base-page';
+import { Card } from '../../components/card/card';
+import { CardsField } from '../../components/cards-field/cards-field';
+import { GameModel } from './game-model';
+import { CardModel } from '../../components/card/card-model';
+import { Timer } from '../../components/timer/timer';
 import { CardFieldTypes } from '../../components/cards-field/card-field-model';
+import {
+  CardImagesCategory,
+  ICardImagesService,
+} from '../../services/card-images-urls';
+import style from './game.scss';
 
 const PAGE_TITLE = 'game';
 const SHOW_TIME = 5;
 
-export default class PageGame extends BasePage {
+export class PageGame extends BasePage {
   private readonly timer = new Timer();
 
   private readonly cardsField = new CardsField();
@@ -35,12 +38,17 @@ export default class PageGame extends BasePage {
     this.cardsField.view.clear();
   }
 
-  async newGame(category: keyof typeof CardImagesCategory, amount: keyof CardFieldTypes): Promise<void> {
+  async newGame(
+    category: keyof typeof CardImagesCategory,
+    amount: keyof CardFieldTypes
+  ): Promise<void> {
     this.clear();
 
     const urls = await this.cardImagesService.getUrls(category, amount);
     if (!urls) return;
-    const cardModels = urls.front.map((url, id) => new CardModel(id, url, urls.back));
+    const cardModels = urls.front.map(
+      (url, id) => new CardModel(id, url, urls.back)
+    );
 
     this.cards = cardModels.map((model) => new Card(model));
     this.cards.forEach((card) =>

@@ -1,19 +1,17 @@
-import appConfig from '../../app/app.config';
-import Observer from '../../shared/observer';
-import BtnView from '../../shared/views/btn/btn';
-import LinkView from '../../shared/views/link/link';
-import View from '../../shared/views/view';
-import Factory from '../../shared/views/view-factory';
-import HeaderState from './state/base-state';
-import HeaderStateInitial from './state/state-initial';
+import { appConfig } from '../../app/app.config';
+import { Observer } from '../../shared/observer';
+import { BtnView } from '../../shared/views/btn/btn';
+import { LinkView } from '../../shared/views/link/link';
+import { View } from '../../shared/views/view';
+import { Factory } from '../../shared/views/view-factory';
+import { HeaderState } from './state/base-state';
+import { HeaderStateInitial } from './state/state-initial';
+import { NavMenuView } from '../nav-menu/nav-menu-view';
 import style from './header-view.scss';
-import NavMenuView from '../nav-menu/nav-menu-view';
-
-
 
 export type HeaderViewEvent = 'initial' | 'sign-in' | 'start' | 'stop';
 
-export default class HeaderView extends View {
+export class HeaderView extends View {
   readonly observer = new Observer<HeaderViewEvent>();
 
   private state = new HeaderStateInitial(this);
@@ -40,12 +38,7 @@ export default class HeaderView extends View {
     this.render(
       Factory.view({
         styles: [style.wrapper],
-        childs: [
-          this.logo,
-          this.menu,
-          this.btnStateSwitch,
-          this.avatar,
-        ],
+        childs: [this.logo, this.menu, this.btnStateSwitch, this.avatar],
       })
     );
 

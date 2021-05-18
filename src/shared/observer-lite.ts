@@ -2,7 +2,7 @@ import { State } from "./types";
 
 export type Listener<S extends State> = (state: S) => void;
 
-export default class ObserverLite<S extends State> {
+export class ObserverLite<S extends State> {
   private readonly listeners = new Set<Listener<S>>();
 
   subscribe(listener: Listener<S>): void {

@@ -1,14 +1,16 @@
-import TimerModel, { ITimerModelState } from './timer-model';
-import TimerView from './timer-view';
+import { TimerModel, ITimerModelState } from './timer-model';
+import { TimerView } from './timer-view';
 
-export default class Timer {
+export class Timer {
   readonly view = new TimerView();
 
   readonly model = new TimerModel();
 
   constructor() {
     this.updateView(this.model.getState());
-    this.model.onStateChange((state) => this.updateView(<ITimerModelState>state))
+    this.model.onStateChange((state) =>
+      this.updateView(state)
+    );
   }
 
   updateView(state: ITimerModelState): void {

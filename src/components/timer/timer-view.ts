@@ -1,9 +1,9 @@
 import { ITimeDiffFormat } from '../../shared/date-time-utils';
-import View from '../../shared/views/view';
-import Factory from '../../shared/views/view-factory';
+import { View } from '../../shared/views/view';
+import { Factory } from '../../shared/views/view-factory';
 import style from './timer-view.scss';
 
-export default class TimerView extends View {
+export class TimerView extends View {
   private readonly output = {
     seconds: Factory.view({
       styles: [style.timerOutput, style.timerOutputSeconds],
@@ -35,7 +35,7 @@ export default class TimerView extends View {
           TimerView.createSplitter(splitter),
           this.output.seconds,
         ],
-      }),
+      })
     );
   }
 

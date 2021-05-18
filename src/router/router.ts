@@ -1,5 +1,5 @@
 import { State } from '../shared/types';
-import ObserverLite, { Listener } from '../shared/observer-lite';
+import { ObserverLite, Listener } from '../shared/observer-lite';
 import { IPage } from '../pages/base-page';
 import { PageError } from '../pages/index';
 
@@ -7,12 +7,14 @@ export interface IRouterState extends State {
   page: IPage;
 }
 
-export default class Router {
+export class Router {
   private readonly observer = new ObserverLite<IRouterState>();
 
-  private readonly routes: Map<string, IPage> = new Map();
+  private readonly routes = new Map<string, IPage>();
 
   private readonly pageError = new PageError();
+
+  private readonly currentPage?: IPage;
 
   constructor() {
     window.addEventListener('hashchange', () => this.notifyChange());

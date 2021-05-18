@@ -1,14 +1,15 @@
-import Router from '../router/router';
+import { Router } from '../router/router';
 import { PageAbout, PageGame, PageSettings, PageScore } from '../pages/index';
 import { IPage } from '../pages/base-page';
-import Header from '../components/header/header';
-import View from '../shared/views/view';
-import Factory from '../shared/views/view-factory';
-import style from './app.scss';
+import { Header } from '../components/header/header';
+import { View } from '../shared/views/view';
+import { Factory } from '../shared/views/view-factory';
 import { CardImagesService } from '../services/card-images-urls';
-import HeaderStateStopGame from '../components/header/state/state-stop-game';
+import { HeaderStateStopGame } from '../components/header/state/state-stop-game';
+import { appConfig } from './app.config';
+import { styles } from './app.scss';
 
-export default class App {
+export class App {
   readonly view: View;
 
   private header = new Header();
@@ -32,7 +33,7 @@ export default class App {
 
     this.view = Factory.view({
       tag: 'main',
-      styles: [style.app],
+      styles: [styles.app],
       childs: [this.header.view, this.pageContainer],
     });
 
@@ -51,12 +52,12 @@ export default class App {
     return Object.values(this.pages).filter(predicat).map(handler);
   }
 
-  update(page: IPage): void {
+  async update(page: IPage): Promise<void> {
     if (page !== this.pages.game) {
       const headerState = this.header.view.getState();
       if (headerState instanceof HeaderStateStopGame) {
         headerState.update();
-        (<PageGame>this.pages.game).stopGame();
+        await (<PageGame>this.pages.game).stopGame();
       }
     }
     this.pageContainer.render(page.view);
@@ -65,7 +66,7 @@ export default class App {
 
   async start(): Promise<void> {
     window.location.hash = this.pages.about.url;
-    this.update(this.router.currentRoute());
+    await this.update(this.router.currentRoute());
   }
 
   async startGame(): Promise<void> {
@@ -75,16 +76,11 @@ export default class App {
 
   async stopGame(): Promise<void> {
     window.location.hash = this.pages.about.url;
-    (<PageGame>this.pages.game).stopGame();
+    await (<PageGame>this.pages.game).stopGame();
   }
 
   private initHeader() {
-    this.header.view.addNavLinks(
-      this.mapPages(
-        (page) => ({ url: page.url, text: page.titleText }),
-        (page) => page.url !== this.pages.game.url
-      )
-    );
+    this.header.addNavLinks(appConfig.header.navMenu);
     this.header.view.observer.subscribe('start', () => this.startGame());
     this.header.view.observer.subscribe('stop', () => this.stopGame());
   }

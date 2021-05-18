@@ -1,8 +1,8 @@
-import appConfig from '../../../app/app.config';
-import HeaderState from './base-state';
-import HeaderStateSignIn from './state-sign-in';
+import { appConfig } from '../../../app/app.config';
+import { HeaderState } from './base-state';
+import { HeaderStateSignIn } from './state-sign-in';
 
-export default class HeaderStateInitial extends HeaderState {
+export class HeaderStateInitial extends HeaderState {
   update(): void {
     this.baseUpdate(
       'initial',

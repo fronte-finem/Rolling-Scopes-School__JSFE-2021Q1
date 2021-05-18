@@ -4,7 +4,7 @@ module.exports = {
     es2021: true,
   },
   extends: [
-    'airbnb-typescript',
+    'airbnb-base-ts',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'prettier',
@@ -13,11 +13,14 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 12,
     sourceType: 'module',
+    project: ['./tsconfig.json'],
   },
   settings: {
     'import/resolver': 'typescript',
   },
   plugins: ['@typescript-eslint'],
-  rules: {},
-  ignorePatterns: ['webpack.config.js'],
+  rules: {
+    'import/prefer-default-export': 'off',
+  },
+  ignorePatterns: ['webpack.config.js', '.eslintrc.js'],
 };

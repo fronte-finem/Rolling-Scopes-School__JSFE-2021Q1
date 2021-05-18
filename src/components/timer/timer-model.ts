@@ -1,16 +1,19 @@
 import { ITimeDiffFormat, timeDiffFormat } from '../../shared/date-time-utils';
-import Model from '../../shared/models/model';
+import { Model } from '../../shared/models/model';
 import { State } from '../../shared/types';
-
 
 export interface ITimerModelState extends State {
   startTime: number;
   currentTime: number;
   getTimeDiff(): ITimeDiffFormat;
 }
-export type TimerModelEvent = 'countdown-start' | 'countdown-end' | 'start' | 'stop';
+export type TimerModelEvent =
+  | 'countdown-start'
+  | 'countdown-end'
+  | 'start'
+  | 'stop';
 
-export default class TimerModel extends Model<ITimerModelState> {
+export class TimerModel extends Model<ITimerModelState> {
   private timerId: number | undefined;
 
   constructor() {
@@ -38,14 +41,14 @@ export default class TimerModel extends Model<ITimerModelState> {
     this.reset(initialTime);
     this.timerId = window.setInterval(() => this.increment(), 1000);
   }
-  
+
   private increment(): void {
     this.state.currentTime += 1;
   }
 
   async countdown(initialTime = 10): Promise<void> {
     return new Promise((resolve) => {
-      this.reset(initialTime);  
+      this.reset(initialTime);
       this.timerId = window.setInterval(() => {
         this.decrement();
         if (this.state.currentTime > 0) return;
@@ -58,7 +61,6 @@ export default class TimerModel extends Model<ITimerModelState> {
   private decrement(): void {
     this.state.currentTime -= 1;
   }
-
 
   getTimeDiff(): ITimeDiffFormat {
     return timeDiffFormat(this.state.currentTime - this.state.startTime);

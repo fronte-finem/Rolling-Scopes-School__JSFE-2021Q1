@@ -1,7 +1,7 @@
-import Observer, { Listener } from "../observer";
-import { State } from "../types";
+import { Observer, Listener } from '../observer';
+import { State } from '../types';
 
-export default abstract class Model<S extends State> {
+export abstract class Model<S extends State> {
   protected readonly observer = new Observer();
 
   protected readonly state: S;
@@ -38,7 +38,9 @@ export default abstract class Model<S extends State> {
     prop: string,
     value: T[string]
   ): string {
-    const msg = `Changin ${target} property ${prop} from ${target[prop]} to ${value}`;
+    const msg = `Changin ${String(target)} property ${prop} from ${String(
+      target[prop]
+    )} to ${String(value)}`;
     // console.log(msg);
     return msg;
   }

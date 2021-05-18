@@ -1,6 +1,6 @@
 import { State } from '../../shared/types';
-import Model from '../../shared/models/model';
-import CardModel from '../../components/card/card-model';
+import { Model } from '../../shared/models/model';
+import { CardModel } from '../../components/card/card-model';
 import { Listener } from '../../shared/observer';
 
 export interface IGameModelState extends State {
@@ -13,7 +13,7 @@ export interface IGameModelState extends State {
   stopTime: Date;
 }
 
-export default class GameModel extends Model<IGameModelState> {
+export class GameModel extends Model<IGameModelState> {
   constructor(readonly cards: CardModel[]) {
     super({
       isError: false,
@@ -23,7 +23,7 @@ export default class GameModel extends Model<IGameModelState> {
       matchedCards: new Set<CardModel>(),
       startTime: new Date(),
       stopTime: new Date(),
-    })
+    });
     this.cards = cards;
   }
 
@@ -73,8 +73,7 @@ export default class GameModel extends Model<IGameModelState> {
   }
 
   match(card: CardModel): boolean {
-    if (card.frontImage !== this.state.gameActiveCard?.frontImage)
-      return false;
+    if (card.frontImage !== this.state.gameActiveCard?.frontImage) return false;
 
     this.state.gameActiveCard.match(true);
     card.match(true);
@@ -99,10 +98,13 @@ export default class GameModel extends Model<IGameModelState> {
   }
 
   get clicks(): { all: number; error: number } {
-    const [all, error] = this.cards.reduce(([a, e], card) =>{
-      const {clickedCount, errorCount} = card.getState();
-      return [a + clickedCount, e + errorCount];
-    }, [0, 0])
+    const [all, error] = this.cards.reduce(
+      ([a, e], card) => {
+        const { clickedCount, errorCount } = card.getState();
+        return [a + clickedCount, e + errorCount];
+      },
+      [0, 0]
+    );
     return { all, error };
   }
 
@@ -116,7 +118,7 @@ export default class GameModel extends Model<IGameModelState> {
     const diffTime = Math.round(
       (stopTime.getTime() - this.state.startTime.getTime()) / 1000
     );
-    const score = diffClicks * 100 - diffTime * 10
+    const score = diffClicks * 100 - diffTime * 10;
     return score < 0 ? 0 : score;
   }
 }

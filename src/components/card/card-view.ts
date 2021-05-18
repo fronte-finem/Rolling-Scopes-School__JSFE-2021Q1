@@ -1,9 +1,9 @@
 import style from './card-view.scss';
-import View from '../../shared/views/view';
-import Factory from '../../shared/views/view-factory';
-import CardModel from './card-model';
+import { View } from '../../shared/views/view';
+import { Factory } from '../../shared/views/view-factory';
+import { CardModel } from './card-model';
 
-export default class CardView extends View {
+export class CardView extends View {
   constructor(cardModel: CardModel) {
     super({
       styles: [style.cardContainer],
@@ -22,7 +22,6 @@ export default class CardView extends View {
       styles: [style.cardSide, style.cardSideFront],
     });
     front.element.style.backgroundImage = `url("./images/${cardModel.frontImage}")`;
-
 
     const card = Factory.view({ styles: [style.card], childs: [back, front] });
 
