@@ -4,9 +4,9 @@ import BtnView from '../../shared/views/btn/btn';
 import LinkView from '../../shared/views/link/link';
 import View from '../../shared/views/view';
 import Factory from '../../shared/views/view-factory';
-import style from './header.scss';
 import HeaderState from './state/base-state';
 import HeaderStateInitial from './state/state-initial';
+import style from './header-view.scss';
 
 export type HeaderViewEvent = 'initial' | 'sign-in' | 'start' | 'stop';
 
@@ -15,11 +15,11 @@ export default class HeaderView extends View {
 
   private state = new HeaderStateInitial(this);
 
-  readonly navLinks: Map<string, LinkView>;
+  private navLinks?: Map<string, LinkView>;
 
   private activeNavLink: LinkView | undefined;
 
-  readonly logo = new LinkView({ url: '#/about', styles: [style.logo] });
+  readonly logo = new LinkView({ url: './', styles: [style.logo] });
 
   readonly avatar = new LinkView({
     url: '#/score',
@@ -33,29 +33,44 @@ export default class HeaderView extends View {
     text: appConfig.header.btn.signUp,
   });
 
-  constructor(navData: { url: string; text: string }[]) {
-    super({ tag: 'header', styles: [style.header] });
+  private readonly navigation = {
+    menu: Factory.view({ tag: 'nav', styles: [style.navMenu] }),
+    list: Factory.view({ tag: 'ul', styles: [style.navItems] }),
+  };
 
-    this.navLinks = navData.reduce(
-      (dict, { url, text }) =>
-        dict.set(url, new LinkView({ url, styles: [style.navLink], text })),
-      new Map<string, LinkView>()
-    );
+  constructor() {
+    super({ tag: 'header', styles: [style.header] });
 
     this.render(
       Factory.view({
         styles: [style.wrapper],
         childs: [
           this.logo,
-          HeaderView.createNavMenu([...this.navLinks.values()]),
+          this.navigation.menu,
           this.btnStateSwitch,
           this.avatar,
         ],
-      }),
+      })
     );
+    this.navigation.menu.render(this.navigation.list);
 
     this.state.update();
     this.btnStateSwitch.onClick(() => this.state.update());
+  }
+
+  addNavLinks(navData: { url: string; text: string }[]): void {
+    this.navLinks = navData.reduce(
+      (dict, { url, text }) =>
+        dict.set(url, new LinkView({ url, styles: [style.navLink], text })),
+      new Map<string, LinkView>()
+    );
+    this.navigation.list.render(
+      HeaderView.createNavItems([...this.navLinks.values()])
+    );
+  }
+
+  getState(): HeaderState {
+    return this.state;
   }
 
   setState(state: HeaderState): void {
@@ -66,28 +81,6 @@ export default class HeaderView extends View {
     this.activeNavLink?.active(false);
     this.activeNavLink = this.navLinks?.get(url);
     this.activeNavLink?.active();
-  }
-
-  private static createBtn(selfStyle: string, text: string): BtnView {
-    return new BtnView({
-      styles: [style.btn, selfStyle],
-      stateStyle: [['hidden', style.btnHidden]],
-      text,
-    });
-  }
-
-  private static createNavMenu(payload: View[]): View {
-    return Factory.view({
-      tag: 'nav',
-      styles: [style.navMenu],
-      childs: [
-        {
-          tag: 'ul',
-          styles: [style.navItems],
-          childs: HeaderView.createNavItems(payload),
-        },
-      ],
-    });
   }
 
   private static createNavItems(payload: View[]): View[] {

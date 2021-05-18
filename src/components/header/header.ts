@@ -4,10 +4,10 @@ import HeaderView from './header-view';
 export default class Header {
   private readonly observer = new Observer();
 
-  readonly view: HeaderView;
+  readonly view = new HeaderView();
 
-  constructor(navData: { url: string; text: string }[]) {
-    this.view = new HeaderView(navData);
+  addNavLinks(navData: { url: string; text: string }[]): void {
+    this.view.addNavLinks(navData)
   }
 
   setActiveNavLink(url: string): void {
