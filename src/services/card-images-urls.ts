@@ -2,8 +2,7 @@ import { knuthShuffle } from '../shared/array-utils';
 
 const IMAGES_JSON = './images.json';
 
-// https://stackoverflow.com/questions/63961803/eslint-says-all-enums-in-typescript-app-are-already-declared-in-the-upper-scope
-// https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-shadow.md
+
 export const enum CardImagesCategory {
   cats,
   dogs,
