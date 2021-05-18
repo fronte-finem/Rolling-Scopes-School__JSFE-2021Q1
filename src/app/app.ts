@@ -6,11 +6,12 @@ import View from '../shared/views/view';
 import Factory from '../shared/views/view-factory';
 import style from './app.scss';
 import { CardImagesService } from '../services/card-images-urls';
+import HeaderStateStopGame from '../components/header/state/state-stop-game';
 
 export default class App {
   readonly view: View;
 
-  private header: Header;
+  private header = new Header();
 
   readonly pageContainer: View;
 
@@ -26,9 +27,6 @@ export default class App {
       score: new PageScore(),
     };
 
-    this.header = new Header(
-      this.mapPages((page) => ({ url: page.url, text: page.titleText }))
-    );
     this.initHeader();
     this.pageContainer = new View({ styles: [style.pageContainer] });
 
@@ -46,33 +44,47 @@ export default class App {
     parent.append(this.view.element);
   }
 
-  mapPages<T>(handler: (page: IPage) => T): T[] {
-    return Object.values(this.pages).map(handler);
+  mapPages<T>(
+    handler: (page: IPage) => T,
+    predicat: (page: IPage) => boolean = () => true
+  ): T[] {
+    return Object.values(this.pages).filter(predicat).map(handler);
   }
 
   update(page: IPage): void {
+    if (page !== this.pages.game) {
+      const headerState = this.header.view.getState();
+      if (headerState instanceof HeaderStateStopGame) {
+        headerState.update();
+        (<PageGame>this.pages.game).stopGame();
+      }
+    }
     this.pageContainer.render(page.view);
     this.header.setActiveNavLink(page.url);
   }
 
   async start(): Promise<void> {
-    window.location.hash = this.pages.game.url;
+    window.location.hash = this.pages.about.url;
     this.update(this.router.currentRoute());
   }
 
   async startGame(): Promise<void> {
     window.location.hash = this.pages.game.url;
-    this.update(this.router.currentRoute());
     await (<PageGame>this.pages.game).newGame('dogs', 12);
   }
 
   async stopGame(): Promise<void> {
-    window.location.hash = this.pages.game.url;
-    this.update(this.router.currentRoute());
+    window.location.hash = this.pages.about.url;
     (<PageGame>this.pages.game).stopGame();
   }
 
   private initHeader() {
+    this.header.view.addNavLinks(
+      this.mapPages(
+        (page) => ({ url: page.url, text: page.titleText }),
+        (page) => page.url !== this.pages.game.url
+      )
+    );
     this.header.view.observer.subscribe('start', () => this.startGame());
     this.header.view.observer.subscribe('stop', () => this.stopGame());
   }
