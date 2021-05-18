@@ -11,10 +11,14 @@
   --color-background-active-hover: hsla(30, 100%, 25%, 1);
   --color-background: var(--color-background-default);
 
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
+  font-size: 16px;
   text-decoration: none;
-  transition: 200ms;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: 300ms;
 
   color: var(--color);
   background-color: var(--color-background);
