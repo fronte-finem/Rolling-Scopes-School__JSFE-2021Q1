@@ -33,7 +33,7 @@ export default class Timer {
   }
 
   async countdown(initialTime = 10): Promise<void> {
-    await this.model.countdown(initialTime);
     this.view.setCssState('countdown', true);
+    await this.model.countdown(initialTime);
   }
 }
