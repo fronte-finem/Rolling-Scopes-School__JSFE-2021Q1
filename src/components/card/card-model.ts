@@ -1,10 +1,9 @@
-import { State } from '../../shared/types';
-import { Model } from '../../shared/models/model';
+import { Model, ModelState } from '../../shared/models/model';
 import { delay } from '../../shared/timer-utils';
 
 const ERROR_TIME = 2;
 
-export interface ICardModelState extends State {
+export interface ICardModelState extends ModelState {
   isError: boolean;
   isMatch: boolean;
   isFrontSide: boolean;

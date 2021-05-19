@@ -1,9 +1,8 @@
-import { State } from '../../shared/types';
-import { Model } from '../../shared/models/model';
+import { Model, ModelState } from '../../shared/models/model';
 import { CardModel } from '../../components/card/card-model';
 import { Listener } from '../../shared/observer';
 
-export interface IGameModelState extends State {
+export interface IGameModelState extends ModelState {
   isError: boolean;
   isStopped: boolean;
   isSolved: boolean;
@@ -39,7 +38,7 @@ export class GameModel extends Model<IGameModelState> {
     this.flipAll(true);
   }
 
-  async start(): Promise<void> {
+  start(): void {
     this.flipAll(false);
     this.state.isStopped = false;
     this.state.startTime = new Date();

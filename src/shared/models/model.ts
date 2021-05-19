@@ -1,7 +1,8 @@
 import { Observer, Listener } from '../observer';
-import { State } from '../types';
 
-export abstract class Model<S extends State> {
+export type ModelState = Record<string, unknown>;
+
+export abstract class Model<S extends ModelState> {
   protected readonly observer = new Observer();
 
   protected readonly state: S;
@@ -33,7 +34,7 @@ export abstract class Model<S extends State> {
     });
   }
 
-  static logChangeState<T extends State>(
+  static logChangeState<T extends ModelState>(
     target: T,
     prop: string,
     value: T[string]
