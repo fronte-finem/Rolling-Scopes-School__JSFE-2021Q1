@@ -1,13 +1,14 @@
-import { replaceSpaces } from '../shared/string-utils';
+import { capitalize, replaceSpaces } from '../shared/string-utils';
 import { View } from '../shared/views/view';
 import { Factory, IBuildViewOptions } from '../shared/views/view-factory';
-import style from './base-page.scss';
+import styles from './base-page.scss';
 
 export interface IPage {
   readonly view: View;
   readonly titleText: string;
   readonly titleSafe: string;
   readonly url: string;
+  init(): void;
 }
 
 export abstract class BasePage implements IPage {
@@ -15,12 +16,16 @@ export abstract class BasePage implements IPage {
 
   readonly view: View;
 
-  constructor(title: string, { styles, ...options }: IBuildViewOptions) {
+  constructor(title: string, { classNames, ...options }: IBuildViewOptions) {
     this.title = title.toLowerCase();
     this.view = Factory.view({
-      styles: [style.page].concat(styles || []),
+      classNames: [styles.page].concat(classNames || []),
       ...options,
     });
+  }
+
+  init(): void {
+    document.title = `🎴 Match-Match 🃏 ${capitalize(this.titleText)} 🎴`;
   }
 
   get titleText(): string {

@@ -6,24 +6,24 @@ import { CardModel } from './card-model';
 export class CardView extends View {
   constructor(cardModel: CardModel) {
     super({
-      styles: [style.cardContainer],
-      stateStyle: [
+      classNames: [style.cardContainer],
+      statesClassNames: [
         ['flip', style.cardContainerCardFlipped],
         ['error', style.cardContainerCardError],
         ['match', style.cardContainerCardMatch],
       ],
     });
     const back = Factory.view({
-      styles: [style.cardSide, style.cardSideBack],
+      classNames: [style.cardSide, style.cardSideBack],
     });
     back.element.style.backgroundImage = `url("./images/${cardModel.backImage}")`;
 
     const front = Factory.view({
-      styles: [style.cardSide, style.cardSideFront],
+      classNames: [style.cardSide, style.cardSideFront],
     });
     front.element.style.backgroundImage = `url("./images/${cardModel.frontImage}")`;
 
-    const card = Factory.view({ styles: [style.card], childs: [back, front] });
+    const card = Factory.view({ classNames: [style.card], childs: [back, front] });
 
     this.render(card);
   }

@@ -2,7 +2,7 @@ import { createSvgSpriteElement } from '../../shared/dom-utils';
 import { LinkView } from '../../shared/views/link/link';
 import { View } from '../../shared/views/view';
 import { Factory } from '../../shared/views/view-factory';
-import style from './nav-menu-view.scss';
+import styles from './nav-menu-view.scss';
 
 export interface NavLinkCreateOptions {
   page: string;
@@ -18,11 +18,11 @@ export class NavMenuView extends View {
 
   private readonly navList = Factory.view({
     tag: 'ul',
-    styles: [style.navItems],
+    classNames: [styles.navItems],
   });
 
   constructor() {
-    super({ tag: 'nav', styles: [style.navMenu] });
+    super({ tag: 'nav', classNames: [styles.navMenu] });
     this.render(this.navList);
   }
 
@@ -47,7 +47,7 @@ export class NavMenuView extends View {
     return payload.map((link) =>
       Factory.view({
         tag: 'li',
-        styles: [style.navItem],
+        classNames: [styles.navItem],
         childs: [link],
       })
     );
@@ -60,10 +60,10 @@ export class NavMenuView extends View {
   }: NavLinkCreateOptions): LinkView {
     return new LinkView({
       url,
-      styles: [style.navLink],
+      classNames: [styles.navLink],
       text: title,
       hookElement: (elem) =>
-        elem.append(createSvgSpriteElement(svgIconLink, [style.svgIcon])),
+        elem.append(createSvgSpriteElement(svgIconLink, [styles.svgIcon])),
     });
   }
 }

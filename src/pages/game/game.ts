@@ -9,7 +9,7 @@ import {
   CardImagesCategory,
   ICardImagesService,
 } from '../../services/card-images-urls';
-import style from './game.scss';
+import styles from './game.scss';
 
 const PAGE_TITLE = 'game';
 const SHOW_TIME = 5;
@@ -25,8 +25,8 @@ export class PageGame extends BasePage {
 
   constructor(private cardImagesService: ICardImagesService) {
     super(PAGE_TITLE, {
-      styles: [style.game],
-      stateStyle: [['solved', style.gameSolved]],
+      classNames: [styles.game],
+      statesClassNames: [['solved', styles.gameSolved]],
     });
 
     this.view.render([this.timer.view, this.cardsField.view]);
@@ -68,7 +68,7 @@ export class PageGame extends BasePage {
     });
   }
 
-  async stopGame(): Promise<void> {
+  stopGame(): void {
     this.timer.reset();
     this.model?.stop();
     this.clear();

@@ -5,9 +5,8 @@ import { Header } from '../components/header/header';
 import { View } from '../shared/views/view';
 import { Factory } from '../shared/views/view-factory';
 import { CardImagesService } from '../services/card-images-urls';
-import { HeaderStateStopGame } from '../components/header/state/state-stop-game';
 import { appConfig } from './app.config';
-import { styles } from './app.scss';
+import styles from './app.scss';
 
 export class App {
   readonly view: View;
@@ -29,11 +28,11 @@ export class App {
     };
 
     this.initHeader();
-    this.pageContainer = new View({ styles: [style.pageContainer] });
+    this.pageContainer = new View({ classNames: [styles.pageContainer] });
 
     this.view = Factory.view({
       tag: 'main',
-      styles: [styles.app],
+      classNames: [styles.app],
       childs: [this.header.view, this.pageContainer],
     });
 
@@ -52,21 +51,21 @@ export class App {
     return Object.values(this.pages).filter(predicat).map(handler);
   }
 
-  async update(page: IPage): Promise<void> {
+  update(page: IPage): void {
     if (page !== this.pages.game) {
-      const headerState = this.header.view.getState();
-      if (headerState instanceof HeaderStateStopGame) {
-        headerState.update();
-        await (<PageGame>this.pages.game).stopGame();
+      const headerStateName = this.header.view.getCurrentState();
+      if (headerStateName === 'stop') {
+        this.header.view.applyCurrentState();
+        (<PageGame>this.pages.game).stopGame();
       }
     }
     this.pageContainer.render(page.view);
     this.header.setActiveNavLink(page.url);
   }
 
-  async start(): Promise<void> {
+  start(): void {
     window.location.hash = this.pages.about.url;
-    await this.update(this.router.currentRoute());
+    this.update(this.router.getCurrentRoute());
   }
 
   async startGame(): Promise<void> {
@@ -74,9 +73,9 @@ export class App {
     await (<PageGame>this.pages.game).newGame('dogs', 12);
   }
 
-  async stopGame(): Promise<void> {
+  stopGame(): void {
     window.location.hash = this.pages.about.url;
-    await (<PageGame>this.pages.game).stopGame();
+    (<PageGame>this.pages.game).stopGame();
   }
 
   private initHeader() {
