@@ -1,4 +1,4 @@
-import { BasePage } from '../base-page';
+import { BasePage, IPage } from '../base-page';
 import { Card } from '../../components/card/card';
 import { CardsField } from '../../components/cards-field/cards-field';
 import { GameModel } from './game-model';
@@ -14,7 +14,7 @@ import styles from './game.scss';
 const PAGE_TITLE = 'game';
 const SHOW_TIME = 5;
 
-export class PageGame extends BasePage {
+export class PageGame extends BasePage implements IPage {
   private readonly timer = new Timer();
 
   private readonly cardsField = new CardsField();
@@ -36,6 +36,18 @@ export class PageGame extends BasePage {
     this.model = undefined;
     this.cards = [];
     this.cardsField.view.clear();
+  }
+
+  init(): void {
+    this.newGame('dogs', 12).then(
+      () => {},
+      () => {}
+    );
+  }
+
+  stop(): void {
+    this.stopGame();
+    console.log('Game stopped:', this);
   }
 
   async newGame(

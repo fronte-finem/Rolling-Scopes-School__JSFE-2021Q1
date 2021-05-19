@@ -9,6 +9,7 @@ export interface IPage {
   readonly titleSafe: string;
   readonly url: string;
   init(): void;
+  stop(): void;
 }
 
 export abstract class BasePage implements IPage {
@@ -26,6 +27,10 @@ export abstract class BasePage implements IPage {
 
   init(): void {
     document.title = `🎴 Match-Match 🃏 ${capitalize(this.titleText)} 🎴`;
+  }
+
+  stop(): void {
+    console.log(this, '⚠️ Method stop not implemented ⚠️');
   }
 
   get titleText(): string {
