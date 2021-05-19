@@ -1,5 +1,9 @@
+function capitalizeWord(word: string): string {
+  return `${word[0].toUpperCase()}${word.slice(1).toLowerCase()}`;
+}
+
 export function capitalize(str: string): string {
-  return `${str[0].toUpperCase()}${str.slice(1).toLowerCase()}`;
+  return str.split(' ').map(capitalizeWord).join(' ');
 }
 
 export function replaceSpaces(str: string, replacement = '-'): string {
