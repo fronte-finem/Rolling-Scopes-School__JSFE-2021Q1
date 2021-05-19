@@ -11,7 +11,7 @@ export class Card {
     this.model.onStateChange((state) => this.updateView(state));
   }
 
-  onClick(handler: (card: Card) => void): void {
+  onClick(handler: (card: Card) => unknown): void {
     this.view.onClick(() => handler(this));
   }
 

@@ -2,7 +2,6 @@ import { knuthShuffle } from '../shared/array-utils';
 
 const IMAGES_JSON = './images.json';
 
-
 export const enum CardImagesCategory {
   cats,
   dogs,
@@ -44,7 +43,7 @@ export class CardImagesService implements ICardImagesService {
   private async fetch(): Promise<Map<string, ICardImagesDescriptionModel>> {
     if (!this.cache) {
       const res = await fetch(IMAGES_JSON);
-      const data: ICardImagesCategoryModel[] = await res.json();
+      const data = (await res.json()) as ICardImagesCategoryModel[];
       this.cache = data.reduce(
         (acc, model) => acc.set(model.category, model.images),
         new Map()
