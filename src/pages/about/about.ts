@@ -1,10 +1,10 @@
-import BasePage from '../base-page';
+import { BasePage } from '../base-page';
 
-const PAGE_TITLE = 'About';
+const PAGE_TITLE = 'about game';
 
-export default class PageAbout extends BasePage {
+export class PageAbout extends BasePage {
   constructor() {
-    super(PAGE_TITLE, { childs: [{ tag: 'h1', text: PAGE_TITLE }]});
+    super(PAGE_TITLE, { childs: [{ tag: 'h1', text: PAGE_TITLE }] });
   }
 }
 // Todo:

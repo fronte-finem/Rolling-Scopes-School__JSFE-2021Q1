@@ -1,19 +1,17 @@
-import { State } from "./types";
+export type Listener<T> = (data: T) => unknown;
 
-export type Listener<S extends State> = (state: S) => void;
+export class ObserverLite {
+  private readonly listeners = new Set<Listener<unknown>>();
 
-export default class ObserverLite<S extends State> {
-  private readonly listeners = new Set<Listener<S>>();
-
-  subscribe(listener: Listener<S>): void {
-    this.listeners.add(listener);
+  subscribe<T>(listener: Listener<T>): void {
+    this.listeners.add(<Listener<unknown>>listener);
   }
 
-  unsubscribe(listener: Listener<S>): void {
-    this.listeners.delete(listener);
+  unsubscribe<T>(listener: Listener<T>): void {
+    this.listeners.delete(<Listener<unknown>>listener);
   }
 
-  notify(state: S): void {
-    this.listeners.forEach((listener) => listener(state));
+  notify<T>(data: T): void {
+    this.listeners.forEach((listener) => listener(data));
   }
 }

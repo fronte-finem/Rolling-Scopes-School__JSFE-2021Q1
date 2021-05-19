@@ -1,5 +1,5 @@
-export { default as PageAbout } from './about/about';
-export { default as PageGame } from './game/game';
-export { default as PageSettings } from './settings/settings';
-export { default as PageScore } from './score/score';
-export { default as PageError } from './error/error';
+export { PageAbout } from './about/about';
+export { PageGame } from './game/game';
+export { PageSettings } from './settings/settings';
+export { PageScore } from './score/score';
+export { PageError } from './error/error';

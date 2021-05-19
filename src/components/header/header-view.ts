@@ -1,103 +1,63 @@
-import appConfig from '../../app/app.config';
-import Observer from '../../shared/observer';
-import BtnView from '../../shared/views/btn/btn';
-import LinkView from '../../shared/views/link/link';
-import View from '../../shared/views/view';
-import Factory from '../../shared/views/view-factory';
-import style from './header.scss';
-import HeaderState from './state/base-state';
-import HeaderStateInitial from './state/state-initial';
+import { appConfig } from '../../app/app.config';
+import { Observer } from '../../shared/observer';
+import { View } from '../../shared/views/view';
+import { Factory } from '../../shared/views/view-factory';
+import { BtnView } from '../../shared/views/btn/btn';
+import { LinkView } from '../../shared/views/link/link';
+import { NavMenuView } from '../nav-menu/nav-menu-view';
+import { StateMashine } from '../../shared/state/state-mashine';
+import { HeaderStateName, IHeaderContext, HeaderState } from './header-view-state';
+import styles from './header-view.scss';
 
-export type HeaderViewEvent = 'initial' | 'sign-in' | 'start' | 'stop';
+export class HeaderView extends View implements IHeaderContext {
+  readonly observer = new Observer<HeaderStateName>();
 
-export default class HeaderView extends View {
-  readonly observer = new Observer<HeaderViewEvent>();
+  protected readonly stateMashine: StateMashine<HeaderStateName> =
+    new StateMashine(
+      new HeaderState('initial', 'ready', appConfig.header.btn.signUp, true)
+    )
+      .addState(
+        new HeaderState('ready', 'game', appConfig.header.btn.start, false)
+      )
+      .addState(
+        new HeaderState('game', 'ready', appConfig.header.btn.stop, false)
+      );
 
-  private state = new HeaderStateInitial(this);
+  readonly logo = new LinkView({ url: './', classNames: [styles.logo] });
 
-  readonly navLinks: Map<string, LinkView>;
-
-  private activeNavLink: LinkView | undefined;
-
-  readonly logo = new LinkView({ url: '#/about', styles: [style.logo] });
+  readonly menu = new NavMenuView();
 
   readonly avatar = new LinkView({
     url: '#/score',
-    styles: [style.avatar],
-    stateStyle: [['hidden', style.avatarHidden]],
+    classNames: [styles.avatar],
+    statesClassNames: [['hidden', styles.avatarHidden]],
   });
 
   readonly btnStateSwitch = new BtnView({
-    styles: [style.btn, style.btnStateSwitch],
-    stateStyle: [['hidden', style.btnHidden]],
-    text: appConfig.header.btn.signUp,
+    classNames: [styles.btn, styles.btnStateSwitch],
+    statesClassNames: [['hidden', styles.btnHidden]],
   });
 
-  constructor(navData: { url: string; text: string }[]) {
-    super({ tag: 'header', styles: [style.header] });
-
-    this.navLinks = navData.reduce(
-      (dict, { url, text }) =>
-        dict.set(url, new LinkView({ url, styles: [style.navLink], text })),
-      new Map<string, LinkView>()
-    );
+  constructor() {
+    super({ tag: 'header', classNames: [styles.header] });
 
     this.render(
       Factory.view({
-        styles: [style.wrapper],
-        childs: [
-          this.logo,
-          HeaderView.createNavMenu([...this.navLinks.values()]),
-          this.btnStateSwitch,
-          this.avatar,
-        ],
-      }),
-    );
-
-    this.state.update();
-    this.btnStateSwitch.onClick(() => this.state.update());
-  }
-
-  setState(state: HeaderState): void {
-    this.state = state;
-  }
-
-  setActiveNavLink(url: string): void {
-    this.activeNavLink?.active(false);
-    this.activeNavLink = this.navLinks?.get(url);
-    this.activeNavLink?.active();
-  }
-
-  private static createBtn(selfStyle: string, text: string): BtnView {
-    return new BtnView({
-      styles: [style.btn, selfStyle],
-      stateStyle: [['hidden', style.btnHidden]],
-      text,
-    });
-  }
-
-  private static createNavMenu(payload: View[]): View {
-    return Factory.view({
-      tag: 'nav',
-      styles: [style.navMenu],
-      childs: [
-        {
-          tag: 'ul',
-          styles: [style.navItems],
-          childs: HeaderView.createNavItems(payload),
-        },
-      ],
-    });
-  }
-
-  private static createNavItems(payload: View[]): View[] {
-    return payload.map((link) =>
-      Factory.view({
-        tag: 'li',
-        styles: [style.navItem],
-        childs: [link],
+        classNames: [styles.wrapper],
+        childs: [this.logo, this.menu, this.btnStateSwitch, this.avatar],
       })
     );
+
+    this.stateMashine.applyCurrentState(this);
+    this.btnStateSwitch.onClick(() => this.stateMashine.applyCurrentState(this));
+  }
+
+  getCurrentState(): HeaderStateName {
+    return this.stateMashine.getCurrentState();
+  }
+
+  nextState(): void {
+    this.stateMashine.applyCurrentState(this, false);
   }
 }
 

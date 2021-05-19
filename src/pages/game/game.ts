@@ -1,17 +1,20 @@
-import BasePage from '../base-page';
-import Card from '../../components/card/card';
-import CardsField from '../../components/cards-field/cards-field';
-import style from './game.scss';
-import GameModel from './game-model';
-import CardModel from '../../components/card/card-model';
-import Timer from '../../components/timer/timer';
-import { CardImagesCategory, ICardImagesService } from '../../services/card-images-urls';
+import { BasePage, IPage } from '../base-page';
+import { Card } from '../../components/card/card';
+import { CardsField } from '../../components/cards-field/cards-field';
+import { GameModel } from './game-model';
+import { CardModel } from '../../components/card/card-model';
+import { Timer } from '../../components/timer/timer';
 import { CardFieldTypes } from '../../components/cards-field/card-field-model';
+import {
+  CardImagesCategory,
+  ICardImagesService,
+} from '../../services/card-images-urls';
+import styles from './game.scss';
 
-const PAGE_TITLE = 'Game';
+const PAGE_TITLE = 'game';
 const SHOW_TIME = 5;
 
-export default class PageGame extends BasePage {
+export class PageGame extends BasePage implements IPage {
   private readonly timer = new Timer();
 
   private readonly cardsField = new CardsField();
@@ -22,8 +25,8 @@ export default class PageGame extends BasePage {
 
   constructor(private cardImagesService: ICardImagesService) {
     super(PAGE_TITLE, {
-      styles: [style.game],
-      stateStyle: [['solved', style.gameSolved]],
+      classNames: [styles.game],
+      statesClassNames: [['solved', styles.gameSolved]],
     });
 
     this.view.render([this.timer.view, this.cardsField.view]);
@@ -35,12 +38,29 @@ export default class PageGame extends BasePage {
     this.cardsField.view.clear();
   }
 
-  async newGame(category: keyof typeof CardImagesCategory, amount: keyof CardFieldTypes): Promise<void> {
+  init(): void {
+    this.newGame('dogs', 12).then(
+      () => {},
+      () => {}
+    );
+  }
+
+  stop(): void {
+    this.stopGame();
+    console.log('Game stopped:', this);
+  }
+
+  async newGame(
+    category: keyof typeof CardImagesCategory,
+    amount: keyof CardFieldTypes
+  ): Promise<void> {
     this.clear();
 
     const urls = await this.cardImagesService.getUrls(category, amount);
     if (!urls) return;
-    const cardModels = urls.front.map((url, id) => new CardModel(id, url, urls.back));
+    const cardModels = urls.front.map(
+      (url, id) => new CardModel(id, url, urls.back)
+    );
 
     this.cards = cardModels.map((model) => new Card(model));
     this.cards.forEach((card) =>
@@ -60,7 +80,7 @@ export default class PageGame extends BasePage {
     });
   }
 
-  async stopGame(): Promise<void> {
+  stopGame(): void {
     this.timer.reset();
     this.model?.stop();
     this.clear();

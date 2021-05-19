@@ -1,8 +1,8 @@
-export type Listener<T> = (data: T) => void;
+export type Listener<T> = (data: T) => unknown;
 
 type Listeners = Set<Listener<unknown>>;
 
-export default class Observer<E> {
+export class Observer<E> {
   private readonly listenersMap = new Map<E, Listeners>();
 
   subscribe<T>(event: E, listener: Listener<T>): void {

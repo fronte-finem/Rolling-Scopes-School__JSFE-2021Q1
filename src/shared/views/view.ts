@@ -1,5 +1,9 @@
-import { createElement, getCssVar, setCssVar } from '../dom-utils';
-import { ICreateElementOptions } from '../types';
+import {
+  ICreateElementOptions,
+  createElement,
+  getCssVar,
+  setCssVar,
+} from '../dom-utils';
 
 export interface IView {
   readonly element: HTMLElement;
@@ -9,28 +13,42 @@ export interface IView {
   setCssState(state: string, force: boolean): void;
   getCssVar(name: string): string;
   setCssVar(name: string, value: string): void;
+  getText(): string | null;
+  setText(text: string): void;
   onClick(
     listener: EventListenerOrEventListenerObject,
     options?: boolean | AddEventListenerOptions
-  ): void
+  ): unknown;
 }
 
 export interface ICreateViewOptions extends ICreateElementOptions {
-  stateStyle?: [state: string, style: string][];
+  statesClassNames?: [state: string, style: string][];
   hookElement?: (elem: HTMLElement) => void;
 }
 
-export default class View implements IView {
+export class View implements IView {
   readonly element: HTMLElement;
 
   readonly mapStateStyle: Map<string, string>;
 
-  constructor({ stateStyle, hookElement: hook, ...options }: ICreateViewOptions) {
+  constructor({
+    statesClassNames: stateStyle,
+    hookElement: hook,
+    ...options
+  }: ICreateViewOptions) {
     this.element = createElement(options);
     this.mapStateStyle = new Map(stateStyle || []);
     if (hook) {
       hook(this.element);
     }
+  }
+
+  getText(): string | null {
+    return this.element.textContent;
+  }
+
+  setText(text: string): void {
+    this.element.textContent = text;
   }
 
   clear(): IView {

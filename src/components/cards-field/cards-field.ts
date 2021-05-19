@@ -1,13 +1,13 @@
 import style from './cards-field.scss';
-import Factory from '../../shared/views/view-factory';
-import Card from '../card/card';
+import { Factory } from '../../shared/views/view-factory';
+import { Card } from '../card/card';
 import { CARD_FIELD_SET, CardFieldTypes } from './card-field-model';
 
 const CSS_VAR_CARDS_COLUMNS = '--cards-columns';
 const CSS_VAR_CARDS_ROWS = '--cards-rows';
 
-export default class CardsField {
-  readonly view = Factory.view({ styles: [style.cardsField] });
+export class CardsField {
+  readonly view = Factory.view({ classNames: [style.cardsField] });
 
   render(cards: Card[], amount: keyof CardFieldTypes): void {
     this.view.clear();

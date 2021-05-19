@@ -1,33 +1,33 @@
 import { ITimeDiffFormat } from '../../shared/date-time-utils';
-import View from '../../shared/views/view';
-import Factory from '../../shared/views/view-factory';
-import style from './timer-view.scss';
+import { View } from '../../shared/views/view';
+import { Factory } from '../../shared/views/view-factory';
+import styles from './timer-view.scss';
 
-export default class TimerView extends View {
+export class TimerView extends View {
   private readonly output = {
     seconds: Factory.view({
-      styles: [style.timerOutput, style.timerOutputSeconds],
+      classNames: [styles.timerOutput, styles.timerOutputSeconds],
     }),
     minutes: Factory.view({
-      styles: [style.timerOutput, style.timerOutputMinutes],
+      classNames: [styles.timerOutput, styles.timerOutputMinutes],
     }),
     hours: Factory.view({
-      styles: [style.timerOutput, style.timerOutputHours],
+      classNames: [styles.timerOutput, styles.timerOutputHours],
     }),
   };
 
   constructor(splitter = ':') {
     super({
-      styles: [style.timer],
-      stateStyle: [
-        ['stop', style.timerStop],
-        ['countdown', style.timerCountdown],
+      classNames: [styles.timer],
+      statesClassNames: [
+        ['stop', styles.timerStop],
+        ['countdown', styles.timerCountdown],
       ],
     });
 
     this.render(
       Factory.view({
-        styles: [style.timerBox],
+        classNames: [styles.timerBox],
         childs: [
           this.output.hours,
           TimerView.createSplitter(splitter),
@@ -35,7 +35,7 @@ export default class TimerView extends View {
           TimerView.createSplitter(splitter),
           this.output.seconds,
         ],
-      }),
+      })
     );
   }
 
@@ -49,7 +49,7 @@ export default class TimerView extends View {
 
   static createSplitter(splitter = ':'): View {
     return Factory.view({
-      styles: [style.timerOutput, style.timerOutputSplitter],
+      classNames: [styles.timerOutput, styles.timerOutputSplitter],
       text: splitter,
     });
   }

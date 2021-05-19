@@ -1,80 +1,87 @@
-import Router from '../router/router';
+import { IRouterState, Router } from '../router/router';
 import { PageAbout, PageGame, PageSettings, PageScore } from '../pages/index';
-import { IPage } from '../pages/base-page';
-import Header from '../components/header/header';
-import View from '../shared/views/view';
-import Factory from '../shared/views/view-factory';
-import style from './app.scss';
+import { Header } from '../components/header/header';
+import { View } from '../shared/views/view';
+import { Factory } from '../shared/views/view-factory';
 import { CardImagesService } from '../services/card-images-urls';
+import { appConfig } from './app.config';
+import { HeaderStateName } from '../components/header/header-view-state';
+import styles from './app.scss';
 
-export default class App {
+export class App {
   readonly view: View;
 
-  private header: Header;
+  private header = new Header();
 
   readonly pageContainer: View;
 
-  readonly router = new Router();
-
-  readonly pages: Record<string, IPage>;
+  readonly router = new Router(new PageAbout());
+  
+  private gameStoppedByButton = false;
 
   constructor(parent: HTMLElement) {
-    this.pages = {
-      about: new PageAbout(),
-      game: new PageGame(new CardImagesService()),
-      settings: new PageSettings(),
-      score: new PageScore(),
-    };
+    this.router
+      .addRoute('#/about-game', this.router.initialPage)
+      .addRoute('#/game', new PageGame(new CardImagesService()))
+      .addRoute('#/game-settings', new PageSettings())
+      .addRoute('#/best-score', new PageScore());
 
-    this.header = new Header(
-      this.mapPages((page) => ({ url: page.url, text: page.titleText }))
-    );
+    this.router.onChange((routerState) => this.applayRouteChange(routerState));
+
     this.initHeader();
-    this.pageContainer = new View({ styles: [style.pageContainer] });
+    this.pageContainer = new View({ classNames: [styles.pageContainer] });
 
     this.view = Factory.view({
       tag: 'main',
-      styles: [style.app],
+      classNames: [styles.app],
       childs: [this.header.view, this.pageContainer],
     });
-
-    this.router.addRoute('', this.pages.about);
-    this.mapPages((page) => this.router.addRoute(page.url, page));
-
-    this.router.onChange(({ page }) => this.update(page));
-
     parent.append(this.view.element);
   }
 
-  mapPages<T>(handler: (page: IPage) => T): T[] {
-    return Object.values(this.pages).map(handler);
+  start(): void {
+    window.location.hash = this.router.initialPage.url;
+    this.applayRouteChange(this.router.updateCurrentRoute());
   }
 
-  update(page: IPage): void {
-    this.pageContainer.render(page.view);
-    this.header.setActiveNavLink(page.url);
-  }
-
-  async start(): Promise<void> {
-    window.location.hash = this.pages.game.url;
-    this.update(this.router.currentRoute());
-  }
-
-  async startGame(): Promise<void> {
-    window.location.hash = this.pages.game.url;
-    this.update(this.router.currentRoute());
-    await (<PageGame>this.pages.game).newGame('dogs', 12);
-  }
-
-  async stopGame(): Promise<void> {
-    window.location.hash = this.pages.game.url;
-    this.update(this.router.currentRoute());
-    (<PageGame>this.pages.game).stopGame();
+  applayRouteChange({ oldPage, newPage }: IRouterState): void {
+    if (
+      oldPage === this.router.getRoute('#/game') &&
+      !this.gameStoppedByButton
+    ) {
+      this.header.view.nextState();
+    }
+    this.pageContainer.render(newPage.view);
+    this.header.setActiveNavLink(newPage.url);
   }
 
   private initHeader() {
-    this.header.view.observer.subscribe('start', () => this.startGame());
-    this.header.view.observer.subscribe('stop', () => this.stopGame());
+    this.header.addNavLinks(appConfig.header.navMenu);
+    this.header.view.observer.subscribe(
+      'game',
+      (stateName: HeaderStateName) => this.applayHeaderState(stateName)
+    );
+    this.header.view.observer.subscribe(
+      'ready',
+      (stateName: HeaderStateName) => this.applayHeaderState(stateName)
+    );
+  }
+
+  applayHeaderState(stateName: HeaderStateName): void {
+    switch (stateName) {
+      case 'game':
+        this.gameStoppedByButton = false;
+        this.router.activateRoute('#/game');
+        break;
+      case 'ready':
+        if (Router.getCurrentPath() === '#/game') {
+          this.gameStoppedByButton = true;
+          this.router.activateRoute('#/about-game');
+        }
+        break;
+      default:
+        break;
+    }
   }
 }
 

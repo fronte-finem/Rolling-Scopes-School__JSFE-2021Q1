@@ -1,18 +1,17 @@
 import { ICreateViewOptions } from '../view';
-import ViewActivable from '../view-types/view-activable';
-
+import { ViewActivable } from '../view-types/view-activable';
 
 export interface ICreateLinkOptions extends ICreateViewOptions {
   url: string;
 }
 
-export default class LinkView extends ViewActivable {
-  constructor({ url, styles, ...options }: ICreateLinkOptions) {
+export class LinkView extends ViewActivable {
+  constructor({ url, classNames, ...options }: ICreateLinkOptions) {
     super({
       ...options,
       tag: 'a',
-      styles: ['link'].concat(styles || []),
-      activeStyle: 'link--active'
+      classNames: ['link'].concat(classNames || []),
+      activeStateClassName: 'link--active',
     });
 
     (<HTMLAnchorElement>this.element).href = url;

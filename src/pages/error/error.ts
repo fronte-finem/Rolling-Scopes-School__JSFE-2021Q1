@@ -1,9 +1,9 @@
-import BasePage from '../base-page';
+import { BasePage } from '../base-page';
 
-const PAGE_TITLE = 'Error';
+const PAGE_TITLE = 'error 404';
 
-export default class PageError extends BasePage {
+export class PageError extends BasePage {
   constructor() {
-    super(PAGE_TITLE, { childs: [{ tag: 'h1', text: PAGE_TITLE }]});
+    super(PAGE_TITLE, { childs: [{ tag: 'h1', text: PAGE_TITLE }] });
   }
 }

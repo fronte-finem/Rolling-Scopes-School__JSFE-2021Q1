@@ -1,24 +1,21 @@
-import View, { ICreateViewOptions, IView } from '../view';
+import { View, ICreateViewOptions, IView } from '../view';
 
 export interface IViewActivable extends IView {
   active(force: boolean): void;
 }
 
 export interface ICreateViewActivableOptions extends ICreateViewOptions {
-  activeStyle: string;
+  activeStateClassName: string;
 }
 
-export default abstract class ViewActivable
-  extends View
-  implements IViewActivable
-{
+export abstract class ViewActivable extends View implements IViewActivable {
   constructor({
-    stateStyle,
-    activeStyle,
+    statesClassNames,
+    activeStateClassName,
     ...options
   }: ICreateViewActivableOptions) {
     super({
-      stateStyle: [...(stateStyle || []), ['active', activeStyle]],
+      statesClassNames: [...(statesClassNames || []), ['active', activeStateClassName]],
       ...options,
     });
   }

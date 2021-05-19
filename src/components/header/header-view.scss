@@ -1,0 +1,43 @@
+.header {
+  background-color: hsla(240deg, 100%, 75%, 0.5);
+}
+
+.wrapper {
+  max-width: 1200px;
+  width: 100%;
+  margin: auto;
+
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+}
+
+.logo {
+  display: block;
+  width: 100px;
+  height: 30px;
+  background-color: #fff;
+}
+
+.btn {
+  --color-default: hsla(200deg, 100%, 100%, 0.8);
+  --color-hover: hsla(200deg, 100%, 100%, 1);
+  --color-background-default: hsla(30deg, 100%, 50%, 0.8);
+  --color-background-hover: hsla(30deg, 100%, 60%, 1);
+
+  &-state-switch {
+    display: block;
+  }
+
+  &--hidden {
+    display: none;
+  }
+}
+
+.avatar {
+  display: block;
+
+  &--hidden {
+    display: none;
+  }
+}

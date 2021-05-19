@@ -1,10 +1,10 @@
-import BasePage from '../base-page';
+import { BasePage } from '../base-page';
 
-const PAGE_TITLE = 'Score';
+const PAGE_TITLE = 'best score';
 
-export default class PageScore extends BasePage {
+export class PageScore extends BasePage {
   constructor() {
-    super(PAGE_TITLE, { childs: [{ tag: 'h1', text: PAGE_TITLE }]});
+    super(PAGE_TITLE, { childs: [{ tag: 'h1', text: PAGE_TITLE }] });
   }
 }
 
