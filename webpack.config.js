@@ -34,7 +34,6 @@ function genConfig(env) {
 function addCssLoaders(isDevMode, config) {
   const loaders = [
     { loader: isDevMode ? 'style-loader' : MiniCssExtractPlugin.loader },
-    { loader: 'webpack-typings-for-css' },
     {
       loader: 'css-loader', // https://webpack.js.org/loaders/css-loader/
       options: {
@@ -43,7 +42,6 @@ function addCssLoaders(isDevMode, config) {
           // localIdentName: "[path][name]__[local]--[contenthash:base64:5]",
           localIdentName: '[local]--[contenthash:base64:9]',
           localIdentContext: path.resolve(__dirname, 'src'),
-          localIdentHashPrefix: 'my-custom-hash',
           exportGlobals: true,
           exportLocalsConvention: 'camelCase',
         },
