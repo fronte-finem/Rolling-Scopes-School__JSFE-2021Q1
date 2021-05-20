@@ -32,12 +32,6 @@ export class PageGame extends BasePage implements IPage {
     this.view.render([this.timer.view, this.cardsField.view]);
   }
 
-  clear(): void {
-    this.model = undefined;
-    this.cards = [];
-    this.cardsField.view.clear();
-    this.view.setCssState('solved', false);
-  }
 
   init(): void {
     this.newGame('dogs', 12).then(
@@ -48,10 +42,22 @@ export class PageGame extends BasePage implements IPage {
 
   stop(): void {
     this.stopGame();
-    console.log('Game stopped:', this);
   }
 
-  async newGame(
+  private clear(): void {
+    this.model = undefined;
+    this.cards = [];
+    this.cardsField.view.clear();
+    this.view.setCssState('solved', false);
+  }
+
+  private stopGame(): void {
+    this.timer.reset();
+    this.model?.stop();
+    this.clear();
+  }
+
+  private async newGame(
     category: keyof typeof CardImagesCategory,
     amount: keyof CardFieldTypes
   ): Promise<void> {
@@ -79,12 +85,6 @@ export class PageGame extends BasePage implements IPage {
       this.timer.stop();
       this.view.setCssState('solved', true);
     });
-  }
-
-  stopGame(): void {
-    this.timer.reset();
-    this.model?.stop();
-    this.clear();
   }
 
   private async cardClickHandler(card: Card): Promise<boolean> {
