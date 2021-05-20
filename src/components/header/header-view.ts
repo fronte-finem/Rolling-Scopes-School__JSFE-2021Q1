@@ -1,4 +1,4 @@
-import { appConfig } from '../../app/app.config';
+import { APP_CONFIG } from '../../app/app.config';
 import { Observer } from '../../shared/observer';
 import { View } from '../../shared/views/view';
 import { Factory } from '../../shared/views/view-factory';
@@ -6,7 +6,11 @@ import { BtnView } from '../../shared/views/btn/btn';
 import { LinkView } from '../../shared/views/link/link';
 import { NavMenuView } from '../nav-menu/nav-menu-view';
 import { StateMashine } from '../../shared/state/state-mashine';
-import { HeaderStateName, IHeaderContext, HeaderState } from './header-view-state';
+import {
+  HeaderStateName,
+  IHeaderContext,
+  HeaderState,
+} from './header-view-state';
 import styles from './header-view.scss';
 
 export class HeaderView extends View implements IHeaderContext {
@@ -14,16 +18,19 @@ export class HeaderView extends View implements IHeaderContext {
 
   protected readonly stateMashine: StateMashine<HeaderStateName> =
     new StateMashine(
-      new HeaderState('initial', 'ready', appConfig.header.btn.signUp, true)
+      new HeaderState('initial', 'ready', APP_CONFIG.header.btn.signUp, true)
     )
       .addState(
-        new HeaderState('ready', 'game', appConfig.header.btn.start, false)
+        new HeaderState('ready', 'game', APP_CONFIG.header.btn.start, false)
       )
       .addState(
-        new HeaderState('game', 'ready', appConfig.header.btn.stop, false)
+        new HeaderState('game', 'ready', APP_CONFIG.header.btn.stop, false)
       );
 
-  readonly logo = new LinkView({ url: './', classNames: [styles.logo] });
+  readonly logo = new LinkView({
+    url: APP_CONFIG.initialRoute.url,
+    classNames: [styles.logo],
+  });
 
   readonly menu = new NavMenuView();
 
@@ -49,7 +56,9 @@ export class HeaderView extends View implements IHeaderContext {
     );
 
     this.stateMashine.applyCurrentState(this);
-    this.btnStateSwitch.onClick(() => this.stateMashine.applyCurrentState(this));
+    this.btnStateSwitch.onClick(() =>
+      this.stateMashine.applyCurrentState(this)
+    );
   }
 
   getCurrentState(): HeaderStateName {

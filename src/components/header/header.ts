@@ -1,5 +1,5 @@
+import { IPageConfig } from '../../app/app.config';
 import { Observer } from '../../shared/observer';
-import { NavLinkCreateOptions } from '../nav-menu/nav-menu-view';
 import { HeaderView } from './header-view';
 
 export class Header {
@@ -7,7 +7,7 @@ export class Header {
 
   readonly view = new HeaderView();
 
-  addNavLinks(options: NavLinkCreateOptions[]): void {
+  addNavLinks(options: IPageConfig[]): void {
     this.view.menu.addNavLinks(options);
   }
 

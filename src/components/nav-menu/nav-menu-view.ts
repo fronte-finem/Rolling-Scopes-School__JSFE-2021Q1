@@ -1,3 +1,4 @@
+import { IPageConfig } from '../../app/app.config';
 import { createSvgSpriteElement } from '../../shared/dom-utils';
 import { LinkView } from '../../shared/views/link/link';
 import { View } from '../../shared/views/view';
@@ -26,12 +27,14 @@ export class NavMenuView extends View {
     this.render(this.navList);
   }
 
-  addNavLinks(navData: NavLinkCreateOptions[]): void {
-    this.navLinks = navData.reduce(
-      (dict, { url, ...options }) =>
-        dict.set(url, NavMenuView.createNavLink({ url, ...options })),
-      new Map<string, LinkView>()
-    );
+  addNavLinks(pagesConfig: IPageConfig[]): void {
+    this.navLinks = pagesConfig
+      .filter((page) => page.navSvgIcon !== undefined)
+      .reduce(
+        (dict, pageCfg) =>
+          dict.set(pageCfg.route.url, NavMenuView.createNavLink(pageCfg)),
+        new Map<string, LinkView>()
+      );
     this.navList.render(
       NavMenuView.createNavItems([...this.navLinks.values()])
     );
@@ -54,16 +57,19 @@ export class NavMenuView extends View {
   }
 
   private static createNavLink({
-    url,
     title,
-    svgIconLink,
-  }: NavLinkCreateOptions): LinkView {
+    route,
+    navSvgIcon,
+  }: IPageConfig): LinkView {
     return new LinkView({
-      url,
+      url: route.url,
       classNames: [styles.navLink],
       text: title,
-      hookElement: (elem) =>
-        elem.append(createSvgSpriteElement(svgIconLink, [styles.svgIcon])),
+      hookElement: (elem) => {
+        if (navSvgIcon)
+          elem.append(createSvgSpriteElement(navSvgIcon, [styles.svgIcon]));
+        return elem;
+      },
     });
   }
 }
