@@ -78,7 +78,6 @@ export class GameModel extends Model<IGameModelState> {
     card.match(true);
     this.state.matchedCards.add(this.state.gameActiveCard);
     this.state.matchedCards.add(card);
-    this.state.matchedCards.add(card);
     this.state.gameActiveCard = undefined;
 
     if (this.state.matchedCards.size === this.cards.length) {

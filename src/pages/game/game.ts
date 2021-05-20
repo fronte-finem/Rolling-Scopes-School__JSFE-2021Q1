@@ -36,6 +36,7 @@ export class PageGame extends BasePage implements IPage {
     this.model = undefined;
     this.cards = [];
     this.cardsField.view.clear();
+    this.view.setCssState('solved', false);
   }
 
   init(): void {

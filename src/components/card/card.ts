@@ -16,8 +16,8 @@ export class Card {
   }
 
   async updateView(state: ICardModelState): Promise<void> {
-    await this.view.flip(state.isFrontSide);
     this.view.error(state.isError);
     this.view.match(state.isMatch);
+    await this.view.flip(state.isFrontSide);
   }
 }
