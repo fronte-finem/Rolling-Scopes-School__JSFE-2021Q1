@@ -1,7 +1,6 @@
 import { View, ICreateViewOptions, IView } from './view';
 import { BtnView } from './btn/btn';
 import { LinkView, ICreateLinkOptions } from './link/link';
-import { ICreateViewActivableOptions } from './view-types/view-activable';
 
 export interface IBuildViewOptions extends ICreateViewOptions {
   childs?: (IBuildViewOptions | IView)[];
@@ -16,8 +15,11 @@ export abstract class Factory {
       case 'a':
         view = new LinkView(<ICreateLinkOptions>options);
         break;
+      case 'img':
+        view = new LinkView(<ICreateLinkOptions>options);
+        break;
       case 'button':
-        view = new BtnView(<ICreateViewActivableOptions>options);
+        view = new BtnView(options);
         break;
       default:
         view = new View(<ICreateViewOptions>{ tag, ...options });
