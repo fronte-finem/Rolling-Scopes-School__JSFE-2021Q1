@@ -1,6 +1,8 @@
 import { PageAbout, PageGame, PageScore, PageSettings } from '../pages/index';
 import { IRoute } from '../router/router';
 import { CardImagesService } from '../services/card-images-urls';
+import { GameSettingsService } from '../services/game-settings';
+import { APP_GAME_INITIAL_CONFIG } from './app.game.config';
 
 export interface IAppConfig {
   readonly initialRoute: IRoute;
@@ -14,7 +16,6 @@ export interface IAppConfig {
 }
 
 export interface IPageConfig {
-  readonly title: string;
   readonly route: IRoute;
   readonly navSvgIcon?: string;
 }
@@ -28,9 +29,11 @@ export interface IHeaderConfig {
 }
 
 const cardImagesService = new CardImagesService();
+const gameSettingsService = new GameSettingsService(APP_GAME_INITIAL_CONFIG.settings);
 
 const initialRoute: Readonly<IRoute> = {
   url: '#/about-game',
+  title: 'about game',
   pageCreator: () => new PageAbout(),
 };
 
@@ -38,25 +41,30 @@ export const APP_CONFIG: Readonly<IAppConfig> = {
   initialRoute,
   pages: {
     about: {
-      title: 'about game',
-      route: { url: '#/about-game', pageCreator: () => new PageScore() },
+      route: initialRoute,
       navSvgIcon: './svg/sprite.svg#icon-question-mark',
     },
     score: {
-      title: 'best score',
-      route: { url: '#/best-score', pageCreator: () => new PageScore() },
+      route: {
+        url: '#/best-score',
+        title: 'best score',
+        pageCreator: () => new PageScore(),
+      },
       navSvgIcon: './svg/sprite.svg#icon-star',
     },
     settings: {
-      title: 'game settings',
-      route: { url: '#/game-settings', pageCreator: () => new PageSettings() },
+      route: {
+        url: '#/game-settings',
+        title: 'game settings',
+        pageCreator: () => new PageSettings(gameSettingsService),
+      },
       navSvgIcon: './svg/sprite.svg#icon-gear',
     },
     game: {
-      title: 'about game',
       route: {
         url: '#/game',
-        pageCreator: () => new PageGame(cardImagesService),
+        title: 'about game',
+        pageCreator: () => new PageGame(gameSettingsService, cardImagesService),
       },
     },
   },
