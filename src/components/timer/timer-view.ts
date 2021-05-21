@@ -17,13 +17,7 @@ export class TimerView extends View {
   };
 
   constructor(splitter = ':') {
-    super({
-      classNames: [styles.timer],
-      statesClassNames: [
-        ['stop', styles.timerStop],
-        ['countdown', styles.timerCountdown],
-      ],
-    });
+    super({ classNames: [styles.timer] });
 
     this.render(
       Factory.view({
@@ -52,5 +46,18 @@ export class TimerView extends View {
       classNames: [styles.timerOutput, styles.timerOutputSplitter],
       text: splitter,
     });
+  }
+
+  stop(stop = true): void {
+    this.setCssState(styles.timerStop, stop);
+  }
+
+  countdown(countdown = true): void {
+    this.setCssState(styles.timerCountdown, countdown);
+  }
+
+  reset(): void {
+    this.stop(false);
+    this.countdown(false);
   }
 }

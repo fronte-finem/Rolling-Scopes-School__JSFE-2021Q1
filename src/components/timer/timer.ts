@@ -18,24 +18,22 @@ export class Timer {
   }
 
   start(): void {
+    this.view.reset();
     this.model.start();
-    this.view.setCssState('stop', false);
-    this.view.setCssState('countdown', false);
   }
 
   stop(): void {
     this.model.stop();
-    this.view.setCssState('stop', true);
+    this.view.stop();
   }
 
   reset(): void {
     this.model.reset();
-    this.view.setCssState('stop', false);
-    this.view.setCssState('countdown', false);
+    this.view.reset();
   }
 
   async countdown(initialTime = 10): Promise<void> {
-    this.view.setCssState('countdown', true);
+    this.view.countdown();
     await this.model.countdown(initialTime);
   }
 }
