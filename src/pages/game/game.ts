@@ -1,18 +1,13 @@
+import { APP_GAME_DIFFICILTY_CONFIG } from '../../app/app.game.config';
 import { BasePage, IPage } from '../base-page';
 import { Card } from '../../components/card/card';
 import { CardsField } from '../../components/cards-field/cards-field';
 import { GameModel } from './game-model';
 import { CardModel } from '../../components/card/card-model';
 import { Timer } from '../../components/timer/timer';
-import { CardFieldTypes } from '../../components/cards-field/card-field-model';
-import {
-  CardImagesCategory,
-  ICardImagesService,
-} from '../../services/card-images-urls';
+import { ICardImagesService } from '../../services/card-images-urls';
+import { IGameSettingsService } from '../../services/game-settings';
 import styles from './game.scss';
-
-const PAGE_TITLE = 'game';
-const SHOW_TIME = 5;
 
 export class PageGame extends BasePage implements IPage {
   private readonly timer = new Timer();
@@ -23,47 +18,40 @@ export class PageGame extends BasePage implements IPage {
 
   private cards: Card[] = [];
 
-  constructor(private cardImagesService: ICardImagesService) {
-    super(PAGE_TITLE, {
-      classNames: [styles.game],
-      statesClassNames: [['solved', styles.gameSolved]],
-    });
+  constructor(
+    private gameSettingsService: IGameSettingsService,
+    private cardImagesService: ICardImagesService
+  ) {
+    super({ classNames: [styles.game] });
 
     this.view.render([this.timer.view, this.cardsField.view]);
   }
 
-
   init(): void {
-    this.newGame('dogs', 12).then(
-      () => {},
-      () => {}
-    );
+    this.newGame().then(null, null);
   }
 
   stop(): void {
     this.stopGame();
   }
 
-  private clear(): void {
-    this.model = undefined;
-    this.cards = [];
-    this.cardsField.view.clear();
-    this.view.setCssState('solved', false);
-  }
-
   private stopGame(): void {
     this.timer.reset();
     this.model?.stop();
-    this.clear();
+    this.model = undefined;
+    this.cards = [];
+    this.cardsField.view.clear();
+    this.view.setCssState(styles.gameSolved, false);
   }
 
-  private async newGame(
-    category: keyof typeof CardImagesCategory,
-    amount: keyof CardFieldTypes
-  ): Promise<void> {
-    this.clear();
+  private async newGame(): Promise<void> {
+    this.stopGame();
 
-    const urls = await this.cardImagesService.getUrls(category, amount);
+    const settings = await this.gameSettingsService.loadSettings();
+    const urls = await this.cardImagesService.getUrls(
+      settings.cardImagesCategory,
+      settings.cardsAmount
+    );
     if (!urls) return;
     const cardModels = urls.front.map(
       (url, id) => new CardModel(id, url, urls.back)
@@ -74,16 +62,18 @@ export class PageGame extends BasePage implements IPage {
       card.onClick(() => this.cardClickHandler(card))
     );
 
-    this.cardsField.render(this.cards, amount);
+    this.cardsField.render(this.cards, settings.cardsAmount);
     this.model = new GameModel(cardModels);
     this.model.showAllCards();
-    await this.timer.countdown(SHOW_TIME);
+    await this.timer.countdown(
+      APP_GAME_DIFFICILTY_CONFIG[settings.cardsAmount].initialShowTime
+    );
     this.model.start();
     this.timer.start();
 
     this.model.onSolved(() => {
       this.timer.stop();
-      this.view.setCssState('solved', true);
+      this.view.setCssState(styles.gameSolved, true);
     });
   }
 
