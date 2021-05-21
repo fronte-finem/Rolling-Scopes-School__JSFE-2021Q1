@@ -57,14 +57,13 @@ export class NavMenuView extends View {
   }
 
   private static createNavLink({
-    title,
     route,
     navSvgIcon,
   }: IPageConfig): LinkView {
     return new LinkView({
       url: route.url,
       classNames: [styles.navLink],
-      text: title,
+      text: route.title,
       hookElement: (elem) => {
         if (navSvgIcon)
           elem.append(createSvgSpriteElement(navSvgIcon, [styles.svgIcon]));
