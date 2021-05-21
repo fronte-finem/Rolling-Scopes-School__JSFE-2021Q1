@@ -1,0 +1,34 @@
+.pop-up {
+  --border: 1px solid #000a;
+
+  background: #fffa;
+  opacity: 1;
+
+  transition: all 500ms;
+}
+
+.hidden {
+  background: #f00a;
+  opacity: 0;
+}
+
+.pop-up__side {
+  padding: 20px;
+}
+
+.pop-up__header {
+  border-bottom: var(--border);
+}
+
+.pop-up__footer {
+  border-top: var(--border);
+}
+
+.pop-up__headedig {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.pop-up__body {
+  padding: 50px;
+}
