@@ -1,13 +1,15 @@
-import { ICreateViewOptions } from '../view';
-import { ViewActivable } from '../view-types/view-activable';
+import { ICreateViewOptions, View } from '../view';
 
-export class BtnView extends ViewActivable {
+export class BtnView extends View {
   constructor({ classNames, ...options }: ICreateViewOptions) {
     super({
       ...options,
       tag: 'button',
       classNames: ['btn'].concat(classNames || []),
-      activeStateClassName: 'btn--active',
     });
+  }
+
+  active(force = true): void {
+    this.setCssState('btn--active', force);
   }
 }
