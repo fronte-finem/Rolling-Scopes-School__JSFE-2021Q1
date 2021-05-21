@@ -1,0 +1,16 @@
+.settings {
+  padding: 50px;
+
+  &-wrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    max-width: 500px;
+  }
+
+  &__select {
+    select {
+      font-family: monospace;
+    }
+  }
+}

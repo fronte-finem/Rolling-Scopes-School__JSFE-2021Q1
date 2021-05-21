@@ -7,7 +7,6 @@ import {
 
 export interface IView {
   readonly element: HTMLElement;
-  readonly mapStateStyle: Map<string, string>;
   clear(): IView;
   render(childs: IView | IView[]): IView;
   setCssState(state: string, force: boolean): void;
@@ -22,22 +21,17 @@ export interface IView {
 }
 
 export interface ICreateViewOptions extends ICreateElementOptions {
-  statesClassNames?: [state: string, style: string][];
   hookElement?: (elem: HTMLElement) => void;
 }
 
 export class View implements IView {
   readonly element: HTMLElement;
 
-  readonly mapStateStyle: Map<string, string>;
-
   constructor({
-    statesClassNames: stateStyle,
     hookElement: hook,
     ...options
   }: ICreateViewOptions) {
     this.element = createElement(options);
-    this.mapStateStyle = new Map(stateStyle || []);
     if (hook) {
       hook(this.element);
     }
@@ -66,9 +60,17 @@ export class View implements IView {
     return this;
   }
 
-  setCssState(state: string, force = true): void {
-    const style = this.mapStateStyle.get(state);
-    if (style) this.element.classList.toggle(style, force);
+  setCssState(stateClassName: string, force = true): void {
+    this.element.classList.toggle(stateClassName, force);
+  }
+
+  setCssStateAsync(stateClassName: string, force = true): Promise<void> {
+    this.element.classList.toggle(stateClassName, force);
+    return new Promise((resolve) => {
+      this.element.addEventListener('transitionend', () => resolve(), {
+        once: true,
+      });
+    });
   }
 
   getCssVar(name: string): string {

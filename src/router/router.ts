@@ -1,25 +1,42 @@
 import { ObserverLite, Listener } from '../shared/observer-lite';
 import { IPage } from '../pages/base-page';
 import { PageError } from '../pages/index';
+import { capitalize } from '../shared/string-utils';
+
+const setTitle = (title: string) => `🎴 Match-Match 🃏 ${capitalize(title)} 🎴`;
+
+const errorPageRoute: IRoute = {
+  url: '#/⛔',
+  title: 'Page Not Found!',
+  pageCreator: () => new PageError(),
+};
+
+export type PageCreator = () => IPage;
+
+export interface IRoute {
+  readonly url: string;
+  readonly title: string;
+  readonly pageCreator: PageCreator;
+}
 
 export interface IRouterState {
-  oldPage: IPage;
-  newPage: IPage;
+  readonly oldUrl: string;
+  readonly newUrl: string;
+  readonly newPage?: IPage;
 }
 
 export class Router {
   private readonly observer = new ObserverLite();
 
-  private readonly routes = new Map<string, IPage>();
+  private readonly routes = new Map<string, IRoute>();
 
-  readonly errorPage = new PageError();
+  readonly errorPageRoute = errorPageRoute;
 
-  private currentPage: IPage;
+  private currentUrl = '';
 
-  constructor(readonly initialPage: IPage) {
-    this.addRoute('', initialPage);
-    this.currentPage = initialPage;
+  private currentPage?: IPage;
 
+  constructor() {
     window.addEventListener('hashchange', () =>
       this.observer.notify(this.updateCurrentRoute())
     );
@@ -29,36 +46,34 @@ export class Router {
     this.observer.subscribe(listener);
   }
 
-  addRoute(path: string, page: IPage): Router {
-    this.routes.set(`${path}`, page);
+  addRoute(route: IRoute): Router {
+    this.routes.set(route.url, route);
     return this;
   }
 
-  getRoutes(): IPage[] {
-    return [...this.routes.values()];
-  }
-
-  getRoute(path: string): IPage {
-    return this.routes.get(path) || this.errorPage;
-  }
-
-  activateRoute(path: string): void {
-    window.location.hash = this.getRoute(path).url;
+  private getPageRoute(url: string): IRoute {
+    return this.routes.get(url) || this.errorPageRoute;
   }
 
   updateCurrentRoute(): IRouterState {
-    const path = Router.getCurrentPath();
-    const newPage = this.getRoute(path);
-    const oldPage = this.currentPage;
-    if (oldPage !== newPage) {
-      oldPage.stop();
-      newPage.init();
-      this.currentPage = newPage;
+    const oldUrl = this.currentUrl;
+    const newUrl = Router.getCurrentUrl();
+    if (oldUrl !== newUrl) {
+      const route = this.getPageRoute(newUrl);
+      setTitle(route.title);
+      this.currentPage?.stop();
+      this.currentPage = route.pageCreator();
+      this.currentPage.init();
+      this.currentUrl = newUrl;
     }
-    return { oldPage, newPage };
+    return { oldUrl, newUrl, newPage: this.currentPage };
   }
 
-  static getCurrentPath(): string {
+  static getCurrentUrl(): string {
     return window.location.hash || '';
+  }
+
+  static activateRoute(url: string): void {
+    window.location.hash = url;
   }
 }

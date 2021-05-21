@@ -1,6 +1,6 @@
 import { Model, ModelState } from '../../shared/models/model';
 import { CardModel } from '../../components/card/card-model';
-import { Listener } from '../../shared/observer';
+import { Listener, Observer } from '../../shared/observer';
 
 export interface IGameModelState extends ModelState {
   isError: boolean;
@@ -12,7 +12,11 @@ export interface IGameModelState extends ModelState {
   stopTime: Date;
 }
 
+type GameEvents = 'game-solved' | 'game-error';
+
 export class GameModel extends Model<IGameModelState> {
+  private gameObserver = new Observer<GameEvents>();
+
   constructor(readonly cards: CardModel[]) {
     super({
       isError: false,
@@ -30,8 +34,8 @@ export class GameModel extends Model<IGameModelState> {
     this.cards.forEach((card) => card.flip(toFront));
   }
 
-  onSolved(listener: Listener<void>): void {
-    this.observer.subscribe('game-solved', listener);
+  onSolved(listener: Listener<IGameModelState>): void {
+    this.gameObserver.subscribe('game-solved', listener);
   }
 
   showAllCards(): void {
@@ -78,13 +82,12 @@ export class GameModel extends Model<IGameModelState> {
     card.match(true);
     this.state.matchedCards.add(this.state.gameActiveCard);
     this.state.matchedCards.add(card);
-    this.state.matchedCards.add(card);
     this.state.gameActiveCard = undefined;
 
     if (this.state.matchedCards.size === this.cards.length) {
       this.state.isSolved = true;
       this.stop();
-      this.observer.notify('game-solved', this.state);
+      this.gameObserver.notify('game-solved', this.state);
     }
     return true;
   }

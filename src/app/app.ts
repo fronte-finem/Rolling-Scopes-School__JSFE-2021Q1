@@ -1,32 +1,34 @@
+import { AppStateName, ProxyAppStateService } from '../services/app-state';
+import { APP_CONFIG } from './app.config';
 import { IRouterState, Router } from '../router/router';
-import { PageAbout, PageGame, PageSettings, PageScore } from '../pages/index';
-import { Header } from '../components/header/header';
 import { View } from '../shared/views/view';
 import { Factory } from '../shared/views/view-factory';
-import { CardImagesService } from '../services/card-images-urls';
-import { appConfig } from './app.config';
-import { HeaderStateName } from '../components/header/header-view-state';
+import { HeaderView } from '../components/header/header-view';
 import styles from './app.scss';
+import { ModalView } from '../components/modal/modal-view';
+import { PopUpView } from '../components/pop-up/pop-up-view';
 
 export class App {
   readonly view: View;
 
-  private header = new Header();
+  private headerView = new HeaderView(
+    new ProxyAppStateService((state) => this.handleAppStateChangeRequest(state))
+  );
 
   readonly pageContainer: View;
-
-  readonly router = new Router(new PageAbout());
   
+  readonly modalView = new ModalView();
+
+  readonly router = new Router();
+
   private gameStoppedByButton = false;
 
   constructor(parent: HTMLElement) {
-    this.router
-      .addRoute('#/about-game', this.router.initialPage)
-      .addRoute('#/game', new PageGame(new CardImagesService()))
-      .addRoute('#/game-settings', new PageSettings())
-      .addRoute('#/best-score', new PageScore());
-
-    this.router.onChange((routerState) => this.applayRouteChange(routerState));
+    Object.values(APP_CONFIG.pages).reduce(
+      (router, page) => router.addRoute(page.route),
+      this.router
+    );
+    this.router.onChange((state) => this.applayRouteChange(state));
 
     this.initHeader();
     this.pageContainer = new View({ classNames: [styles.pageContainer] });
@@ -34,54 +36,64 @@ export class App {
     this.view = Factory.view({
       tag: 'main',
       classNames: [styles.app],
-      childs: [this.header.view, this.pageContainer],
+      childs: [this.headerView, this.pageContainer, this.modalView],
     });
     parent.append(this.view.element);
   }
 
   start(): void {
-    window.location.hash = this.router.initialPage.url;
-    this.applayRouteChange(this.router.updateCurrentRoute());
+    Router.activateRoute(APP_CONFIG.initialRoute.url);
+    this.headerView.menu.setActiveNavLink(APP_CONFIG.initialRoute.url);
   }
 
-  applayRouteChange({ oldPage, newPage }: IRouterState): void {
+  applayRouteChange({ oldUrl, newUrl, newPage }: IRouterState): void {
     if (
-      oldPage === this.router.getRoute('#/game') &&
+      oldUrl === APP_CONFIG.pages.game.route.url &&
       !this.gameStoppedByButton
     ) {
-      this.header.view.nextState();
+      this.headerView.nextState();
     }
-    this.pageContainer.render(newPage.view);
-    this.header.setActiveNavLink(newPage.url);
+    if (newPage) {
+      this.pageContainer.render(newPage.view);
+    }
+    this.headerView.menu.setActiveNavLink(newUrl);
   }
 
   private initHeader() {
-    this.header.addNavLinks(appConfig.header.navMenu);
-    this.header.view.observer.subscribe(
-      'game',
-      (stateName: HeaderStateName) => this.applayHeaderState(stateName)
-    );
-    this.header.view.observer.subscribe(
-      'ready',
-      (stateName: HeaderStateName) => this.applayHeaderState(stateName)
-    );
+    this.headerView.menu.addNavLinks(Object.values(APP_CONFIG.pages));
   }
 
-  applayHeaderState(stateName: HeaderStateName): void {
+  async handleAppStateChangeRequest(stateName: AppStateName): Promise<boolean> {
+    console.log(stateName);
+    await new Promise((rs) => rs(true));
     switch (stateName) {
-      case 'game':
-        this.gameStoppedByButton = false;
-        this.router.activateRoute('#/game');
-        break;
+      case 'initial':
+        return await this.processInitialAppState();
       case 'ready':
-        if (Router.getCurrentPath() === '#/game') {
+        this.gameStoppedByButton = false;
+        Router.activateRoute(APP_CONFIG.pages.game.route.url);
+        return true;
+      case 'game':
+        if (Router.getCurrentUrl() === APP_CONFIG.pages.game.route.url) {
           this.gameStoppedByButton = true;
-          this.router.activateRoute('#/about-game');
+          Router.activateRoute(APP_CONFIG.initialRoute.url);
         }
-        break;
+        return true;
       default:
-        break;
+        return false;
     }
+  }
+
+  async processInitialAppState(): Promise<boolean> {
+    const popup = new PopUpView('Registr new Player');
+    this.modalView.render(popup);
+    await this.modalView.show();
+    this.modalView.onClick(() => {
+      popup.hide().then(() => this.modalView.hide()).then(null, null);
+    });
+    const allowed = await popup.process();
+    await this.modalView.hide();
+    return allowed;
   }
 }
 

@@ -5,7 +5,7 @@ export type ModelState = Record<string, unknown>;
 export abstract class Model<S extends ModelState> {
   protected readonly observer = new Observer();
 
-  protected readonly state: S;
+  protected state: S;
 
   constructor(state: S) {
     this.state = this.proxify(state);

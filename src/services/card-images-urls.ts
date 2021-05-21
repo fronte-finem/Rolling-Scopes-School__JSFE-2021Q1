@@ -2,9 +2,9 @@ import { knuthShuffle } from '../shared/array-utils';
 
 const IMAGES_JSON = './images.json';
 
-export const enum CardImagesCategory {
-  cats,
-  dogs,
+export enum CardImagesCategory {
+  cats = '🐱 Cats 🐈🐈‍⬛',
+  dogs = '🐶 Dogs 🐕🐩🐕‍🦺',
 }
 
 export interface ICardImagesDescriptionModel {

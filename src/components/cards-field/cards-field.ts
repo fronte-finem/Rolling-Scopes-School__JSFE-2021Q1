@@ -1,7 +1,8 @@
-import style from './cards-field.scss';
+import { APP_GAME_DIFFICILTY_CONFIG } from '../../app/app.game.config';
+import { CardsAmount } from '../../pages/game/game-types';
 import { Factory } from '../../shared/views/view-factory';
 import { Card } from '../card/card';
-import { CARD_FIELD_SET, CardFieldTypes } from './card-field-model';
+import style from './cards-field.scss';
 
 const CSS_VAR_CARDS_COLUMNS = '--cards-columns';
 const CSS_VAR_CARDS_ROWS = '--cards-rows';
@@ -9,9 +10,9 @@ const CSS_VAR_CARDS_ROWS = '--cards-rows';
 export class CardsField {
   readonly view = Factory.view({ classNames: [style.cardsField] });
 
-  render(cards: Card[], amount: keyof CardFieldTypes): void {
+  render(cards: Card[], amount: CardsAmount): void {
     this.view.clear();
-    const [columns, rows] = CARD_FIELD_SET[amount];
+    const [columns, rows] = APP_GAME_DIFFICILTY_CONFIG[amount].cardField;
     this.columns = columns;
     this.rows = rows;
     this.view.render(cards.map((card) => card.view));
@@ -34,5 +35,5 @@ export class CardsField {
   }
 }
 
-// Todo: auto-arrangement
+// Todo: try auto-arrangement
 // https://stackoverflow.com/questions/339939/stacking-rectangles-to-into-the-most-square-like-arrangement-possible
