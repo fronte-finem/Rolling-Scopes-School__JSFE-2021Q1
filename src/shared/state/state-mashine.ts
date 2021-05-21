@@ -27,16 +27,17 @@ export class StateMashine<SpecificStateNames> {
     return this.currentState.name;
   }
 
-  applyCurrentState(
-    context: IContext<SpecificStateNames>,
-    fireEvent = true
-  ): void {
-    const currentStateName = this.currentState.name;
+  applyCurrentState(context: IContext<SpecificStateNames>): void {
     this.currentState.apply(context);
-    this.currentState =
-      this.statesMap.get(this.currentState.next) || this.initialState;
+  }
+
+  nextState(context: IContext<SpecificStateNames>, fireEvent = true): void {
+    const oldState = this.currentState;
+    const newState = this.statesMap.get(oldState.next) || this.initialState;
+    this.currentState = newState;
+    this.applyCurrentState(context);
     if (fireEvent) {
-      context.observer.notify(currentStateName, currentStateName);
+      context.observer.notify(oldState.name, [oldState.name, newState.name]);
     }
   }
 }
