@@ -15,3 +15,10 @@ export function html<T>(strings: TemplateStringsArray, ...values: T[]): string {
   values.forEach((value, i) => result.push(String(value), strings[i + 1]));
   return result.join('');
 }
+
+export function hashCode(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i += 1)
+    hash = Math.imul(31, hash) + str.charCodeAt(i);
+  return hash | 0;
+}

@@ -1,0 +1,37 @@
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  padding: 5px 20px;
+  border-bottom: 1px solid #0004;
+  background-color: #0002;
+  transition: all 500ms;
+}
+
+.error {
+  background-color: hsla(30deg, 100%, 50%, 0.75);
+}
+
+.title {
+  display: block;
+  text-transform: capitalize;
+  color: #0008;
+  font-size: 12px;
+}
+
+.input {
+  display: block;
+  font-size: 20px;
+  border: none;
+  background: none;
+  outline: none;
+  color: #fff;
+}
+
+.input::placeholder {
+  color: #fff8;
+}
+
+.input::selection {
+  background-color: hsla(30deg, 100%, 50%, 0.75);
+}

@@ -4,7 +4,7 @@ export interface ICreateLinkOptions extends ICreateViewOptions {
   url: string;
 }
 
-export class LinkView extends View {
+export class LinkView extends View<HTMLAnchorElement> {
   constructor({ url, classNames, ...options }: ICreateLinkOptions) {
     super({
       ...options,
@@ -12,7 +12,7 @@ export class LinkView extends View {
       classNames: ['link'].concat(classNames || []),
     });
 
-    (<HTMLAnchorElement>this.element).href = url;
+    this.element.href = url;
   }
 
   active(force = true): void {

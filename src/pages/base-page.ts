@@ -11,18 +11,14 @@ export interface IPage {
 export abstract class BasePage implements IPage {
   readonly view: View;
 
-  constructor({ classNames, ...options }: IBuildViewOptions) {
+  constructor({ classNames = [], ...options }: IBuildViewOptions) {
     this.view = Factory.view({
-      classNames: [styles.page].concat(classNames || []),
+      classNames: [styles.page, ...classNames],
       ...options,
     });
   }
 
-  init(): void {
-    console.log(this, '⚠️ Method INIT not implemented ⚠️');
-  }
+  abstract init(): void | Promise<void>;
 
-  stop(): void {
-    console.log(this, '⚠️ Method STOP not implemented ⚠️');
-  }
+  abstract stop(): void | Promise<void>;
 }

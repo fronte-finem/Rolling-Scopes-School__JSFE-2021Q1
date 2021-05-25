@@ -1,6 +1,13 @@
+@use "sass:math";
+
 .app {
+  --grad-color-1: #0001;
+  --grad-color-2: #fff1;
+  --grad-size: 200px;
   --app-w-max: 1200px;
-  --grad: #0001 0px 50px, #fff1 50px 100px;
+  --grad: var(--grad-color-1) 0%, var(--grad-color-1) 40%,
+    var(--grad-color-2) 40%, var(--grad-color-2) 60%, var(--grad-color-1) 60%,
+    var(--grad-color-1) 100%;
 
   min-height: 100vh;
   display: grid;
@@ -8,9 +15,14 @@
 
   background-image: repeating-linear-gradient(-45deg, var(--grad)),
     repeating-linear-gradient(45deg, var(--grad));
-  background-position: center;
+  background-size: var(--grad-size) var(--grad-size);
+  background-position: left top;
+  // background-repeat: no-repeat;
 
   font-family: sans-serif;
+
+  animation: slide 10s infinite linear forwards;
+  animation-play-state: var(--app-bg-animation-state);
 }
 
 .page-container {
@@ -19,4 +31,16 @@
   margin: 0 auto;
 
   background-color: #0001;
+  backdrop-filter: blur(10px);
+}
+
+@keyframes slide {
+  0% {
+    background-position-x: 0%;
+    background-position-y: 0%;
+  }
+  100% {
+    background-position-x: var(--grad-size);
+    background-position-y: var(--grad-size);
+  }
 }

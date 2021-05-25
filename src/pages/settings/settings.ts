@@ -1,8 +1,8 @@
-import { APP_GAME_DIFFICILTY_CONFIG } from '../../app/app.game.config';
+import { APP_GAME_DIFFICILTY_CONFIG as APP_GAME_DIFFICULTY_CONFIG } from '../../app/app.game.config';
 import { CardImagesCategory } from '../../services/card-images-urls';
 import { IGameSettingsService } from '../../services/game-settings';
+import { View } from '../../shared/views/view';
 import { SelectView } from '../../components/select/select-view';
-import { Factory } from '../../shared/views/view-factory';
 import { BasePage } from '../base-page';
 import { GameSettingsModel, IGameSettingsState } from './settings-model';
 import { CardsAmount } from '../game/game-types';
@@ -19,48 +19,41 @@ export class PageSettings extends BasePage {
 
   selectDifficulty: SelectView = new SelectView({
     heading: 'difficulty',
-    placeholder: 'select game type',
+    placeholder: '🎴 cards \xa0|\xa0 ⏱ start |\xa0 🏆 score',
     classNames: [styles.settingsSelect],
   });
 
   constructor(private gameSettingsService: IGameSettingsService) {
     super({ classNames: [styles.settings] });
+  }
 
+  stop(): void {
+    this.view.clear();
+  }
+
+  async init(): Promise<void> {
     this.view.render(
-      Factory.view({
+      new View({
         classNames: [styles.settingsWrapper],
         childs: [this.selectDifficulty, this.selectGameCards],
       })
     );
 
-    this.gameSettingsService.loadSettings().then((initialSettings) => {
-      this.model = new GameSettingsModel(initialSettings);
-      this.model.onStateChange((settings) =>
-        this.gameSettingsService.saveSettings(settings)
-      );
-      this.initSelectsors(this.model.getState());
-    }, null);
+    const initialSettings = await this.gameSettingsService.loadSettings();
+
+    this.model = new GameSettingsModel(initialSettings);
+    this.model.onStateChange((settings) =>
+      this.gameSettingsService.saveSettings(settings)
+    );
+    this.initSelectsors(this.model.getState());
   }
 
-  initSelectsors(state: IGameSettingsState): void {
-    const catOpts = Object.entries(CardImagesCategory).map((entry) => ({
-      value: entry[0],
-      text: String(entry[1]),
-      selected: state.cardImagesCategory === entry[0],
-    }));
-    this.selectGameCards.addOptions(catOpts);
+  private initSelectsors(state: IGameSettingsState): void {
+    this.selectGameCards.addOptions(PageSettings.prepareCategoryOptions(state));
 
-    const difOpts = Object.entries(APP_GAME_DIFFICILTY_CONFIG).map((entry) => {
-      const cards = `${entry[1].cardField[0]} × ${entry[1].cardField[1]}`;
-      const time = String(entry[1].initialShowTime).padStart(2, '\xa0');
-      const score = Math.floor(100 * entry[1].scoreCoefficient);
-      return {
-        value: entry[0],
-        text: `🎴 ${cards} \xa0|\xa0 Start ⏳ ${time}s \xa0|\xa0 Score 🏆 × ${score}%`,
-        selected: state.cardsAmount.toString() === entry[0],
-      };
-    });
-    this.selectDifficulty.addOptions(difOpts);
+    this.selectDifficulty.addOptions(
+      PageSettings.prepareDifficultyOptions(state)
+    );
 
     this.selectGameCards.onSelect((value) =>
       this.model?.setSetting(
@@ -72,6 +65,28 @@ export class PageSettings extends BasePage {
     this.selectDifficulty.onSelect((value) =>
       this.model?.setSetting('cardsAmount', value as unknown as CardsAmount)
     );
+  }
+
+  private static prepareCategoryOptions(state: IGameSettingsState) {
+    return Object.entries(CardImagesCategory).map((entry) => ({
+      value: entry[0],
+      text: String(entry[1]),
+      selected: state.cardImagesCategory === entry[0],
+    }));
+  }
+
+  private static prepareDifficultyOptions(state: IGameSettingsState) {
+    return Object.entries(APP_GAME_DIFFICULTY_CONFIG).map((entry) => {
+      const cards = `${entry[1].cardField[0]} × ${entry[1].cardField[1]}`;
+      const time = String(entry[1].initialShowTime).padStart(2, '\xa0');
+      const score = Math.floor(100 * entry[1].scoreCoefficient);
+      return {
+        value: entry[0],
+        text: `🎴 ${cards} \xa0|\xa0 ⏱\xa0 ${time}s \xa0|\xa0 🏆 × ${score}%`,
+        selected: state.cardsAmount.toString() === entry[0],
+        title: `cards ${cards} \xa0|\xa0 start time ${time}s \xa0|\xa0 score × ${score}%`,
+      };
+    });
   }
 }
 

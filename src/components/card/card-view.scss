@@ -11,7 +11,7 @@
 
   &:hover {
     .card {
-      box-shadow: 0 5px 10px hsla(0, 0%, 0%, .5);
+      box-shadow: 0 5px 10px hsla(0, 0%, 0%, 0.5);
       transform: translateZ(20px);
     }
   }
@@ -22,7 +22,7 @@
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  box-shadow: 0 1px 5px hsla(0, 0%, 0%, .5);
+  box-shadow: 0 1px 5px hsla(0, 0%, 0%, 0.5);
   transform-style: preserve-3d;
   // transform-origin: top;
   transition: all var(--card-state-time);
@@ -39,32 +39,32 @@
     backface-visibility: hidden;
 
     &--back {
-      background-color: hsla(0, 0%, 100%, .5);
+      background-color: hsla(0, 0%, 100%, 0.5);
       background-size: 50%;
-    } 
+    }
 
     &--front {
       background-color: red;
       background-size: cover;
       transform: rotateY(180deg) rotateZ(180deg);
-    }     
+    }
   }
 }
 
 .error {
-  background-color: hsla(0, 100%, 50%, .75);
-  box-shadow: 0 0 0 7px hsla(0, 100%, 50%, .75);
+  background-color: hsla(0, 100%, 50%, 0.75);
+  box-shadow: 0 0 0 7px hsla(0, 100%, 50%, 0.75);
 }
 
 .match {
-  background-color: hsla(120, 100%, 50%, .75);
-  box-shadow: 0 0 0 7px hsla(120, 100%, 50%, .75);
+  background-color: hsla(120, 100%, 50%, 0.75);
+  box-shadow: 0 0 0 7px hsla(120, 100%, 50%, 0.75);
 }
 
 .flipped {
   .card,
   &:hover .card {
-    box-shadow: 0 1px 5px hsla(0, 0%, 0%, .5);
+    box-shadow: 0 1px 5px hsla(0, 0%, 0%, 0.5);
     transform: rotateX(-180deg);
     // transform: rotateX(-180deg) translateY(100%);
     // transform-origin: bottom;

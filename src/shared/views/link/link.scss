@@ -1,8 +1,8 @@
 :global .link {
-  --color-default: hsla(240, 100%, 75%, 1);
-  --color-hover: hsla(240, 100%, 95%, 1);
-  --color-active-default: hsla(240, 100%, 25%, 1);
-  --color-active-hover: hsla(240, 100%, 05%, 1);
+  --color-default: hsla(240deg, 100%, 75%, 1);
+  --color-hover: hsla(240deg, 100%, 95%, 1);
+  --color-active-default: hsla(240deg, 100%, 25%, 1);
+  --color-active-hover: hsla(240deg, 100%, 05%, 1);
   --color: var(--color-default);
 
   --color-background-default: transparent;
@@ -13,7 +13,7 @@
 
   text-decoration: none;
   transition: 200ms;
-  
+
   color: var(--color);
   background-color: var(--color-background);
 

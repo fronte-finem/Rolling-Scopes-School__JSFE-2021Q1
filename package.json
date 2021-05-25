@@ -4,9 +4,7 @@
   "author": "Fronte Finem <fronte.finem+match.match.game@ya.ru> (https://github.com/fronte-finem)",
   "private": true,
   "scripts": {
-    "tscfg-wpk": "cross-env-shell \"TS_NODE_PROJECT=tsconfig.webpack.json\"",
-    "test-env": "pnpm run tscfg-wpk \"echo TS_NODE_PROJECT: $TS_NODE_PROJECT\"",
-    "test-cfg": "pnpm run tscfg-wpk \"webpack configtest\"",
+    "test-cfg": "webpack configtest",
     "dev": "webpack serve --env devmode",
     "prod": "webpack",
     "my-dev": "webpack serve --env devmode --env myenv",
