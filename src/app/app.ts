@@ -1,4 +1,4 @@
-import { IAppStateChangeRequest } from '../services/app-state';
+import { AppState, IAppStateChangeRequest } from '../services/app-state';
 import { APP_CONFIG } from './app.config';
 import { IRouterState, Router } from '../router/router';
 import { View } from '../shared/views/view';
@@ -74,25 +74,25 @@ export class App {
   ): Promise<boolean> {
     let isDone: boolean;
     switch (request.from) {
-      case 'initial':
+      case AppState.INITIAL:
         isDone = await this.processPopUp(new PopUpSignUpView(userService));
         return isDone;
-      case 'ready':
+      case AppState.READY:
         this.gameStoppedByButton = false;
         Router.activateRoute(APP_CONFIG.pages.game.route.url);
         return true;
-      case 'game':
-        if (request.to === 'ready') {
+      case AppState.GAME:
+        if (request.to === AppState.READY) {
           if (Router.getCurrentUrl() === APP_CONFIG.pages.game.route.url) {
             this.gameStoppedByButton = true;
             Router.activateRoute(APP_CONFIG.initialRoute.url);
           }
-        } else if (request.to === 'solved') {
+        } else if (request.to === AppState.SOLVED) {
           await this.processPopUp(new PopUpVictoryView(userService));
           Router.activateRoute(APP_CONFIG.pages.score.route.url);
         }
         return true;
-      case 'solved':
+      case AppState.SOLVED:
         return true;
       default:
         return false;

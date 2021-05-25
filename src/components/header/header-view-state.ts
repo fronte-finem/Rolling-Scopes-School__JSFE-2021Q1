@@ -1,21 +1,18 @@
-import { AppStateName } from '../../services/app-state';
-import { IContext } from '../../shared/state/types';
-import { State } from '../../shared/state/state';
+import { AppState } from '../../services/app-state';
+import { IContext, IState } from '../../shared/state/types';
 
-export interface IHeaderContext extends IContext<AppStateName> {
+export interface IHeaderContext extends IContext<AppState> {
   setBtnText(text: string): void;
   hideAvatar(hide: boolean): void;
 }
 
-export class HeaderState extends State<AppStateName> {
+export class HeaderState implements IState<AppState> {
   constructor(
-    readonly name: AppStateName,
-    readonly next: AppStateName,
-    readonly btnText: string,
-    readonly hideAvatar: boolean
-  ) {
-    super(name, next);
-  }
+    readonly name: AppState,
+    readonly next: AppState,
+    private readonly btnText: string,
+    private readonly hideAvatar: boolean
+  ) {}
 
   apply(headerContext: IHeaderContext): void {
     headerContext.setBtnText(this.btnText);

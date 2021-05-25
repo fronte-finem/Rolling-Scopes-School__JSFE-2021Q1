@@ -1,10 +1,13 @@
-import { StateName } from '../shared/state/types';
-
-export type AppStateName = StateName<'ready' | 'game' | 'solved'>;
+export enum AppState {
+  INITIAL = 'initial',
+  READY = 'ready',
+  GAME = 'game',
+  SOLVED = 'solved',
+};
 
 export interface IAppStateChangeRequest {
-  from: AppStateName;
-  to: AppStateName;
+  from: AppState;
+  to: AppState;
 }
 
 export interface IAppStateService {
