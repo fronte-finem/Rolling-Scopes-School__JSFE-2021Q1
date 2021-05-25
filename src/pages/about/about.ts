@@ -1,8 +1,17 @@
+import { View } from '../../shared/views/view';
 import { BasePage } from '../base-page';
 
 export class PageAbout extends BasePage {
   constructor() {
-    super({ childs: [{ tag: 'h1', text: PageAbout.name }] });
+    super({ classNames: ['page-about'] });
+  }
+
+  init(): void {
+    this.view.render(new View({ tag: 'h1', text: PageAbout.name }));
+  }
+
+  stop(): void {
+    this.view.clear();
   }
 }
 // Todo:
