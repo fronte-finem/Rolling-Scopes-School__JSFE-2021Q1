@@ -1,5 +1,8 @@
 export class LocalStorageService<Settings> {
-  constructor(private readonly storageKey: string, private readonly initialSettings: Settings) {}
+  constructor(
+    private readonly storageKey: string,
+    private readonly initialSettings: Settings
+  ) {}
 
   loadSettings(): Promise<Settings> {
     return new Promise((resolve) => {
@@ -14,10 +17,7 @@ export class LocalStorageService<Settings> {
 
   saveSettings(settings: Settings): Promise<void> {
     return new Promise((resolve) => {
-      window.localStorage.setItem(
-        this.storageKey,
-        JSON.stringify(settings)
-      );
+      window.localStorage.setItem(this.storageKey, JSON.stringify(settings));
       resolve();
     });
   }
