@@ -1,6 +1,7 @@
 import { Model, ModelState } from '../../shared/models/model';
 import { CardModel } from '../../components/card/card-model';
 import { Listener, Observer } from '../../shared/observer';
+import { GameMatches } from '../../services/game-service';
 
 export interface IGameModelState extends ModelState {
   isError: boolean;
@@ -8,8 +9,6 @@ export interface IGameModelState extends ModelState {
   isSolved: boolean;
   gameActiveCard?: CardModel;
   matchedCards: Set<CardModel>;
-  startTime: Date;
-  stopTime: Date;
 }
 
 type GameEvents = 'game-solved' | 'game-error';
@@ -24,8 +23,6 @@ export class GameModel extends Model<IGameModelState> {
       isSolved: false,
       gameActiveCard: undefined,
       matchedCards: new Set<CardModel>(),
-      startTime: new Date(),
-      stopTime: new Date(),
     });
     this.cards = cards;
   }
@@ -45,12 +42,10 @@ export class GameModel extends Model<IGameModelState> {
   start(): void {
     this.flipAll(false);
     this.state.isStopped = false;
-    this.state.startTime = new Date();
   }
 
   stop(): void {
     this.state.isStopped = true;
-    this.state.stopTime = new Date();
   }
 
   get activeCard(): CardModel | undefined {
@@ -110,17 +105,8 @@ export class GameModel extends Model<IGameModelState> {
     return { all, error };
   }
 
-  // Расчет очков игрока должен производиться по следующей формуле:
-  //   (количество сравнений - количество ошибочных сравнений) * 100 - (время прошедшее с начала в секундах) * 10.
-  // При этом количество очков не должно быть меньше 0.
-  get score(): number {
+  getMatches(): GameMatches {
     const { all, error } = this.clicks;
-    const diffClicks = all - error;
-    const stopTime = this.state.isStopped ? this.state.stopTime : new Date();
-    const diffTime = Math.round(
-      (stopTime.getTime() - this.state.startTime.getTime()) / 1000
-    );
-    const score = diffClicks * 100 - diffTime * 10;
-    return score < 0 ? 0 : score;
+    return [all / 2, error / 2];
   }
 }
