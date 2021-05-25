@@ -56,10 +56,7 @@ export class PageSettings extends BasePage {
     );
 
     this.selectGameCards.onSelect((value) =>
-      this.model?.setSetting(
-        'cardImagesCategory',
-        value as keyof typeof CardImagesCategory
-      )
+      this.model?.setSetting('cardImagesCategory', value as CardImagesCategory)
     );
 
     this.selectDifficulty.onSelect((value) =>

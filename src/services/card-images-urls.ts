@@ -3,8 +3,8 @@ import { knuthShuffle } from '../shared/array-utils';
 const IMAGES_JSON = './images.json';
 
 export enum CardImagesCategory {
-  cats = '🐱 Cats 🐈🐈‍⬛',
-  dogs = '🐶 Dogs 🐕🐩🐕‍🦺',
+  CATS = '🐱 Cats 🐈🐈‍⬛',
+  DOGS = '🐶 Dogs 🐕🐩🐕‍🦺',
 }
 
 export interface ICardImagesDescriptionModel {
@@ -19,7 +19,7 @@ export interface ICardImagesDescriptionModel {
 }
 
 export interface ICardImagesCategoryModel {
-  category: keyof typeof CardImagesCategory;
+  category: CardImagesCategory;
   images: ICardImagesDescriptionModel;
 }
 
@@ -35,17 +35,19 @@ export interface ICardImagesService {
   ): Promise<ICardImagesUrlsModel | undefined>;
 }
 
+type Cache = Map<CardImagesCategory, ICardImagesDescriptionModel>;
+
 export class CardImagesService implements ICardImagesService {
-  private cache?: Map<string, ICardImagesDescriptionModel>;
+  private cache?: Cache;
 
   private jsonUrl = IMAGES_JSON;
 
-  private async fetch(): Promise<Map<string, ICardImagesDescriptionModel>> {
+  private async fetch(): Promise<Cache> {
     if (!this.cache) {
       const res = await fetch(IMAGES_JSON);
       const data = (await res.json()) as ICardImagesCategoryModel[];
       this.cache = data.reduce(
-        (acc, model) => acc.set(model.category, model.images),
+        (acc, model) => acc.set(model.category.toUpperCase(), model.images),
         new Map()
       );
     }
@@ -53,14 +55,14 @@ export class CardImagesService implements ICardImagesService {
   }
 
   private async generateUrls(
-    category: keyof typeof CardImagesCategory
+    category: CardImagesCategory
   ): Promise<ICardImagesUrlsModel | undefined> {
     const images = (await this.fetch()).get(category);
     if (!images) return undefined;
     const front = Array.from(
       { length: images.last - images.first },
       (_, i) =>
-        `${category}/${String(i + images.first).padStart(
+        `${category.toLowerCase()}/${String(i + images.first).padStart(
           images.leftPad,
           images.leftPadChar
         )}.${images.extension}`
@@ -69,7 +71,7 @@ export class CardImagesService implements ICardImagesService {
   }
 
   async getUrls(
-    category: keyof typeof CardImagesCategory,
+    category: CardImagesCategory,
     amount: number
   ): Promise<ICardImagesUrlsModel | undefined> {
     const urls = await this.generateUrls(category);
