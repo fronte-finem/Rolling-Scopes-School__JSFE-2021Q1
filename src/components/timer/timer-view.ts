@@ -1,17 +1,16 @@
 import { ITimeDiffFormat } from '../../shared/date-time-utils';
 import { View } from '../../shared/views/view';
-import { Factory } from '../../shared/views/view-factory';
 import styles from './timer-view.scss';
 
 export class TimerView extends View {
   private readonly output = {
-    seconds: Factory.view({
+    seconds: new View({
       classNames: [styles.timerOutput, styles.timerOutputSeconds],
     }),
-    minutes: Factory.view({
+    minutes: new View({
       classNames: [styles.timerOutput, styles.timerOutputMinutes],
     }),
-    hours: Factory.view({
+    hours: new View({
       classNames: [styles.timerOutput, styles.timerOutputHours],
     }),
   };
@@ -20,7 +19,7 @@ export class TimerView extends View {
     super({ classNames: [styles.timer] });
 
     this.render(
-      Factory.view({
+      new View({
         classNames: [styles.timerBox],
         childs: [
           this.output.hours,
@@ -42,7 +41,7 @@ export class TimerView extends View {
   }
 
   static createSplitter(splitter = ':'): View {
-    return Factory.view({
+    return new View({
       classNames: [styles.timerOutput, styles.timerOutputSplitter],
       text: splitter,
     });
