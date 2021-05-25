@@ -5,7 +5,7 @@ type StatesMap<SpecificStateNames> = Map<
   IState<SpecificStateNames>
 >;
 
-export class StateMashine<SpecificStateNames> {
+export class StateMaсhine<SpecificStateNames> {
   private readonly statesMap: StatesMap<SpecificStateNames> =
     new Map() as StatesMap<SpecificStateNames>;
 
@@ -18,7 +18,7 @@ export class StateMashine<SpecificStateNames> {
 
   addState(
     state: IState<SpecificStateNames>
-  ): StateMashine<SpecificStateNames> {
+  ): StateMaсhine<SpecificStateNames> {
     this.statesMap.set(state.name, state);
     return this;
   }

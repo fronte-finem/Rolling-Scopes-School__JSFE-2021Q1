@@ -8,7 +8,7 @@ import { View } from '../../shared/views/view';
 import { BtnView } from '../../shared/views/btn/btn';
 import { LinkView } from '../../shared/views/link/link';
 import { NavMenuView } from '../nav-menu/nav-menu-view';
-import { StateMashine } from '../../shared/state/state-mashine';
+import { StateMaсhine } from '../../shared/state/state-maсhine';
 import { IState } from '../../shared/state/types';
 import { IUserService } from '../../services/user-service';
 import { renderAvatar } from '../../shared/views/avatar-factory';
@@ -20,8 +20,8 @@ import { renderAvatar } from '../../shared/views/avatar-factory';
 export class HeaderView extends View implements IHeaderContext {
   readonly observer = new Observer<AppStateName>();
 
-  protected readonly stateMashine: StateMashine<AppStateName> =
-    new StateMashine(
+  protected readonly stateMaсhine: StateMaсhine<AppStateName> =
+    new StateMaсhine(
       new HeaderState(
         'initial',
         'ready',
@@ -74,24 +74,24 @@ export class HeaderView extends View implements IHeaderContext {
       })
     );
 
-    this.stateMashine.applyCurrentState(this);
+    this.stateMaсhine.applyCurrentState(this);
 
     this.btnStateSwitch.onClick(() => {
       const currentState = this.getCurrentState();
       appStateService
         .requestStateChange({ from: currentState.name, to: currentState.next })
         .then((allowed) => {
-          if (allowed) this.stateMashine.nextState(this);
+          if (allowed) this.stateMaсhine.nextState(this);
         }, null);
     });
   }
 
   getCurrentState(): IState<AppStateName> {
-    return this.stateMashine.getCurrentState();
+    return this.stateMaсhine.getCurrentState();
   }
 
   nextState(): void {
-    this.stateMashine.nextState(this, false);
+    this.stateMaсhine.nextState(this, false);
   }
 
   hideAvatar(hide = true): void {
