@@ -7,7 +7,10 @@ import { CardModel } from '../../components/card/card-model';
 import { Timer } from '../../components/timer/timer';
 import { ICardImagesService } from '../../services/card-images-urls';
 import { IGameSettingsService } from '../../services/game-settings';
+import { IUserService } from '../../services/user-service';
 import styles from './game.scss';
+import { IAppStateService } from '../../services/app-state';
+import { countScore } from '../../services/game-service';
 
 export class PageGame extends BasePage implements IPage {
   private readonly timer = new Timer();
@@ -19,8 +22,10 @@ export class PageGame extends BasePage implements IPage {
   private cards: Card[] = [];
 
   constructor(
+    private appStateService: IAppStateService,
     private gameSettingsService: IGameSettingsService,
-    private cardImagesService: ICardImagesService
+    private cardImagesService: ICardImagesService,
+    private userService: IUserService
   ) {
     super({ classNames: [styles.game] });
 
@@ -74,6 +79,14 @@ export class PageGame extends BasePage implements IPage {
     this.model.onSolved(() => {
       this.timer.stop();
       this.view.setCssState(styles.gameSolved, true);
+      if (!this.model) return;
+      const score = countScore(this.model.getMatches(), this.timer.model.diff);
+      this.userService
+        .updateUserAchievement(score, this.timer.model.diff)
+        .then(null, null);
+      this.appStateService
+        .requestStateChange({ from: 'game', to: 'solved' })
+        .then(null, null);
     });
   }
 
