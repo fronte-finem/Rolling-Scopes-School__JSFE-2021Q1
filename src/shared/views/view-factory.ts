@@ -1,14 +1,15 @@
 import { View, ICreateViewOptions, IView } from './view';
 import { BtnView } from './btn/btn';
 import { LinkView, ICreateLinkOptions } from './link/link';
+import { ImgView } from './img/img';
 
 export interface IBuildViewOptions extends ICreateViewOptions {
-  childs?: (IBuildViewOptions | IView)[];
-  hookView?: (view: IView) => void;
+  build?: IBuildViewOptions | IBuildViewOptions[];
+  hookView?: (view: IView<HTMLElement>) => void;
 }
 
 export abstract class Factory {
-  static view({ tag, childs, hookView, ...options }: IBuildViewOptions): View {
+  static view({ tag, build, hookView, ...options }: IBuildViewOptions): View {
     let view: View;
 
     switch (tag) {
@@ -16,7 +17,7 @@ export abstract class Factory {
         view = new LinkView(<ICreateLinkOptions>options);
         break;
       case 'img':
-        view = new LinkView(<ICreateLinkOptions>options);
+        view = new ImgView(<ICreateLinkOptions>options);
         break;
       case 'button':
         view = new BtnView(options);
@@ -29,11 +30,13 @@ export abstract class Factory {
       hookView(view);
     }
 
-    if (childs) {
-      const views = childs.map((child) =>
-        child instanceof View ? child : Factory.view(<IBuildViewOptions>child)
-      );
-      view.render(views);
+    if (build) {
+      if (Array.isArray(build)) {
+        const views = build.map((opt) => Factory.view(opt));
+        view.render(views);
+      } else {
+        view.render(Factory.view(build));
+      }
     }
     return view;
   }
