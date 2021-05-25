@@ -1,28 +1,31 @@
 .timer {
-  --box-color-background: hsla(240deg, 10%, 50%, 0.5);
-  --splitter-color-text: hsla(240deg, 100%, 5%, 0.5);
-  --seconds-color-text: hsla(240deg, 100%, 10%, 1);
-  --minutes-color-text: hsla(240deg, 100%, 20%, 1);
-  --hours-color-text: hsla(240deg, 100%, 30%, 1);
+  --timer-color-main: 240deg, 100%;
+  --timer-color-second: 0deg, 100%;
+
+  --box-color-background: hsla(var(--timer-color-main), 20%, 0.1);
+  --splitter-color-text: hsla(var(--timer-color-main), 5%, 0.5);
+  --seconds-color-text: hsla(var(--timer-color-main), 10%, 1);
+  --minutes-color-text: hsla(var(--timer-color-main), 20%, 1);
+  --hours-color-text: hsla(var(--timer-color-main), 30%, 1);
 
   display: flex;
   justify-content: center;
   align-items: center;
 
   &--countdown {
-    --box-color-background: hsla(0deg, 100%, 100%, 0.5);
-    --splitter-color-text: hsla(0deg, 100%, 50%, 0.5);
-    --seconds-color-text: hsla(0deg, 100%, 40%, 1);
-    --minutes-color-text: hsla(0deg, 100%, 30%, 1);
-    --hours-color-text: hsla(0deg, 100%, 20%, 1);
+    --box-color-background: hsla(var(--timer-color-second), 100%, 0.5);
+    --splitter-color-text: hsla(var(--timer-color-second), 50%, 0.5);
+    --seconds-color-text: hsla(var(--timer-color-second), 40%, 1);
+    --minutes-color-text: hsla(var(--timer-color-second), 30%, 1);
+    --hours-color-text: hsla(var(--timer-color-second), 20%, 1);
   }
 
   &--stop {
     --box-color-background: hsla(120deg, 100%, 20%, 0.5);
-    --splitter-color-text: hsla(240deg, 100%, 95%, 0.5);
-    --seconds-color-text: hsla(240deg, 100%, 90%, 1);
-    --minutes-color-text: hsla(240deg, 100%, 85%, 1);
-    --hours-color-text: hsla(240deg, 100%, 80%, 1);
+    --splitter-color-text: hsla(var(--timer-color-main), 95%, 0.5);
+    --seconds-color-text: hsla(var(--timer-color-main), 90%, 1);
+    --minutes-color-text: hsla(var(--timer-color-main), 85%, 1);
+    --hours-color-text: hsla(var(--timer-color-main), 80%, 1);
   }
 
   &__box {

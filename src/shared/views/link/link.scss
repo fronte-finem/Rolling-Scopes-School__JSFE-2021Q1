@@ -1,34 +1,36 @@
 :global .link {
-  --color-default: hsla(240deg, 100%, 75%, 1);
-  --color-hover: hsla(240deg, 100%, 95%, 1);
-  --color-active-default: hsla(240deg, 100%, 25%, 1);
-  --color-active-hover: hsla(240deg, 100%, 05%, 1);
-  --color: var(--color-default);
+  --color-default: hsla(var(--color-first-default), 0.75);
+  --color-hover: hsla(var(--color-first-default), 1);
+  --color-active-default: hsla(var(--color-first-dark), 0.75);
+  --color-active-hover: hsla(var(--color-first-dark), 1);
+  --link-color: var(--color-default);
 
   --color-background-default: transparent;
   --color-background-hover: transparent;
   --color-background-active-default: transparent;
   --color-background-active-hover: transparent;
-  --color-background: var(--color-background-default);
+  --link-color-background: var(--color-background-default);
+
+  --link-transition: all 300ms;
 
   text-decoration: none;
-  transition: 200ms;
+  transition: var(--link-transition);
 
-  color: var(--color);
-  background-color: var(--color-background);
+  color: var(--link-color);
+  background-color: var(--link-color-background);
 
   &:hover {
-    --color: var(--color-hover);
-    --color-background: var(--color-background-hover);
+    --link-color: var(--color-hover);
+    --link-color-background: var(--color-background-hover);
   }
 
   &--active {
-    --color: var(--color-active-default);
-    --color-background: var(--color-background-active-default);
+    --link-color: var(--color-active-default);
+    --link-color-background: var(--color-background-active-default);
 
     &:hover {
-      --color: var(--color-active-hover);
-      --color-background: var(--color-background-active-hover);
+      --link-color: var(--color-active-hover);
+      --link-color-background: var(--color-background-active-hover);
     }
   }
 }

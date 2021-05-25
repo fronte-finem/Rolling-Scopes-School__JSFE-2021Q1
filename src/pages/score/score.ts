@@ -18,7 +18,7 @@ export class PageScore extends BasePage {
   });
 
   constructor(private readonly userService: IUserService) {
-    super({ classNames: [styles.wrapper] });
+    super({ classNames: [styles.pageScore] });
   }
 
   stop(): void {

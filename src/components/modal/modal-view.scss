@@ -1,4 +1,6 @@
 .modal-cover {
+  --modal-bg-color: #000c;
+
   position: fixed;
   z-index: 100;
   top: 0;
@@ -14,7 +16,7 @@
 
   overflow: hidden;
 
-  background-color: #000c;
+  background-color: var(--modal-bg-color);
   backdrop-filter: blur(10px);
 
   opacity: 1;

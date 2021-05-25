@@ -1,13 +1,11 @@
 @use "sass:math";
 
 .app {
-  --grad-color-1: #0001;
-  --grad-color-2: #fff1;
-  --grad-size: 200px;
   --app-w-max: 1200px;
-  --grad: var(--grad-color-1) 0%, var(--grad-color-1) 40%,
-    var(--grad-color-2) 40%, var(--grad-color-2) 60%, var(--grad-color-1) 60%,
-    var(--grad-color-1) 100%;
+  --grad-size: 200px;
+  --grad: var(--color-grad-1) 0%, var(--color-grad-1) 40%,
+    var(--color-grad-2) 40%, var(--color-grad-2) 60%, var(--color-grad-1) 60%,
+    var(--color-grad-1) 100%;
 
   min-height: 100vh;
   display: grid;

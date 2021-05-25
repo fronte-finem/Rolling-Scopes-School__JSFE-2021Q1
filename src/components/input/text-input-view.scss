@@ -1,21 +1,27 @@
 .input-wrapper {
+  --input-color: #fff;
+  --input-bg-color: ##0002;
+  --input-title-color: #0008;
+  --input-placeholder-color: #fff8;
+  --input-error-bg-color: hsla(var(--color-second-default), 0.75);
+  --input-selection-bg-color: hsla(var(--color-second-default), 0.75);
+
   display: flex;
   flex-direction: column;
   row-gap: 5px;
   padding: 5px 20px;
-  border-bottom: 1px solid #0004;
   background-color: #0002;
   transition: all 500ms;
 }
 
 .error {
-  background-color: hsla(30deg, 100%, 50%, 0.75);
+  background-color: var(--input-error-bg-color);
 }
 
 .title {
   display: block;
   text-transform: capitalize;
-  color: #0008;
+  color: var(--input-title-color);
   font-size: 12px;
 }
 
@@ -25,13 +31,13 @@
   border: none;
   background: none;
   outline: none;
-  color: #fff;
+  color: var(--input-color);
 }
 
 .input::placeholder {
-  color: #fff8;
+  color: var(--input-placeholder-color);
 }
 
 .input::selection {
-  background-color: hsla(30deg, 100%, 50%, 0.75);
+  background-color: var(--input-selection-bg-color);
 }

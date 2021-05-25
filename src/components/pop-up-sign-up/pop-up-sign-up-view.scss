@@ -6,9 +6,6 @@
   padding: 30px 20px;
 }
 
-.form-wrapper {
-}
-
 .inputs-wrapper {
   display: flex;
   flex-direction: column;
@@ -16,6 +13,11 @@
 }
 
 .avatar {
+  --avatar-icon-color: hsla(var(--color-second-default), 0.75);
+  --avatar-bg-color: #0004;
+  --avatar-btn-color: #fff2;
+  --avatar-btn-shadow-color: #0008;
+
   position: relative;
   display: flex;
   justify-content: center;
@@ -27,7 +29,6 @@
 }
 
 .avatar__output {
-  --avatar-color: hsla(30deg, 100%, 50%, 0.75);
   position: absolute;
   top: 0;
   left: 0;
@@ -36,12 +37,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #0004;
+  background-color: var(--avatar-bg-color);
 }
 
 .btn-add-avatar-wrapper {
-  --btn-color: #fff2;
-
   position: relative;
   z-index: 1;
   width: 150px;
@@ -53,7 +52,7 @@
   transition: all 500ms;
 
   &:hover {
-    --btn-color: #fff8;
+    --avatar-btn-color: #fff8;
   }
 }
 
@@ -74,16 +73,16 @@
   width: 80%;
   height: 80%;
   transform: translateY(20%);
-  fill: var(--avatar-color);
+  fill: var(--avatar-icon-color);
 }
 
 .svg-icon--btn-add-avatar {
   position: absolute;
   width: 100%;
   height: 100%;
-  fill: var(--btn-color);
+  fill: var(--avatar-btn-color);
 
   use {
-    filter: drop-shadow(0 0 10px #0008);
+    filter: drop-shadow(0 0 10px var(--avatar-btn-shadow-color));
   }
 }

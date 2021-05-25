@@ -1,4 +1,6 @@
 .game {
+  --page-color-solved: hsla(var(--color-second-default), 0.5);
+
   max-height: 100%;
 
   grid-template-rows: 100px 1fr;
@@ -6,6 +8,6 @@
   transition: all 500ms;
 
   &--solved {
-    background-color: hsla(30deg, 100%, 50%, 0.5);
+    background-color: var(--page-color-solved);
   }
 }

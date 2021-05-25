@@ -1,0 +1,20 @@
+:global :root {
+  --color-root-bg: #ccc;
+  --color-grad-1: #0001;
+  --color-grad-2: #fff1;
+
+  --color-white: 0deg, 100%, 100%;
+  --color-white-light: hsla(var(--color-white), 1);
+  --color-white-default: hsla(var(--color-white), 0.75);
+  --color-white-dark: hsla(var(--color-white), 0.5);
+
+  --color-first: 240deg, 100%;
+  --color-first-light: var(--color-first), 95%;
+  --color-first-default: var(--color-first), 75%;
+  --color-first-dark: var(--color-first), 55%;
+  
+  --color-second: 30deg, 100%;
+  --color-second-light: var(--color-second), 70%;
+  --color-second-default: var(--color-second), 50%;
+  --color-second-dark: var(--color-second), 30%;
+}

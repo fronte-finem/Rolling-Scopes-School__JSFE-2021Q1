@@ -14,15 +14,15 @@
 }
 
 .nav-link {
-  --color-default: hsla(200deg, 100%, 95%, 0.9);
-  --color-hover: hsla(200deg, 100%, 95%, 1);
-  --color-active-default: #fff;
-  --color-active-hover: #fff;
+  --color-default: var(--color-white-default);
+  --color-hover: var(--color-white-light);
+  --color-active-default: var(--color-white-light);
+  --color-active-hover: var(--color-white-light);
 
-  --color-background-default: hsla(30deg, 100%, 50%, 0);
-  --color-background-hover: hsla(30deg, 100%, 50%, 0.2);
-  --color-background-active-default: hsla(30deg, 100%, 50%, 0.8);
-  --color-background-active-hover: hsla(30deg, 100%, 50%, 0.8);
+  --color-background-default: hsla(var(--color-first-dark), 0);
+  --color-background-hover: hsla(var(--color-first-dark), 0.2);
+  --color-background-active-default: hsla(var(--color-second-default), 1);
+  --color-background-active-hover: hsla(var(--color-second-default), 1);
 
   display: flex;
   flex-direction: column;
@@ -42,5 +42,6 @@
   display: block;
   width: 20px;
   height: 20px;
-  fill: var(--color);
+  fill: var(--link-color);
+  transition: var(--link-transition);
 }
