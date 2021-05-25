@@ -1,8 +1,7 @@
-import { IPageConfig } from '../../app/app.config';
+import { IPageConfig } from '../../app/configs/types';
 import { createSvgSpriteElement } from '../../shared/dom-utils';
 import { LinkView } from '../../shared/views/link/link';
 import { View } from '../../shared/views/view';
-import { Factory } from '../../shared/views/view-factory';
 import styles from './nav-menu-view.scss';
 
 export interface NavLinkCreateOptions {
@@ -17,7 +16,7 @@ export class NavMenuView extends View {
 
   private activeNavLink: LinkView | undefined;
 
-  private readonly navList = Factory.view({
+  private readonly navList = new View<HTMLUListElement>({
     tag: 'ul',
     classNames: [styles.navItems],
   });
@@ -47,19 +46,17 @@ export class NavMenuView extends View {
   }
 
   private static createNavItems(payload: View[]): View[] {
-    return payload.map((link) =>
-      Factory.view({
-        tag: 'li',
-        classNames: [styles.navItem],
-        childs: [link],
-      })
+    return payload.map(
+      (link) =>
+        new View<HTMLLIElement>({
+          tag: 'li',
+          classNames: [styles.navItem],
+          childs: [link],
+        })
     );
   }
 
-  private static createNavLink({
-    route,
-    navSvgIcon,
-  }: IPageConfig): LinkView {
+  private static createNavLink({ route, navSvgIcon }: IPageConfig): LinkView {
     return new LinkView({
       url: route.url,
       classNames: [styles.navLink],
