@@ -1,17 +1,18 @@
-import { Model } from "../../shared/models/model";
+import { Model } from '../../shared/models/model';
 
 export interface ISelectOpionModelState {
   value: string;
   text: string;
   selected?: boolean;
   disabled?: boolean;
+  title?: string;
 }
 
 export type SelectModelState = {
   [value: string]: ISelectOpionModelState;
-}
+};
 
-export class SelectModel extends Model<SelectModelState>  {
+export class SelectModel extends Model<SelectModelState> {
   constructor() {
     super({});
   }

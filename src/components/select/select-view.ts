@@ -1,6 +1,5 @@
 import styles from './select-view.scss';
 import { ICreateViewOptions, View } from '../../shared/views/view';
-import { Factory } from '../../shared/views/view-factory';
 import { ISelectOpionModelState } from './select-model';
 
 export interface ISelectOption {
@@ -13,17 +12,17 @@ export interface ICreateSelectOptions extends ICreateViewOptions {
 }
 
 export class SelectView extends View {
-  readonly label: View = Factory.view({
+  readonly label = new View<HTMLLabelElement>({
     tag: 'label',
     classNames: [styles.selectLabel],
   });
 
-  readonly select: View = Factory.view({
+  readonly select = new View<HTMLSelectElement>({
     tag: 'select',
     classNames: [styles.selector],
   });
 
-  readonly placeholder: View = SelectView.createOption({
+  readonly placeholder = SelectView.createOption({
     value: 'placeholder',
     text: 'placeholder',
     selected: true,
@@ -55,21 +54,30 @@ export class SelectView extends View {
     return this;
   }
 
-  static createOption({ value, text, selected, disabled }: ISelectOpionModelState): View {
-    const option = Factory.view({ tag: 'option', classNames: [styles.option] });
+  static createOption({
+    value,
+    text,
+    selected,
+    disabled,
+    title,
+  }: ISelectOpionModelState): View<HTMLOptionElement> {
+    const option = new View<HTMLOptionElement>({
+      tag: 'option',
+      classNames: [styles.option],
+    });
     option.element.setAttribute('value', value);
     option.setText(text);
-    if (selected) option.element.setAttribute('selected', 'selected');
-    if (disabled) option.element.setAttribute('disabled', 'disabled');
+    if (selected) option.element.selected = true;
+    if (disabled) option.element.disabled = true;
+    if (title) option.element.title = title;
     return option;
   }
 
   onSelect(
     listener: (value: string) => void,
-    // listener: EventListenerOrEventListenerObject,
     options?: boolean | AddEventListenerOptions
   ): void {
-    const select = this.select.element as HTMLSelectElement;
+    const select: HTMLSelectElement = this.select.element;
     const handler = () => listener(select.value);
     select.addEventListener('input', handler, options);
   }
