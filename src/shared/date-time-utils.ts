@@ -19,7 +19,7 @@ export function timeSplit(diff: number): [part: number, rest: number] {
 }
 
 export function timeDiff(diff: number): ITimeDiff {
-  const [sec, rest] = timeSplit(diff);
+  const [sec, rest] = timeSplit(Math.floor(diff));
   const [min, hours] = timeSplit(rest);
   return { hours, min, sec, diff };
 }
