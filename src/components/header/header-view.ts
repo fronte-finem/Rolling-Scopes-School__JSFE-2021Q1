@@ -1,14 +1,17 @@
-import { AppStateName, IAppStateService } from '../../services/app-state';
+import styles from './header-view.scss';
 import { APP_CONFIG } from '../../app/app.config';
+import { APP_HEADER_CONFIG } from '../../app/configs/header';
+import { IHeaderContext, HeaderState } from './header-view-state';
+import { AppStateName, IAppStateService } from '../../services/app-state';
 import { Observer } from '../../shared/observer';
 import { View } from '../../shared/views/view';
-import { Factory } from '../../shared/views/view-factory';
 import { BtnView } from '../../shared/views/btn/btn';
 import { LinkView } from '../../shared/views/link/link';
 import { NavMenuView } from '../nav-menu/nav-menu-view';
 import { StateMashine } from '../../shared/state/state-mashine';
-import { IHeaderContext, HeaderState } from './header-view-state';
-import styles from './header-view.scss';
+import { IState } from '../../shared/state/types';
+import { IUserService } from '../../services/user-service';
+import { renderAvatar } from '../../shared/views/avatar-factory';
 
 // После регистрации игрока в header должна появится кнопка позволяющая начать игру
 // После нажатия на кнопку старт должен начинаться игровой цикл
@@ -19,13 +22,28 @@ export class HeaderView extends View implements IHeaderContext {
 
   protected readonly stateMashine: StateMashine<AppStateName> =
     new StateMashine(
-      new HeaderState('initial', 'ready', APP_CONFIG.header.btn.signUp, true)
+      new HeaderState(
+        'initial',
+        'ready',
+        APP_HEADER_CONFIG.btns.signUp.text,
+        true
+      )
     )
       .addState(
-        new HeaderState('ready', 'game', APP_CONFIG.header.btn.start, false)
+        new HeaderState(
+          'ready',
+          'game',
+          APP_HEADER_CONFIG.btns.start.text,
+          false
+        )
       )
       .addState(
-        new HeaderState('game', 'ready', APP_CONFIG.header.btn.stop, false)
+        new HeaderState(
+          'game',
+          'ready',
+          APP_HEADER_CONFIG.btns.stop.text,
+          false
+        )
       );
 
   readonly logo = new LinkView({
@@ -35,8 +53,7 @@ export class HeaderView extends View implements IHeaderContext {
 
   readonly menu = new NavMenuView();
 
-  readonly avatar = new LinkView({
-    url: '#/score',
+  readonly avatar = new View({
     classNames: [styles.avatar],
   });
 
@@ -44,11 +61,14 @@ export class HeaderView extends View implements IHeaderContext {
     classNames: [styles.btn, styles.btnStateSwitch],
   });
 
-  constructor(private readonly appStateService: IAppStateService) {
+  constructor(
+    private readonly appStateService: IAppStateService,
+    private readonly userService: IUserService
+  ) {
     super({ tag: 'header', classNames: [styles.header] });
 
     this.render(
-      Factory.view({
+      new View({
         classNames: [styles.wrapper],
         childs: [this.logo, this.menu, this.btnStateSwitch, this.avatar],
       })
@@ -57,15 +77,16 @@ export class HeaderView extends View implements IHeaderContext {
     this.stateMashine.applyCurrentState(this);
 
     this.btnStateSwitch.onClick(() => {
+      const currentState = this.getCurrentState();
       appStateService
-        .requestStateChange(this.getCurrentState())
+        .requestStateChange({ from: currentState.name, to: currentState.next })
         .then((allowed) => {
           if (allowed) this.stateMashine.nextState(this);
         }, null);
     });
   }
 
-  getCurrentState(): AppStateName {
+  getCurrentState(): IState<AppStateName> {
     return this.stateMashine.getCurrentState();
   }
 
@@ -75,6 +96,16 @@ export class HeaderView extends View implements IHeaderContext {
 
   hideAvatar(hide = true): void {
     this.avatar.setCssState(styles.avatarHidden, hide);
+    if (!hide && this.avatar.element.innerHTML === '') {
+      const user = this.userService.currentUser;
+      if (!user) return;
+      renderAvatar(
+        user,
+        this.avatar,
+        [styles.svgIcon, styles.avatarImg],
+        [styles.avatarImg]
+      );
+    }
   }
 
   setBtnText(text: string): void {
