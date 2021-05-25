@@ -1,24 +1,28 @@
-import { StateName } from "../shared/state/types";
+import { StateName } from '../shared/state/types';
 
-export type AppStateName = StateName<'ready' | 'game'>;
+export type AppStateName = StateName<'ready' | 'game' | 'solved'>;
 
-export interface IAppStateService {
-  requestStateChange(from: AppStateName): Promise<boolean>;
+export interface IAppStateChangeRequest {
+  from: AppStateName;
+  to: AppStateName;
 }
 
-// export class DumbAppStateService implements IAppStateService {
-//   requestStateChange(fromState: AppStateName): Promise<boolean> {
-//     console.log(fromState, this);
-//     return new Promise((resolve) => resolve(true));
-//   }
-// }
+export interface IAppStateService {
+  requestStateChange(request: IAppStateChangeRequest): Promise<boolean>;
+}
 
-type AppStateChangeRequestListener = (fromState: AppStateName) => Promise<boolean>;
+export type AppStateChangeRequestListener = (
+  request: IAppStateChangeRequest
+) => Promise<boolean>;
 
 export class ProxyAppStateService implements IAppStateService {
-  constructor(private readonly requestListener: AppStateChangeRequestListener) {}
+  private requestListener!: AppStateChangeRequestListener;
 
-  requestStateChange(fromState: AppStateName): Promise<boolean> {
-    return this.requestListener(fromState);
+  init(requestListener: AppStateChangeRequestListener): void {
+    this.requestListener = requestListener;
+  }
+
+  requestStateChange(request: IAppStateChangeRequest): Promise<boolean> {
+    return this.requestListener(request);
   }
 }
