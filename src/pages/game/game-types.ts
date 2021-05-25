@@ -24,6 +24,6 @@ export type GameDifficultyMap = Readonly<{
 export type CardsAmount = keyof GameDifficultyMap;
 
 export interface IGameSettings {
-  cardImagesCategory: keyof typeof CardImagesCategory;
+  cardImagesCategory: CardImagesCategory;
   cardsAmount: keyof GameDifficultyMap;
 }

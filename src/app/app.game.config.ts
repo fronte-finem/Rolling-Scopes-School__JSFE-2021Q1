@@ -1,4 +1,5 @@
 import { GameDifficultyMap, IGameSettings } from '../pages/game/game-types';
+import { CardImagesCategory } from '../services/card-images-urls';
 
 export interface IAppGameConfig {
   readonly settings: Readonly<IGameSettings>;
@@ -6,7 +7,7 @@ export interface IAppGameConfig {
 
 export const APP_GAME_INITIAL_CONFIG: Readonly<IAppGameConfig> = {
   settings: {
-    cardImagesCategory: 'dogs',
+    cardImagesCategory: CardImagesCategory.DOGS,
     cardsAmount: 20,
   },
 };

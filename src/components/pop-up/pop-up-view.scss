@@ -1,7 +1,8 @@
 .pop-up {
   --border: 1px solid #0002;
 
-  background: hsla(240deg, 100%, 75%, 0.9);
+  overflow: hidden;
+  border-radius: 10px;
   opacity: 1;
 
   transform: translateY(0);
@@ -21,7 +22,7 @@
 
 .pop-up__side {
   padding: 10px;
-  background: #0008;
+  background: hsla(var(--color-first-dark), 0.25);
 }
 
 .pop-up__header {
@@ -42,4 +43,5 @@
 
 .pop-up__body {
   padding: 20px;
+  background: hsla(var(--color-first-default), 1);
 }

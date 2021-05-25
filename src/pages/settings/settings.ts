@@ -31,7 +31,7 @@ export class PageSettings extends BasePage {
     this.view.clear();
   }
 
-  async init(): Promise<void> {
+  init(): void {
     this.view.render(
       new View({
         classNames: [styles.settingsWrapper],
@@ -39,7 +39,7 @@ export class PageSettings extends BasePage {
       })
     );
 
-    const initialSettings = await this.gameSettingsService.loadSettings();
+    const initialSettings = this.gameSettingsService.loadSettings();
 
     this.model = new GameSettingsModel(initialSettings);
     this.model.onStateChange((settings) =>
@@ -56,10 +56,7 @@ export class PageSettings extends BasePage {
     );
 
     this.selectGameCards.onSelect((value) =>
-      this.model?.setSetting(
-        'cardImagesCategory',
-        value as keyof typeof CardImagesCategory
-      )
+      this.model?.setSetting('cardImagesCategory', value as CardImagesCategory)
     );
 
     this.selectDifficulty.onSelect((value) =>

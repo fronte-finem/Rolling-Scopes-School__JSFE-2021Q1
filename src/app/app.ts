@@ -1,4 +1,4 @@
-import { IAppStateChangeRequest } from '../services/app-state';
+import { AppState, IAppStateChangeRequest } from '../services/app-state';
 import { APP_CONFIG } from './app.config';
 import { IRouterState, Router } from '../router/router';
 import { View } from '../shared/views/view';
@@ -11,11 +11,11 @@ import styles from './app.scss';
 import { PopUpView } from '../components/pop-up/pop-up-view';
 
 export class App {
-  readonly view: View;
+  readonly view = new View({ tag: 'main', classNames: [styles.app] });
 
   private headerView = new HeaderView(appStateService, userService);
 
-  readonly pageContainer: View;
+  readonly pageContainer = new View({ classNames: [styles.pageContainer] });
 
   readonly modalView = new ModalView();
 
@@ -24,25 +24,28 @@ export class App {
   private gameStoppedByButton = false;
 
   constructor(parent: HTMLElement) {
+    this.initApp();
+    parent.append(this.view.element);
+  }
+
+  private initApp() {
     appStateService.init((request) =>
       this.handleAppStateChangeRequest(request)
     );
+    this.initRouter();
+    this.initHeader();
+    this.view.render([this.headerView, this.pageContainer, this.modalView]);
+  }
 
-    Object.values(APP_CONFIG.pages).reduce(
-      (router, page) => router.addRoute(page.route),
-      this.router
+  private initHeader() {
+    this.headerView.menu.addNavLinks(Object.values(APP_CONFIG.pages));
+  }
+
+  private initRouter() {
+    Object.values(APP_CONFIG.pages).forEach((page) =>
+      this.router.addRoute(page.route)
     );
     this.router.onChange((state) => this.applayRouteChange(state));
-
-    this.initHeader();
-    this.pageContainer = new View({ classNames: [styles.pageContainer] });
-
-    this.view = new View({
-      tag: 'main',
-      classNames: [styles.app],
-    });
-    this.view.render([this.headerView, this.pageContainer, this.modalView]);
-    parent.append(this.view.element);
   }
 
   async start(): Promise<void> {
@@ -66,34 +69,30 @@ export class App {
     this.headerView.menu.setActiveNavLink(newUrl);
   }
 
-  private initHeader() {
-    this.headerView.menu.addNavLinks(Object.values(APP_CONFIG.pages));
-  }
-
   private async handleAppStateChangeRequest(
     request: IAppStateChangeRequest
   ): Promise<boolean> {
-    // console.log(request);
-    await new Promise((rs) => rs(true));
+    let isDone: boolean;
     switch (request.from) {
-      case 'initial':
-        return await this.processPopUp(new PopUpSignUpView(userService));
-      case 'ready':
+      case AppState.INITIAL:
+        isDone = await this.processPopUp(new PopUpSignUpView(userService));
+        return isDone;
+      case AppState.READY:
         this.gameStoppedByButton = false;
         Router.activateRoute(APP_CONFIG.pages.game.route.url);
         return true;
-      case 'game':
-        if (request.to === 'ready') {
+      case AppState.GAME:
+        if (request.to === AppState.READY) {
           if (Router.getCurrentUrl() === APP_CONFIG.pages.game.route.url) {
             this.gameStoppedByButton = true;
             Router.activateRoute(APP_CONFIG.initialRoute.url);
           }
-        } else if (request.to === 'solved') {
+        } else if (request.to === AppState.SOLVED) {
           await this.processPopUp(new PopUpVictoryView(userService));
           Router.activateRoute(APP_CONFIG.pages.score.route.url);
         }
         return true;
-      case 'solved':
+      case AppState.SOLVED:
         return true;
       default:
         return false;

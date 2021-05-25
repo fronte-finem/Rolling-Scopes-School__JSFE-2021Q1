@@ -1,11 +1,11 @@
-import { View, ICreateViewOptions, IView } from './view';
+import { View, ICreateViewOptions } from './view';
 import { BtnView } from './btn/btn';
-import { LinkView, ICreateLinkOptions } from './link/link';
-import { ImgView } from './img/img';
+import { ICreateLinkOptions, LinkView } from './link/link';
+import { ICreateImgOptions, ImgView } from './img/img';
 
 export interface IBuildViewOptions extends ICreateViewOptions {
   build?: IBuildViewOptions | IBuildViewOptions[];
-  hookView?: (view: IView<HTMLElement>) => void;
+  hookView?: (view: View<HTMLElement>) => void;
 }
 
 export abstract class Factory {
@@ -17,7 +17,7 @@ export abstract class Factory {
         view = new LinkView(<ICreateLinkOptions>options);
         break;
       case 'img':
-        view = new ImgView(<ICreateLinkOptions>options);
+        view = new ImgView(<ICreateImgOptions>options);
         break;
       case 'button':
         view = new BtnView(options);

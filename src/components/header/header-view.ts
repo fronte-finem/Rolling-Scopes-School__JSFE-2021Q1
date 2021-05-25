@@ -2,13 +2,13 @@ import styles from './header-view.scss';
 import { APP_CONFIG } from '../../app/app.config';
 import { APP_HEADER_CONFIG } from '../../app/configs/header';
 import { IHeaderContext, HeaderState } from './header-view-state';
-import { AppStateName, IAppStateService } from '../../services/app-state';
+import { AppState, IAppStateService } from '../../services/app-state';
 import { Observer } from '../../shared/observer';
 import { View } from '../../shared/views/view';
 import { BtnView } from '../../shared/views/btn/btn';
 import { LinkView } from '../../shared/views/link/link';
 import { NavMenuView } from '../nav-menu/nav-menu-view';
-import { StateMashine } from '../../shared/state/state-mashine';
+import { StateMaсhine } from '../../shared/state/state-maсhine';
 import { IState } from '../../shared/state/types';
 import { IUserService } from '../../services/user-service';
 import { renderAvatar } from '../../shared/views/avatar-factory';
@@ -18,33 +18,32 @@ import { renderAvatar } from '../../shared/views/avatar-factory';
 // У игрока должна быть возможность остановить игру.
 
 export class HeaderView extends View implements IHeaderContext {
-  readonly observer = new Observer<AppStateName>();
+  readonly observer = new Observer<AppState>();
 
-  protected readonly stateMashine: StateMashine<AppStateName> =
-    new StateMashine(
+  protected readonly stateMaсhine: StateMaсhine<AppState> = new StateMaсhine(
+    new HeaderState(
+      AppState.INITIAL,
+      AppState.READY,
+      APP_HEADER_CONFIG.btns.signUp.text,
+      true
+    )
+  )
+    .addState(
       new HeaderState(
-        'initial',
-        'ready',
-        APP_HEADER_CONFIG.btns.signUp.text,
-        true
+        AppState.READY,
+        AppState.GAME,
+        APP_HEADER_CONFIG.btns.start.text,
+        false
       )
     )
-      .addState(
-        new HeaderState(
-          'ready',
-          'game',
-          APP_HEADER_CONFIG.btns.start.text,
-          false
-        )
+    .addState(
+      new HeaderState(
+        AppState.GAME,
+        AppState.READY,
+        APP_HEADER_CONFIG.btns.stop.text,
+        false
       )
-      .addState(
-        new HeaderState(
-          'game',
-          'ready',
-          APP_HEADER_CONFIG.btns.stop.text,
-          false
-        )
-      );
+    );
 
   readonly logo = new LinkView({
     url: APP_CONFIG.initialRoute.url,
@@ -66,32 +65,37 @@ export class HeaderView extends View implements IHeaderContext {
     private readonly userService: IUserService
   ) {
     super({ tag: 'header', classNames: [styles.header] });
+    this.init();
+    this.initStateSwitcher();
+    this.stateMaсhine.applyCurrentState(this);
+  }
 
+  init(): void {
     this.render(
       new View({
         classNames: [styles.wrapper],
         childs: [this.logo, this.menu, this.btnStateSwitch, this.avatar],
       })
     );
-
-    this.stateMashine.applyCurrentState(this);
-
-    this.btnStateSwitch.onClick(() => {
-      const currentState = this.getCurrentState();
-      appStateService
-        .requestStateChange({ from: currentState.name, to: currentState.next })
-        .then((allowed) => {
-          if (allowed) this.stateMashine.nextState(this);
-        }, null);
-    });
   }
 
-  getCurrentState(): IState<AppStateName> {
-    return this.stateMashine.getCurrentState();
+  initStateSwitcher(): void {
+    this.btnStateSwitch.onClick(() => {
+      const currentState = this.getCurrentState();
+      this.appStateService
+        .requestStateChange({ from: currentState.name, to: currentState.next })
+        .then((allowed) => {
+          if (allowed) this.stateMaсhine.nextState(this);
+        }, null);
+    });    
+  }
+
+  getCurrentState(): IState<AppState> {
+    return this.stateMaсhine.getCurrentState();
   }
 
   nextState(): void {
-    this.stateMashine.nextState(this, false);
+    this.stateMaсhine.nextState(this, false);
   }
 
   hideAvatar(hide = true): void {

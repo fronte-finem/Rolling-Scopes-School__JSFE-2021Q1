@@ -1,15 +1,15 @@
 :global .btn {
-  --color-default: hsla(200deg, 100%, 100%, 0.8);
-  --color-hover: hsla(200deg, 100%, 100%, 1);
-  --color-active-default: hsla(240deg, 100%, 25%, 1);
-  --color-active-hover: hsla(240deg, 100%, 05%, 1);
-  --color: var(--color-default);
+  --color-default: var(--color-white-default);
+  --color-hover: var(--color-white-light);
+  --color-active-default: var(--color-white-default);
+  --color-active-hover: var(--color-white-light);
+  --btn-color: var(--color-default);
 
-  --color-background-default: hsla(30deg, 100%, 40%, 0.8);
-  --color-background-hover: hsla(30deg, 100%, 50%, 1);
-  --color-background-active-default: hsla(30deg, 100%, 75%, 0.8);
-  --color-background-active-hover: hsla(30deg, 100%, 85%, 1);
-  --color-background: var(--color-background-default);
+  --color-background-default: hsla(var(--color-second-default), 0.75);
+  --color-background-hover: hsla(var(--color-second-default), 1);
+  --color-background-active-default: hsla(var(--color-first-dark), 0.75);
+  --color-background-active-hover: hsla(var(--color-first-dark), 1);
+  --btn-color-background: var(--color-background-default);
 
   padding: 10px 20px;
   border: none;
@@ -20,26 +20,26 @@
   cursor: pointer;
   transition: 300ms;
 
-  color: var(--color);
-  background-color: var(--color-background);
+  color: var(--btn-color);
+  background-color: var(--btn-color-background);
 
   &--invert {
-    color: var(--color-background);
-    background-color: var(--color);
+    color: var(--btn-color-background);
+    background-color: var(--btn-color);
   }
 
   &:hover {
-    --color: var(--color-hover);
-    --color-background: var(--color-background-hover);
+    --btn-color: var(--color-hover);
+    --btn-color-background: var(--color-background-hover);
   }
 
   &--active {
-    --color: var(--color-active-default);
-    --color-background: var(--color-background-active-default);
+    --btn-color: var(--color-active-default);
+    --btn-color-background: var(--color-background-active-default);
 
     &:hover {
-      --color: var(--color-active-hover);
-      --color-background: var(--color-background-active-hover);
+      --btn-color: var(--color-active-hover);
+      --btn-color-background: var(--color-background-active-hover);
     }
   }
 }

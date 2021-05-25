@@ -6,36 +6,12 @@ import {
   htmlToElem,
 } from '../dom-utils';
 
-export interface IView<HTMLElementExtended extends HTMLElement = HTMLElement> {
-  readonly element: HTMLElementExtended;
-  clear(): IView<HTMLElementExtended>;
-  render(
-    childs: IView<HTMLElement> | IView<HTMLElement>[]
-  ): IView<HTMLElementExtended>;
-  setCssState(stateClassName: string, force: boolean): void;
-  setCssStateAsync(stateClassName: string, force: boolean): Promise<void>;
-  getCssVar(name: string): string;
-  setCssVar(name: string, value: string): void;
-  setCssStyle<CSSProperty extends keyof CSSStyleDeclaration>(
-    cssProperty: CSSProperty,
-    value: CSSStyleDeclaration[CSSProperty]
-  ): void;
-  getText(): string | null;
-  setText(text: string): void;
-  onClick(
-    listener: EventListenerOrEventListenerObject,
-    options?: boolean | AddEventListenerOptions
-  ): unknown;
-}
-
 export interface ICreateViewOptions extends ICreateElementOptions {
-  childs?: IView | IView[];
+  childs?: View | View[];
   hookElement?: (elem: HTMLElement) => void;
 }
 
-export class View<HTMLElementExtended extends HTMLElement = HTMLElement>
-  implements IView<HTMLElementExtended>
-{
+export class View<HTMLElementExtended extends HTMLElement = HTMLElement> {
   readonly element: HTMLElementExtended;
 
   constructor(source: string | ICreateViewOptions) {
@@ -63,14 +39,14 @@ export class View<HTMLElementExtended extends HTMLElement = HTMLElement>
     this.element.textContent = text;
   }
 
-  clear(): IView<HTMLElementExtended> {
+  clear(): View<HTMLElementExtended> {
     this.element.innerHTML = '';
     return this;
   }
 
   render(
-    childs: IView<HTMLElement> | IView<HTMLElement>[]
-  ): IView<HTMLElementExtended> {
+    childs: View<HTMLElement> | View<HTMLElement>[]
+  ): View<HTMLElementExtended> {
     this.clear();
     if (Array.isArray(childs)) {
       this.element.append(...childs.map((child) => child.element));

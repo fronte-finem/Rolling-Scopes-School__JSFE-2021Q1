@@ -9,7 +9,7 @@ import { ICardImagesService } from '../../services/card-images-urls';
 import { IGameSettingsService } from '../../services/game-settings';
 import { IUserService } from '../../services/user-service';
 import styles from './game.scss';
-import { IAppStateService } from '../../services/app-state';
+import { AppState, IAppStateService } from '../../services/app-state';
 import { countScore } from '../../services/game-service';
 
 export class PageGame extends BasePage implements IPage {
@@ -52,7 +52,7 @@ export class PageGame extends BasePage implements IPage {
   private async newGame(): Promise<void> {
     this.stopGame();
 
-    const settings = await this.gameSettingsService.loadSettings();
+    const settings = this.gameSettingsService.loadSettings();
     const urls = await this.cardImagesService.getUrls(
       settings.cardImagesCategory,
       settings.cardsAmount
@@ -85,7 +85,7 @@ export class PageGame extends BasePage implements IPage {
         .updateUserAchievement(score, this.timer.model.diff)
         .then(null, null);
       this.appStateService
-        .requestStateChange({ from: 'game', to: 'solved' })
+        .requestStateChange({ from: AppState.GAME, to: AppState.SOLVED })
         .then(null, null);
     });
   }
