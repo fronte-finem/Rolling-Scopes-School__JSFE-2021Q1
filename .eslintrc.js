@@ -20,6 +20,14 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   rules: {
+    'no-param-reassign': ['error', { props: false }],
+    'no-bitwise': ['error', { int32Hint: true }],
+    // '@typescript-eslint/no-misused-promises': [
+    //   'error',
+    //   {
+    //     checksVoidReturn: false,
+    //   },
+    // ],
     'import/prefer-default-export': 'off',
   },
   ignorePatterns: ['webpack.config.js', '.eslintrc.js'],
