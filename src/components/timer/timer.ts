@@ -1,3 +1,4 @@
+import { timeDiffFormat } from '../../shared/date-time-utils';
 import { TimerModel, ITimerModelState } from './timer-model';
 import { TimerView } from './timer-view';
 
@@ -8,13 +9,11 @@ export class Timer {
 
   constructor() {
     this.updateView(this.model.getState());
-    this.model.onStateChange((state) =>
-      this.updateView(state)
-    );
+    this.model.onStateChange((state) => this.updateView(state));
   }
 
   updateView(state: ITimerModelState): void {
-    this.view.show(state.getTimeDiff());
+    this.view.show(timeDiffFormat(state.currentTime - state.startTime));
   }
 
   start(): void {
