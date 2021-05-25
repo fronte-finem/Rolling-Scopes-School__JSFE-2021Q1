@@ -5,8 +5,8 @@ const KEY_STORAGE_GAME_SETTINGS =
   'fronte-finem__match-match-game___game-settings';
 
 export interface IGameSettingsService {
-  loadSettings(): Promise<IGameSettings>;
-  saveSettings(settings: IGameSettings): Promise<void>;
+  loadSettings(): IGameSettings;
+  saveSettings(settings: IGameSettings): void;
 }
 
 export class GameSettingsService implements IGameSettingsService {
@@ -15,15 +15,15 @@ export class GameSettingsService implements IGameSettingsService {
   constructor(private readonly initialSettings: IGameSettings) {
     this.localStorage = new LocalStorageService<IGameSettings>(
       KEY_STORAGE_GAME_SETTINGS,
-      initialSettings
+      this.initialSettings
     );
   }
 
-  loadSettings(): Promise<IGameSettings> {
+  loadSettings(): IGameSettings {
     return this.localStorage.loadSettings();
   }
 
-  saveSettings(settings: IGameSettings): Promise<void> {
+  saveSettings(settings: IGameSettings): void {
     return this.localStorage.saveSettings(settings);
   }
 }

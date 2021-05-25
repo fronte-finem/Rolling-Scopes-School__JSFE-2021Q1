@@ -52,7 +52,7 @@ export class PageGame extends BasePage implements IPage {
   private async newGame(): Promise<void> {
     this.stopGame();
 
-    const settings = await this.gameSettingsService.loadSettings();
+    const settings = this.gameSettingsService.loadSettings();
     const urls = await this.cardImagesService.getUrls(
       settings.cardImagesCategory,
       settings.cardsAmount
