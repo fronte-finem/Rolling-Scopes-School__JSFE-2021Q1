@@ -1,6 +1,6 @@
 import { ICreateViewOptions, View } from '../view';
 
-export class BtnView extends View {
+export class BtnView extends View<HTMLButtonElement> {
   constructor({ classNames, ...options }: ICreateViewOptions) {
     super({
       ...options,
