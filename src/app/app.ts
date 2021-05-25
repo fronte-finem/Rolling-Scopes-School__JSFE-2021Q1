@@ -1,22 +1,22 @@
-import { AppStateName, ProxyAppStateService } from '../services/app-state';
+import { IAppStateChangeRequest } from '../services/app-state';
 import { APP_CONFIG } from './app.config';
 import { IRouterState, Router } from '../router/router';
 import { View } from '../shared/views/view';
-import { Factory } from '../shared/views/view-factory';
 import { HeaderView } from '../components/header/header-view';
-import styles from './app.scss';
 import { ModalView } from '../components/modal/modal-view';
+import { PopUpSignUpView } from '../components/pop-up-sign-up/pop-up-sign-up-view';
+import { PopUpVictoryView } from '../components/pop-up-victory/pop-up-victory-view';
+import { appStateService, userService } from './configs/services';
+import styles from './app.scss';
 import { PopUpView } from '../components/pop-up/pop-up-view';
 
 export class App {
   readonly view: View;
 
-  private headerView = new HeaderView(
-    new ProxyAppStateService((state) => this.handleAppStateChangeRequest(state))
-  );
+  private headerView = new HeaderView(appStateService, userService);
 
   readonly pageContainer: View;
-  
+
   readonly modalView = new ModalView();
 
   readonly router = new Router();
@@ -24,6 +24,10 @@ export class App {
   private gameStoppedByButton = false;
 
   constructor(parent: HTMLElement) {
+    appStateService.init((request) =>
+      this.handleAppStateChangeRequest(request)
+    );
+
     Object.values(APP_CONFIG.pages).reduce(
       (router, page) => router.addRoute(page.route),
       this.router
@@ -33,20 +37,23 @@ export class App {
     this.initHeader();
     this.pageContainer = new View({ classNames: [styles.pageContainer] });
 
-    this.view = Factory.view({
+    this.view = new View({
       tag: 'main',
       classNames: [styles.app],
-      childs: [this.headerView, this.pageContainer, this.modalView],
     });
+    this.view.render([this.headerView, this.pageContainer, this.modalView]);
     parent.append(this.view.element);
   }
 
-  start(): void {
+  async start(): Promise<void> {
     Router.activateRoute(APP_CONFIG.initialRoute.url);
     this.headerView.menu.setActiveNavLink(APP_CONFIG.initialRoute.url);
+    await userService.init();
+    // await userService.init(true);
+    // await this.showPopup(new PopUpVictoryView(userService))
   }
 
-  applayRouteChange({ oldUrl, newUrl, newPage }: IRouterState): void {
+  private applayRouteChange({ oldUrl, newUrl, newPage }: IRouterState): void {
     if (
       oldUrl === APP_CONFIG.pages.game.route.url &&
       !this.gameStoppedByButton
@@ -63,68 +70,58 @@ export class App {
     this.headerView.menu.addNavLinks(Object.values(APP_CONFIG.pages));
   }
 
-  async handleAppStateChangeRequest(stateName: AppStateName): Promise<boolean> {
-    console.log(stateName);
+  private async handleAppStateChangeRequest(
+    request: IAppStateChangeRequest
+  ): Promise<boolean> {
+    // console.log(request);
     await new Promise((rs) => rs(true));
-    switch (stateName) {
+    switch (request.from) {
       case 'initial':
-        return await this.processInitialAppState();
+        return await this.processPopUp(new PopUpSignUpView(userService));
       case 'ready':
         this.gameStoppedByButton = false;
         Router.activateRoute(APP_CONFIG.pages.game.route.url);
         return true;
       case 'game':
-        if (Router.getCurrentUrl() === APP_CONFIG.pages.game.route.url) {
-          this.gameStoppedByButton = true;
-          Router.activateRoute(APP_CONFIG.initialRoute.url);
+        if (request.to === 'ready') {
+          if (Router.getCurrentUrl() === APP_CONFIG.pages.game.route.url) {
+            this.gameStoppedByButton = true;
+            Router.activateRoute(APP_CONFIG.initialRoute.url);
+          }
+        } else if (request.to === 'solved') {
+          await this.processPopUp(new PopUpVictoryView(userService));
+          Router.activateRoute(APP_CONFIG.pages.score.route.url);
         }
+        return true;
+      case 'solved':
         return true;
       default:
         return false;
     }
   }
 
-  async processInitialAppState(): Promise<boolean> {
-    const popup = new PopUpView('Registr new Player');
+  private async processPopUp(popup: PopUpView): Promise<boolean> {
+    await this.showPopup(popup);
+    const isDone = await popup.task();
+    await this.hidePopup(popup);
+    return isDone;
+  }
+
+  private async showPopup(popup: PopUpView) {
     this.modalView.render(popup);
-    await this.modalView.show();
     this.modalView.onClick(() => {
-      popup.hide().then(() => this.modalView.hide()).then(null, null);
+      this.hidePopup(popup).then(null, null);
     });
-    const allowed = await popup.process();
-    await this.modalView.hide();
-    return allowed;
+    await this.modalView.show();
+    await popup.show();
+  }
+
+  private async hidePopup(popup: PopUpView) {
+    await Promise.all([popup.hide(), this.modalView.hide()]);
   }
 }
 
 // Todo:
-// При регистрации должна быть следующее правило проверки вводимых значений:
-
-// Имя:
-// - Имя не может быть пустым.
-// - Имя не может состоять из цифр.
-// - Имя не может содержать служебные символы (~ ! @ # $ % * () _ — + = | : ; " ' ` < > , . ? / ^).
-
-// Фамилия:
-// - Фамилия не может быть пустой.
-// - Фамилия не может состоять из цифр.
-// - Фамилия не может содержать служебные символы. (~ ! @ # $ % * () _ — + = | : ; " ' ` < > , . ? / ^)
-
-// email:
-// - email не может быть пустым.
-// - должен соответствовать стандартному правилу формированию email
-//   [RFC](https://en.wikipedia.org/wiki/Email_address#Standards_documents)
-
-// Форма в целом:
-// - Возможно использование любого языка для ввода имени и фамилии.
-// - Колличество символов не должно превышать 30 символов включая пробелы
-// - В случае несоответствия любого из вышеуказанных правил, необходимо блокировать кнопку создания пользователя
-// - Все неправильные поля должны быть подсвечены и иметь соответствующие сообщения об ошибках.
-// - После нажатия на кнопку создания игрока страница не должна перезагружаться.
-// - После нажатия на кнопку cancel вся ранее заполненная информация должна быть сброшена.
-
-// Если все данные игрока корректны, все правильно заполненные поля должны быть помеченные как правильные.
-
 // После регистрации игрока в header должна появится кнопка позволяющая начать игру
 // После нажатия на кнопку старт должен начинаться игровой цикл
 // У игрока должна быть возможность остановить игру.
