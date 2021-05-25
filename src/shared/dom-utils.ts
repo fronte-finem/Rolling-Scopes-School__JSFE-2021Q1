@@ -51,3 +51,26 @@ export function createSvgSpriteElement(
   }
   return svg;
 }
+
+export function htmlToElem(template: string): HTMLElement {
+  const tmp = document.createElement('template');
+  tmp.innerHTML = template;
+  return tmp.content.firstElementChild as HTMLElement;
+}
+
+export function cropResize(img: HTMLImageElement, cropSize: number): string {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return '';
+
+  // crop to center
+  const imgSize = Math.min(img.width, img.height);
+  const dx = (img.width - imgSize) / 2;
+  const dy = (img.height - imgSize) / 2;
+
+  ctx.canvas.width = cropSize;
+  ctx.canvas.height = cropSize;
+  ctx.drawImage(img, dx, dy, imgSize, imgSize, 0, 0, cropSize, cropSize);
+
+  return canvas.toDataURL();
+}
