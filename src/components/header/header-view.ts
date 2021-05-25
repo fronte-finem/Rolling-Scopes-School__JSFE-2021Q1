@@ -65,24 +65,29 @@ export class HeaderView extends View implements IHeaderContext {
     private readonly userService: IUserService
   ) {
     super({ tag: 'header', classNames: [styles.header] });
+    this.init();
+    this.initStateSwitcher();
+    this.stateMaсhine.applyCurrentState(this);
+  }
 
+  init(): void {
     this.render(
       new View({
         classNames: [styles.wrapper],
         childs: [this.logo, this.menu, this.btnStateSwitch, this.avatar],
       })
     );
+  }
 
-    this.stateMaсhine.applyCurrentState(this);
-
+  initStateSwitcher(): void {
     this.btnStateSwitch.onClick(() => {
       const currentState = this.getCurrentState();
-      appStateService
+      this.appStateService
         .requestStateChange({ from: currentState.name, to: currentState.next })
         .then((allowed) => {
           if (allowed) this.stateMaсhine.nextState(this);
         }, null);
-    });
+    });    
   }
 
   getCurrentState(): IState<AppState> {
