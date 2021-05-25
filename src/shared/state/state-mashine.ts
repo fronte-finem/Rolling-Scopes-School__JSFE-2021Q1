@@ -23,8 +23,8 @@ export class StateMashine<SpecificStateNames> {
     return this;
   }
 
-  getCurrentState(): StateName<SpecificStateNames> {
-    return this.currentState.name;
+  getCurrentState(): IState<SpecificStateNames> {
+    return this.currentState;
   }
 
   applyCurrentState(context: IContext<SpecificStateNames>): void {
