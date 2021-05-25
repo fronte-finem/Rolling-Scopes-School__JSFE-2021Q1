@@ -1,6 +1,6 @@
 import { APP_GAME_DIFFICILTY_CONFIG } from '../../app/app.game.config';
 import { CardsAmount } from '../../pages/game/game-types';
-import { Factory } from '../../shared/views/view-factory';
+import { View } from '../../shared/views/view';
 import { Card } from '../card/card';
 import style from './cards-field.scss';
 
@@ -8,7 +8,7 @@ const CSS_VAR_CARDS_COLUMNS = '--cards-columns';
 const CSS_VAR_CARDS_ROWS = '--cards-rows';
 
 export class CardsField {
-  readonly view = Factory.view({ classNames: [style.cardsField] });
+  readonly view = new View({ classNames: [style.cardsField] });
 
   render(cards: Card[], amount: CardsAmount): void {
     this.view.clear();
