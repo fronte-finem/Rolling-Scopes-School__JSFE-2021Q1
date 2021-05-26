@@ -1,4 +1,3 @@
-import { APP_GAME_DIFFICILTY_CONFIG } from '../../app/app.game.config';
 import { BasePage, IPage } from '../base-page';
 import { Card } from '../../components/card/card';
 import { CardsField } from '../../components/cards-field/cards-field';
@@ -55,11 +54,11 @@ export class PageGame extends BasePage implements IPage {
     const settings = this.gameSettingsService.loadSettings();
     const urls = await this.cardImagesService.getUrls(
       settings.cardImagesCategory,
-      settings.cardsAmount
+      settings.cardsField.getCardsAmount()
     );
     if (!urls) throw new Error('Cards images urls generation failed');
     const cardModels = urls.front.map(
-      (url, id) => new CardModel(id, url, urls.back)
+      (url, id) => new CardModel(id, url, urls.back, settings.mismatchShowTime)
     );
 
     this.cards = cardModels.map((model) => new Card(model));
@@ -67,12 +66,10 @@ export class PageGame extends BasePage implements IPage {
       card.onClick(() => this.cardClickHandler(card))
     );
 
-    this.cardsField.render(this.cards, settings.cardsAmount);
+    this.cardsField.render(this.cards, settings.cardsField);
     this.model = new GameModel(cardModels);
     this.model.showAllCards();
-    await this.timer.countdown(
-      APP_GAME_DIFFICILTY_CONFIG[settings.cardsAmount].initialShowTime
-    );
+    await this.timer.countdown(settings.initialShowTime);
     this.model.start();
     this.timer.start();
 
