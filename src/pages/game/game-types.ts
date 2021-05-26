@@ -1,4 +1,6 @@
+import { CardFieldModel } from '../../components/cards-field/card-field-model';
 import { CardImagesCategory } from '../../services/card-images-urls';
+import { ISerializer } from '../../shared/models/types';
 
 export type CardField = readonly [columns: number, rows: number];
 
@@ -25,5 +27,18 @@ export type CardsAmount = keyof GameDifficultyMap;
 
 export interface IGameSettings {
   cardImagesCategory: CardImagesCategory;
-  cardsAmount: keyof GameDifficultyMap;
+  cardsField: CardFieldModel;
+  initialShowTime: number;
+  mismatchShowTime: number;
+}
+
+export class GameSettingsSerializer implements ISerializer<IGameSettings> {
+  serialize = (settings: IGameSettings): string => JSON.stringify(settings);
+
+  deserialize = (json: string): IGameSettings => {
+    const settings = JSON.parse(json) as IGameSettings;
+    const {rows, columns} = settings.cardsField;
+    settings.cardsField = new CardFieldModel(rows, columns);
+    return settings;
+  }
 }

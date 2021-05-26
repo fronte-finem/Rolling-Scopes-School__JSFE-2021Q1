@@ -1,4 +1,4 @@
-import { IGameSettings } from '../pages/game/game-types';
+import { GameSettingsSerializer, IGameSettings } from '../pages/game/game-types';
 import { LocalStorageService } from './local-storage';
 
 const KEY_STORAGE_GAME_SETTINGS =
@@ -15,7 +15,8 @@ export class GameSettingsService implements IGameSettingsService {
   constructor(private readonly initialSettings: IGameSettings) {
     this.localStorage = new LocalStorageService<IGameSettings>(
       KEY_STORAGE_GAME_SETTINGS,
-      this.initialSettings
+      this.initialSettings,
+      new GameSettingsSerializer()
     );
   }
 
