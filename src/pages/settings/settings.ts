@@ -1,5 +1,8 @@
 import { APP_GAME_DIFFICILTY_CONFIG as APP_GAME_DIFFICULTY_CONFIG } from '../../app/app.game.config';
-import { CardImagesCategory } from '../../services/card-images-urls';
+import {
+  CardImagesCategory,
+  CARD_IMAGES_CATEGORY_TEXT_MAP,
+} from '../../services/card-images-urls';
 import { IGameSettingsService } from '../../services/game-settings';
 import { View } from '../../shared/views/view';
 import { SelectView } from '../../components/select/select-view';
@@ -9,15 +12,15 @@ import { CardsAmount } from '../game/game-types';
 import styles from './settings.scss';
 
 export class PageSettings extends BasePage {
-  private model?: GameSettingsModel;
+  private model = new GameSettingsModel();
 
-  selectGameCards: SelectView = new SelectView({
+  selectGameCards = new SelectView<CardImagesCategory>({
     heading: 'game cards',
     placeholder: 'select game cards type',
     classNames: [styles.settingsSelect],
   });
 
-  selectDifficulty: SelectView = new SelectView({
+  selectDifficulty = new SelectView({
     heading: 'difficulty',
     placeholder: '🎴 cards \xa0|\xa0 ⏱ start |\xa0 🏆 score',
     classNames: [styles.settingsSelect],
@@ -41,7 +44,7 @@ export class PageSettings extends BasePage {
 
     const initialSettings = this.gameSettingsService.loadSettings();
 
-    this.model = new GameSettingsModel(initialSettings);
+    this.model.init(initialSettings as IGameSettingsState);
     this.model.onStateChange((settings) =>
       this.gameSettingsService.saveSettings(settings)
     );
@@ -55,20 +58,20 @@ export class PageSettings extends BasePage {
       PageSettings.prepareDifficultyOptions(state)
     );
 
-    this.selectGameCards.onSelect((value) =>
-      this.model?.setSetting('cardImagesCategory', value as CardImagesCategory)
-    );
+    this.selectGameCards.onSelect((value) => {
+      this.model.state.cardImagesCategory = value;
+    });
 
-    this.selectDifficulty.onSelect((value) =>
-      this.model?.setSetting('cardsAmount', value as unknown as CardsAmount)
-    );
+    this.selectDifficulty.onSelect((value) => {
+      this.model.state.cardsAmount = value as unknown as CardsAmount;
+    });
   }
 
   private static prepareCategoryOptions(state: IGameSettingsState) {
-    return Object.entries(CardImagesCategory).map((entry) => ({
-      value: entry[0],
-      text: String(entry[1]),
-      selected: state.cardImagesCategory === entry[0],
+    return Object.values(CardImagesCategory).map((category) => ({
+      value: category,
+      text: CARD_IMAGES_CATEGORY_TEXT_MAP.get(category) as string,
+      selected: state.cardImagesCategory === category,
     }));
   }
 
