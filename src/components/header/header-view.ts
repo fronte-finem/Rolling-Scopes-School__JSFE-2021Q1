@@ -9,7 +9,6 @@ import { BtnView } from '../../shared/views/btn/btn';
 import { LinkView } from '../../shared/views/link/link';
 import { NavMenuView } from '../nav-menu/nav-menu-view';
 import { StateMaсhine } from '../../shared/state/state-maсhine';
-import { IState } from '../../shared/state/types';
 import { IUserService } from '../../services/user-service';
 import { renderAvatar } from '../../shared/views/avatar-factory';
 
@@ -81,17 +80,13 @@ export class HeaderView extends View implements IHeaderContext {
 
   initStateSwitcher(): void {
     this.btnStateSwitch.onClick(() => {
-      const currentState = this.getCurrentState();
+      const currentState = this.stateMaсhine.getCurrentState();
       this.appStateService
         .requestStateChange({ from: currentState.name, to: currentState.next })
         .then((allowed) => {
           if (allowed) this.stateMaсhine.nextState(this);
         }, null);
     });    
-  }
-
-  getCurrentState(): IState<AppState> {
-    return this.stateMaсhine.getCurrentState();
   }
 
   nextState(): void {

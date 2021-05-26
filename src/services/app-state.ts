@@ -1,3 +1,6 @@
+import { IStateChangeRequest } from "../shared/state/state-maсhine";
+
+
 export enum AppState {
   INITIAL = 'initial',
   READY = 'ready',
@@ -5,17 +8,12 @@ export enum AppState {
   SOLVED = 'solved',
 };
 
-export interface IAppStateChangeRequest {
-  from: AppState;
-  to: AppState;
-}
-
 export interface IAppStateService {
-  requestStateChange(request: IAppStateChangeRequest): Promise<boolean>;
+  requestStateChange(request: IStateChangeRequest<AppState>): Promise<boolean>;
 }
 
 export type AppStateChangeRequestListener = (
-  request: IAppStateChangeRequest
+  request: IStateChangeRequest<AppState>
 ) => Promise<boolean>;
 
 export class ProxyAppStateService implements IAppStateService {
@@ -25,7 +23,7 @@ export class ProxyAppStateService implements IAppStateService {
     this.requestListener = requestListener;
   }
 
-  requestStateChange(request: IAppStateChangeRequest): Promise<boolean> {
+  requestStateChange(request: IStateChangeRequest<AppState>): Promise<boolean> {
     return this.requestListener(request);
   }
 }

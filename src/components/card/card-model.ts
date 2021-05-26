@@ -15,7 +15,8 @@ export class CardModel extends Model<ICardModelState> {
   constructor(
     readonly id: number,
     readonly frontImage: string,
-    readonly backImage: string
+    readonly backImage: string,
+    readonly mismatchShowTime: number
   ) {
     super({
       isError: false,
@@ -39,7 +40,7 @@ export class CardModel extends Model<ICardModelState> {
     if (this.state.isMatch) return;
     this.state.errorCount += 1;
     this.state.isError = true;
-    await delay(ERROR_TIME * 1000);
+    await delay(this.mismatchShowTime * 1000);
     this.state.isError = false;
     this.flip(false);
   }
