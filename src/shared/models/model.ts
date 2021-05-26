@@ -5,19 +5,21 @@ export type ModelState = Record<string, unknown>;
 export abstract class Model<S extends ModelState> {
   protected readonly observer = new Observer();
 
-  protected state: S;
+  public state: S = {} as S;
 
-  constructor(state: S) {
+  public constructor(state?: S) {
+    if (state) this.init(state);
+  }
+
+  public init(state: S): void {
     this.state = this.proxify(state);
   }
 
-  getState(): S {
+  public getState(): S {
     return { ...this.state };
   }
 
-  protected stateChanged?: (state: S) => void;
-
-  onStateChange(listener: Listener<S>): void {
+  public onStateChange(listener: Listener<S>): void {
     this.observer.subscribe('state-change', listener);
   }
 
