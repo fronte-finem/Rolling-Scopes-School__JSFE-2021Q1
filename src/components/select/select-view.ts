@@ -2,8 +2,8 @@ import styles from './select-view.scss';
 import { ICreateViewOptions, View } from '../../shared/views/view';
 import { ISelectOpionModelState } from './select-model';
 
-export interface ISelectOption {
-  value: string;
+export interface ISelectOption<T> {
+  value: T;
   text: string;
 }
 export interface ICreateSelectOptions extends ICreateViewOptions {
@@ -11,7 +11,9 @@ export interface ICreateSelectOptions extends ICreateViewOptions {
   placeholder: string;
 }
 
-export class SelectView extends View {
+export class SelectView<T extends string = string> extends View {
+  private readonly optionsMap = new Map<string, T>();
+
   readonly label = new View<HTMLLabelElement>({
     tag: 'label',
     classNames: [styles.selectLabel],
@@ -46,7 +48,8 @@ export class SelectView extends View {
     this.select.render(this.placeholder);
   }
 
-  addOptions(opts: ISelectOpionModelState[]): SelectView {
+  addOptions(opts: ISelectOpionModelState<T>[]): SelectView {
+    opts.forEach((opt) => this.optionsMap.set(opt.value, opt.value));
     this.select.render([
       this.placeholder,
       ...opts.map((opt) => SelectView.createOption(opt)),
@@ -54,13 +57,13 @@ export class SelectView extends View {
     return this;
   }
 
-  static createOption({
+  static createOption<V extends string = string>({
     value,
     text,
     selected,
     disabled,
     title,
-  }: ISelectOpionModelState): View<HTMLOptionElement> {
+  }: ISelectOpionModelState<V>): View<HTMLOptionElement> {
     const option = new View<HTMLOptionElement>({
       tag: 'option',
       classNames: [styles.option],
@@ -74,11 +77,11 @@ export class SelectView extends View {
   }
 
   onSelect(
-    listener: (value: string) => void,
+    listener: (value: T) => void,
     options?: boolean | AddEventListenerOptions
   ): void {
     const select: HTMLSelectElement = this.select.element;
-    const handler = () => listener(select.value);
+    const handler = () => listener(this.optionsMap.get(select.value) as T);
     select.addEventListener('input', handler, options);
   }
 }
