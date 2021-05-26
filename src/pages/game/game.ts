@@ -57,7 +57,7 @@ export class PageGame extends BasePage implements IPage {
       settings.cardImagesCategory,
       settings.cardsAmount
     );
-    if (!urls) return;
+    if (!urls) throw new Error('Cards images urls generation failed');
     const cardModels = urls.front.map(
       (url, id) => new CardModel(id, url, urls.back)
     );
