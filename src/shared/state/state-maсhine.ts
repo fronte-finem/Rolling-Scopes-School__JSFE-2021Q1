@@ -1,5 +1,10 @@
 import { IState, IContext } from './types';
 
+export interface IStateChangeRequest<T> {
+  from: T;
+  to: T;
+}
+
 type StatesMap<T> = Map<T, IState<T>>;
 
 export class StateMaсhine<T> {

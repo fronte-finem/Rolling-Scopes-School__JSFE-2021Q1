@@ -1,4 +1,4 @@
-import { AppState, IAppStateChangeRequest } from '../services/app-state';
+import { AppState } from '../services/app-state';
 import { APP_CONFIG } from './app.config';
 import { IRouterState, Router } from '../router/router';
 import { View } from '../shared/views/view';
@@ -9,6 +9,7 @@ import { PopUpVictoryView } from '../components/pop-up-victory/pop-up-victory-vi
 import { appStateService, userService } from './configs/services';
 import styles from './app.scss';
 import { PopUpView } from '../components/pop-up/pop-up-view';
+import { IStateChangeRequest } from '../shared/state/state-maсhine';
 
 export class App {
   readonly view = new View({ tag: 'main', classNames: [styles.app] });
@@ -70,7 +71,7 @@ export class App {
   }
 
   private async handleAppStateChangeRequest(
-    request: IAppStateChangeRequest
+    request: IStateChangeRequest<AppState>
   ): Promise<boolean> {
     let isDone: boolean;
     switch (request.from) {
