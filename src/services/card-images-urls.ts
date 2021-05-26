@@ -3,9 +3,21 @@ import { knuthShuffle } from '../shared/array-utils';
 const IMAGES_JSON = './images.json';
 
 export enum CardImagesCategory {
-  CATS = '🐱 Cats 🐈🐈‍⬛',
-  DOGS = '🐶 Dogs 🐕🐩🐕‍🦺',
+  CATS = 'cats',
+  DOGS = 'dogs',
 }
+
+export const CARD_IMAGES_CATEGORY = new Map<string, CardImagesCategory>(
+  Object.values(CardImagesCategory).map((v) => [v, v])
+);
+
+export const CARD_IMAGES_CATEGORY_TEXT_MAP = new Map<
+  CardImagesCategory,
+  string
+>([
+  [CardImagesCategory.CATS, '🐱 Cats 🐈🐈‍⬛'],
+  [CardImagesCategory.DOGS, '🐶 Dogs 🐕🐩🐕‍🦺'],
+]);
 
 export interface ICardImagesDescriptionModel {
   first: number;
@@ -18,8 +30,8 @@ export interface ICardImagesDescriptionModel {
   cardCover: string;
 }
 
-export interface ICardImagesCategoryModel {
-  category: CardImagesCategory;
+export interface ICardImagesJsonModel {
+  category: string;
   images: ICardImagesDescriptionModel;
 }
 
@@ -30,7 +42,7 @@ export interface ICardImagesUrlsModel {
 
 export interface ICardImagesService {
   getUrls(
-    category: string,
+    category: CardImagesCategory,
     amount: number
   ): Promise<ICardImagesUrlsModel | undefined>;
 }
@@ -45,11 +57,17 @@ export class CardImagesService implements ICardImagesService {
   private async fetch(): Promise<Cache> {
     if (!this.cache) {
       const res = await fetch(IMAGES_JSON);
-      const data = (await res.json()) as ICardImagesCategoryModel[];
-      this.cache = data.reduce(
-        (acc, model) => acc.set(model.category.toUpperCase(), model.images),
-        new Map()
-      );
+      const data = (await res.json()) as ICardImagesJsonModel[];
+      this.cache = data
+        .filter((model) => CARD_IMAGES_CATEGORY.has(model.category))
+        .reduce(
+          (acc, model) =>
+            acc.set(
+              CARD_IMAGES_CATEGORY.get(model.category) as CardImagesCategory,
+              model.images
+            ),
+          new Map<CardImagesCategory, ICardImagesDescriptionModel>()
+        );
     }
     return this.cache;
   }
@@ -62,7 +80,7 @@ export class CardImagesService implements ICardImagesService {
     const front = Array.from(
       { length: images.last - images.first },
       (_, i) =>
-        `${category.toLowerCase()}/${String(i + images.first).padStart(
+        `${category}/${String(i + images.first).padStart(
           images.leftPad,
           images.leftPadChar
         )}.${images.extension}`
