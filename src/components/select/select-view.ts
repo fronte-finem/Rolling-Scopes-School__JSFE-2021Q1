@@ -16,7 +16,7 @@ export interface ICreateOptionOptions<T> {
 }
 
 export class SelectView<T extends string = string> extends View {
-  private readonly optionsMap = new Map<string, T>();
+  private readonly optionsMap = new Map<string, OptionView<T>>();
 
   private readonly label = new View<HTMLLabelElement>({
     tag: 'label',
@@ -48,7 +48,11 @@ export class SelectView<T extends string = string> extends View {
   }
 
   public addOptions(opts: ICreateOptionOptions<T>[]): SelectView {
-    opts.map((opt) => this.select.element.add(new OptionView(opt).element));
+    opts.forEach((opt) => {
+      const optionView = new OptionView(opt);
+      this.optionsMap.set(optionView.element.value, optionView);
+      this.select.element.add(optionView.element);
+    });
     return this;
   }
 
@@ -57,7 +61,8 @@ export class SelectView<T extends string = string> extends View {
     options?: boolean | AddEventListenerOptions
   ): void {
     const select: HTMLSelectElement = this.select.element;
-    const handler = () => listener(this.optionsMap.get(select.value) as T);
+    const handler = () =>
+      listener(this.optionsMap.get(select.value)?.value as T);
     select.addEventListener('input', handler, options);
   }
 }
