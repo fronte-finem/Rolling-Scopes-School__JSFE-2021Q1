@@ -10,12 +10,12 @@ import { capitalize } from '../../shared/string-utils';
 export type ICreateTextInputViewOptions = ICreateViewOptions & ITextInputConfig;
 
 export class TextInputView extends View {
-  readonly label = new View<HTMLLabelElement>({
+  private readonly label = new View<HTMLLabelElement>({
     tag: 'label',
     classNames: [styles.title],
   });
 
-  readonly input = new View<HTMLInputElement>({
+  public readonly input = new View<HTMLInputElement>({
     tag: 'input',
     classNames: [styles.input],
   });
@@ -24,7 +24,7 @@ export class TextInputView extends View {
 
   private readonly title: string;
 
-  constructor({
+  public constructor({
     title,
     type = 'text',
     placeholder = '',
@@ -54,12 +54,12 @@ export class TextInputView extends View {
     this.onInvalid((validity) => this.setError(validity));
   }
 
-  validate(): boolean {
+  public validate(): boolean {
     this.resetError();
     return this.input.element.reportValidity();
   }
 
-  reset(): void {
+  public reset(): void {
     this.resetError();
     this.input.element.value = '';
   }
@@ -86,7 +86,7 @@ export class TextInputView extends View {
     this.setCssStateAsync(styles.error, true).then(null, null);
   }
 
-  onInput(
+  public onInput(
     listener: (value: string) => void,
     options?: boolean | AddEventListenerOptions
   ): void {
@@ -97,7 +97,7 @@ export class TextInputView extends View {
     );
   }
 
-  onInvalid(
+  public onInvalid(
     listener: (validity: ValidityState) => void,
     options?: boolean | AddEventListenerOptions
   ): void {

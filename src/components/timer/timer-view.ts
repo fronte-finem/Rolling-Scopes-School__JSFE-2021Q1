@@ -15,7 +15,7 @@ export class TimerView extends View {
     }),
   };
 
-  constructor(splitter = ':') {
+  public constructor(splitter = ':') {
     super({ classNames: [styles.timer] });
 
     this.render(
@@ -32,7 +32,7 @@ export class TimerView extends View {
     );
   }
 
-  show(time: ITimeDiffFormat): void {
+  public show(time: ITimeDiffFormat): void {
     this.output.seconds.element.textContent = time.sec;
     this.output.minutes.element.textContent = time.min;
     if (time.hours) {
@@ -40,22 +40,22 @@ export class TimerView extends View {
     }
   }
 
-  static createSplitter(splitter = ':'): View {
+  public static createSplitter(splitter = ':'): View {
     return new View({
       classNames: [styles.timerOutput, styles.timerOutputSplitter],
       text: splitter,
     });
   }
 
-  stop(stop = true): void {
+  public stop(stop = true): void {
     this.setCssState(styles.timerStop, stop);
   }
 
-  countdown(countdown = true): void {
+  public countdown(countdown = true): void {
     this.setCssState(styles.timerCountdown, countdown);
   }
 
-  reset(): void {
+  public reset(): void {
     this.stop(false);
     this.countdown(false);
   }

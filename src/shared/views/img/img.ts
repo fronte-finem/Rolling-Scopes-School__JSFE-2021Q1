@@ -6,7 +6,7 @@ export interface ICreateImgOptions extends ICreateLinkOptions {
 }
 
 export class ImgView extends View<HTMLImageElement> {
-  constructor({
+  public constructor({
     url,
     alt = 'image',
     classNames,
@@ -23,7 +23,7 @@ export class ImgView extends View<HTMLImageElement> {
     this.element.setAttribute('crossOrigin', 'anonymous');
   }
 
-  static create(options: ICreateImgOptions): Promise<ImgView> {
+  public static create(options: ICreateImgOptions): Promise<ImgView> {
     return new Promise((resolve) => {
       const img = new ImgView(options);
       img.element.addEventListener('load', () => resolve(img));

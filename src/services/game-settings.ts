@@ -10,9 +10,9 @@ export interface IGameSettingsService {
 }
 
 export class GameSettingsService implements IGameSettingsService {
-  localStorage: LocalStorageService<IGameSettings>;
+  private localStorage: LocalStorageService<IGameSettings>;
 
-  constructor(private readonly initialSettings: IGameSettings) {
+  public constructor(private readonly initialSettings: IGameSettings) {
     this.localStorage = new LocalStorageService<IGameSettings>(
       KEY_STORAGE_GAME_SETTINGS,
       this.initialSettings,
@@ -20,11 +20,11 @@ export class GameSettingsService implements IGameSettingsService {
     );
   }
 
-  loadSettings(): IGameSettings {
+  public loadSettings(): IGameSettings {
     return this.localStorage.loadSettings();
   }
 
-  saveSettings(settings: IGameSettings): void {
+  public saveSettings(settings: IGameSettings): void {
     return this.localStorage.saveSettings(settings);
   }
 }

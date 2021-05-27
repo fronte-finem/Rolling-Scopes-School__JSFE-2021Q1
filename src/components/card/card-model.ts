@@ -1,8 +1,6 @@
 import { Model, ModelState } from '../../shared/models/model';
 import { delay } from '../../shared/timer-utils';
 
-const ERROR_TIME = 2;
-
 export interface ICardModelState extends ModelState {
   isError: boolean;
   isMatch: boolean;
@@ -12,11 +10,11 @@ export interface ICardModelState extends ModelState {
 }
 
 export class CardModel extends Model<ICardModelState> {
-  constructor(
-    readonly id: number,
-    readonly frontImage: string,
-    readonly backImage: string,
-    readonly mismatchShowTime: number
+  public constructor(
+    public readonly id: number,
+    public readonly frontImage: string,
+    public readonly backImage: string,
+    public readonly mismatchShowTime: number
   ) {
     super({
       isError: false,
@@ -27,16 +25,16 @@ export class CardModel extends Model<ICardModelState> {
     });
   }
 
-  flip(toFront: boolean): void {
+  public flip(toFront: boolean): void {
     if (this.state.isMatch || this.state.isError) return;
     this.state.isFrontSide = toFront;
   }
 
-  match(isMatch: boolean): void {
+  public match(isMatch: boolean): void {
     this.state.isMatch = isMatch;
   }
 
-  async error(): Promise<void> {
+  public async error(): Promise<void> {
     if (this.state.isMatch) return;
     this.state.errorCount += 1;
     this.state.isError = true;
@@ -45,7 +43,7 @@ export class CardModel extends Model<ICardModelState> {
     this.flip(false);
   }
 
-  click(): void {
+  public click(): void {
     if (this.state.isMatch || this.state.isError || this.state.isFrontSide) {
       return;
     }

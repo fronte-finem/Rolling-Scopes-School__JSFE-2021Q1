@@ -5,7 +5,7 @@ export interface ICreateLinkOptions extends ICreateViewOptions {
 }
 
 export class LinkView extends View<HTMLAnchorElement> {
-  constructor({ url, classNames, ...options }: ICreateLinkOptions) {
+  public constructor({ url, classNames, ...options }: ICreateLinkOptions) {
     super({
       ...options,
       tag: 'a',
@@ -15,7 +15,7 @@ export class LinkView extends View<HTMLAnchorElement> {
     this.element.href = url;
   }
 
-  active(force = true): void {
+  public active(force = true): void {
     this.setCssState('link--active', force);
   }
 }

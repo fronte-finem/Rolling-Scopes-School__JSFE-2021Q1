@@ -20,7 +20,7 @@ export class PageGame extends BasePage implements IPage {
 
   private cards: Card[] = [];
 
-  constructor(
+  public constructor(
     private appStateService: IAppStateService,
     private gameSettingsService: IGameSettingsService,
     private cardImagesService: ICardImagesService,
@@ -31,11 +31,11 @@ export class PageGame extends BasePage implements IPage {
     this.view.render([this.timer.view, this.cardsField.view]);
   }
 
-  init(): void {
+  public init(): void {
     this.newGame().then(null, null);
   }
 
-  stop(): void {
+  public stop(): void {
     this.stopGame();
   }
 
@@ -92,10 +92,3 @@ export class PageGame extends BasePage implements IPage {
     return this.model.cardClickHandler(card.model);
   }
 }
-
-// ToDo:
-// ✔️ На игровом поле должен присутствовать таймер.
-// ✔️ В случае несовпадения карточек, неправильная пара должна быть подсвечена красным.
-// ✔️ Совпавшие пары должны подсвечиваться зеленым.
-// ⌛ После нахождения всех совпадений необходимо показать модальное окно с поздравлениями.
-// ⌛ После клика на кнопку "ОК" в этом окне приложение должно перейти на страницу рекордов.

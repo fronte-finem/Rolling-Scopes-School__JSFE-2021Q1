@@ -18,9 +18,9 @@ export interface IDBOpenResult {
 export class IndexDbService {
   private db?: IDBDatabase;
 
-  constructor(private dbName: string, private dbVersion = 1) {}
+  public constructor(private dbName: string, private dbVersion = 1) {}
 
-  open(version = 1): Promise<IDBOpenResult> {
+  public open(version = 1): Promise<IDBOpenResult> {
     this.dbVersion = version;
     const request = window.indexedDB.open(this.dbName, this.dbVersion);
     return new Promise((resolve, reject) => {
@@ -42,7 +42,7 @@ export class IndexDbService {
     resolve({ db, upgradeMode });
   }
 
-  openTransaction(
+  public openTransaction(
     storeName: string,
     mode?: IDBTransactionMode
   ): IDBTransaction {
@@ -50,13 +50,13 @@ export class IndexDbService {
     return this.db.transaction(storeName, mode);
   }
 
-  openStore(storeName: string, mode?: IDBTransactionMode): IDBObjectStore {
+  public openStore(storeName: string, mode?: IDBTransactionMode): IDBObjectStore {
     if (!this.db) throw errorDB();
     const transaction = this.db.transaction(storeName, mode);
     return transaction.objectStore(storeName);
   }
 
-  static asyncRequest<T>(request: IDBRequest<T>): Promise<T> {
+  public static asyncRequest<T>(request: IDBRequest<T>): Promise<T> {
     return new Promise((resolve, reject) => {
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(request.error);
@@ -77,7 +77,7 @@ export class IndexDbService {
     });
   }
 
-  create<T>(
+  public create<T>(
     storeName: string,
     data: T,
     key?: IDBValidKey
@@ -94,7 +94,7 @@ export class IndexDbService {
     );
   }
 
-  read<T>(
+  public read<T>(
     storeName: string,
     key: IDBValidKey | IDBKeyRange
   ): Promise<T | undefined> {
@@ -110,7 +110,7 @@ export class IndexDbService {
     );
   }
 
-  update<T>(
+  public update<T>(
     storeName: string,
     data: T,
     key?: IDBValidKey
@@ -127,7 +127,7 @@ export class IndexDbService {
     );
   }
 
-  delete(storeName: string, key: IDBValidKey | IDBKeyRange): Promise<void> {
+  public delete(storeName: string, key: IDBValidKey | IDBKeyRange): Promise<void> {
     return this.operate(
       storeName,
       (store) => store.delete(key),
@@ -140,7 +140,7 @@ export class IndexDbService {
     );
   }
 
-  errorGenerator({ operation, storeName, key }: IErrorInfo): Error {
+  private errorGenerator({ operation, storeName, key }: IErrorInfo): Error {
     return new Error(
       `⚠️DB::${this.dbName}.${
         this.dbVersion

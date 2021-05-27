@@ -36,7 +36,7 @@ export abstract class Model<S extends ModelState> {
     });
   }
 
-  static logChangeState<T extends ModelState>(
+  private static logChangeState<T extends ModelState>(
     target: T,
     prop: string,
     value: T[string]

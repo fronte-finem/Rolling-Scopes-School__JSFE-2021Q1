@@ -7,20 +7,20 @@ const CSS_VAR_CARDS_COLUMNS = '--cards-columns';
 const CSS_VAR_CARDS_ROWS = '--cards-rows';
 
 export class CardsField {
-  readonly view = new View({ classNames: [style.cardsField] });
+  public readonly view = new View({ classNames: [style.cardsField] });
 
-  render(cards: Card[], model: CardFieldModel): void {
+  public render(cards: Card[], model: CardFieldModel): void {
     this.view.clear();
     this.setRows(model.rows);
     this.setColumns(model.columns);
     this.view.render(cards.map((card) => card.view));
   }
 
-  setColumns(value: number): void {
+  public setColumns(value: number): void {
     this.view.setCssVar(CSS_VAR_CARDS_COLUMNS, String(value));
   }
 
-  setRows(value: number): void {
+  public setRows(value: number): void {
     this.view.setCssVar(CSS_VAR_CARDS_ROWS, String(value));
   }
 }

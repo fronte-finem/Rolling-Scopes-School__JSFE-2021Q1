@@ -30,23 +30,23 @@ export class Router {
 
   private readonly routes = new Map<string, IRoute>();
 
-  readonly errorPageRoute = errorPageRoute;
+  public readonly errorPageRoute = errorPageRoute;
 
   private currentUrl = '';
 
   private currentPage?: IPage;
 
-  constructor() {
+  public constructor() {
     window.addEventListener('hashchange', () =>
       this.observer.notify(this.updateCurrentRoute())
     );
   }
 
-  onChange(listener: Listener<IRouterState>): void {
+  public onChange(listener: Listener<IRouterState>): void {
     this.observer.subscribe(listener);
   }
 
-  addRoute(route: IRoute): Router {
+  public addRoute(route: IRoute): Router {
     this.routes.set(route.url, route);
     return this;
   }
@@ -55,7 +55,7 @@ export class Router {
     return this.routes.get(url) || this.errorPageRoute;
   }
 
-  updateCurrentRoute(): IRouterState {
+  public updateCurrentRoute(): IRouterState {
     const oldUrl = this.currentUrl;
     const newUrl = Router.getCurrentUrl();
     if (oldUrl !== newUrl) {
@@ -69,11 +69,11 @@ export class Router {
     return { oldUrl, newUrl, newPage: this.currentPage };
   }
 
-  static getCurrentUrl(): string {
+  public static getCurrentUrl(): string {
     return window.location.hash || '';
   }
 
-  static activateRoute(url: string): void {
+  public static activateRoute(url: string): void {
     window.location.hash = url;
   }
 }

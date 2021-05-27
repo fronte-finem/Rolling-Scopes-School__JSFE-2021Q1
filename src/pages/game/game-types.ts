@@ -33,9 +33,9 @@ export interface IGameSettings {
 }
 
 export class GameSettingsSerializer implements ISerializer<IGameSettings> {
-  serialize = (settings: IGameSettings): string => JSON.stringify(settings);
+  public serialize = (settings: IGameSettings): string => JSON.stringify(settings);
 
-  deserialize = (json: string): IGameSettings => {
+  public deserialize = (json: string): IGameSettings => {
     const settings = JSON.parse(json) as IGameSettings;
     const {rows, columns} = settings.cardsField;
     settings.cardsField = new CardFieldModel(rows, columns);

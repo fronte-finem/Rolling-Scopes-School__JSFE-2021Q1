@@ -16,7 +16,7 @@ type GameEvents = 'game-solved' | 'game-error';
 export class GameModel extends Model<IGameModelState> {
   private gameObserver = new Observer<GameEvents>();
 
-  constructor(readonly cards: CardModel[]) {
+  public constructor(private readonly cards: CardModel[]) {
     super({
       isError: false,
       isStopped: true,
@@ -27,32 +27,32 @@ export class GameModel extends Model<IGameModelState> {
     this.cards = cards;
   }
 
-  flipAll(toFront: boolean): void {
+  public flipAll(toFront: boolean): void {
     this.cards.forEach((card) => card.flip(toFront));
   }
 
-  onSolved(listener: Listener<IGameModelState>): void {
+  public onSolved(listener: Listener<IGameModelState>): void {
     this.gameObserver.subscribe('game-solved', listener);
   }
 
-  showAllCards(): void {
+  public showAllCards(): void {
     this.flipAll(true);
   }
 
-  start(): void {
+  public start(): void {
     this.flipAll(false);
     this.state.isStopped = false;
   }
 
-  stop(): void {
+  public stop(): void {
     this.state.isStopped = true;
   }
 
-  get activeCard(): CardModel | undefined {
+  public get activeCard(): CardModel | undefined {
     return this.state.gameActiveCard;
   }
 
-  async cardClickHandler(card: CardModel): Promise<boolean> {
+  public async cardClickHandler(card: CardModel): Promise<boolean> {
     if (this.state.isStopped || this.state.isError) return false;
     if (this.state.matchedCards.has(card)) return false;
     if (card === this.state.gameActiveCard) return false;
@@ -70,7 +70,7 @@ export class GameModel extends Model<IGameModelState> {
     return true;
   }
 
-  match(card: CardModel): boolean {
+  public match(card: CardModel): boolean {
     if (card.frontImage !== this.state.gameActiveCard?.frontImage) return false;
 
     this.state.gameActiveCard.match(true);
@@ -87,14 +87,14 @@ export class GameModel extends Model<IGameModelState> {
     return true;
   }
 
-  async error(card: CardModel): Promise<void> {
+  public async error(card: CardModel): Promise<void> {
     this.state.isError = true;
     await Promise.all([this.state.gameActiveCard?.error(), card.error()]);
     this.state.isError = false;
     this.state.gameActiveCard = undefined;
   }
 
-  get clicks(): { all: number; error: number } {
+  public get clicks(): { all: number; error: number } {
     const [all, error] = this.cards.reduce(
       ([a, e], card) => {
         const { clickedCount, errorCount } = card.getState();
@@ -105,7 +105,7 @@ export class GameModel extends Model<IGameModelState> {
     return { all, error };
   }
 
-  getMatches(): GameMatches {
+  public getMatches(): GameMatches {
     const { all, error } = this.clicks;
     return [all / 2, error / 2];
   }
