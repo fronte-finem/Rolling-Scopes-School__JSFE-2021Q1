@@ -10,6 +10,7 @@ import { IUserService } from '../../services/user-service';
 import styles from './game.scss';
 import { AppState, IAppStateService } from '../../services/app-state';
 import { countScore } from '../../services/game-service';
+import { IGameSettings } from './game-types';
 
 export class PageGame extends BasePage implements IPage {
   private readonly timer = new Timer();
@@ -50,8 +51,17 @@ export class PageGame extends BasePage implements IPage {
 
   private async newGame(): Promise<void> {
     this.stopGame();
-
     const settings = this.gameSettingsService.loadSettings();
+    const cardModels = await this.initCards(settings);
+    this.model = new GameModel(cardModels);
+    this.model.showAllCards();
+    await this.timer.countdown(settings.initialShowTime);
+    this.model.start();
+    this.timer.start();
+    this.model.onSolved(() => this.succesEndGame());
+  }
+
+  private async initCards(settings: IGameSettings): Promise<CardModel[]> {
     const urls = await this.cardImagesService.getUrls(
       settings.cardImagesCategory,
       settings.cardsField.getCardsAmount()
@@ -60,30 +70,23 @@ export class PageGame extends BasePage implements IPage {
     const cardModels = urls.front.map(
       (url, id) => new CardModel(id, url, urls.back, settings.mismatchShowTime)
     );
-
     this.cards = cardModels.map((model) => new Card(model));
     this.cards.forEach((card) =>
       card.onClick(() => this.cardClickHandler(card))
     );
-
     this.cardsField.render(this.cards, settings.cardsField);
-    this.model = new GameModel(cardModels);
-    this.model.showAllCards();
-    await this.timer.countdown(settings.initialShowTime);
-    this.model.start();
-    this.timer.start();
+    return cardModels;
+  }
 
-    this.model.onSolved(() => {
-      this.timer.stop();
-      this.view.setCssState(styles.gameSolved, true);
-      if (!this.model) return;
-      const score = countScore(this.model.getMatches(), this.timer.model.diff);
-      this.userService
-        .updateUserAchievement(score, this.timer.model.diff)
-        .then(null, null);
-      this.appStateService
-        .requestStateChange({ from: AppState.GAME, to: AppState.SOLVED })
-        .then(null, null);
+  private succesEndGame(): void {
+    this.timer.stop();
+    this.view.setCssState(styles.gameSolved, true);
+    if (!this.model) return;
+    const score = countScore(this.model.getMatches(), this.timer.model.diff);
+    void this.userService.updateUserAchievement(score, this.timer.model.diff);
+    void this.appStateService.requestStateChange({
+      from: AppState.GAME,
+      to: AppState.SOLVED,
     });
   }
 
