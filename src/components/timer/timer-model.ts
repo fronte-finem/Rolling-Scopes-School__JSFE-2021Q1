@@ -13,30 +13,30 @@ export type TimerModelEvent =
 export class TimerModel extends Model<ITimerModelState> {
   private timerId: number | undefined;
 
-  constructor() {
+  public constructor() {
     super({
       startTime: 0,
       currentTime: 0,
     });
   }
 
-  reset(initialTime = 0): void {
+  public reset(initialTime = 0): void {
     window.clearInterval(this.timerId);
     this.state.startTime = 0;
     this.state.currentTime = initialTime;
   }
 
-  stop(): number {
+  public stop(): number {
     window.clearInterval(this.timerId);
     return this.diff;
   }
 
-  start(initialTime = 0): void {
+  public start(initialTime = 0): void {
     this.reset(initialTime);
     this.timerId = window.setInterval(() => this.increment(), 1000);
   }
 
-  async countdown(initialTime = 10): Promise<void> {
+  public async countdown(initialTime = 10): Promise<void> {
     return new Promise((resolve) => {
       this.reset(initialTime);
       this.timerId = window.setInterval(() => {
@@ -56,7 +56,7 @@ export class TimerModel extends Model<ITimerModelState> {
     this.state.currentTime -= 1;
   }
 
-  get diff(): number {
+  public get diff(): number {
     return this.state.currentTime - this.state.startTime;
   }
 }

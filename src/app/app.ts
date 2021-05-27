@@ -12,19 +12,19 @@ import { PopUpView } from '../components/pop-up/pop-up-view';
 import { IStateChangeRequest } from '../shared/state/state-maсhine';
 
 export class App {
-  readonly view = new View({ tag: 'main', classNames: [styles.app] });
+  private readonly view = new View({ tag: 'main', classNames: [styles.app] });
 
   private headerView = new HeaderView(appStateService, userService);
 
-  readonly pageContainer = new View({ classNames: [styles.pageContainer] });
+  private readonly pageContainer = new View({ classNames: [styles.pageContainer] });
 
-  readonly modalView = new ModalView();
+  private readonly modalView = new ModalView();
 
-  readonly router = new Router();
+  private readonly router = new Router();
 
   private gameStoppedByButton = false;
 
-  constructor(parent: HTMLElement) {
+  public constructor(parent: HTMLElement) {
     this.initApp();
     parent.append(this.view.element);
   }
@@ -49,7 +49,7 @@ export class App {
     this.router.onChange((state) => this.applayRouteChange(state));
   }
 
-  async start(): Promise<void> {
+  public async start(): Promise<void> {
     Router.activateRoute(APP_CONFIG.initialRoute.url);
     this.headerView.menu.setActiveNavLink(APP_CONFIG.initialRoute.url);
     await userService.init();
@@ -109,9 +109,7 @@ export class App {
 
   private async showPopup(popup: PopUpView) {
     this.modalView.render(popup);
-    this.modalView.onClick(() => {
-      this.hidePopup(popup).then(null, null);
-    });
+    this.modalView.onClick(async () => this.hidePopup(popup));
     await this.modalView.show();
     await popup.show();
   }

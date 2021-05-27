@@ -3,19 +3,19 @@ import { View } from '../../shared/views/view';
 import { BtnView } from '../../shared/views/btn/btn';
 
 export abstract class PopUpView extends View {
-  readonly header = new View({
+  private readonly header = new View({
     tag: 'header',
     classNames: [styles.popUpSide, styles.popUpHeader],
   });
 
-  readonly footer = new View({
+  private readonly footer = new View({
     tag: 'footer',
     classNames: [styles.popUpSide, styles.popUpFooter],
   });
 
-  readonly body = new View({ classNames: [styles.popUpBody] });
+  private readonly body = new View({ classNames: [styles.popUpBody] });
 
-  constructor(title: string) {
+  public constructor(title: string) {
     super({ tag: 'section', classNames: [styles.popUp, styles.hidden] });
     this.render([this.header, this.body, this.footer]);
     this.header.render(
@@ -30,21 +30,21 @@ export abstract class PopUpView extends View {
     });
   }
 
-  addContent(childs: View | View[]): void {
+  public addContent(childs: View | View[]): void {
     this.body.render(childs);
   }
 
-  addButtons(buttons: BtnView | BtnView[]): void {
+  public addButtons(buttons: BtnView | BtnView[]): void {
     this.footer.render(buttons);
   }
 
-  async show(): Promise<void> {
+  public async show(): Promise<void> {
     await this.setCssStateAsync(styles.hidden, false);
   }
 
-  async hide(): Promise<void> {
+  public async hide(): Promise<void> {
     await this.setCssStateAsync(styles.hidden, true);
   }
 
-  abstract task(): Promise<boolean>;
+  public abstract task(): Promise<boolean>;
 }

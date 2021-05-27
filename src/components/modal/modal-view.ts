@@ -2,18 +2,18 @@ import styles from './modal-view.scss';
 import { View } from '../../shared/views/view';
 
 export class ModalView extends View {
-  constructor() {
+  public constructor() {
     super({
       classNames: [styles.modalCover, styles.hidden],
     });
   }
 
-  async show(): Promise<void> {
+  public async show(): Promise<void> {
     await this.setCssStateAsync(styles.hidden, false);
     document.body.classList.add(styles.rootModalMode);
   }
 
-  async hide(): Promise<void> {
+  public async hide(): Promise<void> {
     await this.setCssStateAsync(styles.hidden, true);
     document.body.classList.remove(styles.rootModalMode);
   }

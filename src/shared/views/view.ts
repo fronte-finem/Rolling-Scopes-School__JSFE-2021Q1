@@ -12,9 +12,9 @@ export interface ICreateViewOptions extends ICreateElementOptions {
 }
 
 export class View<HTMLElementExtended extends HTMLElement = HTMLElement> {
-  readonly element: HTMLElementExtended;
+  public readonly element: HTMLElementExtended;
 
-  constructor(source: string | ICreateViewOptions) {
+  public constructor(source: string | ICreateViewOptions) {
     if (typeof source === 'string') {
       this.element = htmlToElem(source) as HTMLElementExtended;
     } else {
@@ -27,24 +27,24 @@ export class View<HTMLElementExtended extends HTMLElement = HTMLElement> {
     }
   }
 
-  static getElemet(x: View | HTMLElement): HTMLElement {
+  public static getElemet(x: View | HTMLElement): HTMLElement {
     return x instanceof View ? x.element : x;
   }
 
-  getText(): string | null {
+  public getText(): string | null {
     return this.element.textContent;
   }
 
-  setText(text: string): void {
+  public setText(text: string): void {
     this.element.textContent = text;
   }
 
-  clear(): View<HTMLElementExtended> {
+  public clear(): View<HTMLElementExtended> {
     this.element.innerHTML = '';
     return this;
   }
 
-  render(
+  public render(
     childs: View<HTMLElement> | View<HTMLElement>[]
   ): View<HTMLElementExtended> {
     this.clear();
@@ -56,11 +56,11 @@ export class View<HTMLElementExtended extends HTMLElement = HTMLElement> {
     return this;
   }
 
-  setCssState(stateClassName: string, force = true): void {
+  public setCssState(stateClassName: string, force = true): void {
     this.element.classList.toggle(stateClassName, force);
   }
 
-  setCssStateAsync(stateClassName: string, force = true): Promise<void> {
+  public setCssStateAsync(stateClassName: string, force = true): Promise<void> {
     this.element.classList.toggle(stateClassName, force);
     return new Promise((resolve) => {
       this.element.addEventListener('transitionend', () => resolve(), {
@@ -69,22 +69,22 @@ export class View<HTMLElementExtended extends HTMLElement = HTMLElement> {
     });
   }
 
-  setCssStyle<CSSProperty extends keyof CSSStyleDeclaration>(
+  public setCssStyle<CSSProperty extends keyof CSSStyleDeclaration>(
     cssProperty: CSSProperty,
     value: CSSStyleDeclaration[CSSProperty]
   ): void {
     this.element.style[cssProperty] = value;
   }
 
-  getCssVar(name: string): string {
+  public getCssVar(name: string): string {
     return getCssVar(this.element, name);
   }
 
-  setCssVar(name: string, value: string): void {
+  public setCssVar(name: string, value: string): void {
     setCssVar(this.element, name, value);
   }
 
-  onClick(
+  public onClick(
     listener: EventListenerOrEventListenerObject,
     options?: boolean | AddEventListenerOptions
   ): void {

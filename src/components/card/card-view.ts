@@ -8,7 +8,7 @@ const setBackgroundImg = (view: View, imgName: string) =>
   view.setCssStyle('backgroundImage', getImgUrl(imgName));
 
 export class CardView extends View {
-  constructor(cardModel: CardModel) {
+  public constructor(cardModel: CardModel) {
     super({ classNames: [styles.cardContainer] });
 
     const back = new View({
@@ -25,15 +25,15 @@ export class CardView extends View {
     this.render(new View({ classNames: [styles.card], childs: [back, front] }));
   }
 
-  async flip(toFront = true): Promise<void> {
+  public async flip(toFront = true): Promise<void> {
     await this.setCssStateAsync(styles.flipped, toFront);
   }
 
-  error(isError = true): void {
+  public error(isError = true): void {
     this.setCssState(styles.error, isError);
   }
 
-  match(isMatch = true): void {
+  public match(isMatch = true): void {
     this.setCssState(styles.match, isMatch);
   }
 }

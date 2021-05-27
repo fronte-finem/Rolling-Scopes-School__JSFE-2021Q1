@@ -17,7 +17,7 @@ import { renderAvatar } from '../../shared/views/avatar-factory';
 // У игрока должна быть возможность остановить игру.
 
 export class HeaderView extends View implements IHeaderContext {
-  readonly observer = new Observer<AppState>();
+  public readonly observer = new Observer<AppState>();
 
   protected readonly stateMaсhine: StateMaсhine<AppState> = new StateMaсhine(
     new HeaderState(
@@ -44,22 +44,22 @@ export class HeaderView extends View implements IHeaderContext {
       )
     );
 
-  readonly logo = new LinkView({
+  public readonly logo = new LinkView({
     url: APP_CONFIG.initialRoute.url,
     classNames: [styles.logo],
   });
 
-  readonly menu = new NavMenuView();
+  public readonly menu = new NavMenuView();
 
-  readonly avatar = new View({
+  public readonly avatar = new View({
     classNames: [styles.avatar],
   });
 
-  readonly btnStateSwitch = new BtnView({
+  public readonly btnStateSwitch = new BtnView({
     classNames: [styles.btn, styles.btnStateSwitch],
   });
 
-  constructor(
+  public constructor(
     private readonly appStateService: IAppStateService,
     private readonly userService: IUserService
   ) {
@@ -69,7 +69,7 @@ export class HeaderView extends View implements IHeaderContext {
     this.stateMaсhine.applyCurrentState(this);
   }
 
-  init(): void {
+  private init(): void {
     this.render(
       new View({
         classNames: [styles.wrapper],
@@ -78,22 +78,22 @@ export class HeaderView extends View implements IHeaderContext {
     );
   }
 
-  initStateSwitcher(): void {
-    this.btnStateSwitch.onClick(() => {
+  private initStateSwitcher(): void {
+    this.btnStateSwitch.onClick(async () => {
       const currentState = this.stateMaсhine.getCurrentState();
-      this.appStateService
-        .requestStateChange({ from: currentState.name, to: currentState.next })
-        .then((allowed) => {
-          if (allowed) this.stateMaсhine.nextState(this);
-        }, null);
-    });    
+      const allowed = await this.appStateService.requestStateChange({
+        from: currentState.name,
+        to: currentState.next,
+      });
+      if (allowed) this.stateMaсhine.nextState(this);
+    });
   }
 
-  nextState(): void {
+  public nextState(): void {
     this.stateMaсhine.nextState(this, false);
   }
 
-  hideAvatar(hide = true): void {
+  public hideAvatar(hide = true): void {
     this.avatar.setCssState(styles.avatarHidden, hide);
     if (!hide && this.avatar.element.innerHTML === '') {
       const user = this.userService.currentUser;
@@ -107,7 +107,7 @@ export class HeaderView extends View implements IHeaderContext {
     }
   }
 
-  setBtnText(text: string): void {
+  public setBtnText(text: string): void {
     this.btnStateSwitch.setText(text);
   }
 }

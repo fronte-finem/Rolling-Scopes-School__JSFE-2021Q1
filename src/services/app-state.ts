@@ -19,11 +19,11 @@ export type AppStateChangeRequestListener = (
 export class ProxyAppStateService implements IAppStateService {
   private requestListener!: AppStateChangeRequestListener;
 
-  init(requestListener: AppStateChangeRequestListener): void {
+  public init(requestListener: AppStateChangeRequestListener): void {
     this.requestListener = requestListener;
   }
 
-  requestStateChange(request: IStateChangeRequest<AppState>): Promise<boolean> {
+  public requestStateChange(request: IStateChangeRequest<AppState>): Promise<boolean> {
     return this.requestListener(request);
   }
 }

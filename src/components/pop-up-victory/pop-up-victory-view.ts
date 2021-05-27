@@ -29,9 +29,9 @@ const msgGenerator = (user: IUser) => {
 };
 
 export class PopUpVictoryView extends PopUpView {
-  btnConfirn = createBtn('confirm');
+  private btnConfirn = createBtn('confirm');
 
-  constructor(private readonly userService: IUserService, time = NaN) {
+  public constructor(private readonly userService: IUserService, time = NaN) {
     super(APP_POPUP_VICTORY_CONFIG.title);
     this.init(time, this.userService.currentUser);
   }
@@ -42,7 +42,7 @@ export class PopUpVictoryView extends PopUpView {
     this.addButtons(this.btnConfirn);
   }
 
-  task(): Promise<boolean> {
+  public task(): Promise<boolean> {
     return new Promise((resolve) => {
       this.btnConfirn.onClick(() => resolve(true));
     });

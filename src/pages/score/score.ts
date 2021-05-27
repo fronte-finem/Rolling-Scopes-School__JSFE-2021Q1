@@ -17,15 +17,15 @@ export class PageScore extends BasePage {
     classNames: [styles.users],
   });
 
-  constructor(private readonly userService: IUserService) {
+  public constructor(private readonly userService: IUserService) {
     super({ classNames: [styles.pageScore] });
   }
 
-  stop(): void {
+  public stop(): void {
     this.view.clear();
   }
 
-  async init(): Promise<void> {
+  public async init(): Promise<void> {
     const users = await this.userService.getFirstByScore(SCORE_LIMIT);
     const { currentUser } = this.userService;
     let checkUsers: (u: IUser) => boolean;

@@ -21,12 +21,12 @@ export class NavMenuView extends View {
     classNames: [styles.navItems],
   });
 
-  constructor() {
+  public constructor() {
     super({ tag: 'nav', classNames: [styles.navMenu] });
     this.render(this.navList);
   }
 
-  addNavLinks(pagesConfig: IPageConfig[]): void {
+  public addNavLinks(pagesConfig: IPageConfig[]): void {
     this.navLinks = pagesConfig
       .filter((page) => page.navSvgIcon !== undefined)
       .reduce(
@@ -39,7 +39,7 @@ export class NavMenuView extends View {
     );
   }
 
-  setActiveNavLink(url: string): void {
+  public setActiveNavLink(url: string): void {
     this.activeNavLink?.active(false);
     this.activeNavLink = this.navLinks?.get(url);
     this.activeNavLink?.active();

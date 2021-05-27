@@ -22,28 +22,28 @@ const createBtn = (key: PopUpSignUpBtns, ...classNames: string[]): BtnView =>
   new BtnView({ ...APP_POPUP_SINGUP_CONFIG.btns[key], classNames });
 
 export class PopUpSignUpView extends PopUpView {
-  form = new View<HTMLFormElement>({ tag: 'form' });
+  private form = new View<HTMLFormElement>({ tag: 'form' });
 
-  inputFirstName = createInput('firstnName');
+  private inputFirstName = createInput('firstnName');
 
-  inputLastName = createInput('lastName');
+  private inputLastName = createInput('lastName');
 
-  inputEmail = createInput('email');
+  private inputEmail = createInput('email');
 
-  btnAddUser = createBtn('addUser');
+  private btnAddUser = createBtn('addUser');
 
-  btnCancel = createBtn('cancel', 'btn--invert');
+  private btnCancel = createBtn('cancel', 'btn--invert');
 
-  btnAddAvatar = new View<HTMLInputElement>({
+  private btnAddAvatar = new View<HTMLInputElement>({
     tag: 'input',
     classNames: [styles.btnAddAvatar],
   });
 
-  avatarOutput = new View({ classNames: [styles.avatarOutput] });
+  private avatarOutput = new View({ classNames: [styles.avatarOutput] });
 
-  userAvatarBase64?: string;
+  private userAvatarBase64?: string;
 
-  constructor(private readonly userService: IUserService) {
+  public constructor(private readonly userService: IUserService) {
     super(APP_POPUP_SINGUP_CONFIG.title);
     this.addContent(
       new View({ classNames: [styles.userForm] }).render([
@@ -87,12 +87,12 @@ export class PopUpSignUpView extends PopUpView {
       ])
     );
     this.btnAddAvatar.element.addEventListener('input', () => {
-      this.handleAddAvatar().then(null, null);
+      void this.handleAddAvatar();
     });
     return btnAddAvatarWrapper;
   }
 
-  async handleAddAvatar(): Promise<void> {
+  private async handleAddAvatar(): Promise<void> {
     const fileList = this.btnAddAvatar.element.files;
     if (!fileList) return;
     const file = fileList[0];
@@ -112,11 +112,9 @@ export class PopUpSignUpView extends PopUpView {
   // https://stackoverflow.com/questions/29478751/cancel-a-vanilla-ecmascript-6-promise-chain/59999584#59999584
   // https://stackoverflow.com/questions/30233302/promise-is-it-possible-to-force-cancel-a-promise/65805464#65805464
 
-  async task(): Promise<boolean> {
+  public async task(): Promise<boolean> {
     return new Promise((resolve) => {
-      this.btnAddUser.onClick(() => {
-        this.onAddUser(resolve).then(null, null);
-      });
+      this.btnAddUser.onClick(async () => this.onAddUser(resolve));
       this.btnCancel.onClick(() => {
         this.resetInputs();
         resolve(false);

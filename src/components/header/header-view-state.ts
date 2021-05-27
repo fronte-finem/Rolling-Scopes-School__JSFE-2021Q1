@@ -7,14 +7,14 @@ export interface IHeaderContext extends IContext<AppState> {
 }
 
 export class HeaderState implements IState<AppState> {
-  constructor(
-    readonly name: AppState,
-    readonly next: AppState,
+  public constructor(
+    public readonly name: AppState,
+    public readonly next: AppState,
     private readonly btnText: string,
     private readonly hideAvatar: boolean
   ) {}
 
-  apply(headerContext: IHeaderContext): void {
+  public apply(headerContext: IHeaderContext): void {
     headerContext.setBtnText(this.btnText);
     headerContext.hideAvatar(this.hideAvatar);
   }

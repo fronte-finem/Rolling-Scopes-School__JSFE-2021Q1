@@ -1,7 +1,7 @@
 import { ICreateViewOptions, View } from '../view';
 
 export class BtnView extends View<HTMLButtonElement> {
-  constructor({ classNames, ...options }: ICreateViewOptions) {
+  public constructor({ classNames, ...options }: ICreateViewOptions) {
     super({
       ...options,
       tag: 'button',
@@ -9,7 +9,7 @@ export class BtnView extends View<HTMLButtonElement> {
     });
   }
 
-  active(force = true): void {
+  public active(force = true): void {
     this.setCssState('btn--active', force);
   }
 }

@@ -9,7 +9,7 @@ export interface IBuildViewOptions extends ICreateViewOptions {
 }
 
 export abstract class Factory {
-  static view({ tag, build, hookView, ...options }: IBuildViewOptions): View {
+  public static view({ tag, build, hookView, ...options }: IBuildViewOptions): View {
     let view: View;
 
     switch (tag) {

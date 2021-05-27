@@ -27,15 +27,15 @@ export interface IUserService {
 }
 
 export class UserService implements IUserService {
-  dbService = new IndexDbService(DB_NAME, DB_VERSION);
+  private dbService = new IndexDbService(DB_NAME, DB_VERSION);
 
-  user?: IUser;
+  private user?: IUser;
 
-  get currentUser(): IUser | undefined {
+  public get currentUser(): IUser | undefined {
     return this.user;
   }
 
-  async init(testUser = false): Promise<void> {
+  public async init(testUser = false): Promise<void> {
     const { db, upgradeMode } = await this.dbService.open();
     if (upgradeMode) {
       const store = UserService.createStore(db);
@@ -72,7 +72,7 @@ export class UserService implements IUserService {
     await Promise.all(tasks);
   }
 
-  static createTestUser(index: number): IUser {
+  public static createTestUser(index: number): IUser {
     return {
       firstName: 'Test',
       lastName: `User${index}`,
@@ -82,7 +82,7 @@ export class UserService implements IUserService {
     };
   }
 
-  async save(user: IUser): Promise<IUser | undefined> {
+  public async save(user: IUser): Promise<IUser | undefined> {
     const key = UserService.userHashCode(user);
     const maybeUser = await this.dbService.read<IUser>(DB_USERS_STORE, key);
     if (maybeUser) {
@@ -92,18 +92,18 @@ export class UserService implements IUserService {
     try {
       await this.dbService.create<IUser>(DB_USERS_STORE, user, key);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return undefined;
     }
     this.user = user;
     return user;
   }
 
-  static userHashCode({ firstName, lastName, email }: IUser): number {
+  public static userHashCode({ firstName, lastName, email }: IUser): number {
     return hashCode(JSON.stringify({ firstName, lastName, email }));
   }
 
-  async updateUserAchievement(score: number, time: number): Promise<boolean> {
+  public async updateUserAchievement(score: number, time: number): Promise<boolean> {
     if (!this.user) return false;
     if (score < this.user.score) return false;
     this.user.score = score;
@@ -112,13 +112,13 @@ export class UserService implements IUserService {
     try {
       await this.dbService.update<IUser>(DB_USERS_STORE, this.user, key);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return false;
     }
     return true;
   }
 
-  async getFirstByScore(limit = 5): Promise<IUser[]> {
+  public async getFirstByScore(limit = 5): Promise<IUser[]> {
     let counter = 0;
     const users: IUser[] = [];
     const transaction = this.dbService.openTransaction(
@@ -141,7 +141,7 @@ export class UserService implements IUserService {
     });
   }
 
-  async logAll(): Promise<boolean> {
+  public async logAll(): Promise<boolean> {
     const transaction = this.dbService.openTransaction(
       DB_USERS_STORE,
       'readonly'
@@ -150,7 +150,7 @@ export class UserService implements IUserService {
     store.openCursor().onsuccess = (event: Event) => {
       const request = event.target as IDBRequest<IDBCursorWithValue | null>;
       const cursor = request.result;
-      console.log(cursor?.value);
+      // console.log(cursor?.value);
       cursor?.continue();
     };
     return new Promise((resolve) => {

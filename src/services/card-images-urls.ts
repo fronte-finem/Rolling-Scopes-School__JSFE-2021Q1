@@ -88,7 +88,7 @@ export class CardImagesService implements ICardImagesService {
     return { front, back: images.cardCover };
   }
 
-  async getUrls(
+  public async getUrls(
     category: CardImagesCategory,
     amount: number
   ): Promise<ICardImagesUrlsModel | undefined> {

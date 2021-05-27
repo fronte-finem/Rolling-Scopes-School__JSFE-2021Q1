@@ -2,15 +2,15 @@ import { View } from '../../shared/views/view';
 import { BasePage } from '../base-page';
 
 export class PageAbout extends BasePage {
-  constructor() {
+  public constructor() {
     super({ classNames: ['page-about'] });
   }
 
-  init(): void {
+  public init(): void {
     this.view.render(new View({ tag: 'h1', text: PageAbout.name }));
   }
 
-  stop(): void {
+  public stop(): void {
     this.view.clear();
   }
 }

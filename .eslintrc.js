@@ -22,13 +22,17 @@ module.exports = {
   rules: {
     'no-param-reassign': ['error', { props: false }],
     'no-bitwise': ['error', { int32Hint: true }],
-    // '@typescript-eslint/no-misused-promises': [
-    //   'error',
-    //   {
-    //     checksVoidReturn: false,
-    //   },
-    // ],
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      { checksVoidReturn: false },
+    ],
+    '@typescript-eslint/no-floating-promises': [
+      'error',
+      { ignoreVoid: true, ignoreIIFE: true },
+    ],
+    'no-void': ['error', { allowAsStatement: true }],
     'import/prefer-default-export': 'off',
+    '@typescript-eslint/explicit-member-accessibility': ['error'],
   },
   ignorePatterns: ['webpack.config.js', '.eslintrc.js'],
 };
