@@ -66,7 +66,7 @@ export class TextInputView extends View {
 
   private resetError() {
     this.input.element.setCustomValidity('');
-    this.setCssStateAsync(styles.error, false).then(null, null);
+    void this.setCssStateAsync(styles.error, false);
   }
 
   private setError(validity: ValidityState) {
@@ -83,7 +83,7 @@ export class TextInputView extends View {
         `${this.title} should be less than ${this.input.element.maxLength} characters; you entered ${this.input.element.value.length}.`
       );
     }
-    this.setCssStateAsync(styles.error, true).then(null, null);
+    void this.setCssStateAsync(styles.error, true);
   }
 
   public onInput(

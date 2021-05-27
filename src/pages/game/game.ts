@@ -33,7 +33,7 @@ export class PageGame extends BasePage implements IPage {
   }
 
   public init(): void {
-    this.newGame().then(null, null);
+    void this.newGame();
   }
 
   public stop(): void {

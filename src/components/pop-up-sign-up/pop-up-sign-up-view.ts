@@ -87,7 +87,7 @@ export class PopUpSignUpView extends PopUpView {
       ])
     );
     this.btnAddAvatar.element.addEventListener('input', () => {
-      this.handleAddAvatar().then(null, null);
+      void this.handleAddAvatar();
     });
     return btnAddAvatarWrapper;
   }
@@ -114,9 +114,7 @@ export class PopUpSignUpView extends PopUpView {
 
   public async task(): Promise<boolean> {
     return new Promise((resolve) => {
-      this.btnAddUser.onClick(() => {
-        this.onAddUser(resolve).then(null, null);
-      });
+      this.btnAddUser.onClick(async () => this.onAddUser(resolve));
       this.btnCancel.onClick(() => {
         this.resetInputs();
         resolve(false);

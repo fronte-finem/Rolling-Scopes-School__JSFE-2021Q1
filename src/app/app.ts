@@ -109,9 +109,7 @@ export class App {
 
   private async showPopup(popup: PopUpView) {
     this.modalView.render(popup);
-    this.modalView.onClick(() => {
-      this.hidePopup(popup).then(null, null);
-    });
+    this.modalView.onClick(async () => this.hidePopup(popup));
     await this.modalView.show();
     await popup.show();
   }

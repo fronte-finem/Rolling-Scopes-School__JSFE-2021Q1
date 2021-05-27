@@ -44,7 +44,7 @@ export class HeaderView extends View implements IHeaderContext {
       )
     );
 
-    public readonly logo = new LinkView({
+  public readonly logo = new LinkView({
     url: APP_CONFIG.initialRoute.url,
     classNames: [styles.logo],
   });
@@ -79,14 +79,14 @@ export class HeaderView extends View implements IHeaderContext {
   }
 
   private initStateSwitcher(): void {
-    this.btnStateSwitch.onClick(() => {
+    this.btnStateSwitch.onClick(async () => {
       const currentState = this.stateMaсhine.getCurrentState();
-      this.appStateService
-        .requestStateChange({ from: currentState.name, to: currentState.next })
-        .then((allowed) => {
-          if (allowed) this.stateMaсhine.nextState(this);
-        }, null);
-    });    
+      const allowed = await this.appStateService.requestStateChange({
+        from: currentState.name,
+        to: currentState.next,
+      });
+      if (allowed) this.stateMaсhine.nextState(this);
+    });
   }
 
   public nextState(): void {
