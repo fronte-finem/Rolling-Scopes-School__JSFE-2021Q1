@@ -4,9 +4,9 @@ import { OptionView } from '../select/option-view';
 import styles from './range-input-view.scss';
 
 export interface ICreateInputRangeOptions<T> extends ICreateViewOptions {
-  title: string;
-  values: T[];
-  value?: T;
+  readonly title: string;
+  readonly values: T[];
+  readonly value?: T;
 }
 
 type RangeValue = number | string | (IToString & IEquality);
