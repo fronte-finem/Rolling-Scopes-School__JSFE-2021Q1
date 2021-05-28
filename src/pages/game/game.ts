@@ -5,12 +5,14 @@ import { GameModel } from './game-model';
 import { CardModel } from '../../components/card/card-model';
 import { Timer } from '../../components/timer/timer';
 import { ICardImagesService } from '../../services/card-images-urls';
-import { IGameSettingsService } from '../../services/game-settings';
+import {
+  IGameSettings,
+  IGameSettingsService,
+} from '../../services/game-settings';
 import { IUserService } from '../../services/user-service';
 import styles from './game.scss';
 import { AppState, IAppStateService } from '../../services/app-state';
 import { countScore } from '../../services/game-service';
-import { IGameSettings } from './game-types';
 
 export class PageGame extends BasePage implements IPage {
   private readonly timer = new Timer();
@@ -51,7 +53,7 @@ export class PageGame extends BasePage implements IPage {
 
   private async newGame(): Promise<void> {
     this.stopGame();
-    const settings = this.gameSettingsService.loadSettings();
+    const settings = this.gameSettingsService.load();
     const cardModels = await this.initCards(settings);
     this.model = new GameModel(cardModels);
     this.model.showAllCards();

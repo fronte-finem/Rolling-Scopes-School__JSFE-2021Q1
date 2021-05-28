@@ -2,7 +2,7 @@ import {
   APP_GAME_CARD_FIELDS,
   APP_GAME_INITIAL_SHOW_TIME,
   APP_GAME_MISMATCH_SHOW_TIME,
-} from '../../app/app.game.config';
+} from '../../app/configs/game.config';
 import {
   CardImagesCategory,
   CARD_IMAGES_CATEGORY_TEXT_MAP,
@@ -13,7 +13,11 @@ import { SelectView } from '../../components/select/select-view';
 import { BasePage } from '../base-page';
 import { GameSettingsModel, IGameSettingsState } from './settings-model';
 import styles from './settings.scss';
-import { InputRangeView } from '../../components/range-input/range-input-view';
+import {
+  ICreateInputRangeOptions,
+  InputRangeView,
+} from '../../components/range-input/range-input-view';
+import { CardFieldModel } from '../../components/cards-field/card-field-model';
 
 export class PageSettings extends BasePage {
   private model = new GameSettingsModel();
@@ -28,19 +32,19 @@ export class PageSettings extends BasePage {
     title: '🎴🎴 Cards field (rows × columns)',
     values: APP_GAME_CARD_FIELDS,
     classNames: [styles.range],
-  });
+  } as ICreateInputRangeOptions<CardFieldModel>);
 
   private initialShowTimeRange = new InputRangeView({
     title: '⏱🃏 Start game countdown (seconds)',
     values: APP_GAME_INITIAL_SHOW_TIME,
     classNames: [styles.range],
-  });
+  } as ICreateInputRangeOptions<number>);
 
   private mismatchShowTimeRange = new InputRangeView({
     title: '🍎🍏 Delay flip after mismatch (seconds)',
     values: APP_GAME_MISMATCH_SHOW_TIME,
     classNames: [styles.range],
-  });
+  } as ICreateInputRangeOptions<number>);
 
   private wrapper = new View({ classNames: [styles.settingsWrapper] });
 
@@ -61,11 +65,11 @@ export class PageSettings extends BasePage {
       this.mismatchShowTimeRange,
     ]);
 
-    const initialSettings = this.gameSettingsService.loadSettings();
+    const initialSettings = this.gameSettingsService.load();
 
     this.model.init(initialSettings as IGameSettingsState);
     this.model.onStateChange((settings) =>
-      this.gameSettingsService.saveSettings(settings)
+      this.gameSettingsService.save(settings)
     );
     this.initSelectsors(this.model.getState());
     this.initRanges(this.model.getState());
@@ -89,7 +93,6 @@ export class PageSettings extends BasePage {
 
   private initSelectsors(state: IGameSettingsState): void {
     this.selectGameCards.addOptions(PageSettings.prepareCategoryOptions(state));
-
     this.selectGameCards.onSelect((value) => {
       this.model.state.cardImagesCategory = value;
     });
