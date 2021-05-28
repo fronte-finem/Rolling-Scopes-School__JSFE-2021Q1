@@ -35,4 +35,8 @@ export class OptionView<
     if (disabled) this.element.disabled = true;
     if (title) this.element.title = title;
   }
+
+  public selected(isSelected = true): void {
+    this.element.selected = isSelected;
+  }
 }
