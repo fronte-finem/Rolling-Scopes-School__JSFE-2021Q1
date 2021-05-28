@@ -33,6 +33,11 @@ export type BtnTypeInput =
   | 'image'
   | 'range';
 
+export interface IBtnInputConfig {
+  readonly title: string;
+  readonly type: BtnTypeInput;
+}
+
 export interface ITextInputValidation {
   readonly required: boolean;
   readonly errorMessage: string;

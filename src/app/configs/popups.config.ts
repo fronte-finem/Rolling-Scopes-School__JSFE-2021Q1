@@ -1,10 +1,10 @@
-import { IBtnConfig } from './buttons';
+import { IBtnConfig } from './buttons.config';
 import {
   INPUT_EMAIL_CONFIG,
   INPUT_FIRST_NAME_CONFIG,
   INPUT_LAST_NAME_CONFIG,
   ITextInputConfig,
-} from './inputs';
+} from './inputs.config';
 
 export type PopUpSignUpInputs = 'firstnName' | 'lastName' | 'email';
 export type PopUpSignUpBtns = 'addUser' | 'cancel';

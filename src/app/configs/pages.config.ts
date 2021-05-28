@@ -1,16 +1,21 @@
-import { IPageConfig } from './types';
+import { IRoute } from '../../router/router';
 import {
   appStateService,
   cardImagesService,
   gameSettingsService,
   userService,
-} from './services';
+} from './services.config';
 import {
   PageAbout,
   PageGame,
   PageSettings,
   PageScore,
 } from '../../pages/index';
+
+export interface IPageConfig {
+  readonly route: IRoute;
+  readonly navSvgIcon?: string;
+}
 
 export const APP_PAGE_ABOUT_CONFIG: Readonly<IPageConfig> = {
   route: {

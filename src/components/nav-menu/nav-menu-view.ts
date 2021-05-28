@@ -1,4 +1,4 @@
-import { IPageConfig } from '../../app/configs/types';
+import { IPageConfig } from '../../app/configs/pages.config';
 import { createSvgSpriteElement } from '../../shared/dom-utils';
 import { LinkView } from '../../shared/views/link/link';
 import { View } from '../../shared/views/view';

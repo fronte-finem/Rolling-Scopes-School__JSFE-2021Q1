@@ -2,7 +2,7 @@ import styles from './pop-up-victory-view.scss';
 import {
   APP_POPUP_VICTORY_CONFIG,
   PopUpVictoryBtns,
-} from '../../app/configs/popups';
+} from '../../app/configs/popups.config';
 import { BtnView } from '../../shared/views/btn/btn';
 import { PopUpView } from '../pop-up/pop-up-view';
 import { IUser, IUserService } from '../../services/user-service';

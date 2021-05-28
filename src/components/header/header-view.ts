@@ -1,6 +1,6 @@
 import styles from './header-view.scss';
 import { APP_CONFIG } from '../../app/app.config';
-import { APP_HEADER_CONFIG } from '../../app/configs/header';
+import { APP_HEADER_CONFIG } from '../../app/configs/header.config';
 import { IHeaderContext, HeaderState } from './header-view-state';
 import { AppState, IAppStateService } from '../../services/app-state';
 import { Observer } from '../../shared/observer';

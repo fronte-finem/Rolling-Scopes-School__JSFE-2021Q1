@@ -6,7 +6,7 @@ import { HeaderView } from '../components/header/header-view';
 import { ModalView } from '../components/modal/modal-view';
 import { PopUpSignUpView } from '../components/pop-up-sign-up/pop-up-sign-up-view';
 import { PopUpVictoryView } from '../components/pop-up-victory/pop-up-victory-view';
-import { appStateService, userService } from './configs/services';
+import { appStateService, userService } from './configs/services.config';
 import styles from './app.scss';
 import { PopUpView } from '../components/pop-up/pop-up-view';
 import { IStateChangeRequest } from '../shared/state/state-maсhine';

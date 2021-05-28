@@ -1,6 +1,6 @@
 import styles from './text-input-view.scss';
 import { ICreateViewOptions, View } from '../../shared/views/view';
-import { ITextInputConfig } from '../../app/configs/inputs';
+import { ITextInputConfig } from '../../app/configs/inputs.config';
 import { capitalize } from '../../shared/string-utils';
 
 // https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation

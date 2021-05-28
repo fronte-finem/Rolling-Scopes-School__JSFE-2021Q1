@@ -3,7 +3,7 @@ import {
   APP_POPUP_SINGUP_CONFIG,
   PopUpSignUpBtns,
   PopUpSignUpInputs,
-} from '../../app/configs/popups';
+} from '../../app/configs/popups.config';
 import { BtnView } from '../../shared/views/btn/btn';
 import { PopUpView } from '../pop-up/pop-up-view';
 import { TextInputView } from '../input/text-input-view';
