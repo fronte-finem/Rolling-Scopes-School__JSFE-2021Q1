@@ -1,4 +1,16 @@
+import { Immutable } from "../../typings/immutable";
+
 type ObjectLike = Record<string | symbol, unknown>;
+
+export function deepFreeze<T extends ObjectLike>(
+  obj: T
+): Immutable<T> {
+  Object.keys(obj).forEach((prop) => {
+    if (typeof obj[prop] === 'object' && !Object.isFrozen(obj[prop]))
+      deepFreeze(obj[prop] as ObjectLike);
+  });
+  return Object.freeze(obj) as Immutable<T>;
+}
 
 export function propName<T extends ObjectLike>(obj: T): T {
   return new Proxy(obj, { get: (_, key) => key });

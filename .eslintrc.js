@@ -34,5 +34,5 @@ module.exports = {
     'import/prefer-default-export': 'off',
     '@typescript-eslint/explicit-member-accessibility': ['error'],
   },
-  ignorePatterns: ['webpack.config.js', '.eslintrc.js'],
+  ignorePatterns: ['webpack.config.js', '.eslintrc.js', './typings/**/*'],
 };

@@ -1,10 +1,10 @@
 import { CardFieldModel } from '../../components/cards-field/card-field-model';
-import { CardImagesCategory } from '../../services/card-images-urls';
+import {
+  CardImagesCategory,
+  CARD_IMAGES_CATEGORY_TEXT_MAP,
+} from '../../services/card-images-urls';
 import { IGameSettings } from '../../services/game-settings';
-
-export interface IAppGameConfig {
-  readonly settings: Readonly<IGameSettings>;
-}
+import { deepFreeze } from '../../shared/object-utils';
 
 export const APP_GAME_CARD_FIELDS: readonly CardFieldModel[] = [
   new CardFieldModel(3, 4),
@@ -31,3 +31,22 @@ export const APP_GAME_INITIAL_SETTINGS: Readonly<IGameSettings> = {
   initialShowTime: APP_GAME_INITIAL_SHOW_TIME[1],
   mismatchShowTime: APP_GAME_MISMATCH_SHOW_TIME[2],
 };
+
+export const APP_GAME_SETTINGS = deepFreeze({
+  cardImagesCategory: {
+    title: 'Select cards images set',
+    values: CARD_IMAGES_CATEGORY_TEXT_MAP,
+  },
+  cardsField: {
+    title: '🎴🎴 Cards field (rows × columns)',
+    values: APP_GAME_CARD_FIELDS,
+  },
+  initialShowTime: {
+    title: '⏱🃏 Start game countdown (seconds)',
+    values: APP_GAME_INITIAL_SHOW_TIME,
+  },
+  mismatchShowTime: {
+    title: '🍎🍏 Delay flip after mismatch (seconds)',
+    values: APP_GAME_MISMATCH_SHOW_TIME,
+  },
+});
