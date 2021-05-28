@@ -1,7 +1,7 @@
 import { Model, ModelState } from '../../shared/models/model';
 import { CardModel } from '../../components/card/card-model';
 import { Listener, Observer } from '../../shared/observer';
-import { GameMatches } from '../../services/game-service';
+import { GameMatches } from '../../services/game-logic';
 
 export interface IGameModelState extends ModelState {
   isError: boolean;

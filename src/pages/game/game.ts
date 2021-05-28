@@ -12,7 +12,7 @@ import {
 import { IUserService } from '../../services/user-service';
 import styles from './game.scss';
 import { AppState, IAppStateService } from '../../services/app-state';
-import { countScore } from '../../services/game-service';
+import { countScore } from '../../services/game-logic';
 
 export class PageGame extends BasePage implements IPage {
   private readonly timer = new Timer();
