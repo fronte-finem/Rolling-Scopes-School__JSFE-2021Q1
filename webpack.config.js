@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 const BUILD_DIST = 'match-match-game';
@@ -127,6 +128,7 @@ function baseConfig() {
     },
     resolve: {
       extensions: ['.ts', '.js'],
+      plugins: [new TsconfigPathsPlugin()],
     },
     plugins: [
       new HtmlWebpackPlugin({
