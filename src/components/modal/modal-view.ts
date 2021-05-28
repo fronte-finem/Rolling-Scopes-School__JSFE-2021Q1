@@ -1,5 +1,6 @@
-import styles from './modal-view.scss';
 import { View } from '../../shared/views/view';
+
+import styles from './modal-view.scss';
 
 export class ModalView extends View {
   public constructor() {

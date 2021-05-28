@@ -1,7 +1,7 @@
-import { View, ICreateViewOptions } from './view';
 import { BtnView } from './btn/btn';
-import { ICreateLinkOptions, LinkView } from './link/link';
 import { ICreateImgOptions, ImgView } from './img/img';
+import { ICreateLinkOptions, LinkView } from './link/link';
+import { ICreateViewOptions, View } from './view';
 
 export interface IBuildViewOptions extends ICreateViewOptions {
   build?: IBuildViewOptions | IBuildViewOptions[];

@@ -1,6 +1,8 @@
 import { View } from '../../shared/views/view';
 import { Card } from '../card/card';
+
 import { CardFieldModel } from './card-field-model';
+
 import style from './cards-field.scss';
 
 const CSS_VAR_CARDS_COLUMNS = '--cards-columns';

@@ -1,4 +1,4 @@
-import { IBtnConfig } from "./buttons.config";
+import { IBtnConfig } from './buttons.config';
 
 export interface IHeaderConfig {
   readonly btns: Record<string, IBtnConfig>;

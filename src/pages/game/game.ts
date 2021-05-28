@@ -1,18 +1,20 @@
-import { BasePage, IPage } from '../base-page';
 import { Card } from '../../components/card/card';
-import { CardsField } from '../../components/cards-field/cards-field';
-import { GameModel } from './game-model';
 import { CardModel } from '../../components/card/card-model';
+import { CardsField } from '../../components/cards-field/cards-field';
 import { Timer } from '../../components/timer/timer';
+import { AppState, IAppStateService } from '../../services/app-state';
 import { ICardImagesService } from '../../services/card-images-urls';
+import { countScore } from '../../services/game-logic';
 import {
   IGameSettings,
   IGameSettingsService,
 } from '../../services/game-settings';
 import { IUserService } from '../../services/user-service';
+import { BasePage, IPage } from '../base-page';
+
+import { GameModel } from './game-model';
+
 import styles from './game.scss';
-import { AppState, IAppStateService } from '../../services/app-state';
-import { countScore } from '../../services/game-logic';
 
 export class PageGame extends BasePage implements IPage {
   private readonly timer = new Timer();

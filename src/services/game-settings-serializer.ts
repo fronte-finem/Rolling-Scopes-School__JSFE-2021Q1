@@ -1,5 +1,6 @@
 import { CardFieldModel } from '../components/cards-field/card-field-model';
 import { ISerializer } from '../shared/models/types';
+
 import { IGameSettings } from './game-settings';
 
 export class GameSettingsSerializer implements ISerializer<IGameSettings> {

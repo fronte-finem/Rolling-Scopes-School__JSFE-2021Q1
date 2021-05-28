@@ -1,16 +1,17 @@
-import styles from './pop-up-sign-up-view.scss';
 import {
   APP_POPUP_SINGUP_CONFIG,
   PopUpSignUpBtns,
   PopUpSignUpInputs,
 } from '../../app/configs/popups.config';
-import { BtnView } from '../../shared/views/btn/btn';
-import { PopUpView } from '../pop-up/pop-up-view';
-import { TextInputView } from '../input/text-input-view';
-import { View } from '../../shared/views/view';
 import { IUser, IUserService } from '../../services/user-service';
 import { createSvgSpriteElement, cropResize } from '../../shared/dom-utils';
+import { BtnView } from '../../shared/views/btn/btn';
 import { ImgView } from '../../shared/views/img/img';
+import { View } from '../../shared/views/view';
+import { TextInputView } from '../input/text-input-view';
+import { PopUpView } from '../pop-up/pop-up-view';
+
+import styles from './pop-up-sign-up-view.scss';
 
 const BTN_ADD_USER_SVG_ICON = './svg/sprite.svg#icon-cross';
 const DEFAULT_AVATAR_SVG_ICON = './svg/sprite.svg#icon-avatar';

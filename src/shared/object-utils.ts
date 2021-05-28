@@ -1,10 +1,8 @@
-import { Immutable } from "../../typings/immutable";
+import { Immutable } from '../../typings/immutable';
 
 type ObjectLike = Record<string | symbol, unknown>;
 
-export function deepFreeze<T extends ObjectLike>(
-  obj: T
-): Immutable<T> {
+export function deepFreeze<T extends ObjectLike>(obj: T): Immutable<T> {
   Object.keys(obj).forEach((prop) => {
     if (typeof obj[prop] === 'object' && !Object.isFrozen(obj[prop]))
       deepFreeze(obj[prop] as ObjectLike);

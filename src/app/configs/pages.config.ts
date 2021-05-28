@@ -1,16 +1,17 @@
+import {
+  PageAbout,
+  PageGame,
+  PageScore,
+  PageSettings,
+} from '../../pages/index';
 import { IRoute } from '../../router/router';
+
 import {
   appStateService,
   cardImagesService,
   gameSettingsService,
   userService,
 } from './services.config';
-import {
-  PageAbout,
-  PageGame,
-  PageSettings,
-  PageScore,
-} from '../../pages/index';
 
 export interface IPageConfig {
   readonly route: IRoute;

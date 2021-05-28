@@ -1,6 +1,8 @@
-import styles from './card-view.scss';
 import { View } from '../../shared/views/view';
+
 import { CardModel } from './card-model';
+
+import styles from './card-view.scss';
 
 const getImgUrl = (imgName: string) => `url("./images/${imgName}")`;
 

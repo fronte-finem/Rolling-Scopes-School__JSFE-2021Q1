@@ -1,5 +1,7 @@
-import './assets/styles/reset.scss';
-import styles from './assets/styles/main.scss';
+import '@styles/reset.scss';
+
+import styles from '@styles/main.scss';
+
 import { App } from './app/app';
 
 window.addEventListener('load', () => {

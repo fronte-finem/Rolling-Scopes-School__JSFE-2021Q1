@@ -1,13 +1,14 @@
-import styles from './pop-up-victory-view.scss';
 import {
   APP_POPUP_VICTORY_CONFIG,
   PopUpVictoryBtns,
 } from '../../app/configs/popups.config';
-import { BtnView } from '../../shared/views/btn/btn';
-import { PopUpView } from '../pop-up/pop-up-view';
 import { IUser, IUserService } from '../../services/user-service';
-import { View } from '../../shared/views/view';
 import { timeDiff } from '../../shared/date-time-utils';
+import { BtnView } from '../../shared/views/btn/btn';
+import { View } from '../../shared/views/view';
+import { PopUpView } from '../pop-up/pop-up-view';
+
+import styles from './pop-up-victory-view.scss';
 
 const createBtn = (key: PopUpVictoryBtns, ...classNames: string[]): BtnView =>
   new BtnView({ ...APP_POPUP_VICTORY_CONFIG.btns[key], classNames });

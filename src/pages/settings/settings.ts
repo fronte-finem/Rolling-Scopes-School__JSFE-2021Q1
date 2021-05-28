@@ -3,21 +3,23 @@ import {
   APP_GAME_INITIAL_SHOW_TIME,
   APP_GAME_MISMATCH_SHOW_TIME,
 } from '../../app/configs/game.config';
-import {
-  CardImagesCategory,
-  CARD_IMAGES_CATEGORY_TEXT_MAP,
-} from '../../services/card-images-urls';
-import { IGameSettingsService } from '../../services/game-settings';
-import { View } from '../../shared/views/view';
-import { SelectView } from '../../components/select/select-view';
-import { BasePage } from '../base-page';
-import { GameSettingsModel, IGameSettingsState } from './settings-model';
-import styles from './settings.scss';
+import { CardFieldModel } from '../../components/cards-field/card-field-model';
 import {
   ICreateInputRangeOptions,
   InputRangeView,
 } from '../../components/range-input/range-input-view';
-import { CardFieldModel } from '../../components/cards-field/card-field-model';
+import { SelectView } from '../../components/select/select-view';
+import {
+  CARD_IMAGES_CATEGORY_TEXT_MAP,
+  CardImagesCategory,
+} from '../../services/card-images-urls';
+import { IGameSettingsService } from '../../services/game-settings';
+import { View } from '../../shared/views/view';
+import { BasePage } from '../base-page';
+
+import { GameSettingsModel, IGameSettingsState } from './settings-model';
+
+import styles from './settings.scss';
 
 export class PageSettings extends BasePage {
   private model = new GameSettingsModel();

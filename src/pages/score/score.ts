@@ -3,6 +3,7 @@ import { timeDiffFormat } from '../../shared/date-time-utils';
 import { renderAvatar } from '../../shared/views/avatar-factory';
 import { View } from '../../shared/views/view';
 import { BasePage } from '../base-page';
+
 import styles from './score.scss';
 
 const TITLE_PLAYERS = 'Best players';

@@ -1,6 +1,8 @@
-import styles from './select-view.scss';
 import { ICreateViewOptions, View } from '../../shared/views/view';
+
 import { OptionView } from './option-view';
+
+import styles from './select-view.scss';
 
 export interface ICreateSelectOptions extends ICreateViewOptions {
   heading: string;

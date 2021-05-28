@@ -1,7 +1,7 @@
 import { CardFieldModel } from '../../components/cards-field/card-field-model';
 import {
-  CardImagesCategory,
   CARD_IMAGES_CATEGORY_TEXT_MAP,
+  CardImagesCategory,
 } from '../../services/card-images-urls';
 import { IGameSettings } from '../../services/game-settings';
 import { deepFreeze } from '../../shared/object-utils';

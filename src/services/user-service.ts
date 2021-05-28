@@ -3,6 +3,7 @@
 // Можете использовать hash фнкцию для высчитываения уникального хеша объекта и устанавливать хеш как id
 
 import { hashCode } from '../shared/string-utils';
+
 import { IndexDbService } from './index-db';
 
 const DB_NAME = 'fronte-finem';

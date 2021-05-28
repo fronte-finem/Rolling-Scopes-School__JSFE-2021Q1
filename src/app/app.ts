@@ -1,15 +1,17 @@
-import { AppState } from '../services/app-state';
-import { APP_CONFIG } from './app.config';
-import { IRouterState, Router } from '../router/router';
-import { View } from '../shared/views/view';
 import { HeaderView } from '../components/header/header-view';
 import { ModalView } from '../components/modal/modal-view';
+import { PopUpView } from '../components/pop-up/pop-up-view';
 import { PopUpSignUpView } from '../components/pop-up-sign-up/pop-up-sign-up-view';
 import { PopUpVictoryView } from '../components/pop-up-victory/pop-up-victory-view';
-import { appStateService, userService } from './configs/services.config';
-import styles from './app.scss';
-import { PopUpView } from '../components/pop-up/pop-up-view';
+import { IRouterState, Router } from '../router/router';
+import { AppState } from '../services/app-state';
 import { IStateChangeRequest } from '../shared/state/state-maсhine';
+import { View } from '../shared/views/view';
+
+import { appStateService, userService } from './configs/services.config';
+import { APP_CONFIG } from './app.config';
+
+import styles from './app.scss';
 
 export class App {
   private readonly view = new View({ tag: 'main', classNames: [styles.app] });

@@ -1,4 +1,5 @@
 import { ICreateViewOptions, View } from '../../shared/views/view';
+
 import styles from './select-view.scss';
 
 export interface ICreateOptionOptions<T> extends ICreateViewOptions {

@@ -1,6 +1,7 @@
 import { IEquality, IToString } from '../../shared/models/types';
 import { ICreateViewOptions, View } from '../../shared/views/view';
 import { OptionView } from '../select/option-view';
+
 import styles from './range-input-view.scss';
 
 export interface ICreateInputRangeOptions<T> extends ICreateViewOptions {

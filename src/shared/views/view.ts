@@ -1,9 +1,9 @@
 import {
-  ICreateElementOptions,
   createElement,
   getCssVar,
-  setCssVar,
   htmlToElem,
+  ICreateElementOptions,
+  setCssVar,
 } from '../dom-utils';
 
 export interface ICreateViewOptions extends ICreateElementOptions {

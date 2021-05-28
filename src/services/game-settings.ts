@@ -1,7 +1,8 @@
 import { CardFieldModel } from '../components/cards-field/card-field-model';
+import { ISerializer } from '../shared/models/types';
+
 import { CardImagesCategory } from './card-images-urls';
 import { LocalStorageService } from './local-storage';
-import { ISerializer } from '../shared/models/types';
 
 const KEY_STORAGE_GAME_SETTINGS =
   'fronte-finem__match-match-game___game-settings';

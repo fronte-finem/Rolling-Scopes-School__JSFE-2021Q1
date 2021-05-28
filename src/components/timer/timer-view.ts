@@ -1,5 +1,6 @@
 import { ITimeDiffFormat } from '../../shared/date-time-utils';
 import { View } from '../../shared/views/view';
+
 import styles from './timer-view.scss';
 
 export class TimerView extends View {

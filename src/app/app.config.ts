@@ -1,13 +1,14 @@
+import { IRoute } from '../router/router';
+
 import { APP_HEADER_CONFIG, IHeaderConfig } from './configs/header.config';
 import {
   APP_PAGE_ABOUT_CONFIG,
+  APP_PAGE_GAME_CONFIG,
   APP_PAGE_SCORE_CONFIG,
   APP_PAGE_SETTINGS_CONFIG,
-  APP_PAGE_GAME_CONFIG,
   IPageConfig,
 } from './configs/pages.config';
 import { APP_POPUP_SINGUP_CONFIG, IPopUpConfig } from './configs/popups.config';
-import { IRoute } from '../router/router';
 
 export interface IAppConfig {
   readonly initialRoute: IRoute;

@@ -1,6 +1,6 @@
-import { ObserverLite, Listener } from '../shared/observer-lite';
 import { IPage } from '../pages/base-page';
 import { PageError } from '../pages/index';
+import { Listener, ObserverLite } from '../shared/observer-lite';
 import { capitalize } from '../shared/string-utils';
 
 const setTitle = (title: string) => `🎴 Match-Match 🃏 ${capitalize(title)} 🎴`;

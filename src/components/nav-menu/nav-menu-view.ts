@@ -2,6 +2,7 @@ import { IPageConfig } from '../../app/configs/pages.config';
 import { createSvgSpriteElement } from '../../shared/dom-utils';
 import { LinkView } from '../../shared/views/link/link';
 import { View } from '../../shared/views/view';
+
 import styles from './nav-menu-view.scss';
 
 export interface NavLinkCreateOptions {
