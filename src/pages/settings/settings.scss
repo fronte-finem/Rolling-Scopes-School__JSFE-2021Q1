@@ -7,10 +7,10 @@
     row-gap: 30px;
     max-width: 500px;
   }
+}
 
-  &__select {
-    select {
-      font-family: monospace;
-    }
+.selector {
+  select {
+    font-family: monospace;
   }
 }
