@@ -7,7 +7,7 @@ export class LocalStorageService<Settings> {
     private readonly serializer: ISerializer<Settings>
   ) {}
 
-  public loadSettings(): Settings {
+  public load(): Settings {
     const json = window.localStorage.getItem(this.storageKey);
     const settings = json
       ? this.serializer.deserialize(json)
@@ -15,7 +15,7 @@ export class LocalStorageService<Settings> {
     return settings;
   }
 
-  public saveSettings(settings: Settings): void {
+  public save(settings: Settings): void {
     window.localStorage.setItem(
       this.storageKey,
       this.serializer.serialize(settings)
