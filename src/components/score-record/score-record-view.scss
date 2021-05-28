@@ -1,0 +1,69 @@
+.score-record {
+  --user-bg-color: var(--page-color-record-bg);
+  --score-bg-color: var(--page-color-record-score-bg);
+
+  background-color: var(--user-bg-color);
+
+  &--highlight {
+    --user-bg-color: var(--page-color-active-record-bg);
+    --score-bg-color: var(--page-color-active-record-score-bg);
+  }
+}
+
+.user {
+  justify-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+
+  &__name {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  &__mail {
+    font-size: 14px;
+    color: var(--page-color-second-dark);
+  }
+}
+
+.score {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 24px;
+  color: var(--page-color-main-light);
+  background-color: var(--score-bg-color);
+}
+
+.time {
+  font-size: 20px;
+}
+
+.avatar {
+  justify-self: flex-start;
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--page-color-avatar-bg);
+
+  &--hidden {
+    display: none;
+  }
+}
+
+.avatar__img {
+  width: 100%;
+  height: 100%;
+}
+
+.svg-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  fill: var(--page-color-avatar-icon);
+}
