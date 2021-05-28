@@ -1,13 +1,13 @@
 export interface IToString {
-  toString(): string; 
+  toString(): string;
 }
 
 export interface IEquality {
-  equal(model: IEquality): boolean; 
+  equal(model: IEquality): boolean;
 }
 
 export interface IHash {
-  hash(): string; 
+  hash(): string;
 }
 
 export interface ISerializer<T> {

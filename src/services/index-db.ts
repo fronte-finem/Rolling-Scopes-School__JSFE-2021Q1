@@ -50,7 +50,10 @@ export class IndexDbService {
     return this.db.transaction(storeName, mode);
   }
 
-  public openStore(storeName: string, mode?: IDBTransactionMode): IDBObjectStore {
+  public openStore(
+    storeName: string,
+    mode?: IDBTransactionMode
+  ): IDBObjectStore {
     if (!this.db) throw errorDB();
     const transaction = this.db.transaction(storeName, mode);
     return transaction.objectStore(storeName);
@@ -127,7 +130,10 @@ export class IndexDbService {
     );
   }
 
-  public delete(storeName: string, key: IDBValidKey | IDBKeyRange): Promise<void> {
+  public delete(
+    storeName: string,
+    key: IDBValidKey | IDBKeyRange
+  ): Promise<void> {
     return this.operate(
       storeName,
       (store) => store.delete(key),

@@ -6,7 +6,10 @@ export interface ICardFieldOptions {
 }
 
 export class CardFieldModel implements IToString, IEquality {
-  public constructor(public readonly rows: number, public readonly columns: number) {}
+  public constructor(
+    public readonly rows: number,
+    public readonly columns: number
+  ) {}
 
   public getCardsAmount(): number {
     return this.rows * this.columns;

@@ -103,7 +103,10 @@ export class UserService implements IUserService {
     return hashCode(JSON.stringify({ firstName, lastName, email }));
   }
 
-  public async updateUserAchievement(score: number, time: number): Promise<boolean> {
+  public async updateUserAchievement(
+    score: number,
+    time: number
+  ): Promise<boolean> {
     if (!this.user) return false;
     if (score < this.user.score) return false;
     this.user.score = score;

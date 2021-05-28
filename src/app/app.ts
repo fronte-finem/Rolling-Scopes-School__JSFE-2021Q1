@@ -16,7 +16,9 @@ export class App {
 
   private headerView = new HeaderView(appStateService, userService);
 
-  private readonly pageContainer = new View({ classNames: [styles.pageContainer] });
+  private readonly pageContainer = new View({
+    classNames: [styles.pageContainer],
+  });
 
   private readonly modalView = new ModalView();
 
