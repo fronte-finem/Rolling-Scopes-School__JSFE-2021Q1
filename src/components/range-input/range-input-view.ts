@@ -6,7 +6,7 @@ import styles from './range-input-view.scss';
 
 export interface ICreateInputRangeOptions<T> extends ICreateViewOptions {
   readonly title: string;
-  readonly values: T[];
+  readonly values: ReadonlyArray<T>;
   readonly value?: T;
 }
 
@@ -20,7 +20,7 @@ export class InputRangeView<T extends RangeValue> extends View {
     return `input-range-view-${InputRangeView.id}`;
   };
 
-  private values: T[] = [] as T[];
+  private values: ReadonlyArray<T> = [];
 
   private readonly title = new View<HTMLLabelElement>({
     tag: 'label',
@@ -66,7 +66,7 @@ export class InputRangeView<T extends RangeValue> extends View {
     ]);
   }
 
-  private initValues(values: T[]): void {
+  private initValues(values: ReadonlyArray<T>): void {
     this.values = values;
   }
 
