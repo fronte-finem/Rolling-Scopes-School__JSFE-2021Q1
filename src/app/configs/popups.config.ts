@@ -1,65 +1,36 @@
-import { IBtnConfig } from './buttons.config';
-import {
-  INPUT_EMAIL_CONFIG,
-  INPUT_FIRST_NAME_CONFIG,
-  INPUT_LAST_NAME_CONFIG,
-  ITextInputConfig,
-} from './inputs.config';
+import { IUser } from 'services/user-service';
+import { timeDiff } from 'shared/date-time-utils';
 
-export type PopUpSignUpInputs = 'firstnName' | 'lastName' | 'email';
-export type PopUpSignUpBtns = 'addUser' | 'cancel';
+import popupVictoryStyles from '~components/pop-up-victory/pop-up-victory-view.scss';
 
-export type PopUpVictoryBtns = 'confirm';
-
-export interface IPopUpConfig<
-  InputKeys extends string,
-  BtnKeys extends string
-> {
-  readonly title: string;
-  readonly btns: Record<BtnKeys, IBtnConfig>;
-  readonly inputs: Record<InputKeys, ITextInputConfig>;
-}
-
-const APP_POPUP_SINGUP_INPUTS_CONFIG: Record<
-  PopUpSignUpInputs,
-  ITextInputConfig
-> = {
-  firstnName: INPUT_FIRST_NAME_CONFIG,
-  lastName: INPUT_LAST_NAME_CONFIG,
-  email: INPUT_EMAIL_CONFIG,
-};
-
-const APP_POPUP_SINGUP_BTNS_CONFIG: Record<PopUpSignUpBtns, IBtnConfig> = {
-  addUser: { text: 'add user' },
-  cancel: { text: 'cancel' },
-};
-
-const APP_POPUP_VICTORY_BTNS_CONFIG: Record<PopUpVictoryBtns, IBtnConfig> = {
-  confirm: { text: 'OK' },
-};
-
-type PopUpSigUpConfig = Readonly<
-  IPopUpConfig<PopUpSignUpInputs, PopUpSignUpBtns>
->;
-
-export const APP_POPUP_SINGUP_CONFIG: PopUpSigUpConfig = {
+export const POPUP_SIGN_UP = {
   title: '🦸‍♀️ Registr new Player 🦸',
-  btns: APP_POPUP_SINGUP_BTNS_CONFIG,
-  inputs: APP_POPUP_SINGUP_INPUTS_CONFIG,
+  btns: {
+    addUser: { text: 'add user' },
+    cancel: { text: 'cancel', classNames: ['btn--invert'] },
+  },
 };
 
-type PopUpVictoryConfig = Readonly<IPopUpConfig<string, PopUpVictoryBtns>>;
-
-export const APP_POPUP_VICTORY_CONFIG: PopUpVictoryConfig = {
+export const POPUP_VICTORY = {
   title: '🏆 Victory! 🏆',
-  inputs: {},
-  btns: APP_POPUP_VICTORY_BTNS_CONFIG,
+  btns: {
+    confirm: { text: 'OK' },
+  },
+  msgGenerator: (user: IUser): string => {
+    const { hours, min, sec } = timeDiff(user.time);
+    let timeFormat = [`${hours} hours`, `${min} minutes`, `${sec} seconds`];
+    timeFormat = user.time > 3600 ? timeFormat : timeFormat.slice(1);
+    timeFormat = user.time > 60 ? timeFormat : timeFormat.slice(1);
+    return `<div class="${popupVictoryStyles.output}">Congratulations,
+      <span class="${popupVictoryStyles.highlight}">${user.firstName} ${
+      user.lastName
+    }</span>!
+      <br>You successfully found all matches in time
+      <span class="${popupVictoryStyles.highlight}">${timeFormat.join(
+      ' '
+    )}</span>
+      <br>with score <span class="${popupVictoryStyles.highlight}">${
+      user.score
+    }</span>.</div>`;
+  },
 };
-
-// Форма в целом:
-// - В случае несоответствия любого из вышеуказанных правил, необходимо блокировать кнопку создания пользователя
-// - Все неправильные поля должны быть подсвечены и иметь соответствующие сообщения об ошибках.
-// - После нажатия на кнопку создания игрока страница не должна перезагружаться.
-// - После нажатия на кнопку cancel вся ранее заполненная информация должна быть сброшена.
-
-// Если все данные игрока корректны, все правильно заполненные поля должны быть помеченные как правильные.

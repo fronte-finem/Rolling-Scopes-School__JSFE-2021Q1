@@ -53,7 +53,7 @@ export class PageSettings extends BasePage {
     ]);
 
     const initialSettings = this.gameSettingsService.load();
-    this.model.init(initialSettings as IGameSettingsState);
+    this.model.init({ ...initialSettings } as IGameSettingsState);
     this.model.onStateChange((settings) =>
       this.gameSettingsService.save(settings)
     );
