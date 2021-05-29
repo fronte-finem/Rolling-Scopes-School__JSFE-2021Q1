@@ -1,7 +1,11 @@
 @import './colors.scss';
 
 :global .root {
+  --c1: hsla(var(--color-first-default), 0.5);
+  --c2: hsla(var(--color-second-default), 0.5);
+
   background-color: var(--color-root-bg);
+  background-image: linear-gradient(0deg, var(--c1), var(--c2));
 }
 
 @import '../../shared/views/base-views-styles.scss';
