@@ -1,39 +1,20 @@
-import { APP_GAME_SETTINGS } from '../../app/configs/game.config';
-import { InputRangeView } from '../../components/range-input/range-input-view';
-import { SelectView } from '../../components/select/select-view';
-import { CardImagesCategory } from '../../services/card-images-urls';
-import { IGameSettingsService } from '../../services/game-settings';
-import { View } from '../../shared/views/view';
+import { SettingsCardsView } from 'components/settings-cards/settings-cards-view';
+import { SettingsDifficultyView } from 'components/settings-difficulty/settings-difficulty-view';
+import { IGameSettingsService } from 'services/game-settings';
+import { View } from 'shared/views/view';
+
 import { BasePage } from '../base-page';
 
-import { GameSettingsModel, IGameSettingsState } from './settings-model';
+import { GameSettingsModel } from './settings-model';
 
 import styles from './settings.scss';
 
 export class PageSettings extends BasePage {
   private model = new GameSettingsModel();
 
-  private gameCardsSelector = new SelectView<CardImagesCategory>({
-    ...APP_GAME_SETTINGS.cardImagesCategory,
-    classNames: [styles.selector],
-  });
+  private settingsCards = new SettingsCardsView();
 
-  private cardsRange = new InputRangeView({
-    ...APP_GAME_SETTINGS.cardsField,
-    classNames: [styles.range],
-  });
-
-  private initialShowTimeRange = new InputRangeView({
-    ...APP_GAME_SETTINGS.initialShowTime,
-    classNames: [styles.range],
-  });
-
-  private mismatchShowTimeRange = new InputRangeView({
-    ...APP_GAME_SETTINGS.mismatchShowTime,
-    classNames: [styles.range],
-  });
-
-  private wrapper = new View({ classNames: [styles.settingsWrapper] });
+  private settingsDifficulty = new SettingsDifficultyView();
 
   public constructor(private gameSettingsService: IGameSettingsService) {
     super({ classNames: [styles.settings] });
@@ -44,39 +25,35 @@ export class PageSettings extends BasePage {
   }
 
   public init(): void {
-    this.view.render(this.wrapper);
-    this.wrapper.render([
-      this.gameCardsSelector,
-      this.cardsRange,
-      this.initialShowTimeRange,
-      this.mismatchShowTimeRange,
-    ]);
+    const wrapper = new View({ classNames: [styles.settingsWrapper] });
+    this.view.render(wrapper);
+    wrapper.render([this.initSettingsCards(), this.initDifficultyCustomizer()]);
+    this.initModel();
+  }
 
+  private initModel() {
     const initialSettings = this.gameSettingsService.load();
-    this.model.init({ ...initialSettings } as IGameSettingsState);
+    this.model.init({ ...initialSettings });
     this.model.onStateChange((settings) =>
       this.gameSettingsService.save(settings)
     );
-    this.initControls(this.model.getState());
+    this.initControls();
   }
 
-  private initControls(state: IGameSettingsState): void {
-    this.gameCardsSelector.setValue(state.cardImagesCategory);
-    this.cardsRange.setValue(state.cardsField);
-    this.initialShowTimeRange.setValue(state.initialShowTime);
-    this.mismatchShowTimeRange.setValue(state.mismatchShowTime);
+  private initSettingsCards() {
+    const wrapper = new View({ classNames: [styles.cardsWrapper] });
+    wrapper.render(this.settingsCards);
+    return wrapper;
+  }
 
-    this.gameCardsSelector.onSelect((value) => {
-      this.model.state.cardImagesCategory = value;
-    });
-    this.cardsRange.onSelect((value) => {
-      this.model.state.cardsField = value;
-    });
-    this.initialShowTimeRange.onSelect((value) => {
-      this.model.state.initialShowTime = value;
-    });
-    this.mismatchShowTimeRange.onSelect((value) => {
-      this.model.state.mismatchShowTime = value;
-    });
+  private initDifficultyCustomizer() {
+    const wrapper = new View({ classNames: [styles.difficultyWrapper] });
+    wrapper.render(this.settingsDifficulty);
+    return wrapper;
+  }
+
+  private initControls(): void {
+    this.settingsCards.initControls(this.model);
+    this.settingsDifficulty.initControls(this.model);
   }
 }
