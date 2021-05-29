@@ -85,19 +85,23 @@ export class UserService implements IUserService {
 
   public async save(user: IUser): Promise<IUser | undefined> {
     const key = UserService.userHashCode(user);
-    const maybeUser = await this.dbService.read<IUser>(DB_USERS_STORE, key);
-    if (maybeUser) {
-      this.user = maybeUser;
-      return maybeUser;
-    }
     try {
+      const maybeUser = await this.dbService.read<IUser>(DB_USERS_STORE, key);
+      if (maybeUser) {
+        if (user.avatar) {
+          maybeUser.avatar = user.avatar;
+          await this.dbService.update<IUser>(DB_USERS_STORE, maybeUser, key);
+        }
+        this.user = maybeUser;
+        return maybeUser;
+      }
       await this.dbService.create<IUser>(DB_USERS_STORE, user, key);
+      this.user = user;
+      return user;
     } catch (error) {
       // console.log(error);
       return undefined;
     }
-    this.user = user;
-    return user;
   }
 
   public static userHashCode({ firstName, lastName, email }: IUser): number {
