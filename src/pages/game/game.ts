@@ -91,7 +91,11 @@ export class PageGame extends BasePage implements IPage {
       this.timer.model.diff,
       settings
     );
-    void this.userService.updateUserAchievement(score, this.timer.model.diff);
+    void this.userService.updateUserAchievement(
+      score,
+      this.timer.model.diff,
+      settings.cardsField.toString()
+    );
     void this.appStateService.requestStateChange({
       from: AppState.GAME,
       to: AppState.SOLVED,
