@@ -17,6 +17,7 @@ export const POPUP_VICTORY = {
     confirm: { text: 'OK' },
   },
   msgGenerator: (user: IUser): string => {
+    if (!user.time) return '';
     const { hours, min, sec } = timeDiff(user.time);
     let timeFormat = [`${hours} hours`, `${min} minutes`, `${sec} seconds`];
     timeFormat = user.time > 3600 ? timeFormat : timeFormat.slice(1);
