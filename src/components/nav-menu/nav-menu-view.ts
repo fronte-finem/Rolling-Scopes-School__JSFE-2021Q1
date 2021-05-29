@@ -64,7 +64,12 @@ export class NavMenuView extends View {
       text: route.title,
       hookElement: (elem) => {
         if (navSvgIcon)
-          elem.append(createSvgSpriteElement(navSvgIcon, [styles.svgIcon]));
+          elem.append(
+            createSvgSpriteElement({
+              url: navSvgIcon,
+              classNames: [styles.svgIcon],
+            })
+          );
         return elem;
       },
     });

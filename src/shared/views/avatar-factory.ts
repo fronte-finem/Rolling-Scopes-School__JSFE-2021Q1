@@ -14,7 +14,10 @@ export function renderAvatar(
 ): void {
   if (!user.avatar) {
     avatarContainer.element.append(
-      createSvgSpriteElement(DEFAULT_AVATAR_SVG_ICON, svgClassNames)
+      createSvgSpriteElement({
+        url: DEFAULT_AVATAR_SVG_ICON,
+        classNames: svgClassNames,
+      })
     );
   } else {
     avatarContainer.render(
