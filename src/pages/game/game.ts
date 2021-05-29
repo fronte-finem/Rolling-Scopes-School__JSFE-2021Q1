@@ -4,7 +4,7 @@ import { CardsField } from '../../components/cards-field/cards-field';
 import { Timer } from '../../components/timer/timer';
 import { AppState, IAppStateService } from '../../services/app-state';
 import { ICardImagesService } from '../../services/card-images-urls';
-import { countScore } from '../../services/game-logic';
+import { calcScore } from '../../services/game-logic';
 import {
   IGameSettings,
   IGameSettingsService,
@@ -62,7 +62,7 @@ export class PageGame extends BasePage implements IPage {
     await this.timer.countdown(settings.initialShowTime);
     this.model.start();
     this.timer.start();
-    this.model.onSolved(() => this.succesEndGame());
+    this.model.onSolved(() => this.succesEndGame(settings));
   }
 
   private async initCards(settings: IGameSettings): Promise<CardModel[]> {
@@ -82,11 +82,15 @@ export class PageGame extends BasePage implements IPage {
     return cardModels;
   }
 
-  private succesEndGame(): void {
+  private succesEndGame(settings: IGameSettings): void {
     this.timer.stop();
     this.view.setCssState(styles.gameSolved, true);
     if (!this.model) return;
-    const score = countScore(this.model.getMatches(), this.timer.model.diff);
+    const score = calcScore(
+      this.model.getMatches(),
+      this.timer.model.diff,
+      settings
+    );
     void this.userService.updateUserAchievement(score, this.timer.model.diff);
     void this.appStateService.requestStateChange({
       from: AppState.GAME,
