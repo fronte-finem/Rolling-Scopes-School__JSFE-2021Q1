@@ -9,37 +9,37 @@
   --page-color-avatar-bg: #fff3;
   --page-color-avatar-icon: #0003;
 
-  padding: 50px;
-  grid-template-rows: 60px 1fr;
+  padding: 20px;
+  grid-template-rows: 1fr;
   row-gap: 20px;
+}
+
+.users {
+  min-width: 900px;
+  display: grid;
+  grid-template-rows: 260px 230px 200px 170px;
+  row-gap: 10px;
 }
 
 .row {
   display: grid;
-  grid-template-columns: 70px 1fr 150px 200px;
-  justify-items: center;
-  align-items: center;
-  padding: 0 20px;
+  column-gap: 10px;
+  justify-content: center;
 }
 
-.title {
-  font-size: 24px;
-
-  &__users {
-    grid-column: 1 / span 2;
-    justify-self: flex-start;
-    color: var(--page-color-main-dark);
-  }
-  &__score {
-    color: var(--page-color-main-light);
-  }
-  &__time {
-    color: var(--page-color-main-dark);
-  }
+.row-1 {
+  --row-scale: 2.4;
+  grid-template-columns: repeat(1, minmax(0, 200px));
 }
-
-.users {
-  display: grid;
-  grid-auto-rows: 60px;
-  row-gap: 10px;
+.row-2 {
+  --row-scale: 2.1;
+  grid-template-columns: repeat(2, minmax(0, 180px));
+}
+.row-3 {
+  --row-scale: 1.8;
+  grid-template-columns: repeat(3, minmax(0, 160px));
+}
+.row-4 {
+  --row-scale: 1.5;
+  grid-template-columns: repeat(4, minmax(0, 140px));
 }
