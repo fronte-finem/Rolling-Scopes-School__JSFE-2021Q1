@@ -1,5 +1,5 @@
+import { IGameSettings } from '../../services/game-settings';
 import { Model, ModelState } from '../../shared/models/model';
-import { IGameSettings } from '../game/game-types';
 
 export type IGameSettingsState = ModelState & IGameSettings;
 

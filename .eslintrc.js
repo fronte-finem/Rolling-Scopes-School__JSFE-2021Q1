@@ -18,7 +18,7 @@ module.exports = {
   settings: {
     'import/resolver': 'typescript',
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'simple-import-sort'],
   rules: {
     'no-param-reassign': ['error', { props: false }],
     'no-bitwise': ['error', { int32Hint: true }],
@@ -33,6 +33,30 @@ module.exports = {
     'no-void': ['error', { allowAsStatement: true }],
     'import/prefer-default-export': 'off',
     '@typescript-eslint/explicit-member-accessibility': ['error'],
+    'simple-import-sort/imports': [
+      'error',
+      {
+        groups: [
+          // Global style imports.
+          ['^(\\u0000|@).+\\.s?css$'],
+          // Side effect imports.
+          ['^\\u0000'],
+          // Packages.
+          // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
+          ['^@?\\w'],
+          // Absolute imports and other imports such as Vue-style `@/foo`.
+          // Anything not matched in another group.
+          ['^'],
+          // Relative imports.
+          // Parent imports. Put `..` last.
+          ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
+          // Other relative imports. Put same-folder imports and `.` last.
+          ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
+          // Style imports.
+          ['^(\\.|~).+\\.s?css$'],
+        ],
+      },
+    ],
   },
-  ignorePatterns: ['webpack.config.js', '.eslintrc.js'],
+  ignorePatterns: ['webpack.config.js', '.eslintrc.js', './typings/**/*'],
 };

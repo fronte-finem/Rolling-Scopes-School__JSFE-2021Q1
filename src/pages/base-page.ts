@@ -1,5 +1,6 @@
 import { View } from '../shared/views/view';
 import { Factory, IBuildViewOptions } from '../shared/views/view-factory';
+
 import styles from './base-page.scss';
 
 export interface IPage {

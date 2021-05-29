@@ -1,12 +1,13 @@
 import { IEquality, IToString } from '../../shared/models/types';
 import { ICreateViewOptions, View } from '../../shared/views/view';
 import { OptionView } from '../select/option-view';
+
 import styles from './range-input-view.scss';
 
 export interface ICreateInputRangeOptions<T> extends ICreateViewOptions {
-  title: string;
-  values: T[];
-  value?: T;
+  readonly title: string;
+  readonly values: ReadonlyArray<T>;
+  readonly value?: T;
 }
 
 type RangeValue = number | string | (IToString & IEquality);
@@ -19,7 +20,7 @@ export class InputRangeView<T extends RangeValue> extends View {
     return `input-range-view-${InputRangeView.id}`;
   };
 
-  private values: T[] = [] as T[];
+  private values: ReadonlyArray<T> = [];
 
   private readonly title = new View<HTMLLabelElement>({
     tag: 'label',
@@ -65,7 +66,7 @@ export class InputRangeView<T extends RangeValue> extends View {
     ]);
   }
 
-  private initValues(values: T[]): void {
+  private initValues(values: ReadonlyArray<T>): void {
     this.values = values;
   }
 

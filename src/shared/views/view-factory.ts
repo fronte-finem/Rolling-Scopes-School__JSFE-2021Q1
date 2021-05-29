@@ -1,7 +1,7 @@
-import { View, ICreateViewOptions } from './view';
 import { BtnView } from './btn/btn';
-import { ICreateLinkOptions, LinkView } from './link/link';
 import { ICreateImgOptions, ImgView } from './img/img';
+import { ICreateLinkOptions, LinkView } from './link/link';
+import { ICreateViewOptions, View } from './view';
 
 export interface IBuildViewOptions extends ICreateViewOptions {
   build?: IBuildViewOptions | IBuildViewOptions[];
@@ -9,7 +9,12 @@ export interface IBuildViewOptions extends ICreateViewOptions {
 }
 
 export abstract class Factory {
-  public static view({ tag, build, hookView, ...options }: IBuildViewOptions): View {
+  public static view({
+    tag,
+    build,
+    hookView,
+    ...options
+  }: IBuildViewOptions): View {
     let view: View;
 
     switch (tag) {

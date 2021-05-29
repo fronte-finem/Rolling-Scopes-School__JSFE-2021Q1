@@ -1,5 +1,6 @@
 import { timeDiffFormat } from '../../shared/date-time-utils';
-import { TimerModel, ITimerModelState } from './timer-model';
+
+import { ITimerModelState, TimerModel } from './timer-model';
 import { TimerView } from './timer-view';
 
 export class Timer {

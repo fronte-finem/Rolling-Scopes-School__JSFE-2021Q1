@@ -1,16 +1,20 @@
-import { BasePage, IPage } from '../base-page';
 import { Card } from '../../components/card/card';
-import { CardsField } from '../../components/cards-field/cards-field';
-import { GameModel } from './game-model';
 import { CardModel } from '../../components/card/card-model';
+import { CardsField } from '../../components/cards-field/cards-field';
 import { Timer } from '../../components/timer/timer';
-import { ICardImagesService } from '../../services/card-images-urls';
-import { IGameSettingsService } from '../../services/game-settings';
-import { IUserService } from '../../services/user-service';
-import styles from './game.scss';
 import { AppState, IAppStateService } from '../../services/app-state';
-import { countScore } from '../../services/game-service';
-import { IGameSettings } from './game-types';
+import { ICardImagesService } from '../../services/card-images-urls';
+import { calcScore } from '../../services/game-logic';
+import {
+  IGameSettings,
+  IGameSettingsService,
+} from '../../services/game-settings';
+import { IUserService } from '../../services/user-service';
+import { BasePage, IPage } from '../base-page';
+
+import { GameModel } from './game-model';
+
+import styles from './game.scss';
 
 export class PageGame extends BasePage implements IPage {
   private readonly timer = new Timer();
@@ -51,14 +55,14 @@ export class PageGame extends BasePage implements IPage {
 
   private async newGame(): Promise<void> {
     this.stopGame();
-    const settings = this.gameSettingsService.loadSettings();
+    const settings = this.gameSettingsService.load();
     const cardModels = await this.initCards(settings);
     this.model = new GameModel(cardModels);
     this.model.showAllCards();
     await this.timer.countdown(settings.initialShowTime);
     this.model.start();
     this.timer.start();
-    this.model.onSolved(() => this.succesEndGame());
+    this.model.onSolved(() => this.succesEndGame(settings));
   }
 
   private async initCards(settings: IGameSettings): Promise<CardModel[]> {
@@ -78,12 +82,20 @@ export class PageGame extends BasePage implements IPage {
     return cardModels;
   }
 
-  private succesEndGame(): void {
+  private succesEndGame(settings: IGameSettings): void {
     this.timer.stop();
     this.view.setCssState(styles.gameSolved, true);
     if (!this.model) return;
-    const score = countScore(this.model.getMatches(), this.timer.model.diff);
-    void this.userService.updateUserAchievement(score, this.timer.model.diff);
+    const score = calcScore(
+      this.model.getMatches(),
+      this.timer.model.diff,
+      settings
+    );
+    void this.userService.updateUserAchievement(
+      score,
+      this.timer.model.diff,
+      settings.cardsField.toString()
+    );
     void this.appStateService.requestStateChange({
       from: AppState.GAME,
       to: AppState.SOLVED,

@@ -9,107 +9,37 @@
   --page-color-avatar-bg: #fff3;
   --page-color-avatar-icon: #0003;
 
-  padding: 50px;
-  grid-template-rows: 100px 1fr;
+  padding: 20px;
+  grid-template-rows: 1fr;
   row-gap: 20px;
+}
+
+.users {
+  min-width: 900px;
+  display: grid;
+  grid-template-rows: 260px 230px 200px 170px;
+  row-gap: 10px;
 }
 
 .row {
   display: grid;
-  grid-template-columns: 70px 1fr 150px 200px;
-  justify-items: center;
-  align-items: center;
-  padding: 0 20px;
-}
-
-.title {
-  font-size: 24px;
-
-  &__users {
-    grid-column: 1 / span 2;
-    justify-self: flex-start;
-    color: var(--page-color-main-dark);
-  }
-  &__score {
-    color: var(--page-color-main-light);
-  }
-  &__time {
-    color: var(--page-color-main-dark);
-  }
-}
-
-.users {
-  display: grid;
-  grid-auto-rows: 60px;
-  row-gap: 10px;
-}
-
-.item {
-  --user-bg-color: var(--page-color-record-bg);
-  --score-bg-color: var(--page-color-record-score-bg);
-
-  background-color: var(--user-bg-color);
-
-  &--current-user {
-    --user-bg-color: var(--page-color-active-record-bg);
-    --score-bg-color: var(--page-color-active-record-score-bg);
-  }
-}
-
-.user {
-  justify-self: flex-start;
-  display: flex;
-  flex-direction: column;
-  row-gap: 5px;
-
-  &__name {
-    font-size: 20px;
-    font-weight: 600;
-  }
-  &__mail {
-    font-size: 14px;
-    color: var(--page-color-second-dark);
-  }
-}
-
-.score {
-  display: flex;
+  column-gap: 10px;
   justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  font-size: 24px;
-  color: var(--page-color-main-light);
-  background-color: var(--score-bg-color);
 }
 
-.time {
-  font-size: 20px;
+.row-1 {
+  --row-scale: 2.4;
+  grid-template-columns: repeat(1, minmax(0, 200px));
 }
-
-.avatar {
-  justify-self: flex-start;
-  position: relative;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-  background-color: var(--page-color-avatar-bg);
-
-  &--hidden {
-    display: none;
-  }
+.row-2 {
+  --row-scale: 2.1;
+  grid-template-columns: repeat(2, minmax(0, 180px));
 }
-
-.avatar__img {
-  width: 100%;
-  height: 100%;
+.row-3 {
+  --row-scale: 1.8;
+  grid-template-columns: repeat(3, minmax(0, 160px));
 }
-
-.svg-icon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -30%);
-  fill: var(--page-color-avatar-icon);
+.row-4 {
+  --row-scale: 1.5;
+  grid-template-columns: repeat(4, minmax(0, 140px));
 }

@@ -1,4 +1,4 @@
-import { Observer, Listener } from '../observer';
+import { Listener, Observer } from '../observer';
 
 export type ModelState = Record<string, unknown>;
 

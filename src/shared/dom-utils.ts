@@ -6,19 +6,12 @@ export interface ICreateElementOptions {
 
 export function createElement({
   tag = 'div',
-  classNames,
-  text,
+  classNames = [],
+  text = '',
 }: ICreateElementOptions): HTMLElement {
   const element = document.createElement(tag);
-
-  if (Array.isArray(classNames)) {
-    element.classList.add(...classNames);
-  }
-
-  if (text) {
-    element.textContent = text;
-  }
-
+  element.classList.add(...classNames);
+  element.textContent = text;
   return element;
 }
 
@@ -36,19 +29,20 @@ export function setCssVar(
 
 const SVG_NAMESPACE_URI = 'http://www.w3.org/2000/svg';
 
-export function createSvgSpriteElement(
-  link: string,
-  styles?: string[]
-): SVGSVGElement {
+export interface ICreateSvgSpriteElementOptions {
+  url: string;
+  classNames?: string[];
+}
+
+export function createSvgSpriteElement({
+  url,
+  classNames = [],
+}: ICreateSvgSpriteElementOptions): SVGSVGElement {
   const svg = document.createElementNS(SVG_NAMESPACE_URI, 'svg');
   const use = document.createElementNS(SVG_NAMESPACE_URI, 'use');
-  use.setAttribute('href', link);
+  use.setAttribute('href', url);
   svg.append(use);
-
-  svg.classList.add('svg-icon');
-  if (Array.isArray(styles)) {
-    svg.classList.add(...styles);
-  }
+  svg.classList.add('svg-icon', ...classNames);
   return svg;
 }
 

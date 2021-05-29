@@ -1,5 +1,6 @@
 import { IUser } from '../../services/user-service';
 import { createSvgSpriteElement } from '../dom-utils';
+
 import { ImgView } from './img/img';
 import { View } from './view';
 
@@ -13,7 +14,10 @@ export function renderAvatar(
 ): void {
   if (!user.avatar) {
     avatarContainer.element.append(
-      createSvgSpriteElement(DEFAULT_AVATAR_SVG_ICON, svgClassNames)
+      createSvgSpriteElement({
+        url: DEFAULT_AVATAR_SVG_ICON,
+        classNames: svgClassNames,
+      })
     );
   } else {
     avatarContainer.render(

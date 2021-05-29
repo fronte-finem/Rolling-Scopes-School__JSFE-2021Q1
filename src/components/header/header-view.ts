@@ -1,16 +1,18 @@
-import styles from './header-view.scss';
 import { APP_CONFIG } from '../../app/app.config';
-import { APP_HEADER_CONFIG } from '../../app/configs/header';
-import { IHeaderContext, HeaderState } from './header-view-state';
+import { APP_HEADER_CONFIG } from '../../app/configs/header.config';
 import { AppState, IAppStateService } from '../../services/app-state';
+import { IUserService } from '../../services/user-service';
 import { Observer } from '../../shared/observer';
-import { View } from '../../shared/views/view';
+import { StateMaсhine } from '../../shared/state/state-maсhine';
+import { renderAvatar } from '../../shared/views/avatar-factory';
 import { BtnView } from '../../shared/views/btn/btn';
 import { LinkView } from '../../shared/views/link/link';
+import { View } from '../../shared/views/view';
 import { NavMenuView } from '../nav-menu/nav-menu-view';
-import { StateMaсhine } from '../../shared/state/state-maсhine';
-import { IUserService } from '../../services/user-service';
-import { renderAvatar } from '../../shared/views/avatar-factory';
+
+import { HeaderState, IHeaderContext } from './header-view-state';
+
+import styles from './header-view.scss';
 
 // После регистрации игрока в header должна появится кнопка позволяющая начать игру
 // После нажатия на кнопку старт должен начинаться игровой цикл

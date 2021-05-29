@@ -1,27 +1,26 @@
-import styles from './card-view.scss';
 import { View } from '../../shared/views/view';
+
 import { CardModel } from './card-model';
 
-const getImgUrl = (imgName: string) => `url("./images/${imgName}")`;
+import styles from './card-view.scss';
 
-const setBackgroundImg = (view: View, imgName: string) =>
-  view.setCssStyle('backgroundImage', getImgUrl(imgName));
+const getImgUrl = (imgName: string) => `url("./images/${imgName}")`;
 
 export class CardView extends View {
   public constructor(cardModel: CardModel) {
     super({ classNames: [styles.cardContainer] });
+    this.init(cardModel);
+  }
 
+  private init(cardModel: CardModel) {
     const back = new View({
       classNames: [styles.cardSide, styles.cardSideBack],
     });
-
     const front = new View({
       classNames: [styles.cardSide, styles.cardSideFront],
     });
-
-    setBackgroundImg(back, cardModel.backImage);
-    setBackgroundImg(front, cardModel.frontImage);
-
+    back.setCssStyle('backgroundImage', getImgUrl(cardModel.backImage));
+    front.setCssStyle('backgroundImage', getImgUrl(cardModel.frontImage));
     this.render(new View({ classNames: [styles.card], childs: [back, front] }));
   }
 

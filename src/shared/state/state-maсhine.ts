@@ -1,4 +1,4 @@
-import { IState, IContext } from './types';
+import { IContext, IState } from './types';
 
 export interface IStateChangeRequest<T> {
   from: T;

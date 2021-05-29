@@ -2,20 +2,26 @@
 
 .app {
   --app-w-max: 1200px;
-  --grad-size: 200px;
-  --grad: var(--color-grad-1) 0%, var(--color-grad-1) 40%,
-    var(--color-grad-2) 40%, var(--color-grad-2) 60%, var(--color-grad-1) 60%,
-    var(--color-grad-1) 100%;
 
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr;
 
-  background-image: repeating-linear-gradient(-45deg, var(--grad)),
-    repeating-linear-gradient(45deg, var(--grad));
-  background-size: var(--grad-size) var(--grad-size);
-  background-position: left top;
-  // background-repeat: no-repeat;
+  --c0: #fff0;
+  --c1: #0001;
+
+  --s: 200px 200px;
+  --a1: -100px 0;
+  --a2: 0 0;
+  --b1: 100px 200px;
+  --b2: 200px 200px;
+
+  background: linear-gradient(135deg, var(--c1) 25%, var(--c0) 25.1%),
+    linear-gradient(225deg, var(--c1) 25%, var(--c0) 25.1%),
+    linear-gradient(315deg, var(--c1) 25%, var(--c0) 25.1%),
+    linear-gradient(45deg, var(--c1) 25%, var(--c0) 25.1%);
+  background-size: var(--s);
+  background-position: var(--a1), var(--a1), var(--a2), var(--a2);
 
   font-family: sans-serif;
 
@@ -34,11 +40,9 @@
 
 @keyframes slide {
   0% {
-    background-position-x: 0%;
-    background-position-y: 0%;
+    background-position: var(--a1), var(--a1), var(--a2), var(--a2);
   }
   100% {
-    background-position-x: var(--grad-size);
-    background-position-y: var(--grad-size);
+    background-position: var(--b1), var(--b1), var(--b2), var(--b2);
   }
 }

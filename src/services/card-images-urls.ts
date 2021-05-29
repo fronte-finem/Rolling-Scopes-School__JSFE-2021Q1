@@ -11,14 +11,6 @@ export const CARD_IMAGES_CATEGORY = new Map<string, CardImagesCategory>(
   Object.values(CardImagesCategory).map((v) => [v, v])
 );
 
-export const CARD_IMAGES_CATEGORY_TEXT_MAP = new Map<
-  CardImagesCategory,
-  string
->([
-  [CardImagesCategory.CATS, '🐱 Cats 🐈🐈‍⬛'],
-  [CardImagesCategory.DOGS, '🐶 Dogs 🐕🐩🐕‍🦺'],
-]);
-
 export interface ICardImagesDescriptionModel {
   first: number;
   last: number;

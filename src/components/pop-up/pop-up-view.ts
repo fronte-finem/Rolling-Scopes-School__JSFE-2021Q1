@@ -1,6 +1,7 @@
-import styles from './pop-up-view.scss';
-import { View } from '../../shared/views/view';
 import { BtnView } from '../../shared/views/btn/btn';
+import { View } from '../../shared/views/view';
+
+import styles from './pop-up-view.scss';
 
 export abstract class PopUpView extends View {
   private readonly header = new View({

@@ -1,7 +1,8 @@
-import { IPageConfig } from '../../app/configs/types';
+import { IPageConfig } from '../../app/configs/pages.config';
 import { createSvgSpriteElement } from '../../shared/dom-utils';
 import { LinkView } from '../../shared/views/link/link';
 import { View } from '../../shared/views/view';
+
 import styles from './nav-menu-view.scss';
 
 export interface NavLinkCreateOptions {
@@ -63,7 +64,12 @@ export class NavMenuView extends View {
       text: route.title,
       hookElement: (elem) => {
         if (navSvgIcon)
-          elem.append(createSvgSpriteElement(navSvgIcon, [styles.svgIcon]));
+          elem.append(
+            createSvgSpriteElement({
+              url: navSvgIcon,
+              classNames: [styles.svgIcon],
+            })
+          );
         return elem;
       },
     });

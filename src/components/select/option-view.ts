@@ -1,4 +1,5 @@
 import { ICreateViewOptions, View } from '../../shared/views/view';
+
 import styles from './select-view.scss';
 
 export interface ICreateOptionOptions<T> extends ICreateViewOptions {
@@ -8,7 +9,9 @@ export interface ICreateOptionOptions<T> extends ICreateViewOptions {
   title?: string;
 }
 
-export class OptionView<T extends string = string> extends View<HTMLOptionElement> {
+export class OptionView<
+  T extends string = string
+> extends View<HTMLOptionElement> {
   public value: T;
 
   public constructor(options: ICreateOptionOptions<T>) {
@@ -21,10 +24,19 @@ export class OptionView<T extends string = string> extends View<HTMLOptionElemen
     this.init(options);
   }
 
-  private init({ value, selected, disabled, title }: ICreateOptionOptions<T>): void {
+  private init({
+    value,
+    selected,
+    disabled,
+    title,
+  }: ICreateOptionOptions<T>): void {
     this.element.setAttribute('value', value);
     if (selected) this.element.selected = true;
     if (disabled) this.element.disabled = true;
-    if (title) this.element.title = title;    
+    if (title) this.element.title = title;
+  }
+
+  public selected(isSelected = true): void {
+    this.element.selected = isSelected;
   }
 }

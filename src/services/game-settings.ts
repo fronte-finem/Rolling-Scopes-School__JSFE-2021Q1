@@ -1,30 +1,43 @@
-import { GameSettingsSerializer, IGameSettings } from '../pages/game/game-types';
+import { CardFieldModel } from '../components/cards-field/card-field-model';
+import { ISerializer } from '../shared/models/types';
+
+import { CardImagesCategory } from './card-images-urls';
 import { LocalStorageService } from './local-storage';
 
 const KEY_STORAGE_GAME_SETTINGS =
   'fronte-finem__match-match-game___game-settings';
 
+export interface IGameSettings {
+  cardImagesCategory: CardImagesCategory;
+  cardsField: CardFieldModel;
+  initialShowTime: number;
+  mismatchShowTime: number;
+}
+
 export interface IGameSettingsService {
-  loadSettings(): IGameSettings;
-  saveSettings(settings: IGameSettings): void;
+  load(): IGameSettings;
+  save(settings: IGameSettings): void;
 }
 
 export class GameSettingsService implements IGameSettingsService {
   private localStorage: LocalStorageService<IGameSettings>;
 
-  public constructor(private readonly initialSettings: IGameSettings) {
+  public constructor(
+    initialSettings: IGameSettings,
+    serializer: ISerializer<IGameSettings>
+  ) {
     this.localStorage = new LocalStorageService<IGameSettings>(
       KEY_STORAGE_GAME_SETTINGS,
-      this.initialSettings,
-      new GameSettingsSerializer()
+      initialSettings,
+      serializer
     );
   }
 
-  public loadSettings(): IGameSettings {
-    return this.localStorage.loadSettings();
+  public load(): IGameSettings {
+    return this.localStorage.load();
   }
 
-  public saveSettings(settings: IGameSettings): void {
-    return this.localStorage.saveSettings(settings);
+  public save(settings: IGameSettings): void {
+    return this.localStorage.save(settings);
   }
 }

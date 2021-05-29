@@ -2,7 +2,11 @@
 // Юзер считается уникальным если у него уникалны имя, фамилия и email.
 // Можете использовать hash фнкцию для высчитываения уникального хеша объекта и устанавливать хеш как id
 
+import { APP_GAME_SETTINGS } from 'app/configs/game.config';
+import { randomFromInterval } from 'shared/numbers-utils';
+
 import { hashCode } from '../shared/string-utils';
+
 import { IndexDbService } from './index-db';
 
 const DB_NAME = 'fronte-finem';
@@ -14,14 +18,20 @@ export interface IUser {
   lastName: string;
   email: string;
   score: number;
-  time: number;
   avatar?: string;
+  time?: number;
+  cardsField?: string;
+  datetime?: Date;
 }
 
 export interface IUserService {
   currentUser?: IUser;
   save(user: IUser): Promise<IUser | undefined>;
-  updateUserAchievement(score: number, time: number): Promise<boolean>;
+  updateUserAchievement(
+    score: number,
+    time: number,
+    cardsField: string
+  ): Promise<boolean>;
   getFirstByScore(limit: number): Promise<IUser[]>;
   logAll(): Promise<boolean>;
 }
@@ -73,41 +83,56 @@ export class UserService implements IUserService {
   }
 
   public static createTestUser(index: number): IUser {
+    const i = randomFromInterval(0, APP_GAME_SETTINGS.cardsField.length - 1);
     return {
-      firstName: 'Test',
-      lastName: `User${index}`,
+      firstName: 'TEST-LONG-USER-NAME-1337-ಠ_ಠ',
+      lastName: `0x${index
+        .toString(16)
+        .padStart(4, '0')}-CAFE-DEAD-BEEF-BABE-FEED`,
       email: `test.user${index}@${index}resu.tset`,
       score: index / 10,
       time: Math.abs(5000 - index * 40),
+      cardsField: APP_GAME_SETTINGS.cardsField[i].toString(),
+      datetime: new Date(),
     };
   }
 
   public async save(user: IUser): Promise<IUser | undefined> {
     const key = UserService.userHashCode(user);
-    const maybeUser = await this.dbService.read<IUser>(DB_USERS_STORE, key);
-    if (maybeUser) {
-      this.user = maybeUser;
-      return maybeUser;
-    }
     try {
+      const maybeUser = await this.dbService.read<IUser>(DB_USERS_STORE, key);
+      if (maybeUser) {
+        if (user.avatar) {
+          maybeUser.avatar = user.avatar;
+          await this.dbService.update<IUser>(DB_USERS_STORE, maybeUser, key);
+        }
+        this.user = maybeUser;
+        return maybeUser;
+      }
       await this.dbService.create<IUser>(DB_USERS_STORE, user, key);
+      this.user = user;
+      return user;
     } catch (error) {
       // console.log(error);
       return undefined;
     }
-    this.user = user;
-    return user;
   }
 
   public static userHashCode({ firstName, lastName, email }: IUser): number {
     return hashCode(JSON.stringify({ firstName, lastName, email }));
   }
 
-  public async updateUserAchievement(score: number, time: number): Promise<boolean> {
+  public async updateUserAchievement(
+    score: number,
+    time: number,
+    cardsField: string
+  ): Promise<boolean> {
     if (!this.user) return false;
     if (score < this.user.score) return false;
     this.user.score = score;
     this.user.time = time;
+    this.user.cardsField = cardsField;
+    this.user.datetime = new Date();
     const key = UserService.userHashCode(this.user);
     try {
       await this.dbService.update<IUser>(DB_USERS_STORE, this.user, key);
