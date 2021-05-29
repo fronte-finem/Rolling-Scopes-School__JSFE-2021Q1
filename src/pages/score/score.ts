@@ -46,9 +46,10 @@ export class PageScore extends BasePage {
     const { currentUser } = this.userService;
     if (currentUser) {
       const hash = UserService.userHashCode(currentUser);
-      this.recordsViews
-        .filter((rec) => hash === UserService.userHashCode(rec.getUser()))?.[0]
-        .highlight();
+      const checkUser = (rec: ScoreRecordView) =>
+        hash === UserService.userHashCode(rec.getUser());
+      const maybeUser = this.recordsViews.filter(checkUser);
+      if (maybeUser.length > 0) maybeUser[0].highlight();
     }
     this.usersView.render(this.recordsViews);
   }
