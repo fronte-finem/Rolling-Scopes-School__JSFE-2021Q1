@@ -9,7 +9,7 @@
   height: var(--card-h, 100%);
   border-radius: 10px;
   cursor: pointer;
-  perspective: calc(2 * var(--app-w-max) / var(--cards-columns));
+  perspective: calc(2 * var(--app-w-max) / var(--cards-columns, 6));
   perspective-origin: center;
   transition: all var(--card-state-time);
 
