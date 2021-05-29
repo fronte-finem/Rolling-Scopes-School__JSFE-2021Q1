@@ -1,6 +1,7 @@
-import { ITextInputConfig } from '../../app/configs/inputs.config';
 import { capitalize } from '../../shared/string-utils';
 import { ICreateViewOptions, View } from '../../shared/views/view';
+
+import { ITextInputConfig } from './input-types';
 
 import styles from './text-input-view.scss';
 
