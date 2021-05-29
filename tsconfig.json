@@ -37,7 +37,9 @@
     // "moduleResolution": "node",
     "baseUrl": "./src",
     "paths": {
-      "@styles/*": ["assets/styles/*"]
+      "@styles/*": ["assets/styles/*"],
+      "~components/*": ["components/*"],
+      "~pages/*": ["pages/*"]
     },
     // "rootDirs": [],
     // "typeRoots": [],

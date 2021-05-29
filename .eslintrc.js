@@ -37,6 +37,8 @@ module.exports = {
       'error',
       {
         groups: [
+          // Global style imports.
+          ['^@.+\\.s?css$'],
           // Side effect imports.
           ['^\\u0000'],
           // Packages.
@@ -51,7 +53,7 @@ module.exports = {
           // Other relative imports. Put same-folder imports and `.` last.
           ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
           // Style imports.
-          ['^\\..+\\.s?css$'],
+          ['^(\\.|~).+\\.s?css$'],
         ],
       },
     ],
