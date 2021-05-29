@@ -38,7 +38,7 @@ module.exports = {
       {
         groups: [
           // Global style imports.
-          ['^@.+\\.s?css$'],
+          ['^(\\u0000|@).+\\.s?css$'],
           // Side effect imports.
           ['^\\u0000'],
           // Packages.

@@ -1,5 +1,4 @@
 import '@styles/reset.scss';
-
 import styles from '@styles/main.scss';
 
 import { App } from './app/app';
