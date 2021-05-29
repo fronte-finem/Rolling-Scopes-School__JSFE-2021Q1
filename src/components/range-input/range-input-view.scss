@@ -1,5 +1,5 @@
 .input-range {
-  --range-color-opacity: 0.5;
+  --range-color-opacity: 0.75;
 
   --range-input-bg-color: hsla(
     var(--color-first-default),
@@ -29,14 +29,14 @@
   --range-input-transition-time: 300ms;
 
   display: grid;
-  grid-template-rows: 1fr 50px 20px;
+  grid-template-rows: 1fr 40px 20px;
   grid-template-columns: 1fr 80px;
   align-items: center;
   column-gap: 10px;
   row-gap: 10px;
 
   &:hover {
-    --range-color-opacity: 0.75;
+    --range-color-opacity: 1;
   }
 }
 
@@ -45,6 +45,9 @@
   font-size: 20px;
   font-weight: 600;
   // text-transform: capitalize;
+  color: var(--range-output-shadow-color);
+
+  transition: all var(--range-input-transition-time);
 }
 
 .wrapper {
@@ -104,6 +107,7 @@
 }
 
 .input::-webkit-slider-thumb {
+  z-index: 2;
   display: block;
   margin-top: calc(-1 * var(--range-input-rail-height));
   width: var(--range-input-slider-thumb-width);
