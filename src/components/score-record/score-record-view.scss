@@ -1,29 +1,86 @@
-.score-record {
-  --user-bg-color: var(--page-color-record-bg);
-  --score-bg-color: var(--page-color-record-score-bg);
+.record {
+  --color-1: hsla(var(--color-first-dark), calc(0.3 * var(--row-scale, 1)));
+  --color-2: hsla(var(--color-second-default), calc(0.4 * var(--row-scale, 1)));
+  --card-shadow-color: #0008;
+  --card-state-time: 500ms;
 
-  background-color: var(--user-bg-color);
+  --user-bg-color: var(--color-1);
+  --score-bg-color: var(--color-2);
 
-  &--highlight {
-    --user-bg-color: var(--page-color-active-record-bg);
-    --score-bg-color: var(--page-color-active-record-score-bg);
+  cursor: default;
+  perspective: calc(var(--app-w-max) / 4);
+  perspective-origin: center;
+  transition: all var(--card-state-time);
+
+  &:hover .card {
+    box-shadow: 0 1px 5px var(--card-shadow-color);
+    transform: rotateY(-180deg);
+    z-index: 2;
   }
 }
+.record.highlight {
+  --user-bg-color: var(--color-2);
+  --score-bg-color: var(--color-1);
+}
 
-.user {
-  justify-self: flex-start;
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  box-shadow: 0 1px 5px var(--card-shadow-color);
+  transform-style: preserve-3d;
+  // transform-origin: top;
+  transition: all var(--card-state-time);
+}
+
+.side {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  background-repeat: no-repeat;
+  background-position: center;
+  backface-visibility: hidden;
+  background-color: var(--user-bg-color);
+}
+
+.front {
+  display: grid;
+  grid-template-rows: 2.5fr auto auto 1fr;
+  row-gap: calc(3px * var(--row-scale, 1));
+  justify-items: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.back {
   display: flex;
   flex-direction: column;
   row-gap: 5px;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 5px 0;
+  transform: rotateX(180deg) rotateZ(180deg);
+}
 
-  &__name {
-    font-size: 20px;
-    font-weight: 600;
-  }
-  &__mail {
-    font-size: 14px;
-    color: var(--page-color-second-dark);
-  }
+.user {
+  width: 100%;
+  padding: 0 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+.name {
+  font-size: calc(9px * var(--row-scale, 1));
+}
+.mail {
+  font-size: calc(7px * var(--row-scale, 1));
+  color: var(--page-color-second-dark);
 }
 
 .score {
@@ -32,20 +89,16 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  font-size: 24px;
+  font-size: calc(20px * var(--row-scale, 1));
   color: var(--page-color-main-light);
   background-color: var(--score-bg-color);
 }
 
-.time {
-  font-size: 20px;
-}
-
 .avatar {
-  justify-self: flex-start;
+  --size: calc(50px * var(--row-scale, 1));
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: var(--size);
+  height: var(--size);
   border-radius: 50%;
   overflow: hidden;
   background-color: var(--page-color-avatar-bg);
@@ -66,4 +119,22 @@
   left: 50%;
   transform: translate(-50%, -30%);
   fill: var(--page-color-avatar-icon);
+}
+
+.title {
+  width: 100%;
+  padding: 3px 0;
+  font-size: calc(8px * var(--row-scale, 1));
+  color: var(--page-color-main-light);
+  background-color: var(--score-bg-color);
+  text-align: center;
+}
+.datetime {
+  font-size: calc(6px * var(--row-scale, 1));
+}
+.cardsField {
+  font-size: calc(12px * var(--row-scale, 1));
+}
+.time {
+  font-size: calc(7px * var(--row-scale, 1));
 }
