@@ -1,7 +1,5 @@
 import { SETTINGS_CARDS } from 'app/configs/settings-cards.config';
-import { CardModel } from 'components/card/card-model';
 import { CardView } from 'components/card/card-view';
-import { SelectView } from 'components/select/select-view';
 import { GameSettingsModel } from 'pages/settings/settings-model';
 import { CardImagesCategory } from 'services/card-images-urls';
 import { View } from 'shared/views/view';
@@ -39,14 +37,14 @@ export class SettingsCardsView extends View {
     [...this.cards.entries()].forEach(([key, card]) =>
       card.onClick(async () => {
         if (card === this.activeCard) return;
-        this.activeCard?.match(false);
-        this.activeCard?.error(true);
-        await this.activeCard?.flip(false);
-        this.activeCard?.error(false);
-        this.activeCard = card;
-        this.activeCard.match(true);
-        void this.activeCard.flip(true);
         model.state.cardImagesCategory = key;
+        this.activeCard?.match(false);
+        card.match(true);
+        this.activeCard?.error(true);
+        await card.flip(true);
+        this.activeCard?.error(false);
+        this.activeCard?.flip(false);
+        this.activeCard = card;
       })
     );
   }
