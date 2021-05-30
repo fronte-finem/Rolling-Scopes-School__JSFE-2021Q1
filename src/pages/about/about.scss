@@ -1,0 +1,76 @@
+.page-about {
+  --bg-color: #fff1;
+  --shadow-color: #0002;
+  --text-color: #fff;
+  --c1: hsla(var(--color-first-default), 0.5);
+  --c2: hsla(var(--color-second-default), 0.5);
+  --p: perspective(300px);
+  --a: 5deg;
+  --t: 2.5%;
+  --a1: rotateX(calc(-1 * var(--a)));
+  --a2: rotateX(calc(+1 * var(--a)));
+  --t1: translateY(calc(+1 * var(--t)));
+  --t2: translateY(calc(-1 * var(--t)));
+  --transform1: var(--p) var(--a1) var(--t1);
+  --transform2: var(--p) var(--a2) var(--t2);
+
+  grid-template-rows: auto 1fr;
+  row-gap: 20px;
+  padding: 20px 50px;
+}
+
+.title {
+  font-size: 40px;
+  line-height: 50px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+  row-gap: 0px;
+  // mix-blend-mode: hard-light;
+}
+
+.cell {
+  padding: 10px 20px;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-color);
+  background-image: linear-gradient(var(--grad-dir), var(--c1), var(--c2));
+  box-shadow: inset 0 0 5px 0 var(--shadow-color);
+  mask: linear-gradient(0deg, #fff0, #fff 50px);
+}
+
+.info {
+  --grad-dir: -90deg;
+  border-top-left-radius: 20px;
+  transform-origin: left center;
+  transform: var(--transform1);
+}
+
+.pict {
+  --grad-dir: 90deg;
+  justify-content: flex-end;
+  border-top-right-radius: 20px;
+  transform-origin: right center;
+  transform: var(--transform2);
+}
+
+.text {
+  font-size: 20px;
+  line-height: 40px;
+  color: var(--text-color);
+  transform-origin: left center;
+  transform: var(--transform2);
+}
+
+.img {
+  transform-origin: right center;
+  transform: var(--transform1);
+  mask: linear-gradient(90deg, #fff0, #fff 10% 90%, #fff0);
+  backdrop-filter: blur(20px);
+}
