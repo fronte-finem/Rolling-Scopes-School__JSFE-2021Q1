@@ -8,8 +8,8 @@ export const PAGE_ABOUT = {
   ],
 
   urls: [
-    './images/screenshots/img1-signup.jpg',
-    './images/screenshots/img2-settings.jpg',
-    './images/screenshots/img3-game.jpg',
+    './images/screenshots/img1-signup.png',
+    './images/screenshots/img2-settings.png',
+    './images/screenshots/img3-game.png',
   ],
 };
