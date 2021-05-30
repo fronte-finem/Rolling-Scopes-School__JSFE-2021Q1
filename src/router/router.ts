@@ -58,15 +58,20 @@ export class Router {
   public updateCurrentRoute(): IRouterState {
     const oldUrl = this.currentUrl;
     const newUrl = Router.getCurrentUrl();
-    if (oldUrl !== newUrl) {
-      const route = this.getPageRoute(newUrl);
-      document.title = setTitle(route.title);
-      this.currentPage?.stop();
-      this.currentPage = route.pageCreator();
-      this.currentPage.init();
-      this.currentUrl = newUrl;
+    if (oldUrl !== newUrl || !this.currentPage) {
+      this.updateRoute(newUrl);
     }
     return { oldUrl, newUrl, newPage: this.currentPage };
+  }
+
+  public updateRoute(newUrl: string): IPage {
+    const route = this.getPageRoute(newUrl);
+    document.title = setTitle(route.title);
+    this.currentPage?.stop();
+    this.currentPage = route.pageCreator();
+    this.currentPage.init();
+    this.currentUrl = newUrl;
+    return this.currentPage;
   }
 
   public static getCurrentUrl(): string {
@@ -75,5 +80,9 @@ export class Router {
 
   public static activateRoute(url: string): void {
     window.location.hash = url;
+  }
+
+  public static resetHash(): void {
+    window.history.replaceState(null, document.title, '.');
   }
 }

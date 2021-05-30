@@ -54,6 +54,7 @@ export class App {
   }
 
   public async start(): Promise<void> {
+    Router.resetHash();
     Router.activateRoute(APP_CONFIG.initialRoute.url);
     this.headerView.menu.setActiveNavLink(APP_CONFIG.initialRoute.url);
     await userService.init();
