@@ -23,8 +23,6 @@
   background-size: var(--s);
   background-position: var(--a1), var(--a1), var(--a2), var(--a2);
 
-  font-family: sans-serif;
-
   animation: slide 10s infinite linear forwards;
   animation-play-state: var(--app-bg-animation-state);
 }

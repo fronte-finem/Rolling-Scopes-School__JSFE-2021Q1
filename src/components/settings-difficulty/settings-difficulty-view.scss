@@ -41,6 +41,7 @@
 
 .score-title {
   color: var(--score-title-color);
+  font-weight: 400;
   text-align: center;
   white-space: pre-line;
 }
@@ -53,7 +54,9 @@
   height: 150px;
   border-radius: 10px;
   font-size: 40px;
-  font-weight: 600;
+  font-family: 'Fira Mono', monospace;
+  font-weight: 400;
+
   color: var(--score-color);
   background-color: var(--score-bg-color);
   box-shadow: inset 0 0 5px 0 var(--score-shadow-color);
