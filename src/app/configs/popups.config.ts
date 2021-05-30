@@ -4,7 +4,7 @@ import { timeDiff } from 'shared/date-time-utils';
 import popupVictoryStyles from '~components/pop-up-victory/pop-up-victory-view.scss';
 
 export const POPUP_SIGN_UP = {
-  title: '🦸‍♀️ Registr new Player 🦸',
+  title: '🦸‍♀️ Register new Player 🦸',
   btns: {
     addUser: { text: 'add user' },
     cancel: { text: 'cancel', classNames: ['btn--invert'] },
