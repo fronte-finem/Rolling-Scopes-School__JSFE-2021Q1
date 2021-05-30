@@ -1,3 +1,21 @@
+export function zipWith<A, B, T>(
+  func: (x: A, y: B) => T,
+  xs: Array<A>,
+  ys: Array<B>
+): Array<T> {
+  return xs.slice(0, ys.length).map((x, i) => func(x, ys[i]));
+}
+
+export function zipWithAbstract<T>(
+  func: (zs: unknown[]) => T,
+  ...xss: Array<Array<unknown>>
+): Array<T> {
+  return Array.from(
+    { length: Math.min(...xss.map((xs) => xs.length)) },
+    (_, i) => func(xss.map((xs) => xs[i]))
+  );
+}
+
 // https://rosettacode.org/wiki/Knuth_shuffle
 export function knuthShuffle<T>(array: Array<T>): Array<T> {
   const xs = array;
