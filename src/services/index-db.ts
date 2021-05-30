@@ -15,6 +15,13 @@ export interface IDBOpenResult {
   upgradeMode: boolean;
 }
 
+export function asyncRequest<T>(request: IDBRequest<T>): Promise<T> {
+  return new Promise((resolve, reject) => {
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
 export class IndexDbService {
   private db?: IDBDatabase;
 
@@ -57,13 +64,6 @@ export class IndexDbService {
     if (!this.db) throw errorDB();
     const transaction = this.db.transaction(storeName, mode);
     return transaction.objectStore(storeName);
-  }
-
-  public static asyncRequest<T>(request: IDBRequest<T>): Promise<T> {
-    return new Promise((resolve, reject) => {
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error);
-    });
   }
 
   private operate<T>(

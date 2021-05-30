@@ -60,7 +60,7 @@ export class Router {
     const newUrl = Router.getCurrentUrl();
     if (oldUrl !== newUrl) {
       const route = this.getPageRoute(newUrl);
-      setTitle(route.title);
+      document.title = setTitle(route.title);
       this.currentPage?.stop();
       this.currentPage = route.pageCreator();
       this.currentPage.init();

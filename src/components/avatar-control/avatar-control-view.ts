@@ -1,6 +1,6 @@
 import { AVATAR_CONTROL } from 'app/configs/avatar-control.config';
 import { createSvgSpriteElement, cropResize } from 'shared/dom-utils';
-import { ImgView } from 'shared/views/img/img';
+import { createImgView } from 'shared/views/img/img';
 import { View } from 'shared/views/view';
 
 import styles from './avatar-control-view.scss';
@@ -43,11 +43,11 @@ export class AvatarControlView extends View {
     const fileList = this.input.element.files;
     if (!fileList) return;
     const file = fileList[0];
-    let img = await ImgView.create({ url: window.URL.createObjectURL(file) });
+    let img = await createImgView({ url: window.URL.createObjectURL(file) });
     const imgBase64 = cropResize(img.element, 200);
     if (!imgBase64) return;
     this.imgBase64 = imgBase64;
-    img = await ImgView.create({ url: imgBase64 });
+    img = await createImgView({ url: imgBase64 });
     this.output.render(img);
   }
 }

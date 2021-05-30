@@ -17,6 +17,18 @@ export function deepFreeze<T>(obj: T): Immutable<T> {
   return Object.freeze(obj) as Immutable<T>;
 }
 
+export function logChangeState<T extends ObjectLike>(
+  target: T,
+  prop: string,
+  value: T[string]
+): string {
+  const msg = `Changin ${String(target)} property ${prop} from ${String(
+    target[prop]
+  )} to ${String(value)}`;
+  // console.log(msg);
+  return msg;
+}
+
 export function propName<T extends ObjectLike>(obj: T): T {
   return new Proxy(obj, { get: (_, key) => key });
 }

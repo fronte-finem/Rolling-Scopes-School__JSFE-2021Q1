@@ -27,10 +27,6 @@ export class View<HTMLElementExtended extends HTMLElement = HTMLElement> {
     }
   }
 
-  public static getElemet(x: View | HTMLElement): HTMLElement {
-    return x instanceof View ? x.element : x;
-  }
-
   public getText(): string | null {
     return this.element.textContent;
   }

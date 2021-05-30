@@ -1,3 +1,4 @@
+// import { logChangeState } from '../object-utils';
 import { Listener, Observer } from '../observer';
 
 export type ModelState = Record<string, unknown>;
@@ -27,24 +28,12 @@ export abstract class Model<S extends ModelState> {
     return new Proxy(state, {
       set: (target, prop: string, value: S[string]) => {
         const st = target;
-        // Model.logChangeState(target, prop, value);
+        // logChangeState(target, prop, value);
         (st[prop] as S[string]) = value;
         this.observer.notify('state-change', this.getState());
         this.observer.notify(prop, value);
         return true;
       },
     });
-  }
-
-  private static logChangeState<T extends ModelState>(
-    target: T,
-    prop: string,
-    value: T[string]
-  ): string {
-    const msg = `Changin ${String(target)} property ${prop} from ${String(
-      target[prop]
-    )} to ${String(value)}`;
-    // console.log(msg);
-    return msg;
   }
 }

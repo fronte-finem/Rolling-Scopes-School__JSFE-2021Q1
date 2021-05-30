@@ -1,6 +1,6 @@
 import { SCORE_LIMIT } from 'app/configs/score.config';
 import { ScoreRecordView } from 'components/score-record/score-record-view';
-import { IUserService, UserService } from 'services/user-service';
+import { IUserService, userHashCode } from 'services/user-service';
 import { View } from 'shared/views/view';
 
 import { BasePage } from '../base-page';
@@ -21,9 +21,9 @@ export class PageScore extends BasePage {
     const records = users.map((user) => new ScoreRecordView(user));
     const { currentUser } = this.userService;
     if (currentUser) {
-      const hash = UserService.userHashCode(currentUser);
+      const hash = userHashCode(currentUser);
       const checkUser = (rec: ScoreRecordView) =>
-        hash === UserService.userHashCode(rec.getUser());
+        hash === userHashCode(rec.getUser());
       const maybeUser = records.filter(checkUser);
       if (maybeUser.length > 0) maybeUser[0].highlight();
     }
