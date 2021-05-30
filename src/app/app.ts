@@ -43,7 +43,7 @@ export class App {
   }
 
   private initHeader() {
-    this.headerView.menu.addNavLinks(Object.values(APP_CONFIG.pages));
+    this.headerView.menu.init(Object.values(APP_CONFIG.pages));
   }
 
   private initRouter() {
