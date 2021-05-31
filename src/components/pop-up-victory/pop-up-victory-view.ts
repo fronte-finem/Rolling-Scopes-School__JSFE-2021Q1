@@ -4,6 +4,8 @@ import { IUser, IUserService } from 'services/user-service';
 import { BtnView } from 'shared/views/btn/btn';
 import { View } from 'shared/views/view';
 
+import { msgGenerator } from './msg-generator';
+
 export class PopUpVictoryView extends PopUpView {
   private btnConfirn = new BtnView(POPUP_VICTORY.btns.confirm);
 
@@ -14,7 +16,7 @@ export class PopUpVictoryView extends PopUpView {
 
   private init(time: number, user: IUser | undefined) {
     if (!user) return;
-    this.addContent(new View(POPUP_VICTORY.msgGenerator(user)));
+    this.addContent(new View(msgGenerator(user)));
     this.addButtons(this.btnConfirn);
   }
 
