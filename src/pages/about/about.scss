@@ -28,6 +28,7 @@
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: 250px 150px minmax(300px, 1fr);
   column-gap: 20px;
   row-gap: 0px;
   // mix-blend-mode: hard-light;
@@ -36,8 +37,8 @@
 .cell {
   padding: 10px 20px;
   width: 100%;
-  height: 100%;
-  min-height: 200px;
+  // height: 100%;
+  // max-height: 250px;
   display: flex;
   align-items: center;
   background-color: var(--bg-color);
@@ -50,8 +51,18 @@
   --grad-dir: -90deg;
   position: relative;
   border-top-left-radius: 20px;
-  transform-origin: left center;
-  transform: var(--transform1);
+  // transform-origin: left center;
+  // transform: var(--transform1);
+
+  &--step1 {
+    --step1: 1;
+  }
+  &--step2 {
+    --step2: 2;
+  }
+  &--step3 {
+    --step3: 3;
+  }
 }
 
 .info::before {
@@ -79,8 +90,29 @@
   --grad-dir: 90deg;
   justify-content: flex-end;
   border-top-right-radius: 20px;
-  transform-origin: right center;
-  transform: var(--transform2);
+  pointer-events: none;
+
+  &--step1 {
+    & > section {
+      transform: scale(0.5);
+      transform-origin: right center;
+    }
+  }
+  &--step2 {
+    & > nav {
+      max-width: unset;
+      width: auto;
+      margin: 0;
+      transform: scale(1.5);
+      transform-origin: right center;
+    }
+  }
+  &--step3 {
+    & > div {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
 
 .text {
@@ -99,14 +131,4 @@
   background-image: linear-gradient(90deg, var(--c1), var(--c2));
   background-clip: text;
   color: transparent;
-  // text-shadow: 0px 1px 1px #0001;
-  transform-origin: left center;
-  transform: var(--transform2);
-}
-
-.img {
-  max-height: 250px;
-  transform-origin: right center;
-  transform: var(--transform1);
-  mask: linear-gradient(90deg, #fff0, #fff 15% 85%, #fff0);
 }
