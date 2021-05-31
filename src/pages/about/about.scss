@@ -29,27 +29,60 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 250px 150px minmax(300px, 1fr);
-  column-gap: 20px;
+  // column-gap: 20px;
   row-gap: 0px;
   // mix-blend-mode: hard-light;
 }
 
 .cell {
+  position: relative;
   padding: 10px 20px;
   width: 100%;
   // height: 100%;
   // max-height: 250px;
   display: flex;
   align-items: center;
-  background-color: var(--bg-color);
-  background-image: linear-gradient(var(--grad-dir), var(--c1), var(--c2));
-  box-shadow: inset 0 0 5px 0 var(--shadow-color);
+  // background-color: var(--bg-color);
+  // background-image: linear-gradient(var(--mask-dir), var(--c1), var(--c2));
+  // box-shadow: inset 0 0 5px 0 var(--shadow-color);
   mask: linear-gradient(0deg, #fff0, #fff 50px);
+}
+.cell::after {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  // border-radius: 20px;
+  // box-shadow: inset 0 0 10px 0 #0002;
+  // background-image: linear-gradient(180deg, var(--c2), var(--c1));
+  background-image: linear-gradient(
+    var(--grad-dir),
+    #fff0 25%,
+    var(--c1),
+    var(--c2)
+  );
+  // background-image: repeating-linear-gradient(
+  //   90deg,
+  //   #fff0 0px 10px,
+  //   #fff1 10px 20px
+  // );
+  mask: repeating-linear-gradient(
+    var(--mask-dir),
+    #fff0 0px 5px,
+    #fff 5px 10px
+  );
+  // mask: linear-gradient(var(--grad-dir), #fff, #fff0),
+  //   repeating-linear-gradient(var(--mask-dir), #fff 0px 5px, #fff0 5px 10px);
 }
 
 .info {
-  --grad-dir: -90deg;
+  --mask-dir: -90deg;
+  --grad-dir: -45deg;
   position: relative;
+  padding: 10px 50px;
   border-top-left-radius: 20px;
   // transform-origin: left center;
   // transform: var(--transform1);
@@ -87,7 +120,8 @@
 }
 
 .pict {
-  --grad-dir: 90deg;
+  --mask-dir: 90deg;
+  --grad-dir: 45deg;
   justify-content: flex-end;
   border-top-right-radius: 20px;
   pointer-events: none;
@@ -123,10 +157,10 @@
   // --g: var(--c1) 0px 1px, var(--c2) 1px 3px;
   // --g1: repeating-linear-gradient(var(--a1), var(--g));
   // --g2: repeating-linear-gradient(var(--a2), var(--g));
-  font-size: 35px;
+  font-size: 30px;
   font-weight: 400;
   line-height: 40px;
-  color: var(--text-color);
+  // color: var(--text-color);
   // background-image: var(--g1), var(--g2);
   background-image: linear-gradient(90deg, var(--c1), var(--c2));
   background-clip: text;
