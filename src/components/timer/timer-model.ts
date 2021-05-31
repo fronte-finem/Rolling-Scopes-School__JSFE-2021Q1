@@ -4,11 +4,6 @@ export interface ITimerModelState extends ModelState {
   startTime: number;
   currentTime: number;
 }
-export type TimerModelEvent =
-  | 'countdown-start'
-  | 'countdown-end'
-  | 'start'
-  | 'stop';
 
 export class TimerModel extends Model<ITimerModelState> {
   private timerId: number | undefined;

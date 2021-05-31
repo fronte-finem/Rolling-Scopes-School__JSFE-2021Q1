@@ -15,6 +15,8 @@ import { GameModel } from './game-model';
 
 import styles from './game.scss';
 
+const URLS_ERROR = 'Cards images urls generation failed';
+
 export class PageGame extends BasePage implements IPage {
   private readonly timer = new Timer();
 
@@ -69,7 +71,7 @@ export class PageGame extends BasePage implements IPage {
       settings.cardImagesCategory,
       settings.cardsField.getCardsAmount()
     );
-    if (!urls) throw new Error('Cards images urls generation failed');
+    if (!urls) throw new Error(URLS_ERROR);
     const cardModels = urls.front.map(
       (url, id) => new CardModel(id, url, urls.back, settings.mismatchShowTime)
     );

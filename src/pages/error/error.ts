@@ -7,6 +7,8 @@ import { BasePage } from '../base-page';
 
 import styles from './error.scss';
 
+const UNKNOWN_URL = '#/unknown';
+
 export class PageError extends BasePage {
   private cardModel = PAGE_ERROR.card;
 
@@ -20,7 +22,7 @@ export class PageError extends BasePage {
     this.view.clear();
   }
 
-  public init(url = '#/unknown'): void {
+  public init(url = UNKNOWN_URL): void {
     const title = new View(PAGE_ERROR.title);
     title.setText(PAGE_ERROR.title.getMessage(url.slice(2)));
     const wrapper = new View({ classNames: [styles.wrapper] });

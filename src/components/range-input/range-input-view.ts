@@ -4,6 +4,8 @@ import { ICreateViewOptions, View } from 'shared/views/view';
 
 import styles from './range-input-view.scss';
 
+const PREFIX = 'input-range-view-';
+
 export interface ICreateInputRangeOptions<T> extends ICreateViewOptions {
   readonly title: string;
   readonly values: ReadonlyArray<T>;
@@ -17,7 +19,7 @@ export class InputRangeView<T extends RangeValue> extends View {
 
   private getId = () => {
     InputRangeView.id += 1;
-    return `input-range-view-${InputRangeView.id}`;
+    return `${PREFIX}${InputRangeView.id}`;
   };
 
   private values: ReadonlyArray<T> = [];

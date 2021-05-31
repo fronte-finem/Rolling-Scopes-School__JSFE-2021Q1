@@ -9,6 +9,12 @@ import styles from './text-input-view.scss';
 // https://developer.mozilla.org/en-US/docs/Web/API/Constraint_validation
 // https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation
 
+const MESSAGE = {
+  min: ' should be at least ',
+  max: ' should be less than ',
+  sum: ' characters; you entered ',
+};
+
 export type ICreateTextInputViewOptions = ICreateViewOptions & ITextInputConfig;
 
 export class TextInputView extends View {
@@ -78,11 +84,11 @@ export class TextInputView extends View {
       this.input.element.setCustomValidity(this.errorMessage);
     } else if (validity.tooShort) {
       this.input.element.setCustomValidity(
-        `${this.title} should be at least ${this.input.element.minLength} characters; you entered ${this.input.element.value.length}.`
+        `${this.title}${MESSAGE.min}${this.input.element.minLength}${MESSAGE.sum}${this.input.element.value.length}.`
       );
     } else if (validity.tooLong) {
       this.input.element.setCustomValidity(
-        `${this.title} should be less than ${this.input.element.maxLength} characters; you entered ${this.input.element.value.length}.`
+        `${this.title}${MESSAGE.max}${this.input.element.maxLength}${MESSAGE.sum}${this.input.element.value.length}.`
       );
     }
     void this.setCssStateAsync(styles.error, true);

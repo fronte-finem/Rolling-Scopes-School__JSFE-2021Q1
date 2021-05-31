@@ -4,6 +4,8 @@ import { OptionView } from './option-view';
 
 import styles from './select-view.scss';
 
+const PLACEHOLDER = 'placeholder';
+
 export interface ICreateSelectOptions<T> extends ICreateViewOptions {
   title: string;
   values: ReadonlyMap<T, string>;
@@ -23,8 +25,8 @@ export class SelectView<T extends string = string> extends View {
   });
 
   private readonly placeholder = new OptionView({
-    value: 'placeholder',
-    text: 'placeholder',
+    value: PLACEHOLDER,
+    text: PLACEHOLDER,
     selected: true,
     disabled: true,
   });

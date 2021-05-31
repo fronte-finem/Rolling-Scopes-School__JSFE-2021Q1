@@ -14,7 +14,7 @@ const createLogo = ({ link, text, svg }: LogoOpts) => {
 
 export class FooterView extends View {
   public constructor() {
-    super({ classNames: [styles.footer] });
+    super({ tag: 'footer', classNames: [styles.footer] });
     this.init();
   }
 

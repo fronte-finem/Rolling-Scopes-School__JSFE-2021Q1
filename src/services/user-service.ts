@@ -12,16 +12,34 @@ const DB_NAME = 'fronte-finem';
 const DB_VERSION = 1;
 const DB_USERS_STORE = 'users';
 
-export interface IUser {
-  firstName: string;
-  lastName: string;
-  email: string;
-  score: number;
-  avatar?: string;
-  time?: number;
-  cardsField?: string;
-  datetime?: Date;
+const toHex = (i: number) => `0x${i.toString(16).padStart(4, '0')}`;
+const genFirstName = (i: number) => `TEST-${toHex(i)}-LONG-USER-NAME-ಠ_ಠ`;
+const genLastName = (i: number) => `CAFE-DEAD-BEEF-${toHex(i)}-BABE-FEED`;
+const genEmail = (i: number) => `test.user${i}@${i}resu.tset`;
+
+export enum UserFields {
+  FIRSTNAME = 'firstName',
+  LASTNAME = 'lastName',
+  EMAIL = 'email',
+  SCORE = 'score',
+  AVATAR = 'avatar',
+  TIME = 'time',
+  CARDSFIELD = 'cardsField',
+  DATETIME = 'datetime',
 }
+
+export interface IUser {
+  [UserFields.FIRSTNAME]: string;
+  [UserFields.LASTNAME]: string;
+  [UserFields.EMAIL]: string;
+  [UserFields.SCORE]: number;
+  [UserFields.AVATAR]?: string;
+  [UserFields.TIME]?: number;
+  [UserFields.CARDSFIELD]?: string;
+  [UserFields.DATETIME]?: Date;
+}
+
+const FULL_INDEX = 'fullId';
 
 export interface IUserService {
   currentUser?: IUser;
@@ -42,11 +60,9 @@ export function userHashCode({ firstName, lastName, email }: IUser): number {
 export function createTestUser(index: number): IUser {
   const i = randomFromInterval(0, APP_GAME_SETTINGS.cardsField.length - 1);
   return {
-    firstName: 'TEST-LONG-USER-NAME-1337-ಠ_ಠ',
-    lastName: `0x${index
-      .toString(16)
-      .padStart(4, '0')}-CAFE-DEAD-BEEF-BABE-FEED`,
-    email: `test.user${index}@${index}resu.tset`,
+    firstName: genFirstName(index),
+    lastName: genLastName(index),
+    email: genEmail(index),
     score: index / 10,
     time: Math.abs(5000 - index * 40),
     cardsField: APP_GAME_SETTINGS.cardsField[i].toString(),
@@ -69,13 +85,17 @@ async function addTestUsers(store: IDBObjectStore, amount = 100) {
 
 function createStore(db: IDBDatabase): IDBObjectStore {
   const store = db.createObjectStore(DB_USERS_STORE);
-  store.createIndex('firstName', 'firstName', { unique: false });
-  store.createIndex('lastName', 'lastName', { unique: false });
-  store.createIndex('email', 'email', { unique: false });
-  store.createIndex('score', 'score', { unique: false });
-  store.createIndex('fullId', ['firstName', 'lastName', 'email'], {
-    unique: true,
-  });
+  store.createIndex(UserFields.FIRSTNAME, UserFields.FIRSTNAME);
+  store.createIndex(UserFields.LASTNAME, UserFields.LASTNAME);
+  store.createIndex(UserFields.EMAIL, UserFields.EMAIL);
+  store.createIndex(UserFields.SCORE, UserFields.SCORE);
+  store.createIndex(
+    FULL_INDEX,
+    [UserFields.FIRSTNAME, UserFields.LASTNAME, UserFields.EMAIL],
+    {
+      unique: true,
+    }
+  );
   return store;
 }
 
@@ -149,7 +169,7 @@ export class UserService implements IUserService {
       'readonly'
     );
     const store = transaction.objectStore(DB_USERS_STORE);
-    const index = store.index('score');
+    const index = store.index(UserFields.SCORE);
     index.openCursor(null, 'prev').onsuccess = (event: Event) => {
       const request = event.target as IDBRequest<IDBCursorWithValue | null>;
       const cursor = request.result;

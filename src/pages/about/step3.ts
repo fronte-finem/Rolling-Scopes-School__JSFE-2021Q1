@@ -9,6 +9,8 @@ import { createInfo, createPict } from './builder';
 
 import styles from './about.scss';
 
+const URLS_ERROR = 'Cards images urls generation failed';
+
 export const createStep3 = async (): Promise<View[]> => {
   const cardsField = new CardsField();
   const settings = PAGE_ABOUT.step3.gameSettingsService.load();
@@ -16,7 +18,7 @@ export const createStep3 = async (): Promise<View[]> => {
     settings.cardImagesCategory,
     PAGE_ABOUT.step3.cardFieldModel.getCardsAmount()
   );
-  if (!urls) throw new Error('Cards images urls generation failed');
+  if (!urls) throw new Error(URLS_ERROR);
   const cardModels = urls.front.map(
     (url, id) => new CardModel(id, url, urls.back, settings.mismatchShowTime)
   );

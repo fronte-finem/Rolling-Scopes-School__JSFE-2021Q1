@@ -4,8 +4,15 @@ const errorOpenDB = () =>
   );
 const errorDB = () => new Error('⚠️ Database not opened, created, linked ⚠️');
 
+enum Operation {
+  CREATE = 'Create',
+  READ = 'Read',
+  UPDATE = 'Update',
+  DELETE = 'Delete',
+}
+
 interface IErrorInfo {
-  operation: string;
+  operation: Operation;
   storeName: string;
   key?: IDBValidKey | IDBKeyRange;
 }
@@ -89,7 +96,7 @@ export class IndexDbService {
       storeName,
       (store) => store.add(data, key),
       {
-        operation: 'Create',
+        operation: Operation.CREATE,
         key,
         storeName,
       },
@@ -105,7 +112,7 @@ export class IndexDbService {
       storeName,
       (store) => store.get(key) as IDBRequest<T>,
       {
-        operation: 'Read',
+        operation: Operation.READ,
         key,
         storeName,
       },
@@ -122,7 +129,7 @@ export class IndexDbService {
       storeName,
       (store) => store.put(data, key),
       {
-        operation: 'Update',
+        operation: Operation.UPDATE,
         key,
         storeName,
       },
@@ -138,7 +145,7 @@ export class IndexDbService {
       storeName,
       (store) => store.delete(key),
       {
-        operation: 'Delete',
+        operation: Operation.DELETE,
         key,
         storeName,
       },
@@ -148,7 +155,7 @@ export class IndexDbService {
 
   private errorGenerator({ operation, storeName, key }: IErrorInfo): Error {
     return new Error(
-      `⚠️DB::${this.dbName}.${
+      `⚠️ DB::${this.dbName}.${
         this.dbVersion
       }: <${operation}> on store "${storeName}" failed for key "${String(
         key

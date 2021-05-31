@@ -5,6 +5,13 @@ import { View } from 'shared/views/view';
 
 import styles from './score-record-view.scss';
 
+const TITLE = {
+  record: 'Record date:',
+  cardsField: 'Cards field:',
+  winTime: '>Game win time:',
+};
+const UNKNOWN = 'unknown';
+
 export class ScoreRecordView extends View {
   public constructor(private readonly user: IUser) {
     super({ classNames: [styles.record] });
@@ -34,15 +41,15 @@ export class ScoreRecordView extends View {
   }
 
   private initBack(): View {
-    const datetime = this.user.datetime?.toLocaleString() || 'unknown';
-    const cardsField = this.user.cardsField || 'unknown';
+    const datetime = this.user.datetime?.toLocaleString() || UNKNOWN;
+    const cardsField = this.user.cardsField || UNKNOWN;
     const { hours, min, sec } = timeDiffFormat(this.user.time || 0);
     const back = new View(`<div class="${styles.side} ${styles.back}">
-      <div class="${styles.title}">Record date:</div>
+      <div class="${styles.title}">${TITLE.record}</div>
       <div class="${styles.datetime}">${datetime}</div>
-      <div class="${styles.title}">Cards field:</div>
+      <div class="${styles.title}">${TITLE.cardsField}</div>
       <div class="${styles.cardsField}">${cardsField}</div>
-      <div class="${styles.title}">Game win time:</div>
+      <div class="${styles.title}">${TITLE.winTime}</div>
       <div class="${styles.time}">${hours}:${min}:${sec}</div>
     </div>`);
     return back;
