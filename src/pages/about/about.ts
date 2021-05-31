@@ -1,12 +1,11 @@
-import {
-  createStep1,
-  createStep2,
-  createStep3,
-  PAGE_ABOUT,
-} from 'app/configs/page-about.config';
+import { PAGE_ABOUT } from 'app/configs/page-about.config';
 import { View } from 'shared/views/view';
 
 import { BasePage } from '../base-page';
+
+import { createStep1 } from './step1';
+import { createStep2 } from './step2';
+import { createStep3 } from './step3';
 
 import styles from './about.scss';
 
@@ -26,7 +25,3 @@ export class PageAbout extends BasePage {
     this.view.clear();
   }
 }
-// Todo:
-// На странице About Game должна быть представлена краткая инструкция по началу игры
-
-// На главной странице должна быть возможность зарегистрироваться как новый игрок.
