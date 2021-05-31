@@ -11,6 +11,8 @@ const TITLE = {
   winTime: '>Game win time:',
 };
 const UNKNOWN = 'unknown';
+const genMsg = (first: string, last: string, mail: string, score: number) =>
+  `Firstname: ${first}\nLastname: ${last}\nEmail: ${mail}\nScore: ${score}`;
 
 export class ScoreRecordView extends View {
   public constructor(private readonly user: IUser) {
@@ -32,7 +34,7 @@ export class ScoreRecordView extends View {
     const scoreView = new View({ classNames: [styles.score] });
     this.initAvatar(avatar);
     const { firstName, lastName, email, score } = this.user;
-    this.element.title = `${firstName}\n${lastName}`;
+    this.element.title = genMsg(firstName, lastName, email, score);
     name.setText(`${firstName} ${lastName}`);
     mail.setText(email);
     scoreView.setText(String(score));
