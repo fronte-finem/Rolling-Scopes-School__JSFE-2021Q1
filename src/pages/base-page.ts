@@ -4,7 +4,7 @@ import styles from './base-page.scss';
 
 export interface IPage {
   readonly view: View;
-  init(): void;
+  init(url?: string): void;
   stop(): void;
 }
 
@@ -18,7 +18,7 @@ export abstract class BasePage implements IPage {
     });
   }
 
-  public abstract init(): void | Promise<void>;
+  public abstract init(url?: string): void | Promise<void>;
 
   public abstract stop(): void | Promise<void>;
 }

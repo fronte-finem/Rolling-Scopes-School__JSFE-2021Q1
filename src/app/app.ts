@@ -71,7 +71,15 @@ export class App {
 
   private applayRouteChange({ oldUrl, newUrl, newPage }: IRouterState): void {
     if (
+      newUrl === APP_CONFIG.pages.game.route.url &&
+      !userService.currentUser
+    ) {
+      Router.activateRoute(APP_CONFIG.initialRoute.url);
+      return;
+    }
+    if (
       oldUrl === APP_CONFIG.pages.game.route.url &&
+      userService.currentUser &&
       !this.gameStoppedByButton
     ) {
       this.headerView.nextState();

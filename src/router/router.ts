@@ -69,7 +69,7 @@ export class Router {
     document.title = setTitle(route.title);
     this.currentPage?.stop();
     this.currentPage = route.pageCreator();
-    this.currentPage.init();
+    this.currentPage.init(newUrl);
     this.currentUrl = newUrl;
     return this.currentPage;
   }
