@@ -1,21 +1,22 @@
 :global .btn {
   --color-default: var(--color-white-default);
   --color-hover: var(--color-white-light);
-  --color-active-default: var(--color-white-default);
-  --color-active-hover: var(--color-white-light);
+  --color-invert-default: var(--color-white-default);
+  --color-invert-hover: var(--color-white-light);
   --btn-color: var(--color-default);
 
   --color-background-default: hsla(var(--color-second-default), 0.75);
   --color-background-hover: hsla(var(--color-second-default), 1);
-  --color-background-active-default: hsla(var(--color-first-dark), 0.75);
-  --color-background-active-hover: hsla(var(--color-first-dark), 1);
+  --color-background-invert-default: hsla(var(--color-first-default), 0.75);
+  --color-background-invert-hover: hsla(var(--color-first-default), 1);
   --btn-color-background: var(--color-background-default);
 
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Fira Mono', monospace;
   font-size: 16px;
+  font-weight: 400;
   text-decoration: none;
   text-transform: capitalize;
   cursor: pointer;
@@ -23,24 +24,22 @@
 
   color: var(--btn-color);
   background-color: var(--btn-color-background);
-
-  &--invert {
-    color: var(--btn-color-background);
-    background-color: var(--btn-color);
-  }
+  box-shadow: 0 0 1px 1px #0002;
+  // text-shadow: 0px 2px 4px #0004;
 
   &:hover {
     --btn-color: var(--color-hover);
     --btn-color-background: var(--color-background-hover);
+    box-shadow: 0 0 2px 1px #0003;
   }
 
-  &--active {
-    --btn-color: var(--color-active-default);
-    --btn-color-background: var(--color-background-active-default);
+  &--invert {
+    --btn-color: var(--color-invert-default);
+    --btn-color-background: var(--color-background-invert-default);
 
     &:hover {
-      --btn-color: var(--color-active-hover);
-      --btn-color-background: var(--color-background-active-hover);
+      --btn-color: var(--color-invert-hover);
+      --btn-color-background: var(--color-background-invert-hover);
     }
   }
 }
