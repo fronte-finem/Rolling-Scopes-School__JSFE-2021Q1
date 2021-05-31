@@ -31,6 +31,8 @@ module.exports = {
       { ignoreVoid: true, ignoreIIFE: true },
     ],
     'no-void': ['error', { allowAsStatement: true }],
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-use-before-define': ['error', { functions: false }],
     'import/prefer-default-export': 'off',
     '@typescript-eslint/explicit-member-accessibility': ['error'],
     'simple-import-sort/imports': [
