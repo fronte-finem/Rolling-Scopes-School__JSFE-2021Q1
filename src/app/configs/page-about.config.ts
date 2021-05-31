@@ -1,14 +1,15 @@
-import { APP_CONFIG } from 'app/app.config';
 import { Card } from 'components/card/card';
 import { CardModel } from 'components/card/card-model';
 import { CardFieldModel } from 'components/cards-field/card-field-model';
 import { CardsField } from 'components/cards-field/cards-field';
 import { NavMenuView } from 'components/nav-menu/nav-menu-view';
 import { PopUpSignUpView } from 'components/pop-up-sign-up/pop-up-sign-up-view';
+import { PageError } from 'pages/error/error';
 import { DummyUserService } from 'services/dummy-user-service';
 import { randomFromInterval } from 'shared/numbers-utils';
 import { View } from 'shared/views/view';
 
+import { ROUTE, SVGICON, TITLE } from './routes.config';
 import { cardImagesService, gameSettingsService } from './services.config';
 
 import styles from '~pages/about/about.scss';
@@ -60,8 +61,17 @@ export const createStep1 = (): View[] => {
 
 export const createStep2 = (): View[] => {
   const nav = new NavMenuView();
-  nav.init([APP_CONFIG.pages.settings]);
-  nav.setActiveNavLink(APP_CONFIG.pages.settings.route.url);
+  nav.init([
+    {
+      route: {
+        url: ROUTE.SETTINGS,
+        title: TITLE.SETTINGS,
+        pageCreator: () => new PageError(),
+      },
+      navSvgIcon: SVGICON.SETTINGS,
+    },
+  ]);
+  nav.setActiveNavLink(ROUTE.SETTINGS);
   return [
     createInfo(PAGE_ABOUT.step2.text, [styles.infoStep2]),
     createPict(nav, [styles.pictStep2]),

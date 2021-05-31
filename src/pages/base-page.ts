@@ -1,12 +1,7 @@
-import { ICreateViewOptions, View } from '../shared/views/view';
+import { IPage } from 'app/configs/types.config';
+import { ICreateViewOptions, View } from 'shared/views/view';
 
 import styles from './base-page.scss';
-
-export interface IPage {
-  readonly view: View;
-  init(url?: string): void;
-  stop(): void;
-}
 
 export abstract class BasePage implements IPage {
   public readonly view: View;
