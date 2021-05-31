@@ -40,7 +40,7 @@ export function userHashCode({ firstName, lastName, email }: IUser): number {
   return hashCode(JSON.stringify({ firstName, lastName, email }));
 }
 
-function createTestUser(index: number): IUser {
+export function createTestUser(index: number): IUser {
   const i = randomFromInterval(0, APP_GAME_SETTINGS.cardsField.length - 1);
   return {
     firstName: 'TEST-LONG-USER-NAME-1337-ಠ_ಠ',
