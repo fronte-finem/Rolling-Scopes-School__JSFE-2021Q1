@@ -5,7 +5,7 @@
 
   min-height: 100vh;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr auto;
 
   --c0: #fff0;
   --c1: #0001;
@@ -23,8 +23,6 @@
   background-size: var(--s);
   background-position: var(--a1), var(--a1), var(--a2), var(--a2);
 
-  font-family: sans-serif;
-
   animation: slide 10s infinite linear forwards;
   animation-play-state: var(--app-bg-animation-state);
 }
@@ -35,7 +33,7 @@
   margin: 0 auto;
 
   background-color: #0001;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(5px);
 }
 
 @keyframes slide {

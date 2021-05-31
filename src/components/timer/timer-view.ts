@@ -1,7 +1,13 @@
-import { ITimeDiffFormat } from '../../shared/date-time-utils';
-import { View } from '../../shared/views/view';
+import { ITimeDiffFormat } from 'shared/date-time-utils';
+import { View } from 'shared/views/view';
 
 import styles from './timer-view.scss';
+
+const createSplitter = (splitter = ':'): View =>
+  new View({
+    classNames: [styles.timerOutput, styles.timerOutputSplitter],
+    text: splitter,
+  });
 
 export class TimerView extends View {
   private readonly output = {
@@ -16,21 +22,21 @@ export class TimerView extends View {
     }),
   };
 
-  public constructor(splitter = ':') {
+  public constructor() {
     super({ classNames: [styles.timer] });
+    this.init();
+  }
 
-    this.render(
-      new View({
-        classNames: [styles.timerBox],
-        childs: [
-          this.output.hours,
-          TimerView.createSplitter(splitter),
-          this.output.minutes,
-          TimerView.createSplitter(splitter),
-          this.output.seconds,
-        ],
-      })
-    );
+  private init(splitter = ':') {
+    const wrapper = new View({ classNames: [styles.timerBox] });
+    wrapper.render([
+      this.output.hours,
+      createSplitter(splitter),
+      this.output.minutes,
+      createSplitter(splitter),
+      this.output.seconds,
+    ]);
+    this.render(wrapper);
   }
 
   public show(time: ITimeDiffFormat): void {
@@ -39,13 +45,6 @@ export class TimerView extends View {
     if (time.hours) {
       this.output.hours.element.textContent = time.hours;
     }
-  }
-
-  public static createSplitter(splitter = ':'): View {
-    return new View({
-      classNames: [styles.timerOutput, styles.timerOutputSplitter],
-      text: splitter,
-    });
   }
 
   public stop(stop = true): void {

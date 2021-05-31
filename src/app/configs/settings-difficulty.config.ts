@@ -9,7 +9,7 @@ export const SETTINGS_DIFFICULTY = {
   title: {
     tag: H2,
     classNames: [styles.title],
-    text: 'Adjust the difficulty you want\r\n🥱😌🥴🤪🤯',
+    text: 'Adjust difficulty you want\r\n🥱😌🥴🤪🤯',
   },
   cardsRange: {
     title: '🎴🎴 Cards field (rows × columns)',

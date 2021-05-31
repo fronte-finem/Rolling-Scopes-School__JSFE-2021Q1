@@ -1,5 +1,7 @@
 .pop-up {
   --border: 1px solid #0002;
+  --body-color: hsla(var(--color-first-default), 1);
+  --side-color: hsla(var(--color-first-dark), 0.5);
 
   overflow: hidden;
   border-radius: 10px;
@@ -16,13 +18,16 @@
 }
 
 .pop-up__title {
+  font-family: 'Fira Mono', monospace;
+  font-size: 30px;
   text-align: center;
   color: #fff;
 }
 
 .pop-up__side {
+  min-height: 60px;
   padding: 10px;
-  background: hsla(var(--color-first-dark), 0.25);
+  background: var(--side-color);
 }
 
 .pop-up__header {
@@ -38,10 +43,8 @@
 
 .pop-up__headedig {
   font-size: 30px;
-  font-weight: 600;
 }
 
 .pop-up__body {
-  padding: 20px;
-  background: hsla(var(--color-first-default), 1);
+  background: var(--body-color);
 }

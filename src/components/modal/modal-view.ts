@@ -1,4 +1,4 @@
-import { View } from '../../shared/views/view';
+import { View } from 'shared/views/view';
 
 import styles from './modal-view.scss';
 

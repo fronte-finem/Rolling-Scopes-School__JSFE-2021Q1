@@ -1,5 +1,5 @@
-import { BtnView } from '../../shared/views/btn/btn';
-import { View } from '../../shared/views/view';
+import { BtnView } from 'shared/views/btn/btn';
+import { View } from 'shared/views/view';
 
 import styles from './pop-up-view.scss';
 
@@ -16,8 +16,11 @@ export abstract class PopUpView extends View {
 
   private readonly body = new View({ classNames: [styles.popUpBody] });
 
-  public constructor(title: string) {
-    super({ tag: 'section', classNames: [styles.popUp, styles.hidden] });
+  public constructor(title: string, classNames: string[] = []) {
+    super({
+      tag: 'section',
+      classNames: [styles.popUp, styles.hidden, ...classNames],
+    });
     this.render([this.header, this.body, this.footer]);
     this.header.render(
       new View({

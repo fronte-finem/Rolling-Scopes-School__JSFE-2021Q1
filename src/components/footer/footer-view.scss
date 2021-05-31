@@ -1,0 +1,87 @@
+.footer {
+  --c1: hsla(var(--color-second-default), 1);
+  --c2: hsla(var(--color-first-default), 1);
+  --c3: #222;
+  --text-color: var(--c1);
+  --icon-color: var(--c2);
+  --time: 300ms;
+
+  background-image: repeating-linear-gradient(
+    180deg,
+    var(--c3) 0px 3px,
+    #fff0 3px 6px
+  );
+}
+
+.wrapper {
+  max-width: var(--app-w-max);
+  width: 100%;
+  margin: auto;
+  padding: 0 50px;
+
+  display: flex;
+  align-items: center;
+  column-gap: 30px;
+}
+
+.logo {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  background-color: var(--c3);
+  color: var(--text-color);
+  transition: all var(--time);
+
+  &:hover {
+    --text-color: var(--c2);
+  }
+
+  &--rss {
+    overflow: hidden;
+    position: relative;
+    margin-right: auto;
+    padding: 5px 60px 5px 30px;
+    &:hover {
+      letter-spacing: 2px;
+    }
+  }
+
+  &--github {
+    align-items: center;
+    column-gap: 10px;
+    padding: 0 20px 0 0;
+    border-radius: 20px;
+  }
+}
+
+.svg {
+  order: -1;
+  fill: var(--text-color);
+  transition: all var(--time);
+
+  &--rss {
+    height: 40px;
+    width: 108px;
+  }
+
+  &--github {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.text {
+  display: block;
+
+  &--rss {
+    position: absolute;
+    left: 138px;
+    bottom: 0px;
+    font-size: 26px;
+    line-height: 26px;
+    font-weight: 700;
+  }
+
+  &--github {
+    --reserved: 24;
+  }
+}

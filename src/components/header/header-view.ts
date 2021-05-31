@@ -1,14 +1,13 @@
-import { APP_CONFIG } from '../../app/app.config';
-import { APP_HEADER_CONFIG } from '../../app/configs/header.config';
-import { AppState, IAppStateService } from '../../services/app-state';
-import { IUserService } from '../../services/user-service';
-import { Observer } from '../../shared/observer';
-import { StateMaсhine } from '../../shared/state/state-maсhine';
-import { renderAvatar } from '../../shared/views/avatar-factory';
-import { BtnView } from '../../shared/views/btn/btn';
-import { LinkView } from '../../shared/views/link/link';
-import { View } from '../../shared/views/view';
-import { NavMenuView } from '../nav-menu/nav-menu-view';
+import { APP_HEADER_CONFIG } from 'app/configs/header.config';
+import { LogoView } from 'components/logo/logo-view';
+import { NavMenuView } from 'components/nav-menu/nav-menu-view';
+import { AppState, IAppStateService } from 'services/app-state';
+import { IUserService } from 'services/user-service';
+import { Observer } from 'shared/observer';
+import { StateMaсhine } from 'shared/state/state-maсhine';
+import { renderAvatar } from 'shared/views/avatar-factory';
+import { BtnView } from 'shared/views/btn/btn';
+import { View } from 'shared/views/view';
 
 import { HeaderState, IHeaderContext } from './header-view-state';
 
@@ -46,11 +45,6 @@ export class HeaderView extends View implements IHeaderContext {
       )
     );
 
-  public readonly logo = new LinkView({
-    url: APP_CONFIG.initialRoute.url,
-    classNames: [styles.logo],
-  });
-
   public readonly menu = new NavMenuView();
 
   public readonly avatar = new View({
@@ -75,7 +69,7 @@ export class HeaderView extends View implements IHeaderContext {
     this.render(
       new View({
         classNames: [styles.wrapper],
-        childs: [this.logo, this.menu, this.btnStateSwitch, this.avatar],
+        childs: [new LogoView(), this.menu, this.btnStateSwitch, this.avatar],
       })
     );
   }

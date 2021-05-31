@@ -1,0 +1,26 @@
+.page-error {
+  padding: 50px;
+  grid-template-rows: 200px 1fr;
+  justify-items: center;
+  align-items: center;
+}
+
+.title {
+  font-family: 'Fira Mono', monospace;
+  font-size: 40px;
+  line-height: 60px;
+  text-align: center;
+  white-space: pre-wrap;
+}
+
+.wrapper {
+  max-width: 500px;
+  max-height: 500px;
+  width: 100%;
+  height: 100%;
+
+  div {
+    perspective: 1000px;
+    background-size: cover;
+  }
+}

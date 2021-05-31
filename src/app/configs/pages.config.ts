@@ -1,36 +1,27 @@
-import {
-  PageAbout,
-  PageGame,
-  PageScore,
-  PageSettings,
-} from '../../pages/index';
-import { IRoute } from '../../router/router';
+import { PageAbout, PageGame, PageScore, PageSettings } from 'pages/index';
 
+import { ROUTE, SVGICON, TITLE } from './routes.config';
 import {
   appStateService,
   cardImagesService,
   gameSettingsService,
   userService,
 } from './services.config';
-
-export interface IPageConfig {
-  readonly route: IRoute;
-  readonly navSvgIcon?: string;
-}
+import { IPageConfig } from './types.config';
 
 export const APP_PAGE_ABOUT_CONFIG: Readonly<IPageConfig> = {
   route: {
-    url: '#/about-game',
-    title: 'about game',
+    url: ROUTE.ABOUT,
+    title: TITLE.ABOUT,
     pageCreator: () => new PageAbout(),
   },
-  navSvgIcon: './svg/sprite.svg#icon-question-mark',
+  navSvgIcon: SVGICON.ABOUT,
 };
 
 export const APP_PAGE_GAME_CONFIG: Readonly<IPageConfig> = {
   route: {
-    url: '#/game',
-    title: 'about game',
+    url: ROUTE.GAME,
+    title: TITLE.GAME,
     pageCreator: () =>
       new PageGame(
         appStateService,
@@ -43,18 +34,18 @@ export const APP_PAGE_GAME_CONFIG: Readonly<IPageConfig> = {
 
 export const APP_PAGE_SETTINGS_CONFIG: Readonly<IPageConfig> = {
   route: {
-    url: '#/game-settings',
-    title: 'game settings',
+    url: ROUTE.SETTINGS,
+    title: TITLE.SETTINGS,
     pageCreator: () => new PageSettings(gameSettingsService),
   },
-  navSvgIcon: './svg/sprite.svg#icon-gear',
+  navSvgIcon: SVGICON.SETTINGS,
 };
 
 export const APP_PAGE_SCORE_CONFIG: Readonly<IPageConfig> = {
   route: {
-    url: '#/best-score',
-    title: 'best score',
+    url: ROUTE.SCORE,
+    title: TITLE.SCORE,
     pageCreator: () => new PageScore(userService),
   },
-  navSvgIcon: './svg/sprite.svg#icon-star',
+  navSvgIcon: SVGICON.SCORE,
 };

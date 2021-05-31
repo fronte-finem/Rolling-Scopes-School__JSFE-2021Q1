@@ -1,25 +1,27 @@
 .header {
-  background-color: hsla(var(--color-first-default), 0.5);
+  --c1: hsla(var(--color-first-default), 0.5);
+  --c2: hsla(var(--color-second-default), 1);
+  --c3: rgba(0, 0, 0, 0.05);
+
+  background-color: var(--c1);
   backdrop-filter: blur(5px);
+
+  background-image: repeating-linear-gradient(
+    180deg,
+    var(--c3) 0px 3px,
+    #fff0 3px 6px
+  );
 }
 
 .wrapper {
-  max-width: 1200px;
+  max-width: var(--app-w-max);
   width: 100%;
   margin: auto;
+  padding: 0 50px;
 
   display: flex;
   align-items: center;
   column-gap: 20px;
-
-  padding: 0 50px;
-}
-
-.logo {
-  display: block;
-  width: 100px;
-  height: 30px;
-  background-color: #fff;
 }
 
 .btn {
@@ -39,6 +41,7 @@
   border-radius: 50%;
   overflow: hidden;
   background-color: #fff3;
+  box-shadow: 0 0 0px 3px var(--c3);
 
   &--hidden {
     display: none;

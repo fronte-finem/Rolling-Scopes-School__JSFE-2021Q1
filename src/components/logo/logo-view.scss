@@ -1,0 +1,36 @@
+.logo {
+  --c1: hsla(var(--color-first-light), 1);
+  --c2: hsla(var(--color-second-default), 1);
+
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  row-gap: 8px;
+}
+
+.text {
+  padding: 3px 20px;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  text-shadow: 0px 2px 4px #0004;
+}
+
+.text--1 {
+  border-radius: 0 0 5px 5px;
+  color: #fff;
+  color: var(--c1);
+  // background-color: var(--c2);
+  // background-image: linear-gradient(180deg, #fff0, var(--c2) 15px);
+  background-image: radial-gradient(at bottom center, var(--c2) 30px, #fff0);
+  box-shadow: 0 1px 1px 1px #0001;
+}
+
+.text--2 {
+  border-radius: 5px 5px 0 0;
+  color: var(--c2);
+  // background-color: var(--c1);
+  // background-image: linear-gradient(0deg, #fff0, var(--c1) 15px);
+  background-image: radial-gradient(at top center, var(--c1) 30px, #fff0);
+  box-shadow: 0 -1px 1px 1px #0001;
+}

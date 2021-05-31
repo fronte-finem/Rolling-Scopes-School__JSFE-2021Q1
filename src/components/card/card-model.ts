@@ -1,5 +1,5 @@
-import { Model, ModelState } from '../../shared/models/model';
-import { delay } from '../../shared/timer-utils';
+import { Model, ModelState } from 'shared/models/model';
+import { delay } from 'shared/timer-utils';
 
 export interface ICardModelState extends ModelState {
   isError: boolean;

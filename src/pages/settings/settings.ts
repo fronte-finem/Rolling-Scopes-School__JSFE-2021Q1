@@ -41,13 +41,13 @@ export class PageSettings extends BasePage {
   }
 
   private initSettingsCards() {
-    const wrapper = new View({ classNames: [styles.cardsWrapper] });
+    const wrapper = new View({ classNames: [styles.cell, styles.cell1] });
     wrapper.render(this.settingsCards);
     return wrapper;
   }
 
   private initDifficultyCustomizer() {
-    const wrapper = new View({ classNames: [styles.difficultyWrapper] });
+    const wrapper = new View({ classNames: [styles.cell, styles.cell2] });
     wrapper.render(this.settingsDifficulty);
     return wrapper;
   }

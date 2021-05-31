@@ -1,5 +1,5 @@
-import { AppState } from '../../services/app-state';
-import { IContext, IState } from '../../shared/state/types';
+import { AppState } from 'services/app-state';
+import { IContext, IState } from 'shared/state/types';
 
 export interface IHeaderContext extends IContext<AppState> {
   setBtnText(text: string): void;

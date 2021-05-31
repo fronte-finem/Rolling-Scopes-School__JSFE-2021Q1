@@ -1,4 +1,4 @@
-import { timeDiffFormat } from '../../shared/date-time-utils';
+import { timeDiffFormat } from 'shared/date-time-utils';
 
 import { ITimerModelState, TimerModel } from './timer-model';
 import { TimerView } from './timer-view';

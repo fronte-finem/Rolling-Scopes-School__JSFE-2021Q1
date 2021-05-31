@@ -1,7 +1,7 @@
-import { IPage } from '../pages/base-page';
-import { PageError } from '../pages/index';
-import { Listener, ObserverLite } from '../shared/observer-lite';
-import { capitalize } from '../shared/string-utils';
+import { IPage, IRoute } from 'app/configs/types.config';
+import { PageError } from 'pages/index';
+import { Listener, ObserverLite } from 'shared/observer-lite';
+import { capitalize } from 'shared/string-utils';
 
 const setTitle = (title: string) => `🎴 Match-Match 🃏 ${capitalize(title)} 🎴`;
 
@@ -10,14 +10,6 @@ const errorPageRoute: IRoute = {
   title: 'Page Not Found!',
   pageCreator: () => new PageError(),
 };
-
-export type PageCreator = () => IPage;
-
-export interface IRoute {
-  readonly url: string;
-  readonly title: string;
-  readonly pageCreator: PageCreator;
-}
 
 export interface IRouterState {
   readonly oldUrl: string;
@@ -58,15 +50,20 @@ export class Router {
   public updateCurrentRoute(): IRouterState {
     const oldUrl = this.currentUrl;
     const newUrl = Router.getCurrentUrl();
-    if (oldUrl !== newUrl) {
-      const route = this.getPageRoute(newUrl);
-      setTitle(route.title);
-      this.currentPage?.stop();
-      this.currentPage = route.pageCreator();
-      this.currentPage.init();
-      this.currentUrl = newUrl;
+    if (oldUrl !== newUrl || !this.currentPage) {
+      this.updateRoute(newUrl);
     }
     return { oldUrl, newUrl, newPage: this.currentPage };
+  }
+
+  public updateRoute(newUrl: string): IPage {
+    const route = this.getPageRoute(newUrl);
+    document.title = setTitle(route.title);
+    this.currentPage?.stop();
+    this.currentPage = route.pageCreator();
+    this.currentPage.init(newUrl);
+    this.currentUrl = newUrl;
+    return this.currentPage;
   }
 
   public static getCurrentUrl(): string {
@@ -75,5 +72,9 @@ export class Router {
 
   public static activateRoute(url: string): void {
     window.location.hash = url;
+  }
+
+  public static resetHash(): void {
+    window.history.replaceState(null, document.title, '.');
   }
 }

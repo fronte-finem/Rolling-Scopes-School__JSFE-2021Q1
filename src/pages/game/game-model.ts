@@ -1,7 +1,7 @@
-import { CardModel } from '../../components/card/card-model';
-import { GameMatches } from '../../services/game-logic';
-import { Model, ModelState } from '../../shared/models/model';
-import { Listener, Observer } from '../../shared/observer';
+import { CardModel } from 'components/card/card-model';
+import { GameMatches } from 'services/game-logic';
+import { Model, ModelState } from 'shared/models/model';
+import { Listener, Observer } from 'shared/observer';
 
 export interface IGameModelState extends ModelState {
   isError: boolean;
@@ -11,7 +11,10 @@ export interface IGameModelState extends ModelState {
   matchedCards: Set<CardModel>;
 }
 
-type GameEvents = 'game-solved' | 'game-error';
+enum GameEvents {
+  SOLVED = 'game-solved',
+  ERROR = 'game-error',
+}
 
 export class GameModel extends Model<IGameModelState> {
   private gameObserver = new Observer<GameEvents>();
@@ -32,7 +35,7 @@ export class GameModel extends Model<IGameModelState> {
   }
 
   public onSolved(listener: Listener<IGameModelState>): void {
-    this.gameObserver.subscribe('game-solved', listener);
+    this.gameObserver.subscribe(GameEvents.SOLVED, listener);
   }
 
   public showAllCards(): void {
@@ -82,7 +85,7 @@ export class GameModel extends Model<IGameModelState> {
     if (this.state.matchedCards.size === this.cards.length) {
       this.state.isSolved = true;
       this.stop();
-      this.gameObserver.notify('game-solved', this.state);
+      this.gameObserver.notify(GameEvents.SOLVED, this.state);
     }
     return true;
   }

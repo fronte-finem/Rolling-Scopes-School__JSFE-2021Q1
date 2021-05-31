@@ -1,77 +1,52 @@
-import { IPageConfig } from '../../app/configs/pages.config';
-import { createSvgSpriteElement } from '../../shared/dom-utils';
-import { LinkView } from '../../shared/views/link/link';
-import { View } from '../../shared/views/view';
+import { IPageConfig } from 'app/configs/types.config';
+import { createSvgSpriteElement } from 'shared/dom-utils';
+import { LinkView } from 'shared/views/link/link';
+import { View } from 'shared/views/view';
 
 import styles from './nav-menu-view.scss';
 
-export interface NavLinkCreateOptions {
-  page: string;
-  url: string;
-  title: string;
-  svgIconLink: string;
-}
+const createNavItem = (link: View): View => {
+  const li = new View({ tag: 'li', classNames: [styles.navItem] });
+  li.render(link);
+  return li;
+};
+
+const createNavList = (links: View[]): View => {
+  const navList = new View({ tag: 'ul', classNames: [styles.navItems] });
+  navList.render(links.map((link) => createNavItem(link)));
+  return navList;
+};
+
+const createNavLink = ({ route, navSvgIcon = '' }: IPageConfig): LinkView => {
+  const link = new LinkView({ url: route.url, classNames: [styles.navLink] });
+  link.setText(route.title);
+  const opts = { url: navSvgIcon, classNames: [styles.svgIcon] };
+  link.element.append(createSvgSpriteElement(opts));
+  return link;
+};
 
 export class NavMenuView extends View {
   private navLinks?: Map<string, LinkView>;
 
-  private activeNavLink: LinkView | undefined;
-
-  private readonly navList = new View<HTMLUListElement>({
-    tag: 'ul',
-    classNames: [styles.navItems],
-  });
+  private activeNavLink?: LinkView;
 
   public constructor() {
     super({ tag: 'nav', classNames: [styles.navMenu] });
-    this.render(this.navList);
   }
 
-  public addNavLinks(pagesConfig: IPageConfig[]): void {
+  public init(pagesConfig: IPageConfig[]): void {
     this.navLinks = pagesConfig
       .filter((page) => page.navSvgIcon !== undefined)
       .reduce(
-        (dict, pageCfg) =>
-          dict.set(pageCfg.route.url, NavMenuView.createNavLink(pageCfg)),
+        (dict, pageCfg) => dict.set(pageCfg.route.url, createNavLink(pageCfg)),
         new Map<string, LinkView>()
       );
-    this.navList.render(
-      NavMenuView.createNavItems([...this.navLinks.values()])
-    );
+    this.render(createNavList([...this.navLinks.values()]));
   }
 
   public setActiveNavLink(url: string): void {
     this.activeNavLink?.active(false);
     this.activeNavLink = this.navLinks?.get(url);
     this.activeNavLink?.active();
-  }
-
-  private static createNavItems(payload: View[]): View[] {
-    return payload.map(
-      (link) =>
-        new View<HTMLLIElement>({
-          tag: 'li',
-          classNames: [styles.navItem],
-          childs: [link],
-        })
-    );
-  }
-
-  private static createNavLink({ route, navSvgIcon }: IPageConfig): LinkView {
-    return new LinkView({
-      url: route.url,
-      classNames: [styles.navLink],
-      text: route.title,
-      hookElement: (elem) => {
-        if (navSvgIcon)
-          elem.append(
-            createSvgSpriteElement({
-              url: navSvgIcon,
-              classNames: [styles.svgIcon],
-            })
-          );
-        return elem;
-      },
-    });
   }
 }

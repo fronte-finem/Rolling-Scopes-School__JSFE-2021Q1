@@ -1,4 +1,4 @@
-import { knuthShuffle } from '../shared/array-utils';
+import { knuthShuffle } from 'shared/array-utils';
 
 const IMAGES_JSON = './images.json';
 
