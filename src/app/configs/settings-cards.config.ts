@@ -9,7 +9,7 @@ export const SETTINGS_CARDS = {
   title: {
     tag: H2,
     classNames: [styles.title],
-    text: 'Select cards images preset 🎴🃏',
+    text: 'Select images preset\r\n🎴🃏',
   },
   selector: new Map([
     [
