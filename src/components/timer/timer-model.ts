@@ -1,4 +1,4 @@
-import { Model, ModelState } from '../../shared/models/model';
+import { Model, ModelState } from 'shared/models/model';
 
 export interface ITimerModelState extends ModelState {
   startTime: number;

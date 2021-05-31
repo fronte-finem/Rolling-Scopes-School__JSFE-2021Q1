@@ -1,4 +1,4 @@
-import { ISerializer } from '../shared/models/types';
+import { ISerializer } from 'shared/models/types';
 
 export class LocalStorageService<Settings> {
   public constructor(

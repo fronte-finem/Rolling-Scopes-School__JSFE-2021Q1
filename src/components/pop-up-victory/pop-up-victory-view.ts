@@ -1,8 +1,8 @@
-import { POPUP_VICTORY } from '../../app/configs/popups.config';
-import { IUser, IUserService } from '../../services/user-service';
-import { BtnView } from '../../shared/views/btn/btn';
-import { View } from '../../shared/views/view';
-import { PopUpView } from '../pop-up/pop-up-view';
+import { POPUP_VICTORY } from 'app/configs/popups.config';
+import { PopUpView } from 'components/pop-up/pop-up-view';
+import { IUser, IUserService } from 'services/user-service';
+import { BtnView } from 'shared/views/btn/btn';
+import { View } from 'shared/views/view';
 
 export class PopUpVictoryView extends PopUpView {
   private btnConfirn = new BtnView(POPUP_VICTORY.btns.confirm);

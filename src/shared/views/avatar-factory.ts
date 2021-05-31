@@ -1,4 +1,5 @@
-import { IUser } from '../../services/user-service';
+import { IUser } from 'services/user-service';
+
 import { createSvgSpriteElement } from '../dom-utils';
 
 import { ImgView } from './img/img';

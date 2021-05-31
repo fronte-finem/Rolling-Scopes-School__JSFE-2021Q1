@@ -1,6 +1,6 @@
-import { CardFieldModel } from '../../components/cards-field/card-field-model';
-import { CardImagesCategory } from '../../services/card-images-urls';
-import { deepFreeze } from '../../shared/object-utils';
+import { CardFieldModel } from 'components/cards-field/card-field-model';
+import { CardImagesCategory } from 'services/card-images-urls';
+import { deepFreeze } from 'shared/object-utils';
 
 export const APP_GAME_SETTINGS = deepFreeze({
   initialShowTime: [5, 10, 15, 20, 25, 30],

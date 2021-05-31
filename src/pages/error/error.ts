@@ -1,8 +1,8 @@
 import { PAGE_ERROR } from 'app/configs/page-error.config';
+import { View } from 'shared/views/view';
 
 import { CardView } from '~components/card/card-view';
 
-import { View } from '../../shared/views/view';
 import { BasePage } from '../base-page';
 
 import styles from './error.scss';

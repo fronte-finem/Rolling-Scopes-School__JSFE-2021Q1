@@ -1,5 +1,5 @@
-import { capitalize } from '../../shared/string-utils';
-import { ICreateViewOptions, View } from '../../shared/views/view';
+import { capitalize } from 'shared/string-utils';
+import { ICreateViewOptions, View } from 'shared/views/view';
 
 import { ITextInputConfig } from './input-types';
 

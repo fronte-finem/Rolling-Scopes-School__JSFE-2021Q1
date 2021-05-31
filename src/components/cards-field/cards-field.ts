@@ -1,5 +1,5 @@
-import { View } from '../../shared/views/view';
-import { Card } from '../card/card';
+import { Card } from 'components/card/card';
+import { View } from 'shared/views/view';
 
 import { CardFieldModel } from './card-field-model';
 

@@ -1,4 +1,4 @@
-import { IStateChangeRequest } from '../shared/state/state-maсhine';
+import { IStateChangeRequest } from 'shared/state/state-maсhine';
 
 export enum AppState {
   INITIAL = 'initial',

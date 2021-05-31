@@ -1,5 +1,5 @@
-import { BtnView } from '../../shared/views/btn/btn';
-import { View } from '../../shared/views/view';
+import { BtnView } from 'shared/views/btn/btn';
+import { View } from 'shared/views/view';
 
 import styles from './pop-up-view.scss';
 

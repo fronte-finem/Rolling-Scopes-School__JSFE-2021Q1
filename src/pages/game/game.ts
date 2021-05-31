@@ -1,16 +1,15 @@
-import { Card } from '../../components/card/card';
-import { CardModel } from '../../components/card/card-model';
-import { CardsField } from '../../components/cards-field/cards-field';
-import { Timer } from '../../components/timer/timer';
-import { AppState, IAppStateService } from '../../services/app-state';
-import { ICardImagesService } from '../../services/card-images-urls';
-import { calcScore } from '../../services/game-logic';
-import {
-  IGameSettings,
-  IGameSettingsService,
-} from '../../services/game-settings';
-import { IUserService } from '../../services/user-service';
-import { BasePage, IPage } from '../base-page';
+import { IPage } from 'app/configs/types.config';
+import { Card } from 'components/card/card';
+import { CardModel } from 'components/card/card-model';
+import { CardsField } from 'components/cards-field/cards-field';
+import { Timer } from 'components/timer/timer';
+import { AppState, IAppStateService } from 'services/app-state';
+import { ICardImagesService } from 'services/card-images-urls';
+import { calcScore } from 'services/game-logic';
+import { IGameSettings, IGameSettingsService } from 'services/game-settings';
+import { IUserService } from 'services/user-service';
+
+import { BasePage } from '../base-page';
 
 import { GameModel } from './game-model';
 

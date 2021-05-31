@@ -4,8 +4,7 @@
 
 import { APP_GAME_SETTINGS } from 'app/configs/game.config';
 import { randomFromInterval } from 'shared/numbers-utils';
-
-import { hashCode } from '../shared/string-utils';
+import { hashCode } from 'shared/string-utils';
 
 import { asyncRequest, IndexDbService } from './index-db';
 

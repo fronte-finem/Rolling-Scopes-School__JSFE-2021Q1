@@ -1,4 +1,4 @@
-import { View } from '../../shared/views/view';
+import { View } from 'shared/views/view';
 
 import { CardModel } from './card-model';
 

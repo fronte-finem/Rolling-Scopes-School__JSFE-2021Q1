@@ -1,4 +1,4 @@
-import { ICreateViewOptions, View } from '../../shared/views/view';
+import { ICreateViewOptions, View } from 'shared/views/view';
 
 import { OptionView } from './option-view';
 

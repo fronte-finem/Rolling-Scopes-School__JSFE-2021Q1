@@ -1,4 +1,4 @@
-import { IEquality, IToString } from '../../shared/models/types';
+import { IEquality, IToString } from 'shared/models/types';
 
 export interface ICardFieldOptions {
   rows: number;
