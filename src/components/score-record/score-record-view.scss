@@ -1,6 +1,6 @@
 .record {
-  --color-1: hsla(var(--color-first-dark), calc(0.3 * var(--row-scale, 1)));
-  --color-2: hsla(var(--color-second-default), calc(0.4 * var(--row-scale, 1)));
+  --color-1: hsla(var(--color-first-dark), calc(0.3 * var(--set-scale, 1)));
+  --color-2: hsla(var(--color-second-default), calc(0.4 * var(--set-scale, 1)));
   --card-shadow-color: #0008;
   --card-state-time: 500ms;
 
@@ -8,7 +8,7 @@
   --score-bg-color: var(--color-2);
 
   cursor: default;
-  perspective: calc(var(--app-w-max) / 4);
+  perspective: calc(var(--app-w-max) * var(--set-scale, 1) / 4);
   perspective-origin: center;
   transition: all var(--card-state-time);
 
@@ -50,7 +50,7 @@
 .front {
   display: grid;
   grid-template-rows: 2.5fr auto auto 1fr;
-  row-gap: calc(3px * var(--row-scale, 1));
+  row-gap: calc(3px * var(--set-scale, 1));
   justify-items: center;
   align-items: center;
   text-align: center;
@@ -78,10 +78,10 @@
   text-align: center;
 }
 .name {
-  font-size: calc(9px * var(--row-scale, 1));
+  font-size: calc(9px * var(--set-scale, 1));
 }
 .mail {
-  font-size: calc(7px * var(--row-scale, 1));
+  font-size: calc(7px * var(--set-scale, 1));
   color: var(--page-color-second-dark);
 }
 
@@ -92,13 +92,13 @@
   width: 100%;
   height: 100%;
   font-family: 'Fira Mono', monospace;
-  font-size: calc(20px * var(--row-scale, 1));
+  font-size: calc(20px * var(--set-scale, 1));
   color: var(--page-color-main-light);
   background-color: var(--score-bg-color);
 }
 
 .avatar {
-  --size: calc(50px * var(--row-scale, 1));
+  --size: calc(50px * var(--set-scale, 1));
   position: relative;
   width: var(--size);
   height: var(--size);
@@ -127,7 +127,7 @@
 .title {
   width: 100%;
   padding: 3px 0;
-  font-size: calc(8px * var(--row-scale, 1));
+  font-size: calc(8px * var(--set-scale, 1));
   font-family: 'Fira Sans', sans-serif;
   color: var(--user-bg-color);
   background-color: var(--score-bg-color);
@@ -135,11 +135,11 @@
   text-align: center;
 }
 .datetime {
-  font-size: calc(6px * var(--row-scale, 1));
+  font-size: calc(6px * var(--set-scale, 1));
 }
 .cardsField {
-  font-size: calc(12px * var(--row-scale, 1));
+  font-size: calc(12px * var(--set-scale, 1));
 }
 .time {
-  font-size: calc(7px * var(--row-scale, 1));
+  font-size: calc(7px * var(--set-scale, 1));
 }
