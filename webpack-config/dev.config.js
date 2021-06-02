@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const { VanillaExtractPlugin } = require('@vanilla-extract/webpack-plugin');
-// const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = devConfig;
 
@@ -79,7 +79,7 @@ function devConfig(env) {
     },
     resolve: {
       extensions: ['.ts', '.js'],
-      // plugins: [new TsconfigPathsPlugin()],
+      plugins: [new TsconfigPathsPlugin()],
     },
     plugins: [
       new HtmlWebpackPlugin({

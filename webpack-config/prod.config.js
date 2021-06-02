@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const { VanillaExtractPlugin } = require('@vanilla-extract/webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 const BUILD_DIST = 'async-race';
@@ -75,7 +75,7 @@ function prodConfig(env) {
     },
     resolve: {
       extensions: ['.ts'],
-      // plugins: [new TsconfigPathsPlugin()],
+      plugins: [new TsconfigPathsPlugin()],
     },
     plugins: [
       new HtmlWebpackPlugin({
