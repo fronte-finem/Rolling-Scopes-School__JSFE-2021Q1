@@ -24,20 +24,20 @@ module.exports = {
   rules: {
     'no-param-reassign': ['error', { props: false }],
     'no-bitwise': ['error', { int32Hint: true }],
-    '@typescript-eslint/no-misused-promises': [
-      'error',
-      { checksVoidReturn: false },
-    ],
-    '@typescript-eslint/no-floating-promises': [
-      'error',
-      { ignoreVoid: true, ignoreIIFE: true },
-    ],
+    '@typescript-eslint/no-misused-promises': ['error', { checksVoidReturn: false }],
+    '@typescript-eslint/no-floating-promises': ['error', { ignoreVoid: true, ignoreIIFE: true }],
     'no-void': ['error', { allowAsStatement: true }],
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['error', { functions: false }],
     'import/prefer-default-export': 'off',
     '@typescript-eslint/explicit-member-accessibility': ['error'],
     'simple-import-sort/imports': 'error',
+    '@typescript-eslint/lines-between-class-members': [
+      'error',
+      'always',
+      { exceptAfterOverload: true, exceptAfterSingleLine: true },
+    ],
+    'no-underscore-dangle': ['error', { allowAfterThis: true }],
   },
   ignorePatterns: ['.eslintrc.js', 'webpack-config/**/*'],
 };
