@@ -1,6 +1,15 @@
-import { EngineMode, EngineQuery, generateUrl, Route } from './api';
-import { IRaceParams, IRaceResult } from './data-types';
+import { Try } from 'shared/types';
+
+import { EngineMode, EngineQuery, Route } from './api-config';
+import { IDriveParams, IDriveResult } from './data-types';
 import { validateRaceParams, validateRaceResult } from './data-validators';
+import { fetcher, generateUrl, initGet } from './helpers';
+
+const generateEngineQuery = (id: number, mode: EngineMode) =>
+  generateUrl(Route.ENGINE, {
+    [EngineQuery.ID]: id,
+    [EngineQuery.STATUS]: mode,
+  });
 
 /**
  * Starts engine of specified car, and returns it's actual velocity and distance.
@@ -30,16 +39,13 @@ import { validateRaceParams, validateRaceResult } from './data-validators';
  *   - Code: `404 NOT FOUND`
  *   - Content: *Car with such id was not found in the garage.*
  */
-
-export async function startEngine(id: number): Promise<IRaceParams | null> {
-  const url = generateUrl(Route.ENGINE, {
-    [EngineQuery.ID]: id,
-    [EngineQuery.STATUS]: EngineMode.STARTED,
+export async function startEngine(id: number): Promise<Try<IDriveParams>> {
+  return fetcher({
+    url: generateEngineQuery(id, EngineMode.STARTED),
+    validator: validateRaceParams,
   });
-  const response = await fetch(url, { method: 'GET' });
-  if (response.status !== 200) return null;
-  return validateRaceParams(await response.json());
 }
+
 /**
  * Stops engine of specified car, and returns it's actual velocity and distance.
  *
@@ -68,16 +74,13 @@ export async function startEngine(id: number): Promise<IRaceParams | null> {
  *   - Code: `404 NOT FOUND`
  *   - Content: *Car with such id was not found in the garage.*
  */
-
-export async function stopEngine(id: number): Promise<IRaceParams | null> {
-  const url = generateUrl(Route.ENGINE, {
-    [EngineQuery.ID]: id,
-    [EngineQuery.STATUS]: EngineMode.STOPED,
+export async function stopEngine(id: number): Promise<Try<IDriveParams>> {
+  return fetcher({
+    url: generateEngineQuery(id, EngineMode.STOPPED),
+    validator: validateRaceParams,
   });
-  const response = await fetch(url, { method: 'GET' });
-  if (response.status !== 200) return null;
-  return validateRaceParams(await response.json());
 }
+
 /**
  * Switches engine of specified car to drive mode and finishes with success message or fails with 500 error.
  *
@@ -98,7 +101,7 @@ export async function stopEngine(id: number): Promise<IRaceParams | null> {
  *
  * - Success Response:
  *   - Code: `200 OK`
- *   - Content: `IRaceResult`
+ *   - Content: `IDriveResult`
  *
  * - Error Response:
  *   - Code: `400 BAD REQUEST`
@@ -115,13 +118,10 @@ export async function stopEngine(id: number): Promise<IRaceParams | null> {
  *   - *Time when response will finish can be calculated using response from making engine 'started'.*
  *   - *Engine may fall randomly and at random time at the whole distance.*
  */
-
-export async function driveEngine(id: number): Promise<IRaceResult | null> {
-  const url = generateUrl(Route.ENGINE, {
-    [EngineQuery.ID]: id,
-    [EngineQuery.STATUS]: EngineMode.DRIVE,
+export async function driveEngine(id: number, signal: AbortSignal): Promise<Try<IDriveResult>> {
+  return fetcher({
+    url: generateEngineQuery(id, EngineMode.DRIVE),
+    init: initGet(signal),
+    validator: validateRaceResult,
   });
-  const response = await fetch(url, { method: 'GET' });
-  if (response.status !== 200) return null;
-  return validateRaceResult(await response.json());
 }

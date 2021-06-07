@@ -4,7 +4,14 @@
  * Server API: https://github.com/mikhama/async-race-api
  */
 
-const SERVER = 'http://127.0.0.1:3000';
+export const SERVER = 'http://127.0.0.1:3000';
+
+export enum Method {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
+}
 
 export enum Route {
   GARAGE = '/garage',
@@ -23,46 +30,40 @@ export const GARAGE_PAGE_LIMIT_DEFAULT = 7;
 // "Winners" view: 5.2) There should be pagination (10 winners per one page).
 export const WINNERS_PAGE_LIMIT_DEFAULT = 10;
 
-export const enum PageQuery {
+export enum PageQuery {
   PAGE = '_page',
   LIMIT = '_limit',
   SORT = '_sort',
   ORDER = '_order',
 }
 
-export const enum EngineQuery {
+export enum EngineQuery {
   ID = 'id',
   STATUS = 'status',
 }
 
 export enum EngineMode {
   STARTED = 'started',
-  STOPED = 'stoped',
+  STOPPED = 'stopped',
   DRIVE = 'drive',
 }
 
-export const enum SortWinners {
+export enum SortWinners {
   ID = 'id',
   WINS = 'wins',
   TIME = 'time',
 }
 
-export const enum OrderWinners {
+export enum OrderWinners {
   ASC = 'ASC',
   DESC = 'DESC',
 }
 
-type QueryParams = Record<string, string | number>;
-
-export function generateUrl(
-  path: string,
-  queryParams: QueryParams = {}
-): string {
-  return `${SERVER}${path}${generateQuery(queryParams)}`;
-}
-
-function generateQuery(queryParams: QueryParams): string {
-  return Object.entries(queryParams)
-    .map(([key, value]) => `${key}=${value}`)
-    .join('&');
+export enum FetchStatus {
+  USER_ABORT = '4242',
+  OK = '200',
+  BAD_REQUEST = '400',
+  NOT_FOUND = '404',
+  TOO_MANY_REQUESTS = '429',
+  INTERNAL_SERVER_ERROR = '500',
 }

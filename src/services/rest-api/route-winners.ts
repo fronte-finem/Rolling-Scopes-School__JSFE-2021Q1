@@ -1,15 +1,38 @@
+import { Try } from 'shared/types';
+
 import {
-  generateUrl,
-  HEADER_JSON,
   HEADER_TOTAL_COUNT,
   OrderWinners,
   PageQuery,
   Route,
   SortWinners,
   WINNERS_PAGE_LIMIT_DEFAULT,
-} from './api';
-import { IWinner, IWinnerParams, IWinnersResponse } from './data-types';
+} from './api-config';
+import { IWinner, IWinnerParams, IWinners } from './data-types';
 import { validateWinner, validateWinners } from './data-validators';
+import {
+  fetcher,
+  generateUrl,
+  initDELETE,
+  initPOST,
+  initPUT,
+  safeFetch,
+  safeResponseHandler,
+} from './helpers';
+
+const generateWinnersQuery = (
+  page: number,
+  limit = WINNERS_PAGE_LIMIT_DEFAULT,
+  sort = SortWinners.ID,
+  order = OrderWinners.ASC
+) => ({
+  url: generateUrl(Route.WINNERS, {
+    [PageQuery.PAGE]: page,
+    [PageQuery.LIMIT]: limit,
+    [PageQuery.SORT]: sort,
+    [PageQuery.ORDER]: order,
+  }),
+});
 
 /**
  * Returns json data about winners.
@@ -33,30 +56,29 @@ import { validateWinner, validateWinners } from './data-validators';
  *
  * - Success Response:
  *   - Code: `200 OK`
- *   - Content: `IWinnersResponse`
+ *   - Content: `IWinners`
  *
  * - Response Headers: `None | X-Total-Count`
  *   - *if `_limit` param is passed api returns a header that countains total number of records*
  */
-
 export async function getWinners(
   page: number,
-  limit: number = WINNERS_PAGE_LIMIT_DEFAULT,
-  sort: SortWinners = SortWinners.ID,
-  order: OrderWinners = OrderWinners.ASC
-): Promise<IWinnersResponse> {
-  const url = generateUrl(Route.WINNERS, {
-    [PageQuery.PAGE]: page,
-    [PageQuery.LIMIT]: limit,
-    [PageQuery.SORT]: sort,
-    [PageQuery.ORDER]: order,
-  });
-  const response = await fetch(url, { method: 'GET' });
-  const maybeTotalCount = response.headers.get(HEADER_TOTAL_COUNT);
-  const totalCount = maybeTotalCount ? Number(maybeTotalCount) : null;
-  const winners = validateWinners(await response.json());
-  return { winners, totalCount };
+  limit?: number,
+  sort?: SortWinners,
+  order?: OrderWinners
+): Promise<Try<IWinners>> {
+  const maybeResponse = await safeFetch(generateWinnersQuery(page, limit, sort, order));
+  if (!(maybeResponse instanceof Response)) return maybeResponse;
+  const totalCount = Number(maybeResponse.headers.get(HEADER_TOTAL_COUNT)) || 0;
+  const maybeWinners = await safeResponseHandler(maybeResponse, validateWinners);
+  return !Array.isArray(maybeWinners)
+    ? maybeWinners
+    : {
+        winners: maybeWinners,
+        totalCount: totalCount || maybeWinners.length,
+      };
 }
+
 /**
  * Returns json data about specified winner.
  *
@@ -82,13 +104,13 @@ export async function getWinners(
  *   - Code: `404 NOT FOUND`
  *   - Content: `{}`
  */
-
-export async function getWinner(id: number): Promise<IWinner | null> {
-  const url = generateUrl(`${Route.WINNERS}/${id}`);
-  const response = await fetch(url, { method: 'GET' });
-  if (response.status !== 200) return null;
-  return validateWinner(await response.json());
+export async function getWinner(id: number): Promise<Try<IWinner>> {
+  return fetcher({
+    url: generateUrl(`${Route.WINNERS}/${id}`),
+    validator: validateWinner,
+  });
 }
+
 /**
  * Creates a new records in a winners table.
  *
@@ -113,17 +135,14 @@ export async function getWinner(id: number): Promise<IWinner | null> {
  *   - Code: `500 INTERNAL SERVER ERROR`
  *   - Content: *Error: Insert failed, duplicate id*
  */
-
-export async function createWinner(winner: IWinner): Promise<IWinner | null> {
-  const url = generateUrl(Route.WINNERS);
-  const response = await fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(winner),
-    headers: HEADER_JSON,
+export async function createWinner(winner: IWinner): Promise<Try<IWinner>> {
+  return fetcher({
+    url: generateUrl(Route.WINNERS),
+    init: initPOST(winner),
+    validator: validateWinner,
   });
-  if (response.status !== 201) return null;
-  return validateWinner(await response.json());
 }
+
 /**
  * Delete specified car from a garage
  *
@@ -149,13 +168,16 @@ export async function createWinner(winner: IWinner): Promise<IWinner | null> {
  *   - Code: `404 NOT FOUND`
  *   - Content: `{}`
  */
-
-export async function deleteWinner(id: number): Promise<void> {
-  const url = generateUrl(`${Route.WINNERS}/${id}`);
-  await fetch(url, { method: 'DELETE' });
+export async function deleteWinner(id: number): Promise<Try<boolean>> {
+  return fetcher({
+    url: generateUrl(`${Route.WINNERS}/${id}`),
+    init: initDELETE(),
+    validator: () => true,
+  });
 }
+
 /**
- * Creates a new records in a winners table.
+ * Updates attributes of specified winner.
  *
  * - URL: `/winners/:id`
  *
@@ -180,16 +202,10 @@ export async function deleteWinner(id: number): Promise<void> {
  *   - Code: `404 NOT FOUND`
  *   - Content: `{}`
  */
-
-export async function updateWinner(
-  winnerParams: IWinnerParams
-): Promise<IWinner | null> {
-  const url = generateUrl(Route.WINNERS);
-  const response = await fetch(url, {
-    method: 'PUT',
-    body: JSON.stringify(winnerParams),
-    headers: HEADER_JSON,
+export async function updateWinner(id: number, winnerParams: IWinnerParams): Promise<Try<IWinner>> {
+  return fetcher({
+    url: generateUrl(`${Route.WINNERS}/${id}`),
+    init: initPUT(winnerParams),
+    validator: validateWinner,
   });
-  if (response.status !== 200) return null;
-  return validateWinner(await response.json());
 }

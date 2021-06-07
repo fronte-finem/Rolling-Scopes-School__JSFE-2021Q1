@@ -1,13 +1,25 @@
+import { Try } from 'shared/types';
+
+import { GARAGE_PAGE_LIMIT_DEFAULT, HEADER_TOTAL_COUNT, PageQuery, Route } from './api-config';
+import { ICar, ICarParams, ICars } from './data-types';
+import { validateCar, validateCars } from './data-validators';
 import {
-  GARAGE_PAGE_LIMIT_DEFAULT,
+  fetcher,
   generateUrl,
-  HEADER_JSON,
-  HEADER_TOTAL_COUNT,
-  PageQuery,
-  Route,
-} from './api';
-import { ICar, ICarParams, IGarageResponse } from './data-types';
-import { validateCar, validateGarage } from './data-validators';
+  getStatusHandler,
+  initDELETE,
+  initPOST,
+  initPUT,
+  safeFetch,
+  safeResponseHandler,
+} from './helpers';
+
+const generateGarageQuery = (page: number, limit = GARAGE_PAGE_LIMIT_DEFAULT) => ({
+  url: generateUrl(Route.GARAGE, {
+    [PageQuery.PAGE]: page,
+    [PageQuery.LIMIT]: limit,
+  }),
+});
 
 /**
  * Returns json data about cars in a garage.
@@ -29,26 +41,24 @@ import { validateCar, validateGarage } from './data-validators';
  *
  * - Success Response:
  *   - Code: `200 OK`
- *   - Content: `IGarageResponse`
+ *   - Content: `IGarage`
  *
  * - Response Headers: `None | X-Total-Count`
  *   - *if `_limit` param is passed api returns a header that countains total number of records*
  */
-
-export async function getGarage(
-  page: number,
-  limit: number = GARAGE_PAGE_LIMIT_DEFAULT
-): Promise<IGarageResponse> {
-  const url = generateUrl(Route.GARAGE, {
-    [PageQuery.PAGE]: page,
-    [PageQuery.LIMIT]: limit,
-  });
-  const response = await fetch(url, { method: 'GET' });
-  const maybeTotalCount = response.headers.get(HEADER_TOTAL_COUNT);
-  const totalCount = maybeTotalCount ? Number(maybeTotalCount) : null;
-  const cars = validateGarage(await response.json());
-  return { cars, totalCount };
+export async function getCars(page: number, limit?: number): Promise<Try<ICars>> {
+  const maybeResponse = await safeFetch(generateGarageQuery(page, limit));
+  if (!(maybeResponse instanceof Response)) return maybeResponse;
+  const totalCount = Number(maybeResponse.headers.get(HEADER_TOTAL_COUNT)) || 0;
+  const maybeCars = await safeResponseHandler(maybeResponse, validateCars);
+  return !Array.isArray(maybeCars)
+    ? maybeCars
+    : {
+        cars: maybeCars,
+        totalCount: totalCount || maybeCars.length,
+      };
 }
+
 /**
  * Returns json data about specified car.
  *
@@ -74,13 +84,13 @@ export async function getGarage(
  *   - Code: `404 NOT FOUND`
  *   - Content: `{}`
  */
-
-export async function getCar(id: number): Promise<ICar | null> {
-  const url = generateUrl(`${Route.GARAGE}/${id}`);
-  const response = await fetch(url, { method: 'GET' });
-  if (response.status !== 200) return null;
-  return validateCar(await response.json());
+export async function getCar(id: number): Promise<Try<ICar>> {
+  return fetcher({
+    url: generateUrl(`${Route.GARAGE}/${id}`),
+    validator: validateCar,
+  });
 }
+
 /**
  * Creates a new car in a garage.
  *
@@ -101,17 +111,15 @@ export async function getCar(id: number): Promise<ICar | null> {
  *   - Code: `201 CREATED`
  *   - Content: `ICar`
  */
-
-export async function createCar(carParam: ICarParams): Promise<ICar | null> {
-  const url = generateUrl(Route.GARAGE);
-  const response = await fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(carParam),
-    headers: HEADER_JSON,
+export async function createCar(carParam: ICarParams): Promise<Try<ICar>> {
+  return fetcher({
+    url: generateUrl(Route.GARAGE),
+    init: initPOST(carParam),
+    statusHandler: getStatusHandler(201),
+    validator: validateCar,
   });
-  if (response.status !== 201) return null;
-  return validateCar(await response.json());
 }
+
 /**
  * Delete specified car from a garage
  *
@@ -137,11 +145,14 @@ export async function createCar(carParam: ICarParams): Promise<ICar | null> {
  *   - Code: `404 NOT FOUND`
  *   - Content: `{}`
  */
-
-export async function deleteCar(id: number): Promise<void> {
-  const url = generateUrl(`${Route.GARAGE}/${id}`);
-  await fetch(url, { method: 'DELETE' });
+export async function deleteCar(id: number): Promise<Try<boolean>> {
+  return fetcher({
+    url: generateUrl(`${Route.GARAGE}/${id}`),
+    init: initDELETE(),
+    validator: () => true,
+  });
 }
+
 /**
  * Updates attributes of specified car.
  *
@@ -168,17 +179,10 @@ export async function deleteCar(id: number): Promise<void> {
  *   - Code: `404 NOT FOUND`
  *   - Content: `{}`
  */
-
-export async function updateCar(
-  id: number,
-  carParam: ICarParams
-): Promise<ICar | null> {
-  const url = generateUrl(`${Route.GARAGE}/${id}`);
-  const response = await fetch(url, {
-    method: 'PUT',
-    body: JSON.stringify(carParam),
-    headers: HEADER_JSON,
+export async function updateCar(id: number, carParam: ICarParams): Promise<Try<ICar>> {
+  return fetcher({
+    url: generateUrl(`${Route.GARAGE}/${id}`),
+    init: initPUT(carParam),
+    validator: validateCar,
   });
-  if (response.status !== 200) return null;
-  return validateCar(await response.json());
 }
