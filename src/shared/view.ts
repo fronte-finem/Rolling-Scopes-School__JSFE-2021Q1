@@ -1,61 +1,39 @@
-import {
-  createElement,
-  cssGetVar,
-  cssSetVar,
-  HTMLTag,
-  ICreateElementOptions,
-} from 'lib/dom-utils';
+import { createElement, cssGetVar, cssSetVar, HTMLTag, ICreateElementOptions } from './dom-utils';
 
-export type RenderOptions =
-  | string
-  | HTMLElement
-  | View
-  | Array<HTMLElement | View>;
-
-export class View<
+export abstract class View<
+  Model,
   Tag extends HTMLTag = 'div',
   CssStateClassNameEnum extends string = string,
   CssVarNameEnum extends string = string
 > {
-  public readonly root: HTMLElementTagNameMap[Tag];
+  protected root: HTMLElementTagNameMap[Tag];
 
-  public constructor(
-    classNames: string | string[],
-    options?: ICreateElementOptions<Tag>
-  ) {
+  public getRoot(): HTMLElementTagNameMap[Tag] {
+    return this.root;
+  }
+
+  public constructor(classNames: string | string[], options?: ICreateElementOptions<Tag>) {
     this.root = createElement<Tag>(classNames, options);
   }
 
-  protected overrideDestroy?: () => boolean;
+  protected hookDestroy(): boolean {
+    return !this;
+  }
 
   public destroy(): void {
-    if (this.overrideDestroy?.()) return;
+    if (this.hookDestroy()) return;
     this.root.innerHTML = '';
   }
 
-  protected overrideRender?: (param: RenderOptions) => boolean;
+  protected abstract init(): void;
 
-  public render(param: RenderOptions): void {
-    if (this.overrideRender?.(param)) return;
-    if (typeof param === 'string') {
-      this.root.innerHTML = param;
-      return;
-    }
-    const array = !Array.isArray(param) ? [param] : param;
-    this.root.append(...array.map((x) => (x instanceof View ? x.root : x)));
-  }
+  public abstract update(model: Model): void;
 
-  public setCssState(
-    cssStateClassName: CssStateClassNameEnum,
-    force: boolean
-  ): void {
+  public setCssState(cssStateClassName: CssStateClassNameEnum, force: boolean): void {
     this.root.classList.toggle(cssStateClassName, force);
   }
 
-  public setCssStateAsync(
-    cssStateClassName: CssStateClassNameEnum,
-    force: boolean
-  ): Promise<void> {
+  public setCssStateAsync(cssStateClassName: CssStateClassNameEnum, force: boolean): Promise<void> {
     this.root.classList.toggle(cssStateClassName, force);
     return new Promise((resolve) => {
       this.root.addEventListener('transitionend', () => resolve(), {

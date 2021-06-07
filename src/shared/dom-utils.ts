@@ -10,9 +10,7 @@ export function createElement<Tag extends HTMLTag = 'div'>(
   { tag = 'div' as Tag, parent }: ICreateElementOptions<Tag> = {}
 ): HTMLElementTagNameMap[Tag] {
   const element = document.createElement(tag);
-  element.classList.add(
-    ...(Array.isArray(classNames) ? classNames : [classNames])
-  );
+  element.classList.add(...(Array.isArray(classNames) ? classNames : [classNames]));
   if (parent) parent.append(element);
   return element;
 }
@@ -43,20 +41,13 @@ export function cssGetVar(element: Element, name: string): string {
   return getComputedStyle(element).getPropertyValue(name);
 }
 
-export function cssSetVar(
-  element: HTMLElement,
-  name: string,
-  value: string
-): void {
+export function cssSetVar(element: HTMLElement, name: string, value: string): void {
   element.style.setProperty(name, value);
 }
 
 const SVG_NAMESPACE_URI = 'http://www.w3.org/2000/svg';
 
-export function createSvgSpriteElement(
-  url: string,
-  classNames: string | string[]
-): SVGSVGElement {
+export function createSvgSpriteElement(url: string, classNames: string | string[]): SVGSVGElement {
   const svg = document.createElementNS(SVG_NAMESPACE_URI, 'svg');
   const use = document.createElementNS(SVG_NAMESPACE_URI, 'use');
   use.setAttribute('href', url);
