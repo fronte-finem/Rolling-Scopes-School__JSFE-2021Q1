@@ -27,5 +27,5 @@
 ---
 > # 🏎️ Async-race 🏎️
 > - [x] [📃 task](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/async-race.md)
-> - [ ] [🏗️ pull-request](https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/21)
+> - [x] [🏗️ pull-request (preview)](https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/21)
 > - [ ] [🏠 deploy](https://rolling-scopes-school.github.io/fronte-finem-JSFE2021Q1/async-race/)
