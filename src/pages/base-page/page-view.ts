@@ -1,36 +1,30 @@
 import { ButtonView } from 'components/button';
 import { PopupView } from 'components/popup';
 import { createElement } from 'shared/dom-utils';
-import { AsyncObserver } from 'shared/observer-async';
+import { Observer } from 'shared/observer';
 import { View } from 'shared/view';
 
 import { PAGE_CSS_CLASS } from './page.css';
-import { PageLogic, PageModel } from './page-model';
+import { PageViewEvent } from './page-config';
+import { PageModel } from './page-model';
 
-export enum PageEvent {
-  NEXT = 'next',
-  PREV = 'prev',
-  PAGE = 'page',
-  BEFORE_REQUEST = 'before request',
-}
-
+const formatTitle = (name: string, count: number) => `${name} (${count})`;
 const formatPageNum = (num: number) => `Page #${num}`;
 
 export abstract class PageView<M extends PageModel> extends View<M> {
-  private pageObserver = new AsyncObserver<PageEvent>();
+  private pageObserver = new Observer<PageViewEvent>();
   protected popup?: PopupView;
   private pageName: string;
-  protected pageLogic: PageLogic;
+  private pageModel?: PageModel;
   private titleTotalAmount = createElement(PAGE_CSS_CLASS.title, { tag: 'h2' });
   private titlePageNum = createElement(PAGE_CSS_CLASS.pageNum, { tag: 'h3' });
-  private btnNext = new ButtonView(PageEvent.NEXT);
-  private btnPrev = new ButtonView(PageEvent.PREV);
+  private btnNext = new ButtonView(PageViewEvent.NEXT);
+  private btnPrev = new ButtonView(PageViewEvent.PREV);
   protected content = createElement(PAGE_CSS_CLASS.content);
 
   public constructor(pageName: string, pageClassName = '') {
     super([PAGE_CSS_CLASS.page, pageClassName]);
     this.pageName = pageName;
-    this.pageLogic = new PageLogic();
     this.initPage();
   }
 
@@ -42,29 +36,30 @@ export abstract class PageView<M extends PageModel> extends View<M> {
     this.root.append(this.titleTotalAmount, this.titlePageNum);
     this.root.append(this.content);
     this.root.append(this.btnPrev.getRoot(), this.btnNext.getRoot());
-    this.btnPrev.onClick(() => this.requestPage(this.pageLogic.getPrev().num));
-    this.btnNext.onClick(() => this.requestPage(this.pageLogic.getNext().num));
+    this.btnPrev.disable();
+    this.btnNext.disable();
+    this.btnPrev.onClick(() => this.requestPage(PageViewEvent.PREV));
+    this.btnNext.onClick(() => this.requestPage(PageViewEvent.NEXT));
   }
 
-  protected updatePage(model: M): void {
-    this.pageLogic.update(model);
-    this.btnPrev.switch(this.pageLogic.getPrev().enabled);
-    this.btnNext.switch(this.pageLogic.getNext().enabled);
-    this.titleTotalAmount.textContent = `${this.pageName} (${model.totalCount})`;
+  public updatePage(model: PageModel): void {
+    if (!this.pageModel) this.pageModel = model;
+    this.btnPrev.switch(this.pageModel.getPrev().enabled);
+    this.btnNext.switch(this.pageModel.getNext().enabled);
+    this.titleTotalAmount.textContent = formatTitle(this.pageName, model.totalCount);
     this.titlePageNum.textContent = formatPageNum(model.pageNum);
   }
 
-  public async requestPage(num: number): Promise<void> {
-    await Promise.all(this.pageObserver.notify(PageEvent.BEFORE_REQUEST, num));
-    this.pageObserver.notify(PageEvent.PAGE, num);
+  private requestPage(next: PageViewEvent): void {
+    if (!this.pageModel) return;
+    this.pageObserver.notify(
+      PageViewEvent.PAGE,
+      this.pageModel.getPage(next === PageViewEvent.NEXT)
+    );
   }
 
-  protected hookRequestPage(listener: (num: number) => Promise<void>): void {
-    this.pageObserver.addListener(PageEvent.BEFORE_REQUEST, listener);
-  }
-
-  public onRequestPage(listener: (num: number) => Promise<void>): void {
-    this.pageObserver.addListener(PageEvent.PAGE, listener);
+  public onRequestPage(listener: (num: number) => void): void {
+    this.pageObserver.addListener(PageViewEvent.PAGE, listener);
   }
 
   public show(): void {
