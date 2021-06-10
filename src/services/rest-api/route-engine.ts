@@ -39,7 +39,7 @@ const generateEngineQuery = (id: number, mode: EngineMode) =>
  *   - Code: `404 NOT FOUND`
  *   - Content: *Car with such id was not found in the garage.*
  */
-export async function startEngine(id: number): Promise<Try<IDriveParams>> {
+export async function engineStart(id: number): Promise<Try<IDriveParams>> {
   return fetcher({
     url: generateEngineQuery(id, EngineMode.STARTED),
     validator: validateRaceParams,
@@ -74,7 +74,7 @@ export async function startEngine(id: number): Promise<Try<IDriveParams>> {
  *   - Code: `404 NOT FOUND`
  *   - Content: *Car with such id was not found in the garage.*
  */
-export async function stopEngine(id: number): Promise<Try<IDriveParams>> {
+export async function engineStop(id: number): Promise<Try<IDriveParams>> {
   return fetcher({
     url: generateEngineQuery(id, EngineMode.STOPPED),
     validator: validateRaceParams,
@@ -118,7 +118,7 @@ export async function stopEngine(id: number): Promise<Try<IDriveParams>> {
  *   - *Time when response will finish can be calculated using response from making engine 'started'.*
  *   - *Engine may fall randomly and at random time at the whole distance.*
  */
-export async function driveEngine(id: number, signal: AbortSignal): Promise<Try<IDriveResult>> {
+export async function engineDrive(id: number, signal: AbortSignal): Promise<Try<IDriveResult>> {
   return fetcher({
     url: generateEngineQuery(id, EngineMode.DRIVE),
     init: initGet(signal),
