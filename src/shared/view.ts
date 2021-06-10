@@ -16,15 +16,6 @@ export abstract class View<
     this.root = createElement<Tag>(classNames, options);
   }
 
-  protected hookDestroy(): boolean {
-    return !this;
-  }
-
-  public destroy(): void {
-    if (this.hookDestroy()) return;
-    this.root.innerHTML = '';
-  }
-
   protected abstract init(): void;
 
   public abstract update(model: Model): void;

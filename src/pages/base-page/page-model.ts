@@ -1,18 +1,27 @@
-export interface PageModel {
-  totalCount: number;
-  pageNum: number;
-  pageLimit: number;
-}
+import { Observer } from 'shared/observer';
 
-export class PageLogic implements PageModel {
-  public totalCount!: number;
-  public pageNum!: number;
-  public pageLimit!: number;
+import { PageModelEvent } from './page-config';
 
-  public update({ totalCount, pageNum, pageLimit }: PageModel): void {
+export class PageModel {
+  private pageObserver = new Observer<PageModelEvent>();
+  public totalCount = 0;
+  public pageNum = 1;
+
+  public constructor(public pageLimit: number) {}
+
+  public pageUpdate(totalCount: number, pageNum?: number): void {
     this.totalCount = totalCount;
-    this.pageNum = pageNum;
-    this.pageLimit = pageLimit;
+    if (pageNum !== undefined) this.pageNum = pageNum;
+    this.pageObserver.notify(PageModelEvent.UPDATE, this);
+  }
+
+  public onPageUpdate(listener: (model: PageModel) => void): void {
+    this.pageObserver.addListener(PageModelEvent.UPDATE, listener);
+  }
+
+  public getPage(next: boolean): number {
+    const { num } = next ? this.getNext() : this.getPrev();
+    return num;
   }
 
   public getNext(): { num: number; enabled: boolean } {

@@ -1,5 +1,3 @@
-import { randomFromInterval } from 'shared/numbers-utils';
-
 const DATASET = './dataset/us-car-models-2020-brands.json';
 
 export interface CarBrand {
@@ -21,8 +19,4 @@ function makeDatasetGetter(): () => Promise<CarBrand[]> {
 
 export const getDataset = makeDatasetGetter();
 
-export function getRandomCarName(dataset: CarBrand[]): string {
-  const brand = randomFromInterval(0, dataset.length - 1);
-  const model = randomFromInterval(0, dataset[brand].models.length - 1);
-  return `${dataset[brand].brand} ${dataset[brand].models[model]}`;
-}
+export const CAR_BRANDS: CarBrand[] = [];

@@ -1,95 +1,132 @@
 import { CarModel } from 'components/car';
 import { GarageModel } from 'pages/garage/garage-model';
+import { WinnersModel } from 'pages/winners/winners-model';
 import { REST_API } from 'services/rest-api';
-import { getRandomColor } from 'shared/css-utils';
 import { Observer } from 'shared/observer';
-import { Try } from 'shared/types';
+import { Maybe } from 'shared/types';
 
-import { CarBrand, getDataset, getRandomCarName } from './car-models';
-import { IRaceService, RaceEvent } from './types';
+import { RaceEvent } from './config';
 
-export class RaceService implements IRaceService {
+export class RaceService {
   private observer = new Observer<RaceEvent>();
-  private race = new Map<number, AbortController>();
+  private race = new Map<CarModel, AbortController>();
   private garage!: GarageModel;
+  private winners!: WinnersModel;
+  private raceResults: Array<CarModel> = [];
 
-  private carBrands!: CarBrand[];
-
-  public constructor(private pageLimit = REST_API.GARAGE_PAGE_LIMIT_DEFAULT) {}
-
-  public async init(garage: GarageModel): Promise<void> {
-    this.garage = garage;
-    this.carBrands = await getDataset();
+  public initGarage(model: GarageModel): void {
+    this.garage = model;
   }
 
-  private notifyGarageUpdate(model: Try<GarageModel>): void {
-    this.observer.notify(RaceEvent.CARS_UPDATE, model);
+  public initWinners(model: WinnersModel): void {
+    this.winners = model;
   }
 
-  public onCarsUpdate(listener: (model: Try<GarageModel>) => void): void {
-    this.observer.addListener(RaceEvent.CARS_UPDATE, listener);
+  public async startCar(car: CarModel): Promise<void> {
+    if (this.race.has(car)) return;
+    const maybeParams = await REST_API.engineStart(car.id);
+    if (!maybeParams) return;
+    if (maybeParams instanceof Error) return;
+    const { distance, velocity } = maybeParams;
+    car.driveStart(Math.ceil(distance / velocity));
+    this.race.set(car, new AbortController());
   }
 
-  public async getCarsForPage(pageNum?: number): Promise<void> {
-    if (pageNum) this.garage.pageNum = pageNum;
-    const maybeCars = await REST_API.getCars(this.garage.pageNum, this.pageLimit);
-    if (!maybeCars || maybeCars instanceof Error) {
-      this.notifyGarageUpdate(maybeCars);
-      return;
-    }
-    const { cars, totalCount } = maybeCars;
-    this.garage.totalCount = totalCount;
-    this.garage.cars = cars.map(({ id, name, color }) => new CarModel(id, name, color));
-    this.notifyGarageUpdate(this.garage);
+  public async stopCar(car: CarModel): Promise<void> {
+    if (!this.race.has(car)) return;
+    this.abortDriveCar(car);
+    const maybeParams = await REST_API.engineStop(car.id);
+    if (!maybeParams) return;
+    if (maybeParams instanceof Error) return;
+    car.driveReset();
   }
 
-  public async addCar({ name, color }: CarModel): Promise<void> {
-    const result = await REST_API.createCar({ name, color });
-    if (result) {
-      await this.getCarsForPage();
-    }
+  public stopCarSync(car: CarModel): void {
+    if (!this.race.has(car)) return;
+    this.abortDriveCar(car);
+    void REST_API.engineStop(car.id);
+    car.driveReset();
   }
 
-  public async delCar(id: number): Promise<void> {
-    const success = await REST_API.deleteCar(id);
-    if (success) await this.getCarsForPage();
-  }
-
-  public async updateCar(id: number, { name, color }: CarModel): Promise<void> {
-    const result = await REST_API.updateCar(id, { name, color });
-    if (result) await this.getCarsForPage();
-  }
-
-  public generateRandomCarParam(): CarModel {
-    return new CarModel(-1, getRandomCarName(this.carBrands), getRandomColor());
-  }
-
-  public async generateRandomCars(count = 100): Promise<void> {
-    const params = Array.from({ length: count }, () => this.generateRandomCarParam());
-    await Promise.all(params.map((p) => this.addCar(p)));
-    await this.getCarsForPage();
-  }
-
-  public async startCar(id: number): Promise<Try<REST_API.IDriveParams>> {
-    if (this.race.has(id)) return null;
-    const params = await REST_API.startEngine(id);
-    this.race.set(id, new AbortController());
-    return params;
-  }
-
-  public async stopCar(id: number): Promise<Try<REST_API.IDriveParams>> {
-    if (!this.race.has(id)) return null;
-    const controller = this.race.get(id) as AbortController;
+  public abortDriveCar(car: CarModel): void {
+    if (!this.race.has(car)) return;
+    const controller = this.race.get(car) as AbortController;
     controller.abort();
-    this.race.delete(id);
-    const params = await REST_API.stopEngine(id);
-    return params;
+    this.race.delete(car);
   }
 
-  public async driveCar(id: number): Promise<Try<REST_API.IDriveResult>> {
-    if (!this.race.has(id)) return null;
-    const controller = this.race.get(id) as AbortController;
-    const params = await REST_API.driveEngine(id, controller.signal);
-    return params;
+  public async driveCar(car: CarModel): Promise<Maybe<CarModel>> {
+    if (!this.race.has(car)) return car;
+    const controller = this.race.get(car) as AbortController;
+    car.driveMove();
+    const maybeResult = await REST_API.engineDrive(car.id, controller.signal);
+    if (!maybeResult) return null;
+    if (maybeResult instanceof Error) {
+      if (maybeResult instanceof REST_API.EngineError) {
+        car.drivePause();
+      }
+      return null;
+    }
+    car.driveFinish();
+    return car;
+  }
+
+  public async startAndDriveCar(car: CarModel): Promise<void> {
+    await this.startCar(car);
+    await this.driveCar(car);
+  }
+
+  public abortRace(): void {
+    if (this.race.size === 0) return;
+    this.raceResults = [];
+    [...this.race.keys()].map((car) => this.abortDriveCar(car));
+  }
+
+  public async resetRace(): Promise<void> {
+    if (this.race.size === 0) return;
+    this.raceResults = [];
+    await Promise.all([...this.race.keys()].map((car) => this.stopCar(car)));
+  }
+
+  public resetRaceSync(): void {
+    if (this.race.size === 0) return;
+    this.raceResults = [];
+    [...this.race.keys()].map((car) => this.stopCarSync(car));
+  }
+
+  public async startRace(): Promise<void> {
+    await this.resetRace();
+    await Promise.all(this.garage.cars.map((car) => this.startCar(car)));
+    const driveTasks = this.garage.cars.map((car) => this.driveCar(car));
+    this.raceResults = [];
+    await this.doRace(driveTasks);
+    this.notifyRaceEnd(this.raceResults);
+  }
+
+  private async doRace(driveTasks: Promise<Maybe<CarModel>>[]): Promise<void> {
+    if (driveTasks.length === 0) return;
+    const race = driveTasks.map((p) => p.then((c) => ({ car: c, promise: p })));
+    const { car, promise } = await Promise.race(race);
+    if (car) {
+      if (this.raceResults.length === 0) this.notifyRaceWin(car);
+      this.raceResults.push(car);
+    }
+    await this.doRace(driveTasks.filter((p) => p !== promise));
+  }
+
+  public onRaceWin(listener: (winner: CarModel) => void): void {
+    this.observer.addListener(RaceEvent.RACE_WIN, listener);
+  }
+
+  private notifyRaceWin(winner: CarModel): void {
+    this.observer.notify(RaceEvent.RACE_WIN, winner);
+  }
+
+  public onRaceEnd(listener: (finishers: CarModel[]) => void): void {
+    this.observer.addListener(RaceEvent.RACE_END, listener);
+  }
+
+  private notifyRaceEnd(finishers: CarModel[]): void {
+    this.observer.notify(RaceEvent.RACE_END, finishers);
   }
 }

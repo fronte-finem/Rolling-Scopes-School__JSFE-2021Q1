@@ -25,6 +25,10 @@ export class WinnersView extends PageView<WinnersModel> {
     this.getRoot();
   }
 
+  public handleError(error: Error): void {
+    this.popup?.update(`${error.name}: ${error.message}`);
+  }
+
   public update(model: WinnersModel): void {
     this.updatePage(model);
   }

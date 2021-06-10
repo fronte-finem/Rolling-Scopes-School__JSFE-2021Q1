@@ -1,12 +1,11 @@
 import { ButtonView } from 'components/button';
-import { CAR_EMPTY_ID, CarModel, CarState } from 'components/car';
+import { CarModel } from 'components/car';
 import { CarInputView } from 'components/car-input';
 import { TrackState, TrackView } from 'components/track';
 import { PageView } from 'pages/base-page';
 import { REST_API } from 'services/rest-api';
 import { createElement } from 'shared/dom-utils';
 import { Observer } from 'shared/observer';
-import { Try } from 'shared/types';
 
 import { GAGRAGE_CSS_CLASS } from './garage.css';
 import { CarageButtons, GARAGE, GarageViewEvent, GENERATE_COUNT } from './garage-config';
@@ -28,14 +27,14 @@ export class GarageView extends PageView<GarageModel> {
   private inputAdd = new CarInputView(CarageButtons.ADD);
   private inputUpdate = new CarInputView(CarageButtons.UPDATE);
   private btnGenerate = new ButtonView(CarageButtons.GENERATE);
+  private btnRemovePage = new ButtonView(CarageButtons.REMOVE_PAGE);
   private btnStartRace = new ButtonView(CarageButtons.RACE);
   private btnResetRace = new ButtonView(CarageButtons.RESET);
+  private tracksList = createElement('tracks');
   private tracks = Array.from(
     { length: REST_API.GARAGE_PAGE_LIMIT_DEFAULT },
     () => new TrackView()
   );
-
-  private carsMap!: Map<number, CarModel>;
 
   public constructor() {
     super(GARAGE, GAGRAGE_CSS_CLASS.garage);
@@ -44,66 +43,47 @@ export class GarageView extends PageView<GarageModel> {
 
   protected init(): void {
     this.content.append(this.inputAdd.getRoot(), this.inputUpdate.getRoot());
-    this.content.append(this.btnGenerate.getRoot());
+    this.content.append(this.btnGenerate.getRoot(), this.btnRemovePage.getRoot());
     this.content.append(this.btnStartRace.getRoot(), this.btnResetRace.getRoot());
-    const tracksList = createElement('tracks', { tag: 'ul' });
-    tracksList.append(...this.tracks.map((track) => track.getRoot()));
-    this.content.append(tracksList);
-    this.bindRequests();
-    this.bindTracks();
+    this.tracks.forEach((track) => this.tracksList.appendChild(track.getRoot()));
+    this.content.append(this.tracksList);
+    this.initBinds();
   }
 
-  private bindRequests() {
-    this.hookRequestPage((num) => this.requestGaragePage(num));
-    this.inputAdd.onSubmit((car) => this.requestCreateCar(car));
+  private initBinds() {
+    this.inputAdd.onSubmit((car) => this.requestAddCar(car));
     this.inputUpdate.onSubmit((car) => this.requestUpdateCar(car));
     this.inputUpdate.disable();
     this.btnGenerate.onClick(() => this.requestGenerateCars());
-    this.btnStartRace.onClick(() => this.startRace());
-    this.btnResetRace.onClick(() => this.resetRace());
+    this.btnRemovePage.onClick(() => this.requestRemovePage());
+    this.btnStartRace.onClick(() => this.requestStartRace());
+    this.btnResetRace.onClick(() => this.requestResetRace());
+    this.tracks.forEach((track) => this.bindTrack(track));
   }
 
-  private bindTracks(): void {
-    this.tracks.forEach((track) => {
-      track.onSelect((id) => this.selectCar(id));
-      track.onRemove((id) => this.requestRemoveCar(id));
-      track.onStart((id) => this.requestStartCar(id));
-      track.onStop((id) => this.requestStopCar(id));
-      track.switchButtons();
-    });
+  private bindTrack(track: TrackView): void {
+    track.onSelect((car) => car && this.selectCar(car));
+    track.onRemove((car) => car && this.requestRemoveCar(car));
+    track.onStart((car) => car && this.requestStartCar(car));
+    track.onStop((car) => car && this.requestStopCar(car));
+    track.switchButtons();
   }
 
   public update(model: GarageModel): void {
-    super.updatePage(model);
-    this.carsMap = new Map<number, CarModel>();
-    this.tracks.forEach((track, i) => {
-      const car = model.cars[i];
-      track.update(car);
-      if (car) this.carsMap.set(car.id, car);
-    });
+    this.tracks.forEach((track, i) => track.update(model.cars[i]));
   }
 
-  public onRequestGaragePage(listener: (num?: number) => Promise<void>): void {
-    this.observer.addListener(GarageViewEvent.GARAGE, listener);
+  public updateCars(cars: CarModel[]): void {
+    this.tracks.forEach((track, i) => track.update(cars[i]));
   }
 
-  public async requestGaragePage(num: number): Promise<void> {
-    await this.resetRace();
-    this.observer.notify(GarageViewEvent.GARAGE, num);
+  public handleError(error: Error): void {
+    this.popup?.update(`${error.name}: ${error.message}`);
   }
 
-  public updateGaragePage(maybeModel: Try<GarageModel>): void {
-    if (!maybeModel) return;
-    if (maybeModel instanceof Error) {
-      this.popup?.update(`${maybeModel.name}: ${maybeModel.message}`);
-      return;
-    }
-    this.update(maybeModel);
-  }
-
-  public selectCar(id: number): void {
+  public selectCar(car: CarModel): void {
     this.inputUpdate.enable();
-    this.inputUpdate.update(this.carsMap.get(id) as CarModel);
+    this.inputUpdate.update(car);
   }
 
   private requestGenerateCars(count = GENERATE_COUNT): void {
@@ -114,12 +94,45 @@ export class GarageView extends PageView<GarageModel> {
     this.observer.addListener(GarageViewEvent.GENERATE, listener);
   }
 
-  private requestCreateCar(car: CarModel): void {
+  private requestRemovePage(): void {
+    this.observer.notify(GarageViewEvent.REMOVE_PAGE, null);
+  }
+
+  public onRequestRemovePage(listener: () => void): void {
+    this.observer.addListener(GarageViewEvent.REMOVE_PAGE, listener);
+  }
+
+  public onRequestAddCar(listener: (car: CarModel) => void): void {
+    this.observer.addListener(GarageViewEvent.ADD, listener);
+  }
+
+  private requestAddCar(car: CarModel): void {
     this.observer.notify(GarageViewEvent.ADD, car);
   }
 
-  public onRequestCreateCar(listener: (car: CarModel) => void): void {
-    this.observer.addListener(GarageViewEvent.ADD, listener);
+  public addCar(car: CarModel): void {
+    this.tracks.find((track) => track.car === null)?.update(car);
+  }
+
+  public onRequestRemoveCar(listener: (car: CarModel) => void): void {
+    this.observer.addListener(GarageViewEvent.REMOVE, listener);
+  }
+
+  private requestRemoveCar(car: CarModel): void {
+    if (car.id === this.inputUpdate.getId()) this.inputUpdate.reset();
+    this.observer.notify(GarageViewEvent.REMOVE, car);
+  }
+
+  public removeCar(car: CarModel): void {
+    const maybeTrack = this.tracks.find((t) => t.car === car);
+    if (!maybeTrack) return;
+    this.tracks = this.tracks.filter((t) => t !== maybeTrack);
+    maybeTrack.reset();
+    this.tracksList.removeChild(maybeTrack.getRoot());
+    const newTrack = new TrackView();
+    this.tracks.push(newTrack);
+    this.tracksList.appendChild(newTrack.getRoot());
+    this.bindTrack(newTrack);
   }
 
   private requestUpdateCar(car: CarModel): void {
@@ -130,82 +143,52 @@ export class GarageView extends PageView<GarageModel> {
     this.observer.addListener(GarageViewEvent.UPDATE, listener);
   }
 
-  private requestRemoveCar(id: number): void {
-    if (id === this.inputUpdate.getId()) this.inputUpdate.reset();
-    this.observer.notify(GarageViewEvent.REMOVE, id);
+  public onRequestStartCar(listener: (car: CarModel) => void): void {
+    this.observer.addListener(GarageViewEvent.START, listener);
   }
 
-  public onRequestRemoveCar(listener: (id: number) => void): void {
-    this.observer.addListener(GarageViewEvent.REMOVE, listener);
+  private requestStartCar(car: CarModel): void {
+    this.observer.notify(GarageViewEvent.START, car);
   }
 
-  public onRequestStartCar!: (id: number) => Promise<Try<REST_API.IDriveParams>>;
-
-  private async requestStartCar(id: number): Promise<void> {
-    const maybeParams = await this.onRequestStartCar(id);
-    if (!maybeParams) return;
-    if (maybeParams instanceof Error) return;
-    if (maybeParams) {
-      this.moveCar(id, maybeParams);
-      await this.requestDriveCar(id);
-    }
+  public onRequestStopCar(listener: (car: CarModel) => void): void {
+    this.observer.addListener(GarageViewEvent.STOP, listener);
   }
 
-  public onRequestStopCar!: (id: number) => Promise<Try<REST_API.IDriveParams>>;
-
-  private async requestStopCar(id: number): Promise<void> {
-    const maybeParams = await this.onRequestStopCar(id);
-    if (!maybeParams) return;
-    if (maybeParams instanceof Error) return;
-    if (maybeParams) this.stopCar(id);
+  private requestStopCar(car: CarModel): void {
+    this.observer.notify(GarageViewEvent.STOP, car);
   }
 
-  public onRequestDriveCar!: (id: number) => Promise<Try<REST_API.IDriveResult>>;
+  public onRequestStartRace!: () => Promise<void>;
 
-  private async requestDriveCar(id: number): Promise<void> {
-    const maybeResult = await this.onRequestDriveCar(id);
-    if (!maybeResult) return;
-    if (maybeResult instanceof REST_API.EngineError) {
-      this.pauseCar(id);
-    }
+  private async requestStartRace(): Promise<void> {
+    this.btnStartRace.disable();
+    this.getCarTracks().forEach((track) => track.switchButtons(TrackState.DRIVE));
+    await this.onRequestStartRace();
+    this.btnStartRace.enable();
   }
 
-  public moveCar(id: number, raceParams: REST_API.IDriveParams): void {
-    this.carsMap.get(id)?.move(raceParams);
-  }
+  public onRequestResetRace!: () => Promise<void>;
 
-  public stopCar(id: number): void {
-    this.carsMap.get(id)?.reset();
-  }
-
-  public pauseCar(id: number): void {
-    this.carsMap.get(id)?.pause();
-  }
-
-  public async resetRace(): Promise<void> {
-    if (!this.carsMap) return;
+  private async requestResetRace(): Promise<void> {
     this.btnStartRace.disable();
     this.btnResetRace.disable();
     this.getCarTracks().forEach((track) => track.switchButtons(TrackState.EMPTY));
-    await Promise.all(
-      [...this.carsMap.values()]
-        .filter((car) => car.state !== CarState.INITIAL)
-        .map((car) => this.requestStopCar(car.id))
-    );
+    await this.onRequestResetRace();
     this.getCarTracks().forEach((track) => track.switchButtons(TrackState.INITIAL));
     this.btnStartRace.enable();
     this.btnResetRace.enable();
   }
 
-  public async startRace(): Promise<void> {
-    await this.resetRace();
-    this.btnStartRace.disable();
-    this.getCarTracks().forEach((track) => track.switchButtons(TrackState.DRIVE));
-    await Promise.all([...this.carsMap.keys()].map((id) => this.requestStartCar(id)));
-    this.btnStartRace.enable();
+  private getCarTracks() {
+    return this.tracks.filter((track) => track.car !== null);
   }
 
-  private getCarTracks() {
-    return this.tracks.filter((track) => track.carID !== CAR_EMPTY_ID);
+  public showWinner(car: CarModel): void {
+    this.popup?.update(`Winner: ${car.name}!`);
+  }
+
+  public showFinishers(cars: CarModel[]): void {
+    this.popup?.update(`Finishers:\n ${cars.map((car, i) => `${i + 1}) ${car.name}`).join('\n')}!`);
   }
 }

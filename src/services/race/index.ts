@@ -1,2 +1,3 @@
-export * as TYPE from './types';
+export * from './garage';
 export * from './race';
+export * from './winners';

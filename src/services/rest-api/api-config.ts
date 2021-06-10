@@ -21,10 +21,6 @@ export enum Route {
 
 export const HEADER_TOTAL_COUNT = 'X-Total-Count';
 
-export const HEADER_JSON = Object.freeze({
-  'Content-Type': 'application/json',
-});
-
 // "Garage" view: 2.4) There should be pagination on the "Garage" view (7 cars per one page).
 export const GARAGE_PAGE_LIMIT_DEFAULT = 7;
 // "Winners" view: 5.2) There should be pagination (10 winners per one page).

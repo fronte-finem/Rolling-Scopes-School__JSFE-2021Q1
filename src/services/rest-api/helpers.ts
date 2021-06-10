@@ -1,6 +1,6 @@
 import { Maybe, Try } from 'shared/types';
 
-import { HEADER_JSON, Method, SERVER } from './api-config';
+import { Method, SERVER } from './api-config';
 import { AbortError, EngineError, FetchError, ParseJsonError, ResponseError } from './errors';
 
 type QueryParams = Record<string, string | number>;
@@ -21,9 +21,12 @@ export function generateRequest<T>(
   signal?: AbortSignal
 ): RequestInit {
   const init: RequestInit = { method };
+  init.headers = new Headers();
+  init.headers.append('pragma', 'no-cache');
+  init.headers.append('cache-control', 'no-cache');
   if (data) {
     init.body = JSON.stringify(data);
-    init.headers = HEADER_JSON;
+    init.headers.append('content-type', 'application/json');
   }
   if (signal) {
     init.signal = signal;

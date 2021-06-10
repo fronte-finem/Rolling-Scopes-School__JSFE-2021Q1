@@ -6,14 +6,12 @@ export function getVarName(variable: string): string {
 }
 
 /**
- * @param dark flag
- * @returns h in [0,360], s in [0,1], l in [0, 0.5] or [0.5, 1]
+ * @returns h in [0,360], s in [0,1], l in [0, 1]
  */
-function getRandomHSL(dark = false): [h: number, s: number, l: number] {
-  const modifier = dark ? 0 : 0.5;
+function getRandomHSL(): [h: number, s: number, l: number] {
   const h = randomFromInterval(0, 359);
   const s = Math.random();
-  const l = modifier + 0.5 * Math.random();
+  const l = Math.random();
   return [h, s, l];
 }
 
@@ -47,8 +45,8 @@ function rgb2hex(r: number, g: number, b: number) {
     .join('')}`;
 }
 
-export function getRandomColor(dark = false): string {
-  const [h, s, l] = getRandomHSL(dark);
+export function getRandomColor(): string {
+  const [h, s, l] = getRandomHSL();
   const [r, g, b] = hsl2rgb(h, s, l);
   return rgb2hex(r, g, b);
 }
