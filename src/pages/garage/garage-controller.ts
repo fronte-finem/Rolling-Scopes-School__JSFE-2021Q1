@@ -1,4 +1,4 @@
-import { IRaceService } from 'services/race/types';
+import { GarageService, RaceService } from 'services/race';
 
 import { GarageModel } from './garage-model';
 import { GarageView } from './garage-view';
@@ -7,28 +7,55 @@ export class GarageController {
   public readonly model = new GarageModel();
   public readonly view = new GarageView();
 
-  public constructor(private readonly raceService: IRaceService) {
-    this.initBinds();
+  public constructor(
+    private readonly garageService: GarageService,
+    private readonly raceService: RaceService
+  ) {
+    this.initGarageBinds();
+    this.initRaceBinds();
   }
 
-  private initBinds(): void {
-    this.view.onRequestGaragePage((num) => this.raceService.getCarsForPage(num));
-    this.raceService.onCarsUpdate((maybeModel) => this.view.updateGaragePage(maybeModel));
-
-    this.view.onRequestGenerateCars((count) => this.raceService.generateRandomCars(count));
-
-    this.view.onRequestCreateCar((model) => this.raceService.addCar(model));
-    this.view.onRequestRemoveCar((id) => this.raceService.delCar(id));
-    this.view.onRequestUpdateCar((model) => this.raceService.updateCar(model.id, model));
-
-    this.view.onRequestStartCar = (id) => this.raceService.startCar(id);
-    this.view.onRequestStopCar = (id) => this.raceService.stopCar(id);
-    this.view.onRequestDriveCar = (id) => this.raceService.driveCar(id);
-  }
-
-  public async init(): Promise<void> {
+  public init(): Promise<void> {
     this.view.update(this.model);
-    await this.raceService.init(this.model);
-    return this.view.requestGaragePage(1);
+    this.garageService.initGarage(this.model);
+    this.raceService.initGarage(this.model);
+    return this.garageService.getCarsForPage();
+  }
+
+  private initGarageBinds(): void {
+    this.garageService.onError((error) => this.view.handleError(error));
+    this.model.onPageUpdate((page) => this.view.updatePage(page));
+    this.model.onCarsUpdate((cars) => this.view.updateCars(cars));
+    // this.model.onCarRemove((car) => this.view.removeCar(car));
+    this.model.onCarAdd((car) => this.view.addCar(car));
+
+    this.view.onRequestPage(async (num) => {
+      this.raceService.resetRaceSync();
+      await this.garageService.getCarsForPage(num);
+    });
+    this.view.onRequestRemoveCar(async (car) => {
+      this.raceService.abortDriveCar(car);
+      await this.garageService.removeCar(car);
+      await this.garageService.getCarsForPage();
+    });
+    this.view.onRequestRemovePage(async () => {
+      this.raceService.abortRace();
+      const tasks = this.model.cars.map((car) => this.garageService.removeCar(car));
+      await Promise.all(tasks);
+      await this.garageService.getCarsForPage();
+    });
+    this.view.onRequestAddCar((car) => this.garageService.addCar(car));
+    this.view.onRequestUpdateCar((car) => this.garageService.updateCar(car));
+    this.view.onRequestGenerateCars((count) => this.garageService.generateRandomCars(count));
+  }
+
+  private initRaceBinds(): void {
+    this.view.onRequestStartCar((car) => this.raceService.startAndDriveCar(car));
+    this.view.onRequestStopCar((car) => this.raceService.stopCar(car));
+    this.view.onRequestStartRace = () => this.raceService.startRace();
+    this.view.onRequestResetRace = () => this.raceService.resetRace();
+
+    this.raceService.onRaceWin((car) => this.view.showWinner(car));
+    this.raceService.onRaceEnd((cars) => this.view.showFinishers(cars));
   }
 }
