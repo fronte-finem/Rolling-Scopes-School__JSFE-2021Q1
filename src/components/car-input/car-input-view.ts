@@ -1,5 +1,5 @@
 import { ButtonView } from 'components/button';
-import { CAR_EMPTY_ID, CarModel } from 'components/car/car-model';
+import { CAR_EMPTY_ID, CarModel } from 'components/car';
 import { createElement } from 'shared/dom-utils';
 import { Observer } from 'shared/observer';
 import { View } from 'shared/view';
