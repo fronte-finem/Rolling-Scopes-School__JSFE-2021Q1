@@ -19,4 +19,11 @@ export class Observer<EventEnum> {
   public notify<T>(event: EventEnum, data: T): void {
     this.listenersMap.get(event)?.forEach((listener) => listener(data));
   }
+
+  public reset(): void {
+    this.listenersMap.forEach((listeners) => {
+      listeners.length = 0;
+    });
+    this.listenersMap.clear();
+  }
 }
