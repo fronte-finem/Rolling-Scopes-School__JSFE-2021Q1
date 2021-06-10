@@ -14,12 +14,12 @@ const root = style({
   },
 });
 
-const buttons = style({
+const header = style({
   display: 'flex',
   columnGap: '5px',
 });
 
-const wrapper = style({
+const body = style({
   backgroundColor: colorVar,
 });
 
@@ -33,8 +33,8 @@ const carName = style({});
 
 export const TRACK_CSS_CLASS = {
   root,
-  buttons,
-  wrapper,
+  header,
+  body,
   track,
   carName,
 };
