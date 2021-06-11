@@ -1,8 +1,7 @@
+import { CarModel } from 'components/car';
 import { PageModel } from 'pages/base-page';
 import { REST_API } from 'services/rest-api';
-import { Observer } from 'shared/observer';
-
-import { WinnersModelEvent } from './winners-config';
+import { Maybe } from 'shared/types';
 
 // 1.3 (+5)  "Winners" view should contain its name, page number, and the full amount of items in the database (how many records the winners table contains).
 // 5.1 (+10) After some car wins it should be displayed at the "Winners view" table.
@@ -13,40 +12,30 @@ import { WinnersModelEvent } from './winners-config';
 // 5.4 (+10) User should be able to sort cars by wins number and by best time (ASC, DESC).
 
 export class WinnersModel extends PageModel {
-  private observer = new Observer<WinnersModelEvent>();
-  public winners = new Array<REST_API.IWinner>();
+  public cars = new Array<CarModel>();
+
+  public onWinnersUpdate?: (winners: Array<CarModel>) => void;
 
   public constructor() {
     super(REST_API.WINNERS_PAGE_LIMIT_DEFAULT);
   }
 
-  public updateWinners(winners: Array<REST_API.IWinner>): void {
-    console.log(winners);
-    this.winners = winners;
-    this.observer.notify(WinnersModelEvent.UPDATE, winners);
+  public updateWinners(cars: Array<CarModel>): void {
+    this.cars = cars;
+    this.onWinnersUpdate?.(cars);
   }
 
-  public onWinnersUpdate(listener: (winners: Array<REST_API.IWinner>) => void): void {
-    this.observer.addListener(WinnersModelEvent.UPDATE, listener);
+  public get(id: number): Maybe<CarModel> {
+    return this.cars.find((car) => car.id === id) || null;
   }
 
-  public addWinner(winner: REST_API.IWinner): void {
-    console.log(winner);
-    if (this.winners.length >= this.pageLimit) return;
-    this.winners.push(winner);
-    this.observer.notify(WinnersModelEvent.ADD, winner);
+  public add(car: CarModel): Maybe<CarModel> {
+    if (this.cars.length >= this.pageLimit) return null;
+    this.cars.push(car);
+    return car;
   }
 
-  public onWinnerAdd(listener: (winner: REST_API.IWinner) => void): void {
-    this.observer.addListener(WinnersModelEvent.ADD, listener);
-  }
-
-  public removeWinner(winner: REST_API.IWinner): void {
-    this.winners = this.winners.filter((w) => w !== winner);
-    this.observer.notify(WinnersModelEvent.REMOVE, winner);
-  }
-
-  public onWinnerRemove(listener: (winner: REST_API.IWinner) => void): void {
-    this.observer.addListener(WinnersModelEvent.REMOVE, listener);
+  public remove(id: number): void {
+    this.cars = this.cars.filter((car) => car.id !== id);
   }
 }
