@@ -1,23 +1,25 @@
 import { AppRoute, AppView } from 'app';
-import { GarageController } from 'pages/garage';
-import { WinnersController } from 'pages/winners';
-import { GarageService, RaceService, WinnersService } from 'services/race';
+import { GarageController, GarageModel } from 'pages/garage';
+import { WinnersController, WinnersModel } from 'pages/winners';
+import { CarsService, RaceService } from 'services/race';
 
 import { root, theme } from './index.css';
 
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
   document.body.classList.add(root, theme);
 
-  const garageService = new GarageService();
-  const winnersService = new WinnersService();
-  const raceService = new RaceService();
+  const garageModel = new GarageModel();
+  const winnersModel = new WinnersModel();
 
-  const garageController = new GarageController(garageService, raceService);
-  const winnersController = new WinnersController(winnersService, raceService);
+  const carsService = new CarsService(garageModel, winnersModel);
+  const raceService = new RaceService(garageModel, winnersModel);
+
+  const garageController = new GarageController(garageModel, carsService, raceService);
+  const winnersController = new WinnersController(winnersModel, carsService, raceService);
 
   const app = new AppView(AppRoute.GARAGE, garageController.view, winnersController.view);
   document.body.append(app.getRoot());
 
-  void garageController.init();
-  void winnersController.init();
+  await garageController.init();
+  await winnersController.init();
 });
