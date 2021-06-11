@@ -38,6 +38,7 @@ module.exports = {
       { exceptAfterOverload: true, exceptAfterSingleLine: true },
     ],
     'no-underscore-dangle': ['error', { allowAfterThis: true }],
+    'no-await-in-loop': 'warn',
   },
   ignorePatterns: ['.eslintrc.js', 'webpack-config/**/*'],
 };
