@@ -1,8 +1,8 @@
 import { Try } from 'shared/types';
 
 import { EngineMode, EngineQuery, Route } from './api-config';
-import { IDriveParams, IDriveResult } from './data-types';
-import { validateRaceParams, validateRaceResult } from './data-validators';
+import { DriveParamsDTO, DriveResultDTO } from './data-types';
+import { validateRaceParamsDTO, validateRaceResultDTO } from './data-validators';
 import { fetcher, generateUrl, initGet } from './helpers';
 
 const generateEngineQuery = (id: number, mode: EngineMode) =>
@@ -39,10 +39,10 @@ const generateEngineQuery = (id: number, mode: EngineMode) =>
  *   - Code: `404 NOT FOUND`
  *   - Content: *Car with such id was not found in the garage.*
  */
-export async function engineStart(id: number): Promise<Try<IDriveParams>> {
+export async function engineStart(id: number): Promise<Try<DriveParamsDTO>> {
   return fetcher({
     url: generateEngineQuery(id, EngineMode.STARTED),
-    validator: validateRaceParams,
+    validator: validateRaceParamsDTO,
   });
 }
 
@@ -74,10 +74,10 @@ export async function engineStart(id: number): Promise<Try<IDriveParams>> {
  *   - Code: `404 NOT FOUND`
  *   - Content: *Car with such id was not found in the garage.*
  */
-export async function engineStop(id: number): Promise<Try<IDriveParams>> {
+export async function engineStop(id: number): Promise<Try<DriveParamsDTO>> {
   return fetcher({
     url: generateEngineQuery(id, EngineMode.STOPPED),
-    validator: validateRaceParams,
+    validator: validateRaceParamsDTO,
   });
 }
 
@@ -118,10 +118,10 @@ export async function engineStop(id: number): Promise<Try<IDriveParams>> {
  *   - *Time when response will finish can be calculated using response from making engine 'started'.*
  *   - *Engine may fall randomly and at random time at the whole distance.*
  */
-export async function engineDrive(id: number, signal: AbortSignal): Promise<Try<IDriveResult>> {
+export async function engineDrive(id: number, signal: AbortSignal): Promise<Try<DriveResultDTO>> {
   return fetcher({
     url: generateEngineQuery(id, EngineMode.DRIVE),
     init: initGet(signal),
-    validator: validateRaceResult,
+    validator: validateRaceResultDTO,
   });
 }
