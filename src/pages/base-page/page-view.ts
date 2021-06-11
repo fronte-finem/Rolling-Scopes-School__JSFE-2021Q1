@@ -11,28 +11,32 @@ import { PageModel } from './page-model';
 const formatTitle = (name: string, count: number) => `${name} (${count})`;
 const formatPageNum = (num: number) => `Page #${num}`;
 
-export abstract class PageView<M extends PageModel> extends View<M> {
+export abstract class PageView extends View {
   private pageObserver = new Observer<PageViewEvent>();
-  protected popup?: PopupView;
+  protected _popup?: PopupView;
   private pageName: string;
-  private pageModel?: PageModel;
   private titleTotalAmount = createElement(PAGE_CSS_CLASS.title, { tag: 'h2' });
   private titlePageNum = createElement(PAGE_CSS_CLASS.pageNum, { tag: 'h3' });
   private btnNext = new ButtonView(PageViewEvent.NEXT);
   private btnPrev = new ButtonView(PageViewEvent.PREV);
   protected content = createElement(PAGE_CSS_CLASS.content);
 
-  public constructor(pageName: string, pageClassName = '') {
+  public constructor(private pageModel: PageModel, pageName: string, pageClassName = '') {
     super([PAGE_CSS_CLASS.page, pageClassName]);
     this.pageName = pageName;
-    this.initPage();
+    this.init();
+    this.updatePage(pageModel);
   }
 
   public setPopup(popup: PopupView): void {
-    this.popup = popup;
+    this._popup = popup;
   }
 
-  protected initPage(): void {
+  public popup(message: string): void {
+    this._popup?.update(message);
+  }
+
+  private init(): void {
     this.root.append(this.titleTotalAmount, this.titlePageNum);
     this.root.append(this.content);
     this.root.append(this.btnPrev.getRoot(), this.btnNext.getRoot());
@@ -50,8 +54,10 @@ export abstract class PageView<M extends PageModel> extends View<M> {
     this.titlePageNum.textContent = formatPageNum(model.pageNum);
   }
 
+  protected hookRequestPage?: () => void;
+
   private requestPage(next: PageViewEvent): void {
-    if (!this.pageModel) return;
+    this.hookRequestPage?.();
     this.pageObserver.notify(
       PageViewEvent.PAGE,
       this.pageModel.getPage(next === PageViewEvent.NEXT)
