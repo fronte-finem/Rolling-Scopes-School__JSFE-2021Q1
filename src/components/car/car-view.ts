@@ -1,27 +1,25 @@
+import { Maybe } from 'shared/types';
 import { View } from 'shared/view';
 
 import { CAR_CSS_CLASS, CAR_CSS_VAR } from './car.css';
 import { CarState } from './car-congfig';
 import { CarModel } from './car-model';
 
-export class CarView extends View<CarModel> {
-  private state = CarState.INITIAL;
-
+export class CarView extends View {
   private stateMachine = new Map<CarState, (car: CarModel) => void>();
 
-  public constructor(model: CarModel) {
+  public constructor(model: Maybe<CarModel>) {
     super(CAR_CSS_CLASS.car);
     this.init();
-    model.onUpdate((car: CarModel) => this.update(car));
-    model.onDrive((car: CarModel) => this.drive(car));
     this.update(model);
   }
 
-  protected init(): void {
-    this.stateMachine.set(CarState.INITIAL, (car) => {
+  private init(): void {
+    this.stateMachine.set(CarState.INITIAL, () => {
+      this.setCssState(CAR_CSS_CLASS.hidden, false);
       this.setCssState(CAR_CSS_CLASS.broken, false);
       this.setCssState(CAR_CSS_CLASS.finish, false);
-      this.setCssVar(CAR_CSS_VAR.position, `${car.position}%`);
+      this.setCssVar(CAR_CSS_VAR.position, '0%');
     });
     this.stateMachine.set(CarState.DRIVE, (car) => {
       this.setCssVar(CAR_CSS_VAR.position, `${car.position}%`);
@@ -34,8 +32,13 @@ export class CarView extends View<CarModel> {
     });
   }
 
-  public update(car: CarModel): void {
-    this.setCssVar(CAR_CSS_VAR.color, car.color);
+  public update(model: Maybe<CarModel>): void {
+    if (!model) {
+      this.setCssState(CAR_CSS_CLASS.hidden, true);
+    } else {
+      this.setCssState(CAR_CSS_CLASS.hidden, false);
+      this.setCssVar(CAR_CSS_VAR.color, model.color);
+    }
   }
 
   public drive(car: CarModel): void {

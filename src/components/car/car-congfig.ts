@@ -4,6 +4,7 @@ export const CAR_EMPTY_COLOR = '#000000';
 
 export enum CarEvent {
   UPDATE = 'update',
+  UPDATE_WIN = 'update win',
   DRIVE = 'drive',
 }
 
