@@ -1,11 +1,6 @@
 import { createElement, cssGetVar, cssSetVar, HTMLTag, ICreateElementOptions } from './dom-utils';
 
-export abstract class View<
-  Model,
-  Tag extends HTMLTag = 'div',
-  CssStateClassNameEnum extends string = string,
-  CssVarNameEnum extends string = string
-> {
+export abstract class View<Tag extends HTMLTag = 'div'> {
   protected root: HTMLElementTagNameMap[Tag];
 
   public getRoot(): HTMLElementTagNameMap[Tag] {
@@ -16,15 +11,11 @@ export abstract class View<
     this.root = createElement<Tag>(classNames, options);
   }
 
-  protected abstract init(): void;
-
-  public abstract update(model: Model): void;
-
-  public setCssState(cssStateClassName: CssStateClassNameEnum, force: boolean): void {
+  public setCssState(cssStateClassName: string, force: boolean): void {
     this.root.classList.toggle(cssStateClassName, force);
   }
 
-  public setCssStateAsync(cssStateClassName: CssStateClassNameEnum, force: boolean): Promise<void> {
+  public setCssStateAsync(cssStateClassName: string, force: boolean): Promise<void> {
     this.root.classList.toggle(cssStateClassName, force);
     return new Promise((resolve) => {
       this.root.addEventListener('transitionend', () => resolve(), {
@@ -33,11 +24,11 @@ export abstract class View<
     });
   }
 
-  public getCssVar(name: CssVarNameEnum): string {
+  public getCssVar(name: string): string {
     return cssGetVar(this.root, name);
   }
 
-  public setCssVar(name: CssVarNameEnum, value: string): void {
+  public setCssVar(name: string, value: string): void {
     cssSetVar(this.root, name, value);
   }
 
