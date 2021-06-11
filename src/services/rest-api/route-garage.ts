@@ -1,8 +1,8 @@
 import { Try } from 'shared/types';
 
 import { GARAGE_PAGE_LIMIT_DEFAULT, HEADER_TOTAL_COUNT, PageQuery, Route } from './api-config';
-import { ICar, ICarParams, ICars } from './data-types';
-import { validateCar, validateCars } from './data-validators';
+import { CarDTO, GaragePageDTO } from './data-types';
+import { validateCarDTO, validateCarDTOArray } from './data-validators';
 import {
   fetcher,
   generateUrl,
@@ -46,16 +46,16 @@ const generateGarageQuery = (page: number, limit = GARAGE_PAGE_LIMIT_DEFAULT) =>
  * - Response Headers: `None | X-Total-Count`
  *   - *if `_limit` param is passed api returns a header that countains total number of records*
  */
-export async function getCars(page: number, limit?: number): Promise<Try<ICars>> {
+export async function getCars(page: number, limit?: number): Promise<Try<GaragePageDTO>> {
   const maybeResponse = await safeFetch(generateGarageQuery(page, limit));
   if (!(maybeResponse instanceof Response)) return maybeResponse;
   const totalCount = Number(maybeResponse.headers.get(HEADER_TOTAL_COUNT)) || 0;
-  const maybeCars = await safeResponseHandler(maybeResponse, validateCars);
-  return !Array.isArray(maybeCars)
-    ? maybeCars
+  const maybeCarDTOArray = await safeResponseHandler(maybeResponse, validateCarDTOArray);
+  return !Array.isArray(maybeCarDTOArray)
+    ? maybeCarDTOArray
     : {
-        cars: maybeCars,
-        totalCount: totalCount || maybeCars.length,
+        carDTOArray: maybeCarDTOArray,
+        totalCount: totalCount || maybeCarDTOArray.length,
       };
 }
 
@@ -84,10 +84,10 @@ export async function getCars(page: number, limit?: number): Promise<Try<ICars>>
  *   - Code: `404 NOT FOUND`
  *   - Content: `{}`
  */
-export async function getCar(id: number): Promise<Try<ICar>> {
+export async function getCar(id: number): Promise<Try<CarDTO>> {
   return fetcher({
     url: generateUrl(`${Route.GARAGE}/${id}`),
-    validator: validateCar,
+    validator: validateCarDTO,
   });
 }
 
@@ -111,12 +111,12 @@ export async function getCar(id: number): Promise<Try<ICar>> {
  *   - Code: `201 CREATED`
  *   - Content: `ICar`
  */
-export async function createCar(carParam: ICarParams): Promise<Try<ICar>> {
+export async function createCar({ name, color }: CarDTO): Promise<Try<CarDTO>> {
   return fetcher({
     url: generateUrl(Route.GARAGE),
-    init: initPOST(carParam),
+    init: initPOST({ name, color }),
     statusHandler: getStatusHandler(201),
-    validator: validateCar,
+    validator: validateCarDTO,
   });
 }
 
@@ -179,10 +179,10 @@ export async function deleteCar(id: number): Promise<Try<boolean>> {
  *   - Code: `404 NOT FOUND`
  *   - Content: `{}`
  */
-export async function updateCar(id: number, carParam: ICarParams): Promise<Try<ICar>> {
+export async function updateCar({ id, name, color }: CarDTO): Promise<Try<CarDTO>> {
   return fetcher({
     url: generateUrl(`${Route.GARAGE}/${id}`),
-    init: initPUT(carParam),
-    validator: validateCar,
+    init: initPUT({ name, color }),
+    validator: validateCarDTO,
   });
 }

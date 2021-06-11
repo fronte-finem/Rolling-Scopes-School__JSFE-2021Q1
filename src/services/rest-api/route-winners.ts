@@ -8,11 +8,12 @@ import {
   SortWinners,
   WINNERS_PAGE_LIMIT_DEFAULT,
 } from './api-config';
-import { IWinner, IWinnerParams, IWinners } from './data-types';
-import { validateWinner, validateWinners } from './data-validators';
+import { WinDTO, WinnersPageDTO } from './data-types';
+import { validateWinDTO, validateWinDTOArray } from './data-validators';
 import {
   fetcher,
   generateUrl,
+  getStatusHandler,
   initDELETE,
   initPOST,
   initPUT,
@@ -66,16 +67,16 @@ export async function getWinners(
   limit?: number,
   sort?: SortWinners,
   order?: OrderWinners
-): Promise<Try<IWinners>> {
+): Promise<Try<WinnersPageDTO>> {
   const maybeResponse = await safeFetch(generateWinnersQuery(page, limit, sort, order));
   if (!(maybeResponse instanceof Response)) return maybeResponse;
   const totalCount = Number(maybeResponse.headers.get(HEADER_TOTAL_COUNT)) || 0;
-  const maybeWinners = await safeResponseHandler(maybeResponse, validateWinners);
-  return !Array.isArray(maybeWinners)
-    ? maybeWinners
+  const maybeWinDTOArray = await safeResponseHandler(maybeResponse, validateWinDTOArray);
+  return !Array.isArray(maybeWinDTOArray)
+    ? maybeWinDTOArray
     : {
-        winners: maybeWinners,
-        totalCount: totalCount || maybeWinners.length,
+        winDTOArray: maybeWinDTOArray,
+        totalCount: totalCount || maybeWinDTOArray.length,
       };
 }
 
@@ -104,10 +105,10 @@ export async function getWinners(
  *   - Code: `404 NOT FOUND`
  *   - Content: `{}`
  */
-export async function getWinner(id: number): Promise<Try<IWinner>> {
+export async function getWinner(id: number): Promise<Try<WinDTO>> {
   return fetcher({
     url: generateUrl(`${Route.WINNERS}/${id}`),
-    validator: validateWinner,
+    validator: validateWinDTO,
   });
 }
 
@@ -135,11 +136,12 @@ export async function getWinner(id: number): Promise<Try<IWinner>> {
  *   - Code: `500 INTERNAL SERVER ERROR`
  *   - Content: *Error: Insert failed, duplicate id*
  */
-export async function createWinner(winner: IWinner): Promise<Try<IWinner>> {
+export async function createWinner(winner: WinDTO): Promise<Try<WinDTO>> {
   return fetcher({
     url: generateUrl(Route.WINNERS),
     init: initPOST(winner),
-    validator: validateWinner,
+    statusHandler: getStatusHandler(201),
+    validator: validateWinDTO,
   });
 }
 
@@ -202,10 +204,10 @@ export async function deleteWinner(id: number): Promise<Try<boolean>> {
  *   - Code: `404 NOT FOUND`
  *   - Content: `{}`
  */
-export async function updateWinner(id: number, winnerParams: IWinnerParams): Promise<Try<IWinner>> {
+export async function updateWinner({ id, wins, time }: WinDTO): Promise<Try<WinDTO>> {
   return fetcher({
     url: generateUrl(`${Route.WINNERS}/${id}`),
-    init: initPUT(winnerParams),
-    validator: validateWinner,
+    init: initPUT({ wins, time }),
+    validator: validateWinDTO,
   });
 }

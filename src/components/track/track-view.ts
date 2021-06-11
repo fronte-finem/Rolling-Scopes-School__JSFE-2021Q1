@@ -8,15 +8,16 @@ import { View } from 'shared/view';
 import { TRACK_CSS_CLASS } from './track.css';
 import { TrackButton, TrackEvent, TrackState } from './track-config';
 
-export class TrackView extends View<CarModel> {
+export class TrackView extends View {
   private observer = new Observer<TrackEvent>();
-  private carName = createElement(TRACK_CSS_CLASS.carName);
-  private track = createElement(TRACK_CSS_CLASS.track);
   private btnSelect = new ButtonView(TrackButton.SELECT);
   private btnRemove = new ButtonView(TrackButton.REMOVE);
   private btnStart = new ButtonView(TrackButton.START);
   private btnStop = new ButtonView(TrackButton.STOP);
-  public car: Maybe<CarModel> = null;
+  private carName = createElement(TRACK_CSS_CLASS.carName);
+  private track = createElement(TRACK_CSS_CLASS.track);
+  public carModel: Maybe<CarModel> = null;
+  private carView = new CarView(this.carModel);
 
   public constructor() {
     super(TRACK_CSS_CLASS.root);
@@ -24,7 +25,7 @@ export class TrackView extends View<CarModel> {
     this.reset();
   }
 
-  protected init(): void {
+  private init(): void {
     this.switchButtons();
     this.btnSelect.onClick(() => this.select());
     this.btnRemove.onClick(() => this.remove());
@@ -35,6 +36,7 @@ export class TrackView extends View<CarModel> {
     this.root.append(header);
     const body = createElement(TRACK_CSS_CLASS.body);
     body.append(this.track);
+    this.track.appendChild(this.carView.getRoot());
     this.root.append(header, body);
   }
 
@@ -43,21 +45,27 @@ export class TrackView extends View<CarModel> {
   }
 
   public reset(): void {
-    this.car?.reset();
-    this.car = null;
+    this.carModel?.reset();
+    this.carModel = null;
     this.carName.textContent = '';
-    this.track.innerHTML = '';
+    this.carView.update(null);
     this.switchButtons(TrackState.EMPTY);
   }
 
-  public update(maybeCar: Maybe<CarModel>): void {
-    this.reset();
-    if (!maybeCar) return;
-    this.car = maybeCar;
-    maybeCar.onUpdate((car) => this.updateName(car));
-    this.updateName(maybeCar);
-    const carView = new CarView(maybeCar);
-    this.track.appendChild(carView.getRoot());
+  public update(model: Maybe<CarModel>): void {
+    if (model === this.carModel) return;
+    if (!model) {
+      this.reset();
+      return;
+    }
+    this.carModel = model;
+    model.onUpdate((car) => {
+      this.updateName(car);
+      this.carView.update(car);
+    });
+    model.onDrive((car) => this.carView.drive(car));
+    this.updateName(model);
+    this.carView.update(model);
     this.switchButtons();
   }
 
@@ -74,7 +82,7 @@ export class TrackView extends View<CarModel> {
   }
 
   private select(): void {
-    this.observer.notify(TrackEvent.SELECT, this.car);
+    this.observer.notify(TrackEvent.SELECT, this.carModel);
   }
 
   public onSelect(listener: (car: Maybe<CarModel>) => void): void {
@@ -82,7 +90,7 @@ export class TrackView extends View<CarModel> {
   }
 
   private remove(): void {
-    this.observer.notify(TrackEvent.REMOVE, this.car);
+    this.observer.notify(TrackEvent.REMOVE, this.carModel);
   }
 
   public onRemove(listener: (car: Maybe<CarModel>) => void): void {
@@ -91,7 +99,7 @@ export class TrackView extends View<CarModel> {
 
   private start(): void {
     this.switchButtons(TrackState.DRIVE);
-    this.observer.notify(TrackEvent.START, this.car);
+    this.observer.notify(TrackEvent.START, this.carModel);
   }
 
   public onStart(listener: (car: Maybe<CarModel>) => void): void {
@@ -100,7 +108,7 @@ export class TrackView extends View<CarModel> {
 
   private stop(): void {
     this.switchButtons(TrackState.INITIAL);
-    this.observer.notify(TrackEvent.STOP, this.car);
+    this.observer.notify(TrackEvent.STOP, this.carModel);
   }
 
   public onStop(listener: (car: Maybe<CarModel>) => void): void {

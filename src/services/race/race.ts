@@ -10,19 +10,14 @@ import { RaceEvent } from './config';
 export class RaceService {
   private observer = new Observer<RaceEvent>();
   private race = new Map<CarModel, AbortController>();
-  private garage!: GarageModel;
-  private winners!: WinnersModel;
   private raceResults: Array<CarModel> = [];
 
-  public initGarage(model: GarageModel): void {
-    this.garage = model;
-  }
+  public constructor(
+    public readonly garageModel: GarageModel,
+    public readonly winnersModel: WinnersModel
+  ) {}
 
-  public initWinners(model: WinnersModel): void {
-    this.winners = model;
-  }
-
-  public async startCar(car: CarModel): Promise<void> {
+  public async start(car: CarModel): Promise<void> {
     if (this.race.has(car)) return;
     const maybeParams = await REST_API.engineStart(car.id);
     if (!maybeParams) return;
@@ -32,30 +27,30 @@ export class RaceService {
     this.race.set(car, new AbortController());
   }
 
-  public async stopCar(car: CarModel): Promise<void> {
+  public async stop(car: CarModel): Promise<void> {
     if (!this.race.has(car)) return;
-    this.abortDriveCar(car);
+    this.abort(car);
     const maybeParams = await REST_API.engineStop(car.id);
     if (!maybeParams) return;
     if (maybeParams instanceof Error) return;
     car.driveReset();
   }
 
-  public stopCarSync(car: CarModel): void {
+  public stopSync(car: CarModel): void {
     if (!this.race.has(car)) return;
-    this.abortDriveCar(car);
+    this.abort(car);
     void REST_API.engineStop(car.id);
     car.driveReset();
   }
 
-  public abortDriveCar(car: CarModel): void {
+  public abort(car: CarModel): void {
     if (!this.race.has(car)) return;
     const controller = this.race.get(car) as AbortController;
     controller.abort();
     this.race.delete(car);
   }
 
-  public async driveCar(car: CarModel): Promise<Maybe<CarModel>> {
+  public async drive(car: CarModel): Promise<Maybe<CarModel>> {
     if (!this.race.has(car)) return car;
     const controller = this.race.get(car) as AbortController;
     car.driveMove();
@@ -71,36 +66,37 @@ export class RaceService {
     return car;
   }
 
-  public async startAndDriveCar(car: CarModel): Promise<void> {
-    await this.startCar(car);
-    await this.driveCar(car);
+  public async startAndDrive(car: CarModel): Promise<void> {
+    await this.start(car);
+    await this.drive(car);
   }
 
   public abortRace(): void {
     if (this.race.size === 0) return;
     this.raceResults = [];
-    [...this.race.keys()].map((car) => this.abortDriveCar(car));
+    [...this.race.keys()].map((car) => this.abort(car));
   }
 
   public async resetRace(): Promise<void> {
-    if (this.race.size === 0) return;
-    this.raceResults = [];
-    await Promise.all([...this.race.keys()].map((car) => this.stopCar(car)));
+    if (this.race.size > 0) {
+      this.raceResults = [];
+      await Promise.all([...this.race.keys()].map((car) => this.stop(car)));
+    }
   }
 
   public resetRaceSync(): void {
     if (this.race.size === 0) return;
     this.raceResults = [];
-    [...this.race.keys()].map((car) => this.stopCarSync(car));
+    [...this.race.keys()].map((car) => this.stopSync(car));
   }
 
-  public async startRace(): Promise<void> {
+  public async startRace(): Promise<CarModel[]> {
     await this.resetRace();
-    await Promise.all(this.garage.cars.map((car) => this.startCar(car)));
-    const driveTasks = this.garage.cars.map((car) => this.driveCar(car));
+    await Promise.all(this.garageModel.cars.map((car) => this.start(car)));
+    const driveTasks = this.garageModel.cars.map((car) => this.drive(car));
     this.raceResults = [];
     await this.doRace(driveTasks);
-    this.notifyRaceEnd(this.raceResults);
+    return this.raceResults;
   }
 
   private async doRace(driveTasks: Promise<Maybe<CarModel>>[]): Promise<void> {
@@ -108,8 +104,10 @@ export class RaceService {
     const race = driveTasks.map((p) => p.then((c) => ({ car: c, promise: p })));
     const { car, promise } = await Promise.race(race);
     if (car) {
-      if (this.raceResults.length === 0) this.notifyRaceWin(car);
       this.raceResults.push(car);
+      const place = this.raceResults.length;
+      if (place === 1) this.notifyRaceWin(car);
+      this.onRaceEnd?.(place, car);
     }
     await this.doRace(driveTasks.filter((p) => p !== promise));
   }
@@ -122,11 +120,5 @@ export class RaceService {
     this.observer.notify(RaceEvent.RACE_WIN, winner);
   }
 
-  public onRaceEnd(listener: (finishers: CarModel[]) => void): void {
-    this.observer.addListener(RaceEvent.RACE_END, listener);
-  }
-
-  private notifyRaceEnd(finishers: CarModel[]): void {
-    this.observer.notify(RaceEvent.RACE_END, finishers);
-  }
+  public onRaceEnd?: (place: number, car: CarModel) => void;
 }

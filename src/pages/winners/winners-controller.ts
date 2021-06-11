@@ -1,34 +1,30 @@
-import { RaceService, WinnersService } from 'services/race';
+import { CarsService, RaceService } from 'services/race';
 
 import { WinnersModel } from './winners-model';
 import { WinnersView } from './winners-view';
 
 export class WinnersController {
-  public readonly model = new WinnersModel();
-  public readonly view = new WinnersView();
+  public readonly view: WinnersView;
 
   public constructor(
-    private readonly winnersService: WinnersService,
+    public readonly model: WinnersModel,
+    private readonly carsService: CarsService,
     private readonly raceService: RaceService
   ) {
+    this.view = new WinnersView(model);
     this.initBinds();
   }
 
   public init(): Promise<void> {
-    this.view.update(this.model);
-    this.winnersService.initWinners(this.model);
-    this.raceService.initWinners(this.model);
-    return this.winnersService.getWinnersForPage();
+    return this.carsService.getWinnersPage();
   }
 
   private initBinds(): void {
-    this.winnersService.onWinnersError((error) => this.view.handleError(error));
+    this.carsService.onError((error) => this.view.handleError(error));
     this.model.onPageUpdate((page) => this.view.updatePage(page));
+    this.model.onWinnersUpdate = (cars) => this.view.updateWinners(cars);
 
-    this.raceService.onRaceWin(async (car) => {
-      const { id, duration } = car;
-      if (duration === null) return;
-      await this.winnersService.addWinner({ id, wins: 1, time: duration });
-    });
+    this.raceService.onRaceWin((car) => this.carsService.addWinner(car));
+    this.carsService.onAddWinner = (car) => this.view.add(car);
   }
 }

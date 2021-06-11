@@ -1,3 +1,2 @@
-export * from './garage';
+export * from './cars';
 export * from './race';
-export * from './winners';

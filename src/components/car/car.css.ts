@@ -45,9 +45,13 @@ const broken = style({
 const finish = style({
   backgroundImage: getGradient(0, MARK_COLOR),
 });
+const hidden = style({
+  opacity: '0',
+});
 
 export const CAR_CSS_CLASS = {
   car: composeStyles(position, view).split(' '),
   broken,
   finish,
+  hidden,
 };

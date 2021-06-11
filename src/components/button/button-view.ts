@@ -2,14 +2,10 @@ import { View } from 'shared/view';
 
 import { BUTTON_CSS_CLASS } from './button.css';
 
-export class ButtonView extends View<string, 'button'> {
-  public constructor(text: string) {
+export class ButtonView extends View<'button'> {
+  public constructor(text = '') {
     super(BUTTON_CSS_CLASS.button, { tag: 'button' });
     this.update(text);
-  }
-
-  protected init(): void {
-    this.root.textContent = '';
   }
 
   public update(text: string): void {

@@ -7,13 +7,9 @@ export enum ModalState {
   VISIBLE = 'visible',
 }
 
-export class ModalView extends View<ModalState> {
+export class ModalView extends View {
   public constructor() {
     super(MODAL_CSS_CLASS.modal);
-    this.init();
-  }
-
-  protected init(): void {
     this.hide();
   }
 

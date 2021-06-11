@@ -1,4 +1,9 @@
+import { CarModel } from 'components/car';
+import { WinnerView } from 'components/winner';
+import { WinnersHeaderView } from 'components/winners-header';
 import { PageView } from 'pages/base-page';
+import { REST_API } from 'services/rest-api';
+import { createElement } from 'shared/dom-utils';
 import { Observer } from 'shared/observer';
 
 import { WINNERS_CSS_CLASS } from './winners.css';
@@ -13,23 +18,41 @@ import { WinnersModel } from './winners-model';
 //           - If the same car wins more than once the number of wins should be incremented while best time should be saved only if it's better than the stored one.
 // 5.4 (+10) User should be able to sort cars by wins number and by best time (ASC, DESC).
 
-export class WinnersView extends PageView<WinnersModel> {
-  private observer = new Observer<WinnersViewEvent>();
+const LIMIT = REST_API.WINNERS_PAGE_LIMIT_DEFAULT;
 
-  public constructor() {
-    super(WINNERS, WINNERS_CSS_CLASS.winners);
-    this.init();
+export class WinnersView extends PageView {
+  private observer = new Observer<WinnersViewEvent>();
+  private table = createElement('table', { tag: 'table' });
+  private thead = createElement('thead', { tag: 'thead' });
+  private tbody = createElement('tbody', { tag: 'tbody' });
+  private header = new WinnersHeaderView();
+  private cars: Array<WinnerView> = Array.from({ length: LIMIT }, (_, i) => new WinnerView(i + 1));
+
+  public constructor(model: WinnersModel) {
+    super(model, WINNERS, WINNERS_CSS_CLASS.winners);
+    this.initWinners();
   }
 
-  protected init(): void {
-    this.getRoot();
+  private initWinners(): void {
+    this.thead.append(this.header.getRoot());
+    this.tbody.append(...this.cars.map((w) => w.getRoot()));
+    this.table.append(this.thead, this.tbody);
+    this.content.append(this.table);
   }
 
   public handleError(error: Error): void {
-    this.popup?.update(`${error.name}: ${error.message}`);
+    this.popup(`${error.name}: ${error.message}`);
   }
 
   public update(model: WinnersModel): void {
     this.updatePage(model);
+  }
+
+  public updateWinners(car: CarModel[]): void {
+    this.cars.forEach((view, i) => view.update(car[i]));
+  }
+
+  public add(car: CarModel): void {
+    this.cars.find((w) => w.isEmpty)?.update(car);
   }
 }

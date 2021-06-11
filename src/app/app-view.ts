@@ -9,7 +9,7 @@ import { View } from 'shared/view';
 import { APP_CSS_CLASS } from './app.css';
 import { AppRoute } from './app-config';
 
-export class AppView extends View<AppRoute> {
+export class AppView extends View {
   private btnToGarage = new ButtonView(AppRoute.GARAGE);
   private btnToWinners = new ButtonView(AppRoute.WINNERS);
   private wrapper = createElement('wrapper');

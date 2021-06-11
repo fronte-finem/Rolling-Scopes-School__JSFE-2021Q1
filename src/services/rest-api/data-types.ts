@@ -1,36 +1,30 @@
-export interface ICarParams {
+export interface CarDTO {
+  id: number;
   name: string;
   color: string;
 }
 
-export interface ICar extends ICarParams {
+export interface WinDTO {
   id: number;
-}
-
-export interface IDriveParams {
-  velocity: number;
-  distance: number;
-}
-
-export interface IDriveResult {
-  success: boolean;
-}
-
-export interface IWinnerParams {
   wins: number;
   time: number;
 }
 
-export interface IWinner extends IWinnerParams {
-  id: number;
-}
-
-export interface ICars {
-  cars: Array<ICar>;
+export interface GaragePageDTO {
+  carDTOArray: Array<CarDTO>;
   totalCount: number;
 }
 
-export interface IWinners {
-  winners: Array<IWinner>;
+export interface WinnersPageDTO {
+  winDTOArray: Array<WinDTO>;
   totalCount: number;
+}
+
+export interface DriveParamsDTO {
+  velocity: number;
+  distance: number;
+}
+
+export interface DriveResultDTO {
+  success: boolean;
 }

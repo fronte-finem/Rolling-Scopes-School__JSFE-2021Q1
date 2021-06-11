@@ -1,6 +1,6 @@
 import { Maybe } from 'shared/types';
 
-import { ICar, IDriveParams, IDriveResult, IWinner } from './data-types';
+import { CarDTO, DriveParamsDTO, DriveResultDTO, WinDTO } from './data-types';
 
 type Validator<T> = (maybeData: T) => Maybe<T>;
 
@@ -16,44 +16,44 @@ function validateArray<T>(maybeArray: unknown, validator: Validator<T>): Array<T
     .filter((maybeT) => maybeT !== null) as Array<T>;
 }
 
-export function validateCars(maybeArray: unknown): Array<ICar> {
-  return validateArray(maybeArray, validateCar);
+export function validateCarDTOArray(maybeArray: unknown): Array<CarDTO> {
+  return validateArray(maybeArray, validateCarDTO);
 }
 
-export function validateWinners(maybeArray: unknown): Array<IWinner> {
-  return validateArray(maybeArray, validateWinner);
+export function validateWinDTOArray(maybeArray: unknown): Array<WinDTO> {
+  return validateArray(maybeArray, validateWinDTO);
 }
 
-export function validateCar(maybeData: unknown): Maybe<ICar> {
-  return validateObject(maybeData, (maybeCar: ICar) =>
-    typeof maybeCar.id === 'number' &&
-    typeof maybeCar.name === 'string' &&
-    typeof maybeCar.color === 'string'
-      ? maybeCar
+export function validateCarDTO(maybeData: unknown): Maybe<CarDTO> {
+  return validateObject(maybeData, (carDTO: CarDTO) =>
+    typeof carDTO.id === 'number' &&
+    typeof carDTO.name === 'string' &&
+    typeof carDTO.color === 'string'
+      ? carDTO
       : null
   );
 }
 
-export function validateWinner(maybeData: unknown): Maybe<IWinner> {
-  return validateObject(maybeData, (maybeWinner: IWinner) =>
-    typeof maybeWinner.id === 'number' &&
-    typeof maybeWinner.wins === 'number' &&
-    typeof maybeWinner.time === 'number'
-      ? maybeWinner
+export function validateWinDTO(maybeData: unknown): Maybe<WinDTO> {
+  return validateObject(maybeData, (winDTO: WinDTO) =>
+    typeof winDTO.id === 'number' &&
+    typeof winDTO.wins === 'number' &&
+    typeof winDTO.time === 'number'
+      ? winDTO
       : null
   );
 }
 
-export function validateRaceParams(maybeData: unknown): Maybe<IDriveParams> {
-  return validateObject(maybeData, (maybeRaceParams: IDriveParams) =>
-    typeof maybeRaceParams.velocity === 'number' && typeof maybeRaceParams.distance === 'number'
-      ? maybeRaceParams
+export function validateRaceParamsDTO(maybeData: unknown): Maybe<DriveParamsDTO> {
+  return validateObject(maybeData, (driveParamsDTO: DriveParamsDTO) =>
+    typeof driveParamsDTO.velocity === 'number' && typeof driveParamsDTO.distance === 'number'
+      ? driveParamsDTO
       : null
   );
 }
 
-export function validateRaceResult(maybeData: unknown): Maybe<IDriveResult> {
-  return validateObject(maybeData, (maybeDriveResult: IDriveResult) =>
-    typeof maybeDriveResult.success === 'boolean' ? maybeDriveResult : null
+export function validateRaceResultDTO(maybeData: unknown): Maybe<DriveResultDTO> {
+  return validateObject(maybeData, (driveResultDTO: DriveResultDTO) =>
+    typeof driveResultDTO.success === 'boolean' ? driveResultDTO : null
   );
 }

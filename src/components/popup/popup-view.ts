@@ -8,17 +8,13 @@ export enum PopupState {
   VISIBLE = 'visible',
 }
 
-export class PopupView extends View<string> {
+export class PopupView extends View {
   public constructor(private modal: ModalView) {
     super(POPUP_CSS_CLASS.popup);
     this.init();
   }
 
-  private escapeListener = (event: KeyboardEvent) => {
-    if (event.code === 'Escape') this.hide();
-  };
-
-  protected init(): void {
+  private init(): void {
     this.hide();
     this.modal.onClick(() => this.hide());
   }
@@ -39,4 +35,8 @@ export class PopupView extends View<string> {
     this.setCssState(POPUP_CSS_CLASS.hidden, false);
     document.body.addEventListener('keydown', this.escapeListener, { once: true });
   }
+
+  private escapeListener = (event: KeyboardEvent) => {
+    if (event.code === 'Escape') this.hide();
+  };
 }
