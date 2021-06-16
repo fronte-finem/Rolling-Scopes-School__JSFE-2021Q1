@@ -1,11 +1,9 @@
 import { REST_API } from 'services/rest-api';
-import { Observer } from 'shared/observer';
 import { Maybe } from 'shared/types';
 
-import { CAR_EMPTY_COLOR, CAR_EMPTY_ID, CAR_EMPTY_NAME, CarEvent, CarState } from './car-congfig';
+import { CAR_EMPTY_COLOR, CAR_EMPTY_ID, CAR_EMPTY_NAME, CarState } from './config';
 
 export class CarModel {
-  private observer = new Observer<CarEvent>();
   public id = CAR_EMPTY_ID;
   public name = CAR_EMPTY_NAME;
   public color = CAR_EMPTY_COLOR;
@@ -27,13 +25,20 @@ export class CarModel {
       this.color = carDTO.color;
     }
     if (winDTO) {
-      this.wins = winDTO.id;
+      this.wins = winDTO.wins;
       this.winTime = winDTO.time;
     }
   }
 
+  public get carDTO(): REST_API.CarDTO {
+    return {
+      id: this.id,
+      name: this.name,
+      color: this.color,
+    };
+  }
+
   public reset(): void {
-    this.observer.reset();
     this.id = CAR_EMPTY_ID;
     this.name = CAR_EMPTY_NAME;
     this.color = CAR_EMPTY_COLOR;
@@ -43,46 +48,47 @@ export class CarModel {
   public update({ name, color }: REST_API.CarDTO): CarModel {
     this.name = name;
     this.color = color;
-    this.notifyUpdate();
+    this.onUpdate?.(this);
     return this;
   }
 
   public updateWin({ wins, time }: REST_API.WinDTO): void {
     this.wins = wins;
     this.winTime = time;
-    this.notifyUpdate();
+    this.onUpdate?.(this);
+    this.onUpdateWin?.(this);
   }
 
-  public driveStart(duration: Maybe<number>): CarModel {
+  public driveStart(duration: number): CarModel {
     this.state = CarState.START;
     this.duration = duration;
-    this.notifyDrive();
+    this.onDrive?.(this);
     return this;
   }
 
-  public drivePause(): CarModel {
+  public driveDead(): CarModel {
     this.state = CarState.BROKEN;
-    this.notifyDrive();
+    this.onDrive?.(this);
     return this;
   }
 
   public driveFinish(): CarModel {
     this.state = CarState.FINISH;
-    this.notifyDrive();
+    this.onDrive?.(this);
     return this;
   }
 
   public driveReset(): CarModel {
     this.state = CarState.INITIAL;
     this.position = 0;
-    this.notifyDrive();
+    this.onDrive?.(this);
     return this;
   }
 
   public driveMove(): CarModel {
     if (!this.duration) return this;
     this.state = CarState.DRIVE;
-    this.notifyDrive();
+    this.onDrive?.(this);
     this.driveAnimate(this.duration);
     return this;
   }
@@ -95,36 +101,14 @@ export class CarModel {
       const elapsed = timestamp - startTime;
       this.position = 100 * Math.min(elapsed / time, 1);
       if (elapsed < time) window.requestAnimationFrame(step);
-      this.notifyDrive();
+      this.onDrive?.(this);
     };
     window.requestAnimationFrame(step);
   }
 
-  private notifyUpdate(): void {
-    this.observer.notify(CarEvent.UPDATE, this);
-  }
+  public onUpdate?: (model: CarModel) => void;
 
-  private notifyUpdateWin(): void {
-    this.observer.notify(CarEvent.UPDATE_WIN, this);
-  }
+  public onUpdateWin?: (model: CarModel) => void;
 
-  private notifyDrive(): void {
-    this.observer.notify(CarEvent.DRIVE, this);
-  }
-
-  public onUpdate(listener: (model: CarModel) => void): void {
-    this.observer.addListener(CarEvent.UPDATE, listener);
-  }
-
-  public onUpdateWin(listener: (model: CarModel) => void): void {
-    this.observer.addListener(CarEvent.UPDATE_WIN, listener);
-  }
-
-  public onDrive(listener: (model: CarModel) => void): void {
-    this.observer.addListener(CarEvent.DRIVE, listener);
-  }
-
-  public resetBinds(): void {
-    this.observer.reset();
-  }
+  public onDrive?: (model: CarModel) => void;
 }
