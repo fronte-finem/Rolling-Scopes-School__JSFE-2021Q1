@@ -25,14 +25,11 @@ import styles from './style.module.scss';
 //           - Color should be also generated randomly.
 
 export class GarageView extends PageView {
-  private btnAddCar = new ButtonView(CarageButtons.ADD, ButtonType.DEFAULT, styles.btn);
-  private btnUpdateCar = new ButtonView(CarageButtons.UPDATE, ButtonType.DEFAULT, styles.btn);
-  private btnUnselect = new ButtonView(CarageButtons.UNSELECT, ButtonType.DEFAULT, styles.btn);
+  private btnAddCar = new ButtonView(CarageButtons.CREATE, ButtonType.DEFAULT, styles.btn);
   private btnGenerate = new ButtonView(CarageButtons.GENERATE, ButtonType.DEFAULT, styles.btn);
   private btnRemovePage = new ButtonView(CarageButtons.REMOVE_PAGE, ButtonType.DEFAULT, styles.btn);
   private btnStartRace = new ButtonView(CarageButtons.RACE, ButtonType.START, styles.btnRace);
   private btnResetRace = new ButtonView(CarageButtons.RESET, ButtonType.STOP, styles.btnRace);
-  private selected: Maybe<CarModel> = null;
   private tracks = Array.from(
     { length: REST_API.GARAGE_PAGE_LIMIT_DEFAULT },
     () => new TrackView()
@@ -55,13 +52,7 @@ export class GarageView extends PageView {
   }
 
   private get buttons() {
-    return [
-      this.btnAddCar,
-      this.btnUpdateCar,
-      this.btnUnselect,
-      this.btnGenerate,
-      this.btnRemovePage,
-    ];
+    return [this.btnAddCar, this.btnGenerate, this.btnRemovePage];
   }
 
   private build(model: GarageModel): void {
@@ -79,33 +70,36 @@ export class GarageView extends PageView {
 
   private initBinds() {
     this.btnAddCar.onClick(() => this.requestAddCar());
-    this.btnUpdateCar.onClick(() => this.requestUpdateCar());
-    this.btnUnselect.onClick(() => this.deselect());
     this.btnGenerate.onClick(() => this.requestGenerateCars());
     this.btnRemovePage.onClick(() => this.requestRemovePage());
     this.btnStartRace.onClick(() => this.requestStartRace());
     this.btnResetRace.onClick(() => this.requestResetRace());
-    this.btnUpdateCar.disable();
-    this.btnUnselect.disable();
     this.btnResetRace.disable();
     this.tracks.forEach((track) => this.bindTrack(track));
   }
 
   private requestAddCar(): void {
-    const input = new CarInputView(CarageButtons.ADD);
+    const input = new CarInputView(CarageButtons.CREATE);
     input.onSubmit = (carDTO) => this.submitAddCar(carDTO);
-    this.popup.render(CarageButtons.ADD, input.getRoot());
+    this.popup.render(CarageButtons.CREATE, input.getRoot());
   }
 
-  private requestUpdateCar(): void {
-    const input = new CarInputView(CarageButtons.UPDATE, this.selected?.carDTO);
+  private requestUpdateCar(car: Maybe<CarModel>): void {
+    if (!car) return;
+    const input = new CarInputView(CarageButtons.UPDATE, car.carDTO);
     input.onSubmit = (carDTO) => this.submitUpdateCar(carDTO);
     this.popup.render(CarageButtons.UPDATE, input.getRoot());
   }
 
+  private async requestRemoveCar(car: Maybe<CarModel>): Promise<void> {
+    if (!car || !this.onRequestRemoveCar) return;
+    await this.onRequestRemoveCar?.(car);
+  }
+
   private bindTrack(track: TrackView): void {
     track.onSelect = () => this.select(track);
-    track.onRemove = (car) => this.requestRemoveCar(car);
+    track.onRequestUpdate = (car) => this.requestUpdateCar(car);
+    track.onRequestRemove = (car) => this.requestRemoveCar(car);
     track.onStart = (car) => this.requestStartCar(car);
     track.onStop = (car) => this.requestStopCar(car);
   }
@@ -113,16 +107,10 @@ export class GarageView extends PageView {
   public select(track: TrackView): void {
     if (!track.carModel) return;
     this.tracks.filter((t) => t !== track).forEach((t) => t.deselect());
-    this.selected = track.carModel;
-    this.btnUpdateCar.enable();
-    this.btnUnselect.enable();
   }
 
   public deselect(): void {
-    this.btnUpdateCar.disable();
-    this.btnUnselect.disable();
     this.tracks.forEach((t) => t.deselect());
-    this.selected = null;
   }
 
   protected hookRequestPage = (): void => {
@@ -171,12 +159,6 @@ export class GarageView extends PageView {
     const cars = await this.onRequestGenerateCars?.(count);
     if (!cars) return;
     cars.forEach((car) => this.addCar(car));
-  }
-
-  private async requestRemoveCar(car: Maybe<CarModel>): Promise<void> {
-    if (!car || !this.onRequestRemoveCar) return;
-    this.selected = null;
-    await this.onRequestRemoveCar?.(car);
   }
 
   private async requestStartCar(car: Maybe<CarModel>): Promise<void> {

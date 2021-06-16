@@ -40,9 +40,13 @@
 }
 
 .btn-close {
+  --g-line: #fff0 40%, #000e 40% 60%, #fff0 60%;
+  --g-cross: linear-gradient(45deg, var(--g-line)), linear-gradient(-45deg, var(--g-line));
+
   position: absolute;
   top: 5px;
   right: 5px;
   background-color: #fff0;
+  background-image: var(--g-cross);
   box-shadow: none;
 }

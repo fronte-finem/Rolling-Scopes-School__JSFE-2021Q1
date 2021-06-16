@@ -20,7 +20,8 @@ export class TrackView extends View {
   private carView = new CarView(this.carModel);
 
   public onSelect?: (car: Maybe<CarModel>) => void;
-  public onRemove?: (car: Maybe<CarModel>) => Promise<void>;
+  public onRequestUpdate?: (car: Maybe<CarModel>) => void;
+  public onRequestRemove?: (car: Maybe<CarModel>) => Promise<void>;
   public onStart?: (car: Maybe<CarModel>) => Promise<void>;
   public onStop?: (car: Maybe<CarModel>) => Promise<void>;
 
@@ -50,7 +51,8 @@ export class TrackView extends View {
     this.btnStart.onClick(() => this.start());
     this.btnStop.onClick(() => this.stop());
     this.carView.onSelect = () => this.onSelect?.(this.carModel);
-    this.carView.onRemove = () => this.remove();
+    this.carView.onRequestUpdate = () => this.requestUpdate();
+    this.carView.onRequestRemove = () => this.requestRemove();
     this.setCssState(styles.showInfo, false);
   }
 
@@ -64,10 +66,15 @@ export class TrackView extends View {
     this.carView.deselect();
   }
 
-  private async remove(): Promise<void> {
-    if (!this.carModel || !this.onRemove) return;
+  private requestUpdate(): void {
+    if (!this.carModel || !this.onRequestUpdate) return;
+    this.onRequestUpdate?.(this.carModel);
+  }
+
+  private async requestRemove(): Promise<void> {
+    if (!this.carModel || !this.onRequestRemove) return;
     this.switch(TrackState.EMPTY);
-    await this.onRemove?.(this.carModel);
+    await this.onRequestRemove?.(this.carModel);
     this.switch(TrackState.INITIAL);
   }
 

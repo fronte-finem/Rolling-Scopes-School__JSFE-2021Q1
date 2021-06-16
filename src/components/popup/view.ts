@@ -14,7 +14,7 @@ export enum PopupState {
 export class PopupView extends View {
   private header = createElement(styles.header, { tag: 'header' });
   private content = createElement(styles.content);
-  private btnClose = new ButtonView('', ButtonType.DELETE, styles.btnClose);
+  private btnClose = new ButtonView('', ButtonType.NO_TEXT, styles.btnClose);
   public onShow?: () => void;
   public onHide?: () => void;
 

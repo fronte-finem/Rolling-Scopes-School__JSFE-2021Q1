@@ -13,19 +13,18 @@
 .btns-wrapper {
   transform-style: preserve-3d;
   perspective: 200px;
-  row-gap: 5px;
-  column-gap: 20px;
+  row-gap: 10px;
+  column-gap: 10px;
 
   &.btns-car {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-rows: repeat(3, 1fr);
+    display: flex;
+    flex-wrap: wrap;
   }
   &.btns-race {
     align-self: flex-end;
     margin-left: auto;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
   }
 }
 
@@ -37,11 +36,13 @@
 }
 
 .btn {
+  width: auto;
   &:disabled {
     height: 0;
     opacity: 0;
   }
 }
 .btn-race {
+  width: 100px;
   padding: 0 20px;
 }
