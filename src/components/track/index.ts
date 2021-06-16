@@ -1,2 +1,2 @@
-export * from './track-config';
-export * from './track-view';
+export * from './config';
+export * from './view';

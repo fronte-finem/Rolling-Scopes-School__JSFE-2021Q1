@@ -1,0 +1,87 @@
+.root {
+  --car-size: 100px;
+
+  --c-in: #fff;
+  --c-out: #0fa;
+
+  display: flex;
+  border-radius: 15px;
+  background-color: #0002;
+
+  box-shadow: inset 0 0 30px 0 #0008, inset 0 0 0 1px #0008;
+  backdrop-filter: blur(5px);
+
+  --name-pos: 0%;
+  --info-pos: 100vw;
+  --name-opacity: 1;
+  --info-opacity: 0;
+
+  &.show-info {
+    --name-pos: -100vw;
+    --info-pos: 0%;
+    --name-opacity: 0;
+    --info-opacity: 1;
+    color: bron;
+  }
+
+  &.place1 {
+    --c-out: hsl(51, 100%, 50%);
+  }
+  &.place2 {
+    --c-out: hsl(0, 0%, 75%);
+  }
+  &.place3 {
+    --c-out: hsl(39, 26%, 44%);
+  }
+  &.neon {
+    box-shadow: 0 0 1px var(--c-in), 0 0 1px var(--c-in), 0 0 10px var(--c-out),
+      0 0 8px var(--c-out), 0 0 28px var(--c-out), inset 0 0 13px var(--c-out);
+  }
+}
+
+.body {
+  order: 1;
+  flex: 1;
+}
+
+.track {
+  position: relative;
+  width: calc(100% - var(--car-size));
+  height: 70px;
+}
+
+.name,
+.info {
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100vw;
+  transition: left 1s;
+  text-align: center;
+  font-family: var(--ff-sans);
+  font-size: 24px;
+  white-space: nowrap;
+}
+.name {
+  left: var(--name-pos);
+  opacity: var(--name-opacity);
+  color: #fff4;
+  filter: drop-shadow(0 0 5px #fff2);
+}
+.info {
+  left: var(--info-pos);
+  opacity: var(--info-opacity);
+}
+
+.btns-wrapper {
+  z-index: 1;
+  order: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0px 3px;
+  transform-style: preserve-3d;
+  perspective: 200px;
+}
