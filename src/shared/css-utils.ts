@@ -45,8 +45,14 @@ function rgb2hex(r: number, g: number, b: number) {
     .join('')}`;
 }
 
-export function getRandomColor(): string {
-  const [h, s, l] = getRandomHSL();
+export function hsl2hex(h: number, s: number, l: number): string {
   const [r, g, b] = hsl2rgb(h, s, l);
   return rgb2hex(r, g, b);
+}
+
+export function getRandomColor(): string {
+  const [h, s, l] = getRandomHSL();
+  const saturatuion = s < 0.75 ? 1 - s : s;
+  const lighting = 0.5 + (0.5 - l) / 2;
+  return hsl2hex(h, saturatuion, lighting);
 }
