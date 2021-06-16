@@ -1,1 +1,1 @@
-export * from './car-input-view';
+export * from './view';
