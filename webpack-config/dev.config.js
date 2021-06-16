@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const { VanillaExtractPlugin } = require('@vanilla-extract/webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = devConfig;
@@ -41,7 +40,6 @@ function devConfig(env) {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-typescript'],
-              plugins: ['@vanilla-extract/babel-plugin'],
             },
           },
         },
@@ -54,10 +52,23 @@ function devConfig(env) {
           type: 'asset/resource',
         },
         {
-          test: /\.css$/,
+          test: /\.s?css$/,
           use: [
             'style-loader',
-            'css-loader',
+            {
+              loader: 'css-loader', // https://webpack.js.org/loaders/css-loader/
+              options: {
+                modules: {
+                  auto: true,
+                  // localIdentName: "[path][name]__[local]--[contenthash:base64:5]",
+                  localIdentName: '[local]--[contenthash:base64:9]',
+                  localIdentContext: path.resolve(__dirname, 'src'),
+                  exportGlobals: true,
+                  exportLocalsConvention: 'camelCase',
+                },
+                importLoaders: 0,
+              },
+            },
             {
               loader: 'postcss-loader',
               options: {
@@ -73,6 +84,7 @@ function devConfig(env) {
                 },
               },
             },
+            'sass-loader',
           ],
         },
       ],
@@ -88,7 +100,6 @@ function devConfig(env) {
       new CopyPlugin({
         patterns: [{ from: 'public' }],
       }),
-      new VanillaExtractPlugin(),
     ],
   };
 }
