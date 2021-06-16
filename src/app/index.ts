@@ -1,2 +1,2 @@
-export * from './app-config';
-export * from './app-view';
+export * from './config';
+export * from './view';
