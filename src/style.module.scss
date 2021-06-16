@@ -24,7 +24,8 @@
     height: 100vh;
     pointer-events: none;
 
-    background-image: /* webpackIgnore: true */ url(./images/code.png);
+    /* webpackIgnore: true */
+    background-image: url(./images/code.png);
     background-size: cover;
     background-repeat: repeat-y;
     background-position-x: 50%;
