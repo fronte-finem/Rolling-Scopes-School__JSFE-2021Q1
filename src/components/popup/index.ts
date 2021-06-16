@@ -1,1 +1,1 @@
-export * from './popup-view';
+export * from './view';
