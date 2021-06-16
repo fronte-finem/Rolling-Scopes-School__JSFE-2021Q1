@@ -2,10 +2,10 @@ import { Try } from 'shared/types';
 
 import {
   HEADER_TOTAL_COUNT,
-  OrderWinners,
   PageQuery,
   Route,
-  SortWinners,
+  Sort,
+  SortOrder,
   WINNERS_PAGE_LIMIT_DEFAULT,
 } from './api-config';
 import { WinDTO, WinnersPageDTO } from './data-types';
@@ -24,8 +24,8 @@ import {
 const generateWinnersQuery = (
   page: number,
   limit = WINNERS_PAGE_LIMIT_DEFAULT,
-  sort = SortWinners.ID,
-  order = OrderWinners.ASC
+  sort = Sort.ID,
+  order = SortOrder.ASC
 ) => ({
   url: generateUrl(Route.WINNERS, {
     [PageQuery.PAGE]: page,
@@ -65,8 +65,8 @@ const generateWinnersQuery = (
 export async function getWinners(
   page: number,
   limit?: number,
-  sort?: SortWinners,
-  order?: OrderWinners
+  sort?: Sort,
+  order?: SortOrder
 ): Promise<Try<WinnersPageDTO>> {
   const maybeResponse = await safeFetch(generateWinnersQuery(page, limit, sort, order));
   if (!(maybeResponse instanceof Response)) return maybeResponse;

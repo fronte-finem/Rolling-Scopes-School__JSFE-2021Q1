@@ -22,8 +22,6 @@ export function generateRequest<T>(
 ): RequestInit {
   const init: RequestInit = { method };
   init.headers = new Headers();
-  init.headers.append('pragma', 'no-cache');
-  init.headers.append('cache-control', 'no-cache');
   if (data) {
     init.body = JSON.stringify(data);
     init.headers.append('content-type', 'application/json');
