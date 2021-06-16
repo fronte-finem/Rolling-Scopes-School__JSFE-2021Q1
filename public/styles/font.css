@@ -1,18 +1,24 @@
 body {
-  font-family: 'Work Sans', sans-serif;
-  font-weight: 300;
+  --ff-sans: 'Work Sans', sans-serif;
+  --ff-mono: 'Inconsolata', monospace;
+  --ff-hand: 'Sacramento', cursive;
+
+  font-family: var(--ff-sans);
+  font-weight: 100;
   font-size: 20px;
 }
 
 h1,
 h2,
 h3,
-h4 {
-  font-weight: 400;
+h4,
+h5,
+h6 {
+  font-weight: 200;
 }
 
 button {
-  font-family: 'Fira Mono', monospace;
+  font-family: var(--ff-mono);
   font-weight: 300;
   font-size: 20px;
   text-transform: capitalize;
