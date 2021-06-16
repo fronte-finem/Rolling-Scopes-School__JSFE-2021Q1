@@ -1,1 +1,1 @@
-export * from './modal-view';
+export * from './view';

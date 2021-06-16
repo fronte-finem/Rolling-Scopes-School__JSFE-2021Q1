@@ -1,6 +1,6 @@
 import { View } from 'shared/view';
 
-import { MODAL_CSS_CLASS } from './modal.css';
+import styles from './style.module.scss';
 
 export enum ModalState {
   HIDDEN = 'hidden',
@@ -9,14 +9,14 @@ export enum ModalState {
 
 export class ModalView extends View {
   public constructor() {
-    super(MODAL_CSS_CLASS.modal);
+    super(styles.modal);
     this.hide();
   }
 
   public update(state: ModalState): void {
     const hide = state === ModalState.HIDDEN;
-    this.setCssState(MODAL_CSS_CLASS.hidden, hide);
-    document.body.classList.toggle(MODAL_CSS_CLASS.bodyHidden, !hide);
+    this.setCssState(styles.hidden, hide);
+    document.body.classList.toggle(styles.bodyHidden, !hide);
   }
 
   public hide(): void {
