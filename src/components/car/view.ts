@@ -11,12 +11,16 @@ import styles from './style.module.scss';
 
 export class CarView extends View {
   private stateMap = new Map<CarState, (car?: CarModel) => void>();
-  private btnRemove = new ButtonView('', ButtonType.DELETE, styles.btn);
+  private btnUpdate = new ButtonView('Update', ButtonType.CUSTOM, [styles.btn, styles.update]);
+  private btnRemove = new ButtonView('Delete', ButtonType.CUSTOM, [styles.btn, styles.delete]);
+  private btnCancel = new ButtonView('Cancel', ButtonType.CUSTOM, [styles.btn, styles.cancel]);
+  private selectTarget!: HTMLElement;
   public carModel: Maybe<CarModel> = null;
 
   public onSelect?: () => void;
   public onDeselect?: () => void;
-  public onRemove?: () => void;
+  public onRequestUpdate?: () => void;
+  public onRequestRemove?: () => void;
 
   public constructor(model: Maybe<CarModel>, private passive = false, className: string[] = []) {
     super([styles.car, ...className]);
@@ -38,18 +42,24 @@ export class CarView extends View {
     const legR3 = createElement([styles.leg, styles.legRight, styles.leg3]);
     const body = createElement(styles.body);
     const bodyCover = createElement(styles.bodyCover);
+    this.selectTarget = bodyCover;
     body.append(legL1, legL2, legL3, legR1, legR2, legR3, bodyCover);
     bodyCover.append(EyeL, EyeR);
-    this.root.append(body, this.btnRemove.getRoot());
+    this.root.append(
+      body,
+      this.btnUpdate.getRoot(),
+      this.btnRemove.getRoot(),
+      this.btnCancel.getRoot()
+    );
     this.setCssState(styles.passive, this.passive);
   }
 
-  private selectTitle = () => `Click to select: "${this.carModel?.name || ''}"`;
-  private removeTitle = () => `Click to delete: "${this.carModel?.name || ''}"`;
-
   private init() {
-    this.onClick(() => this.select(true));
-    this.btnRemove.onClick(() => this.remove());
+    this.onClick((ev) => {
+      this.select(ev.target !== this.btnRemove.getRoot() && ev.target !== this.btnCancel.getRoot());
+    });
+    this.btnUpdate.onClick(() => this.requestUpdate());
+    this.btnRemove.onClick(() => this.requestRemove());
   }
 
   public deselect = (): void => {
@@ -61,11 +71,18 @@ export class CarView extends View {
     if (ok && this.onSelect) this.onSelect();
   }
 
-  private remove() {
-    if (!this.onRemove) return;
+  private requestUpdate() {
+    if (!this.onRequestUpdate) return;
     document.body.removeEventListener('click', this.deselect);
     this.select(false);
-    this.onRemove();
+    this.onRequestUpdate();
+  }
+
+  private requestRemove() {
+    if (!this.onRequestRemove) return;
+    document.body.removeEventListener('click', this.deselect);
+    this.select(false);
+    this.onRequestRemove();
   }
 
   private initStateMap(): void {
@@ -124,8 +141,6 @@ export class CarView extends View {
 
   public update(model: Maybe<CarModel>): void {
     this.carModel = model;
-    if (!this.passive) this.root.title = this.selectTitle();
-    this.btnRemove.getRoot().title = this.removeTitle();
     if (!model) {
       this.setCssState(styles.hidden, true);
     } else {
