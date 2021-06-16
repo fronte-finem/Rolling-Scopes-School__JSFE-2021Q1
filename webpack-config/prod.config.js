@@ -48,7 +48,7 @@ function prodConfig(env) {
           type: 'asset/resource',
         },
         {
-          test: /\.css$/,
+          test: /\.s?css$/,
           use: [
             MiniCssExtractPlugin.loader,
             {
@@ -88,6 +88,9 @@ function prodConfig(env) {
     resolve: {
       extensions: ['.ts'],
       plugins: [new TsconfigPathsPlugin()],
+      alias: {
+        './images/code.png': path.resolve(__dirname, '../public/images/code.png'),
+      },
     },
     plugins: [
       new HtmlWebpackPlugin({
