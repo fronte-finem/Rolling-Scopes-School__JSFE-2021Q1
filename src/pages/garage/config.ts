@@ -5,7 +5,8 @@ export const GARAGE = 'Garage';
 export enum CarageButtons {
   ADD = 'add',
   UPDATE = 'update',
-  GENERATE = 'generate cars',
+  UNSELECT = 'unselect',
+  GENERATE = 'generate',
   REMOVE_PAGE = 'remove page',
   RACE = 'race',
   RESET = 'reset',
