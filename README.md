@@ -22,5 +22,4 @@
 
 > ### 🏎️ Async-race 🏎️
 > - [x] [📃 task](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/async-race.md)
-> - [ ] [🏠 deploy](https://rolling-scopes-school.github.io/fronte-finem-JSFE2021Q1/async-race/)
-
+> - [x] [🏠 deploy](https://rolling-scopes-school.github.io/fronte-finem-JSFE2021Q1/async-race/)
