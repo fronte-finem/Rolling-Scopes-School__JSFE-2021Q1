@@ -5,9 +5,3 @@ export enum WinnersHeaderName {
   WINS = 'wins',
   TIME = 'best time (seconds)',
 }
-
-export enum WinnersHeaderState {
-  INITIAL = 'initial',
-  SORT_WINS = 'sort wins',
-  SORT_TIME = 'sort time',
-}
