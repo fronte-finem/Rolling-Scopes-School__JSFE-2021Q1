@@ -1,17 +1,15 @@
 import { CarsService, RaceService } from 'services/race';
 
-import { WinnersModel } from './winners-model';
-import { WinnersView } from './winners-view';
+import { WinnersModel } from './model';
+import { WinnersView } from './view';
 
 export class WinnersController {
-  public readonly view: WinnersView;
-
   public constructor(
     public readonly model: WinnersModel,
+    public readonly view: WinnersView,
     private readonly carsService: CarsService,
     private readonly raceService: RaceService
   ) {
-    this.view = new WinnersView(model);
     this.initBinds();
   }
 
@@ -26,5 +24,12 @@ export class WinnersController {
 
     this.raceService.onRaceWin((car) => this.carsService.addWinner(car));
     this.carsService.onAddWinner = (car) => this.view.add(car);
+
+    this.view.onRequestPage((num) =>
+      this.carsService.getWinnersPage(num, this.view.sortType, this.view.sortOrder)
+    );
+
+    this.view.onRequesSortWins = (order) => this.carsService.sortWins(order);
+    this.view.onRequesSortTime = (order) => this.carsService.sortTime(order);
   }
 }
