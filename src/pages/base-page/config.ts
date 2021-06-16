@@ -1,10 +1,11 @@
 export enum PageModelEvent {
-  UPDATE = 'update',
+  UPDATED = 'updated',
 }
 
 export enum PageViewEvent {
   NEXT = 'next',
   PREV = 'prev',
-  PAGE = 'page',
+  REQUEST_PAGE = 'request page',
   BEFORE_REQUEST = 'before request',
+  PAGE_UPDATED = 'page updated',
 }

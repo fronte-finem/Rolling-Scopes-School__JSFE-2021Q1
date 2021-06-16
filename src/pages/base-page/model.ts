@@ -1,6 +1,6 @@
 import { Observer } from 'shared/observer';
 
-import { PageModelEvent } from './page-config';
+import { PageModelEvent } from './config';
 
 export class PageModel {
   private pageObserver = new Observer<PageModelEvent>();
@@ -12,11 +12,11 @@ export class PageModel {
   public pageUpdate(totalCount: number, pageNum?: number): void {
     this.totalCount = totalCount;
     if (pageNum !== undefined) this.pageNum = pageNum;
-    this.pageObserver.notify(PageModelEvent.UPDATE, this);
+    this.pageObserver.notify(PageModelEvent.UPDATED, this);
   }
 
   public onPageUpdate(listener: (model: PageModel) => void): void {
-    this.pageObserver.addListener(PageModelEvent.UPDATE, listener);
+    this.pageObserver.addListener(PageModelEvent.UPDATED, listener);
   }
 
   public getPage(next: boolean): number {
@@ -25,7 +25,7 @@ export class PageModel {
   }
 
   public getNext(): { num: number; enabled: boolean } {
-    const enabled = this.totalCount - this.pageNum * this.pageLimit >= 0;
+    const enabled = this.totalCount - this.pageNum * this.pageLimit > 0;
     const num = this.pageNum + 1;
     return { num, enabled };
   }
