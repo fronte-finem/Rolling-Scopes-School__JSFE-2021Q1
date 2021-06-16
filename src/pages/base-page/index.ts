@@ -1,2 +1,2 @@
-export * from './page-model';
-export * from './page-view';
+export * from './model';
+export * from './view';

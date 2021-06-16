@@ -1,16 +1,19 @@
-import { CarModel } from 'components/car/car-model';
-import { GarageModel } from 'pages/garage/garage-model';
-import { WinnersModel } from 'pages/winners/winners-model';
-import { generateRandomCars } from 'services/car';
+import { CarModel } from 'components/car/model';
+import { GarageModel } from 'pages/garage/model';
+import { WinnersModel } from 'pages/winners/model';
+import { generateRandomBugs, generateRandomCars } from 'services/car';
 import { REST_API } from 'services/rest-api';
 import { Observer } from 'shared/observer';
-import { handleTry, Maybe, safeTry, toMaybe, Try } from 'shared/types';
+import { filterTry, handleTry, Maybe, safeTry, toMaybe, Try } from 'shared/types';
 
-import { getCarModels, getWinModels } from './utils';
+import { INIT_CARS_COUNT, isInitCars } from './config';
 
 enum ServiceEvent {
   ERROR,
 }
+
+type Sort = REST_API.Sort;
+type SortOrder = REST_API.SortOrder;
 
 export class CarsService {
   private observer = new Observer<ServiceEvent>();
@@ -19,6 +22,19 @@ export class CarsService {
     public readonly garageModel: GarageModel,
     public readonly winnersModel: WinnersModel
   ) {}
+
+  public async init(): Promise<void> {
+    const result = await REST_API.getCars(this.garageModel.pageNum, this.garageModel.pageLimit);
+    await safeTry(result, async ({ carDTOArray, totalCount }) => {
+      if (totalCount === INIT_CARS_COUNT && isInitCars(carDTOArray)) {
+        const bugs = generateRandomBugs(INIT_CARS_COUNT);
+        bugs.forEach((bug, i) => {
+          bug.id = i + 1;
+        });
+        await Promise.all(bugs.map((bug) => REST_API.updateCar(bug)));
+      }
+    });
+  }
 
   public async getGaragePage(pageNum?: number): Promise<void> {
     const result = await REST_API.getCars(
@@ -29,28 +45,45 @@ export class CarsService {
       result,
       ({ carDTOArray, totalCount }) => {
         this.garageModel.pageUpdate(totalCount, pageNum || this.garageModel.pageNum);
-        const models = getCarModels(carDTOArray, this.winnersModel.cars);
-        this.garageModel.updateCars(models);
-        return models;
+        this.garageModel.updateCars(carDTOArray);
       },
       (error) => this.noifyError(error)
     );
   }
 
-  public async getWinnersPage(pageNum?: number): Promise<void> {
+  public async getWinnersPage(pageNum?: number, sort?: Sort, order?: SortOrder): Promise<void> {
     const result = await REST_API.getWinners(
       pageNum || this.winnersModel.pageNum,
-      this.winnersModel.pageLimit
+      this.winnersModel.pageLimit,
+      sort,
+      order
     );
     await handleTry(
       result,
       async ({ winDTOArray, totalCount }) => {
         this.winnersModel.pageUpdate(totalCount, pageNum || this.winnersModel.pageNum);
-        const models = await getWinModels(winDTOArray, this.garageModel.cars);
+        const models = filterTry(
+          await Promise.all(
+            winDTOArray.map(async (winDTO) => {
+              const carDTO = toMaybe(await REST_API.getCar(winDTO.id));
+              return new CarModel(carDTO, winDTO);
+            })
+          )
+        );
         this.winnersModel.updateWinners(models);
       },
       (error) => this.noifyError(error)
     );
+  }
+
+  public sortWins(order: SortOrder): Promise<void> {
+    if (order === REST_API.SortOrder.INITIAL) return this.getWinnersPage();
+    return this.getWinnersPage(this.winnersModel.pageNum, REST_API.Sort.WINS, order);
+  }
+
+  public sortTime(order: SortOrder): Promise<void> {
+    if (order === REST_API.SortOrder.INITIAL) return this.getWinnersPage();
+    return this.getWinnersPage(this.winnersModel.pageNum, REST_API.Sort.TIME, order);
   }
 
   public async addCar(carDTO: REST_API.CarDTO): Promise<Maybe<CarModel>> {
@@ -63,12 +96,22 @@ export class CarsService {
   public async updateCar(carDTO: REST_API.CarDTO): Promise<void> {
     const carModel = this.garageModel.cars.find((car) => car.id === carDTO.id);
     if (!carModel) return;
-    safeTry(await REST_API.updateCar(carDTO), (newCarDTO) => carModel.update(newCarDTO));
+    safeTry(await REST_API.updateCar(carDTO), (newCarDTO) => {
+      carModel.update(newCarDTO);
+      this.winnersModel.cars.find((c) => c.id === newCarDTO.id)?.update(newCarDTO);
+    });
   }
 
-  public async generateRandomCars(count = 100): Promise<void> {
+  public async generateRandomCars(count = 100): Promise<CarModel[]> {
     const carsParams = await generateRandomCars(count);
-    await Promise.all(carsParams.map((params) => this.addCar(params)));
+    const cars = await Promise.all(carsParams.map((params) => this.addCar(params)));
+    return cars.filter((car) => car !== null) as CarModel[];
+  }
+
+  public async generateRandomBugs(count = 100): Promise<CarModel[]> {
+    const carsParams = generateRandomBugs(count);
+    const cars = await Promise.all(carsParams.map((params) => this.addCar(params)));
+    return cars.filter((car) => car !== null) as CarModel[];
   }
 
   public async removeGaragePage(): Promise<void> {
@@ -83,18 +126,10 @@ export class CarsService {
   public async removeCar(id: number): Promise<void> {
     await safeTry(await REST_API.deleteCar(id), async () => {
       await REST_API.deleteWinner(id);
-      this.garageModel.cars.forEach((car) => car.resetBinds());
       this.garageModel.updateCars(this.garageModel.cars.filter((car) => car.id !== id));
-      this.winnersModel.cars.forEach((w) => w.resetBinds());
       this.winnersModel.updateWinners([]);
       await this.getGaragePage();
       await this.getWinnersPage();
-    });
-  }
-
-  private async removeWinner(id: number): Promise<void> {
-    await safeTry(await REST_API.deleteWinner(id), async (ok) => {
-      if (ok) await this.getWinnersPage();
     });
   }
 

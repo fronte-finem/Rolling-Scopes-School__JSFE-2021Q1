@@ -1,3 +1,3 @@
-export * from './car-congfig';
-export * from './car-model';
-export * from './car-view';
+export * from './config';
+export * from './model';
+export * from './view';

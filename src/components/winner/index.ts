@@ -1,1 +1,1 @@
-export * from './winner-view';
+export * from './view';

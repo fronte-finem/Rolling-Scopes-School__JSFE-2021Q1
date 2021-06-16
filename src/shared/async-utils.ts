@@ -1,5 +1,5 @@
-export function delay(time: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, time));
+export function delay<T>(time: number, pass: T): Promise<T> {
+  return new Promise((resolve) => setTimeout(resolve, time, pass));
 }
 
 export async function timer(time: number, cancelPromise?: Promise<null>): Promise<boolean> {

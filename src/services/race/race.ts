@@ -1,27 +1,39 @@
 import { CarModel } from 'components/car';
-import { GarageModel } from 'pages/garage/garage-model';
-import { WinnersModel } from 'pages/winners/winners-model';
+import { GarageModel } from 'pages/garage/model';
+import { WinnersModel } from 'pages/winners/model';
 import { REST_API } from 'services/rest-api';
+import { delay } from 'shared/async-utils';
 import { Observer } from 'shared/observer';
-import { Maybe } from 'shared/types';
+import { Maybe, toMaybe } from 'shared/types';
 
-import { RaceEvent } from './config';
+import { DEFAULT_LAG_TIME, DEFAULT_TIMEOUT, RaceEvent } from './config';
 
 export class RaceService {
   private observer = new Observer<RaceEvent>();
   private race = new Map<CarModel, AbortController>();
   private raceResults: Array<CarModel> = [];
+  private raceStartTime = new Date();
 
   public constructor(
     public readonly garageModel: GarageModel,
     public readonly winnersModel: WinnersModel
   ) {}
 
+  public abort(car: CarModel): void {
+    if (!this.race.has(car)) return;
+    const controller = this.race.get(car) as AbortController;
+    controller.abort();
+    this.race.delete(car);
+  }
+
   public async start(car: CarModel): Promise<void> {
     if (this.race.has(car)) return;
-    const maybeParams = await REST_API.engineStart(car.id);
-    if (!maybeParams) return;
-    if (maybeParams instanceof Error) return;
+    car.driveStart(10 * (Math.random() + 1));
+    const maybeParams = toMaybe(await REST_API.engineStart(car.id));
+    if (!maybeParams) {
+      car.driveReset();
+      return;
+    }
     const { distance, velocity } = maybeParams;
     car.driveStart(Math.ceil(distance / velocity));
     this.race.set(car, new AbortController());
@@ -30,9 +42,8 @@ export class RaceService {
   public async stop(car: CarModel): Promise<void> {
     if (!this.race.has(car)) return;
     this.abort(car);
-    const maybeParams = await REST_API.engineStop(car.id);
+    const maybeParams = toMaybe(await REST_API.engineStop(car.id));
     if (!maybeParams) return;
-    if (maybeParams instanceof Error) return;
     car.driveReset();
   }
 
@@ -43,24 +54,23 @@ export class RaceService {
     car.driveReset();
   }
 
-  public abort(car: CarModel): void {
-    if (!this.race.has(car)) return;
-    const controller = this.race.get(car) as AbortController;
-    controller.abort();
-    this.race.delete(car);
-  }
-
   public async drive(car: CarModel): Promise<Maybe<CarModel>> {
-    if (!this.race.has(car)) return car;
+    if (!this.race.has(car)) return null;
     const controller = this.race.get(car) as AbortController;
+    const timeout = delay((car.duration || DEFAULT_TIMEOUT) + DEFAULT_LAG_TIME, controller);
+    const drive = REST_API.engineDrive(car.id, controller.signal);
     car.driveMove();
-    const maybeResult = await REST_API.engineDrive(car.id, controller.signal);
-    if (!maybeResult) return null;
-    if (maybeResult instanceof Error) {
-      if (maybeResult instanceof REST_API.EngineError) {
-        car.drivePause();
-      }
+    const result = await Promise.race([timeout, drive]);
+    if (result === null) {
       return null;
+    }
+    // if (result instanceof REST_API.EngineError) {
+    if (result instanceof Error) {
+      car.driveDead();
+      return null;
+    }
+    if (result instanceof AbortController) {
+      result.abort();
     }
     car.driveFinish();
     return car;
@@ -95,6 +105,7 @@ export class RaceService {
     await Promise.all(this.garageModel.cars.map((car) => this.start(car)));
     const driveTasks = this.garageModel.cars.map((car) => this.drive(car));
     this.raceResults = [];
+    this.raceStartTime = new Date();
     await this.doRace(driveTasks);
     return this.raceResults;
   }
@@ -107,7 +118,7 @@ export class RaceService {
       this.raceResults.push(car);
       const place = this.raceResults.length;
       if (place === 1) this.notifyRaceWin(car);
-      this.onRaceEnd?.(place, car);
+      this.onFinish?.(place, car);
     }
     await this.doRace(driveTasks.filter((p) => p !== promise));
   }
@@ -120,5 +131,5 @@ export class RaceService {
     this.observer.notify(RaceEvent.RACE_WIN, winner);
   }
 
-  public onRaceEnd?: (place: number, car: CarModel) => void;
+  public onFinish?: (place: number, car: CarModel) => void;
 }

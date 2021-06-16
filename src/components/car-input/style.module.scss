@@ -1,0 +1,52 @@
+.root {
+  display: grid;
+  row-gap: 10px;
+}
+
+.inputs-wrapper {
+  display: flex;
+  column-gap: 5px;
+}
+
+.btns-wrapper {
+  display: flex;
+  column-gap: 5px;
+}
+
+.car-wrapper {
+  position: relative;
+  width: 100%;
+  height: 150px;
+}
+
+.input {
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid #000;
+  background-color: #111;
+  color: #ccc;
+  font-family: var(--ff-sans);
+  font-weight: 200;
+  font-size: 18px;
+  letter-spacing: 1px;
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  &.name {
+    width: 300px;
+    padding: 0 10px;
+  }
+  &.color {
+    width: 50px;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+.big-bug {
+  --position: calc(50% - 100px) !important;
+  width: 200px;
+  height: 100px;
+}

@@ -1,1 +1,2 @@
-export * from './winners-header-view';
+export * from './view';
+export * from './config';

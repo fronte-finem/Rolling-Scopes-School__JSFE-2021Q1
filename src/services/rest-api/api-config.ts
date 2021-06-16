@@ -44,13 +44,14 @@ export enum EngineMode {
   DRIVE = 'drive',
 }
 
-export enum SortWinners {
+export enum Sort {
   ID = 'id',
   WINS = 'wins',
   TIME = 'time',
 }
 
-export enum OrderWinners {
+export enum SortOrder {
+  INITIAL = 'initial',
   ASC = 'ASC',
   DESC = 'DESC',
 }
