@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans|Source+Code+Pro&display=swap"
+    />
+
+    <title>Elm</title>
+
+    <link rel="stylesheet" href="js/reset.css" />
+    <link rel="stylesheet" href="js/reveal.css" />
+    <link rel="stylesheet" href="js/theme/white.css" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <!-- <link rel="stylesheet" href="plugin/highlight/monokai.css" /> -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/base16/spacemacs.min.css"
+    />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <div class="r-hstack">
+            <svg viewBox="-600 -600 1200 1200" style="max-height: 500px; max-width: 500px">
+              <g transform="scale(1 -1)">
+                <polygon
+                  fill="rgba(18, 147, 216, 1)"
+                  points="-280,-90 0,190 280,-90"
+                  transform="translate(0 -210) rotate(0)"
+                ></polygon>
+                <polygon
+                  fill="rgba(18, 147, 216, 1)"
+                  points="-280,-90 0,190 280,-90"
+                  transform="translate(-210 0) rotate(-90)"
+                ></polygon>
+                <polygon
+                  fill="rgba(18, 147, 216, 0.75)"
+                  points="-198,-66 0,132 198,-66"
+                  transform="translate(207 207) rotate(-45)"
+                ></polygon>
+                <polygon
+                  fill="rgba(18, 147, 216, 1)"
+                  points="-130,0 0,-130 130,0 0,130"
+                  transform="translate(150 0) rotate(0)"
+                ></polygon>
+                <polygon
+                  fill="rgba(18, 147, 216, 0.75)"
+                  points="-191,61 69,61 191,-61 -69,-61"
+                  transform="translate(-89 239) rotate(0)"
+                ></polygon>
+                <polygon
+                  fill="rgba(18, 147, 216, 0.75)"
+                  points="-130,-44 0,86  130,-44"
+                  transform="translate(0 106) rotate(-180)"
+                ></polygon>
+                <polygon
+                  fill="rgba(18, 147, 216, 0.75)"
+                  points="-130,-44 0,86  130,-44"
+                  transform="translate(256 -150) rotate(-270)"
+                ></polygon>
+              </g>
+            </svg>
+            <h2>Elm lang</h2>
+          </div>
+        </section>
+
+        <section data-background="#08f">
+          <section data-auto-animate>
+            <h2>Why use Elm?</h2>
+            <ul></ul>
+            <aside class="notes"></aside>
+          </section>
+          <section data-auto-animate>
+            <h2>Why use Elm?</h2>
+            <ul>
+              <li>Easy introduction to FP</li>
+            </ul>
+            <aside class="notes"></aside>
+          </section>
+          <section data-auto-animate>
+            <h2>Why use Elm?</h2>
+            <ul>
+              <li>Easy introduction to FP</li>
+              <li>Powerful type system</li>
+            </ul>
+            <aside class="notes"></aside>
+          </section>
+          <section data-auto-animate>
+            <h2>Why use Elm?</h2>
+            <ul>
+              <li>Easy introduction to FP</li>
+              <li>Powerful type system</li>
+              <li>Care for error in production</li>
+            </ul>
+            <aside class="notes"></aside>
+          </section>
+          <section data-auto-animate>
+            <h2>Why use Elm?</h2>
+            <ul>
+              <li>Easy introduction to FP</li>
+              <li>Powerful type system</li>
+              <li>Care for error in production</li>
+              <li>Simple refactoring</li>
+            </ul>
+            <aside class="notes"></aside>
+          </section>
+          <section data-auto-animate>
+            <h2>Why use Elm?</h2>
+            <ul>
+              <li>Easy introduction to FP</li>
+              <li>Powerful type system</li>
+              <li>Care for error in production</li>
+              <li>Simple refactoring</li>
+              <li>Great architecture pattern MVU</li>
+            </ul>
+            <aside class="notes"></aside>
+          </section>
+          <section data-auto-animate>
+            <h2>Why use Elm?</h2>
+            <ul>
+              <li>Easy introduction to FP</li>
+              <li>Powerful type system</li>
+              <li>Care for error in production</li>
+              <li>Simple refactoring</li>
+              <li>Great architecture pattern MVU</li>
+              <li>Fast and ligthweigt Virtual-Dom</li>
+            </ul>
+            <aside class="notes"></aside>
+          </section>
+          <section data-auto-animate>
+            <h2>Why use Elm?</h2>
+            <ul>
+              <li>Easy introduction to FP</li>
+              <li>Powerful type system</li>
+              <li>Care for error in production</li>
+              <li>Simple refactoring</li>
+              <li>Great architecture pattern MVU</li>
+              <li>Fast and ligthweigt Virtual-Dom</li>
+              <li>Quality tooling</li>
+            </ul>
+            <aside class="notes"></aside>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Elm Architecture</h2>
+            <img src="./assets/elm-compiler.svg" alt="" />
+            <aside class="notes">
+              <br />Elm is a functional language that compiles to JavaScript. <br />The Elm compiler
+              is a program that transforms the code written in Elm programming language to
+              JavaScript. <br />Elm takes in multiple .elm files in our project and compiles them to
+              a single .js file. <br />Notice the two JavaScript files in the Final Build box above.
+              <br />The reason behind it is that the code for our application doesn’t need to be
+              written 100% in Elm <br />This approach is recommended if you are trying to introduce
+              Elm to an existing project.
+            </aside>
+          </section>
+          <section data-auto-animate>
+            <h2>Elm Architecture</h2>
+            <img src="./assets/model-view-update.svg" alt="MVU" />
+            <aside class="notes">
+              <br />Elm Architecture is a set of patterns and language features for managing the
+              flow of data in a program. <br />One of this pattern present a three parts: model,
+              view, and update. <br />The entire application can be viewed as one giant machine.
+              <br />The structure of that machine: take an initial model, present it to the user,
+              listen to messages, update the model based on those messages, and present the updated
+              model back to the user again.
+            </aside>
+          </section>
+          <section data-auto-animate>
+            <h2>Elm Architecture</h2>
+            <img src="./assets/model-view-update-interaction-1.svg" alt="MVU interaction" />
+            <aside class="notes">
+              <br />In a highly interactive application, the data flows through many components.
+              <br />The resulting interaction between these components can be quite complex.
+              <br />The Elm Architecture reduces this complexity by using some very clever
+              techniques. <br />If you are coming to Elm from other languages such as JavaScript,
+              Ruby, or Python, you will notice that there is no separate framework for building
+              applications in Elm. <br />That’s because the Elm Architecture is baked into the
+              language. <br />Because of this, Elm is not just a JavaScript alternative, but also an
+              alternative to frameworks like React, Angular, and Vue.js.
+            </aside>
+          </section>
+          <section data-auto-animate>
+            <h2>Elm Runtime</h2>
+            <img src="./assets/elm-vs-javascript-territory.svg" alt="Elm Runtime" />
+            <aside class="notes">
+              <br />The Elm runtime is a system designed to support the execution of programs
+              written in the Elm programming language. <br />The runtime is part of what makes Elm
+              so powerful. <br />It’s all the code that Elm runs behind the scenes, so that we can
+              write programs describing what we want to accomplish and not worry about how Elm
+              executes them.
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section data-auto-animate>
+            <h2>Intresting Core Language Features</h2>
+          </section>
+
+          <section data-auto-animate data-background="#111">
+            <div data-id="code-title">Immutability</div>
+            <pre
+              data-id="code-animation"
+            ><code class="language-elm hljs" data-trim data-line-numbers><script type="text/template">
+              [ 1, 2, 3 ]
+
+              ( 1, 2.5, "Butch" )
+
+              { name = "Firefly", creator = "Joss Whedon", episodes = 14 }
+            </script></code></pre>
+            <aside class="notes">
+              <br />All values in Elm are immutable, meaning that a value cannot be modified after
+              it is created. <br />Elm uses persistent data structures to implement its Lists,
+              Tuples, and Records in the standard library
+            </aside>
+          </section>
+          <section data-auto-animate data-background="#111">
+            <div data-id="code-title">Static types</div>
+            <pre
+              data-id="code-animation"
+            ><code class="language-elm hljs" data-trim data-line-numbers><script type="text/template">
+              x : List Int
+              x = [ 1, 2, 3 ]
+
+              y : ( Int, Float, String )
+              y = ( 1, 2.5, "Butch" )
+
+              z : { name : String, creator : String, episodes : Int }
+              z = { name = "Firefly", creator = "Joss Whedon", episodes = 14 }
+            </script></code></pre>
+            <aside class="notes">
+              <br />Elm is statically typed. <br />Type annotations are optional (due to type
+              inference) but strongly recomented. <br />Annotations exist on the line above the
+              definition (unlike C-family languages where types and names are interspersed).
+              <br />Types include primitives like integers and strings, and basic data structures
+              such as lists, tuples, and records.
+            </aside>
+          </section>
+          <section data-auto-animate data-background="#111">
+            <div data-id="code-title">Static types</div>
+            <pre
+              data-id="code-animation"
+            ><code class="language-elm hljs" data-trim data-line-numbers><script type="text/template">
+              round : Float -> Int
+
+              greet : String -> String
+              greet name = "Hello" ++ name ++ "!"
+            </script></code></pre>
+            <aside class="notes">
+              <br />Functions have types written with arrows, for example <br />For example,
+              function round have type Float arrow Int, whicj mean it take Float argument and return
+              int. <br />Or our function greet, that take String and return String
+            </aside>
+          </section>
+          <section data-auto-animate data-background="#111">
+            <div data-id="code-title">Static types</div>
+            <pre
+              data-id="code-animation"
+            ><code class="language-elm hljs" data-trim data-line-numbers><script type="text/template">
+              x : List a
+              x = []
+
+              List.length : List a -> Int
+              -- List.length x == 0
+              -- List.length [1,2,3] == 3
+              -- List.length ["A","b"] == 2
+            </script></code></pre>
+            <aside class="notes">
+              <br />Types are always capitalized; lowercase names are type variables. <br />For
+              example, a List a is a list of values of unknown type. <br />It is the type of the
+              empty list and of the argument to List.length, which is agnostic to the list's
+              elements.
+            </aside>
+          </section>
+
+          <section data-auto-animate data-background="#08f">
+            <div data-id="code-title">Pure Functions</div>
+            <ul></ul>
+            <aside class="notes">
+              <br />Functions in Elm will always return the same output given the same input and
+              they don’t have any side effects. <br />Their behavior aligns perfectly well with how
+              functions work in mathematics.
+            </aside>
+          </section>
+          <section data-auto-animate data-background="#08f">
+            <div data-id="code-title">Pure Functions</div>
+            <ul>
+              <li>Easy to understand code</li>
+            </ul>
+            <aside class="notes">
+              <br />Easy to understand code - we can rely on our functions to not behave in
+              surprising new ways <br />Functions in Elm aren’t affected by the external state. They
+              are also prohibited from modifying any state. <br />As a result, we don’t need to
+              mentally keep track of things that aren’t in their scope.
+            </aside>
+          </section>
+          <section data-auto-animate data-background="#08f">
+            <div data-id="code-title">Pure Functions</div>
+            <ul>
+              <li>Easy to understand code</li>
+              <li>Easy to debug</li>
+            </ul>
+            <aside class="notes">
+              <br />Easy to debug - It’s much easier to find the root cause of a bug in a program
+              built by assembling pure functions <br />Since functions in Elm don’t depend on
+              unrelated code that was executed before them, we can reliably reproduce the bug.
+              <br />Once it’s reproduced, finding the root cause of a bug is also easy. <br />We
+              pause the execution of our program and examine each function’s output. <br />Because a
+              function in Elm depends only on its arguments and other immutable constants in its
+              scope, all the information being fed to a function is right before our eyes. <br />If
+              we see a function producing unexpected output, then we must have incorrectly
+              implemented the logic inside that function. <br />This differs from languages that
+              lack immutability and pure functions. <br />When functions in those languages produce
+              unexpected output, we can’t be certain that the logic is wrong because the function
+              depends on an unpredictable external state.
+            </aside>
+          </section>
+          <section data-auto-animate data-background="#08f">
+            <div data-id="code-title">Pure Functions</div>
+            <ul>
+              <li>Easy to understand code</li>
+              <li>Easy to debug</li>
+              <li>Easy to test</li>
+            </ul>
+            <aside class="notes">
+              <br />Easy to test - Verifying that our functions work exactly how we expect them to
+              also becomes easier when they are pure. <br />There are multiple ways to verify a
+              function’s behavior. <br />One such technique is to write unit tests which determine
+              whether an individual unit of source code can be used reliably. <br />In Elm, that
+              individual unit of code is a function. <br />When we write our unit tests, we
+              repeatedly pass values to a function from its input set and verify that the values it
+              produces belong to its output set. <br />Since a pure function doesn’t rely on
+              external states, we don’t need to worry about writing tests that verify whether the
+              function caused any side effects.
+            </aside>
+          </section>
+          <section data-auto-animate data-background="#08f">
+            <div data-id="code-title">Pure Functions</div>
+            <ul>
+              <li>Easy to understand code</li>
+              <li>Easy to debug</li>
+              <li>Easy to test</li>
+              <li>Solving complex problems with simple functions</li>
+            </ul>
+            <aside class="notes">
+              <br />An effective way of solving a problem is to break it into smaller problems
+              first. <br />We can then write small reliable functions that solve each mini-problem
+              separately. <br />We then put the functions back together to create a solution that
+              solves the original complex problem. <br />It’s incredibly difficult to apply this
+              technique if the functions aren’t pure.
+            </aside>
+          </section>
+
+          <section data-auto-animate>
+            <div data-id="code-title">Module system</div>
+            <img src="./assets/package-module-relationship.svg" alt="module" />
+            <aside class="notes">
+              <br />Elm has a module system that allows users to break their code into smaller parts
+              called modules. <br />Modules can hide implementation details such as helper
+              functions, and group related code together. <br />Modules serve as a namespace for
+              imported code <br />Third party libraries (or packages) consist of one or more
+              modules, and are available from the Elm Public Library <br />All libraries are
+              versioned according to semver, which is enforced by the compiler and other tools.
+            </aside>
+          </section>
+          <section data-auto-animate>
+            <div data-id="code-title">Interoperability with HTML, CSS, and JavaScript</div>
+            <img src="./assets/elm-runtime.svg" alt="runtime" />
+            <aside class="notes">
+              <br />Elm uses an abstraction called ports to communicate with JavaScript. <br />It
+              allows values to flow in and out of Elm programs, making it possible to communicate
+              between Elm and JavaScript. <br />Elm has a library called elm/html that a programmer
+              can use to write HTML and CSS within Elm. <br />It uses a virtual DOM approach to make
+              updates efficient.
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section data-background="#08f">
+            <h2>Alternatives</h2>
+            <div class="r-hstack justify-space" style="column-gap: 100px">
+              <img src="./assets/typescript.svg" style="height: 100px" alt="typescript" />
+              <img src="./assets/purescript.svg" style="height: 100px" alt="purescript" />
+              <img src="./assets/reason.svg" style="height: 100px" alt="reason" />
+            </div>
+            <aside class="notes">
+              <br />TypeScript a strict superset of JavaScript and adds optional static typing to
+              the language <br />PureScript: a strongly-typed, purely-functional programming
+              language that compiles to JavaScript <br />Reason: A syntax extension and toolchain
+              for OCaml that can also transpile to JavaScript
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <h2>Some Resources</h2>
+          <ul>
+            <li><a href="https://elm-lang.org">elm-lang.org</a></li>
+            <li><a href="https://guide.elm-lang.org">guide.elm-lang.org</a></li>
+            <li><a href="https://elmprogramming.com/">elmprogramming.com</a></li>
+            <li>
+              <a href="https://github.com/sporto/awesome-elm">github.com/sporto/awesome-elm</a>
+            </li>
+          </ul>
+          <aside class="notes"></aside>
+        </section>
+      </div>
+    </div>
+
+    <script src="js/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>

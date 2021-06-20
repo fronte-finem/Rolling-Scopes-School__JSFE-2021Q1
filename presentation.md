@@ -1,0 +1,2 @@
+- [video](https://youtu.be/XiPKxTi5foQ)
+- [deploy](https://rolling-scopes-school.github.io/fronte-finem-JSFE2021Q1/presentation/)
