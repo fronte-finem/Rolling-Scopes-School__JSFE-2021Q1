@@ -93,10 +93,14 @@ export class AppView extends View {
     return [this.aboutView, this.carsController.view, this.winsController.view];
   }
 
-  private activate(page: IShow, btn: ButtonView): void {
-    page.show();
-    btn.setCssState(styles.active, true);
-    this.routerPages.filter((p) => p !== page).forEach((p) => p.hide());
-    this.routerBtns.filter((b) => b !== btn).forEach((b) => b.setCssState(styles.active, false));
+  private activate(pageToActivate: IShow, btnToActivate: ButtonView): void {
+    pageToActivate.show();
+    btnToActivate.setCssState(styles.active, true);
+    this.routerPages
+      .filter((page) => page !== pageToActivate)
+      .forEach((page) => page.hide());
+    this.routerBtns
+      .filter((btn) => btn !== btnToActivate)
+      .forEach((btn) => btn.setCssState(styles.active, false));
   }
 }

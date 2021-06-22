@@ -5,6 +5,13 @@ export const CAR_EMPTY_NAME = '';
 export const CAR_EMPTY_COLOR = '#000000';
 export const TIMEOUT = DEFAULT_TIMEOUT / 1000;
 
+export enum CarBtn {
+  UPDATE = 'Update',
+  DELETE = 'Delete',
+  CANCEL = 'Cancel',
+}
+
+
 export enum CarState {
   INITIAL = 'initial',
   START = 'start',

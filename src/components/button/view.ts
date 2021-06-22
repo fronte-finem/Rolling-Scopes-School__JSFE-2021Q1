@@ -5,7 +5,8 @@ import { ButtonType, getBtnClassName } from './config';
 const mixClassName = (type = ButtonType.DEFAULT, className?: string | string[]): string[] => {
   const classNamesArray = getBtnClassName(type);
   if (!className) return classNamesArray;
-  return classNamesArray.concat(Array.isArray(className) ? className : [className]);
+  const externalClassNamesArray = Array.isArray(className) ? className : [className];
+  return [...classNamesArray, ...externalClassNamesArray];
 };
 
 export class ButtonView extends View<'button'> {
