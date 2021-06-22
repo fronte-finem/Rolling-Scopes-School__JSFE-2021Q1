@@ -27,7 +27,6 @@ export const getBtnClassName = (type: ButtonType): string[] => {
       return [];
     case ButtonType.ROUTE:
       return [styles.btnRoute];
-    case ButtonType.DEFAULT:
     default:
       return [styles.button];
   }
