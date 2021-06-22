@@ -5,15 +5,15 @@ import { createElement } from 'shared/dom-utils';
 import { Maybe } from 'shared/types';
 import { View } from 'shared/view';
 
-import { CarCSSVar, CarState, TIMEOUT, TO_STATE } from './config';
+import { CarBtn, CarCSSVar, CarState, TIMEOUT, TO_STATE } from './config';
 import { CarModel } from './model';
 import styles from './style.module.scss';
 
 export class CarView extends View {
   private stateMap = new Map<CarState, (car?: CarModel) => void>();
-  private btnUpdate = new ButtonView('Update', ButtonType.CUSTOM, [styles.btn, styles.update]);
-  private btnRemove = new ButtonView('Delete', ButtonType.CUSTOM, [styles.btn, styles.delete]);
-  private btnCancel = new ButtonView('Cancel', ButtonType.CUSTOM, [styles.btn, styles.cancel]);
+  private btnUpdate = new ButtonView(CarBtn.UPDATE, ButtonType.CUSTOM, [styles.btn, styles.update]);
+  private btnRemove = new ButtonView(CarBtn.DELETE, ButtonType.CUSTOM, [styles.btn, styles.delete]);
+  private btnCancel = new ButtonView(CarBtn.CANCEL, ButtonType.CUSTOM, [styles.btn, styles.cancel]);
   private selectTarget!: HTMLElement;
   public carModel: Maybe<CarModel> = null;
 
