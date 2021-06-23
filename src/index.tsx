@@ -1,20 +1,67 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
+import { Card } from 'card/card';
 
-const Test = (props: { isOnline: boolean }) => <>{props.isOnline ? 'Online' : 'Offline'}</>;
+const cardsData = [
+  {
+    word: 'cry',
+    translation: 'плакать',
+    image: 'data/img/cry.jpg',
+    audio: 'data/audio/cry.mp3',
+  },
+  {
+    word: 'dance',
+    translation: 'танцевать',
+    image: 'data/img/dance.jpg',
+    audio: 'data/audio/dance.mp3',
+  },
+  {
+    word: 'dive',
+    translation: 'нырять',
+    image: 'data/img/dive.jpg',
+    audio: 'data/audio/dive.mp3',
+  },
+  {
+    word: 'draw',
+    translation: 'рисовать',
+    image: 'data/img/draw.jpg',
+    audio: 'data/audio/draw.mp3',
+  },
+  {
+    word: 'fish',
+    translation: 'ловить рыбу',
+    image: 'data/img/fish.jpg',
+    audio: 'data/audio/fish.mp3',
+  },
+  {
+    word: 'fly',
+    translation: 'летать',
+    image: 'data/img/fly.jpg',
+    audio: 'data/audio/fly.mp3',
+  },
+  {
+    word: 'hug',
+    translation: 'обнимать',
+    image: 'data/img/hug.jpg',
+    audio: 'data/audio/hug.mp3',
+  },
+  {
+    word: 'jump',
+    translation: 'прыгать',
+    image: 'data/img/jump.jpg',
+    audio: 'data/audio/jump.mp3',
+  },
+];
 
 const App = () => {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    document.title = `English for ${count} kids!`;
-  });
-
   return (
     <div>
-      <h1>English for {count} kids!</h1>
-      <button onClick={() => setCount(count + 1)}>Raise</button>
-      <Test isOnline={false} />
+      <h1>English for kids!</h1>
+      <div className="cards">
+        {cardsData.map((cardData) => (
+          <Card card={cardData} />
+        ))}
+      </div>
     </div>
   );
 };
