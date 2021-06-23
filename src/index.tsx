@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Card } from 'card/card';
+import { CardsField } from 'cards-field/cards-field';
 
 const cardsData = [
   {
@@ -57,11 +58,7 @@ const App = () => {
   return (
     <div>
       <h1>English for kids!</h1>
-      <div className="cards">
-        {cardsData.map((cardData) => (
-          <Card card={cardData} />
-        ))}
-      </div>
+      <CardsField cards={cardsData} />
     </div>
   );
 };
