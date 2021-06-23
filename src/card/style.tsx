@@ -6,7 +6,6 @@ interface StyledCardSideProps {
 
 export const CardContainer = styled.div`
   --flip: 0deg;
-  perspective: 200vw;
 
   &:hover {
     --flip: 180deg;
@@ -14,15 +13,16 @@ export const CardContainer = styled.div`
 `;
 
 export const StyledCard = styled.div`
-  --aspect-ratio: 3 / 4;
+  --aspect-ratio: 1 / 1;
   position: relative;
   border-radius: 10px;
+  box-shadow: 0 0 2px 0 #0004;
   aspect-ratio: var(--aspect-ratio);
   transform-style: preserve-3d;
   transform: rotateY(var(--flip));
   transition: 500ms;
 
-  @supports not (aspect-ratio: var(--aspect-ratio)) {
+  @supports not (aspect-ratio: 1 / 1) {
     &::before {
       content: '';
       float: left;
