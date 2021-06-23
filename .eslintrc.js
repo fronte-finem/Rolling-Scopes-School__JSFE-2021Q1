@@ -1,0 +1,46 @@
+module.exports = {
+  env: {
+    browser: true,
+    node: true,
+    es2021: true,
+  },
+  extends: [
+    'airbnb-typescript',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:prettier/recommended',
+    'prettier',
+    'prettier/@typescript-eslint',
+  ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 12,
+    sourceType: 'module',
+    project: ['./tsconfig.json'],
+    requireConfigFile: false,
+  },
+  ignorePatterns: ['.eslintrc.js', 'webpack-config/**/*'],
+  settings: {
+    'import/resolver': 'typescript',
+  },
+  plugins: ['@typescript-eslint', '@babel', 'prettier', 'simple-import-sort'],
+  rules: {
+    'import/prefer-default-export': 'off',
+    'no-param-reassign': ['error', { props: false }],
+    'no-bitwise': ['error', { int32Hint: true }],
+    '@typescript-eslint/no-misused-promises': ['error', { checksVoidReturn: false }],
+    '@typescript-eslint/no-floating-promises': ['error', { ignoreVoid: true, ignoreIIFE: true }],
+    'no-void': ['error', { allowAsStatement: true }],
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-use-before-define': ['error', { functions: false }],
+    '@typescript-eslint/explicit-member-accessibility': ['error'],
+    'simple-import-sort/imports': 'error',
+    '@typescript-eslint/lines-between-class-members': [
+      'error',
+      'always',
+      { exceptAfterOverload: true, exceptAfterSingleLine: true },
+    ],
+    'no-underscore-dangle': ['error', { allowAfterThis: true }],
+    'no-await-in-loop': 'warn',
+  },
+};
