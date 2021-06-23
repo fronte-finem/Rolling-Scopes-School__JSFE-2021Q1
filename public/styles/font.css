@@ -1,7 +1,7 @@
 body {
-  --ff-sans: 'Work Sans', sans-serif;
-  --ff-mono: 'Inconsolata', monospace;
-  --ff-hand: 'Sacramento', cursive;
+  --ff-sans: sans-serif;
+  --ff-mono: monospace;
+  --ff-hand: cursive;
 
   font-family: var(--ff-sans);
   font-weight: 100;
