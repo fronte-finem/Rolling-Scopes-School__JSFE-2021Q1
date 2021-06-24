@@ -1,6 +1,6 @@
 import React from 'react';
 import { CardDTO } from 'types/dto';
-import { CardSide } from './side';
+import { CardBackSide, CardFrontSide } from './side';
 import { CardContainer, StyledCard } from './style';
 
 export interface CardProps {
@@ -13,8 +13,8 @@ export const Card = ({ className, data }: CardProps) => {
   return (
     <CardContainer className={className}>
       <StyledCard>
-        <CardSide word={word} image={image} />
-        <CardSide word={translation} image={image} back />
+        <CardFrontSide word={word} image={image} />
+        <CardBackSide word={translation} image={image} />
       </StyledCard>
     </CardContainer>
   );

@@ -1,20 +1,39 @@
 import React from 'react';
-import { StyledCardSide, CardImage, CardWord, BtnFlip } from './style';
+import { ProgressPlugin } from 'webpack';
+import { StyledCardSide, CardImage, CardWord, BtnFlip, StyledCardBackSide } from './style';
 
 interface CardSideProps {
   word: string;
   image: string;
-  back?: boolean;
+  children?: JSX.Element;
 }
 
-export const CardSide = ({ image, word, back = false }: CardSideProps) => {
+const CardSide = ({ image, word, children }: CardSideProps) => {
   return (
-    <StyledCardSide back={back}>
+    <>
       <CardImage src={image} alt={word} />
       <CardWord>
         {word}
-        {!back && <BtnFlip />}
+        {children}
       </CardWord>
+    </>
+  );
+};
+
+export const CardFrontSide = ({ image, word }: CardSideProps) => {
+  return (
+    <StyledCardSide>
+      <CardSide image={image} word={word}>
+        <BtnFlip />
+      </CardSide>
     </StyledCardSide>
+  );
+};
+
+export const CardBackSide = ({ image, word }: CardSideProps) => {
+  return (
+    <StyledCardBackSide>
+      <CardSide image={image} word={word} />
+    </StyledCardBackSide>
   );
 };
