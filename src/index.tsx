@@ -1,25 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { CardsField } from 'components/cards-field/cards-field';
-import { CardDTO, CategoryDTO } from 'types/dto';
-import { fetchData } from 'services/fetch';
+import { categoriesDTOValidator } from 'types/dto';
+import { useFetch } from 'services/fetch-hook';
+import { fixLinks } from 'services/fix-links';
 
 const App = () => {
-  const [data, setData] = useState([] as Array<CardDTO>);
+  const [data, isLoading, error] = useFetch('./data/cards.json', categoriesDTOValidator);
 
-  useEffect(() => {
-    (async () => {
-      const data = await fetchData();
-      if (data.length === 0) return;
-      setData(data[2].cards);
-    })();
-    return;
-  }, []);
+  if (isLoading) return <>Loading...</>;
+  if (error) return <>Error...</>;
 
   return (
     <div>
       <h1>English for kids!</h1>
-      <CardsField cards={data} />
+      <CardsField cards={data === null ? [] : fixLinks(data)[5].cards} />
     </div>
   );
 };

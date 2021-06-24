@@ -1,14 +1,10 @@
 import styled from 'styled-components';
 
-interface StyledCardSideProps {
-  readonly back?: boolean;
-}
-
 export const CardContainer = styled.div`
-  --flip: 0deg;
+  --flip: rotateY(0deg);
 
   &:hover {
-    --flip: 180deg;
+    --flip: rotateY(180deg);
   }
 `;
 
@@ -19,7 +15,7 @@ export const StyledCard = styled.div`
   box-shadow: 0 0 2px 0 #0004;
   aspect-ratio: var(--aspect-ratio);
   transform-style: preserve-3d;
-  transform: rotateY(var(--flip));
+  transform: var(--flip);
   transition: 500ms;
 
   @supports not (aspect-ratio: 1 / 1) {
@@ -36,7 +32,7 @@ export const StyledCard = styled.div`
   }
 `;
 
-export const StyledCardSide = styled.div<StyledCardSideProps>`
+export const StyledCardSide = styled.div`
   position: absolute;
   top: 0;
   width: 100%;
@@ -44,7 +40,11 @@ export const StyledCardSide = styled.div<StyledCardSideProps>`
   border-radius: inherit;
   overflow: hidden;
   backface-visibility: hidden;
-  transform: ${(props) => props.back && 'rotateY(180deg)'};
+`;
+
+export const StyledCardBackSide = styled(StyledCardSide)`
+  --mirror: scaleX(-1);
+  transform: rotateY(180deg);
 `;
 
 export const CardImage = styled.img`
@@ -53,6 +53,7 @@ export const CardImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transform: var(--mirror);
 `;
 
 export const CardWord = styled.div`
