@@ -27,5 +27,10 @@
 ---
 > # 🏎️ Async-race 🏎️
 > - [x] [📃 task](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/async-race.md)
-> - [x] [🏗️ pull-request (preview)](https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/21)
+> - [x] [🏗️ pull-request](https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/21)
 > - [x] [🏠 deploy](https://rolling-scopes-school.github.io/fronte-finem-JSFE2021Q1/async-race/)
+---
+> # 🅰️ English-for-Kids 🅱️
+> - [x] [📃 task](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/rslang/english-for-kids.md)
+> - [x] [🏗️ pull-request (draft)](https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/22)
+> - [ ] [🏠 deploy](https://rolling-scopes-school.github.io/fronte-finem-JSFE2021Q1/english-for-kids/)
