@@ -1,16 +1,10 @@
 import React from 'react';
+import { CardDTO } from 'types/dto';
 import { CardSide } from './side';
 import { CardContainer, StyledCard } from './style';
 
-export interface CardData {
-  word: string;
-  translation: string;
-  image: string;
-  audio: string;
-}
-
 export interface CardProps {
-  data: CardData;
+  data: CardDTO;
   className?: string;
 }
 
