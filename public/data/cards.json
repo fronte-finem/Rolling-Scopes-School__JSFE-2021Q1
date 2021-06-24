@@ -1,6 +1,7 @@
 [
   {
     "category": "Action (set A)",
+    "image": "img/jump.jpg",
     "cards": [
       {
         "word": "cry",
@@ -54,6 +55,7 @@
   },
   {
     "category": "Action (set B)",
+    "image": "img/run.jpg",
     "cards": [
       {
         "word": "open",
@@ -107,6 +109,7 @@
   },
   {
     "category": "Animal (set A)",
+    "image": "img/cat.jpg",
     "cards": [
       {
         "word": "cat",
@@ -160,6 +163,7 @@
   },
   {
     "category": "Animal (set B)",
+    "image": "img/bird.jpg",
     "cards": [
       {
         "word": "bird",
@@ -213,6 +217,7 @@
   },
   {
     "category": "Clothes",
+    "image": "img/skirt.jpg",
     "cards": [
       {
         "word": "skirt",
@@ -266,6 +271,7 @@
   },
   {
     "category": "Emotions",
+    "image": "img/happy.jpg",
     "cards": [
       {
         "word": "sad",
