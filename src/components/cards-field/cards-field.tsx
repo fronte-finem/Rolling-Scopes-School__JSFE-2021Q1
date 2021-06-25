@@ -7,7 +7,9 @@ const StyledCardsField = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  grid-gap: 20px;
+  gap: 20px;
+  padding: 20px;
+  overflow: hidden;
 `;
 
 const CARD_WIDTH = 300;
