@@ -1,5 +1,6 @@
-import { BtnMenu } from 'components/btn-menu/btn-menu';
 import styled from 'styled-components';
+
+import { BtnMenu } from 'components/btn-menu/btn-menu';
 
 export const StyledHeader = styled.header`
   height: 100px;
@@ -37,9 +38,4 @@ export const StyledHeading = styled.h1`
   @media (max-width: 800px) {
     display: none;
   }
-`;
-
-export const StyledGameModeSwitch = styled.button`
-  width: 100px;
-  height: 100px;
 `;

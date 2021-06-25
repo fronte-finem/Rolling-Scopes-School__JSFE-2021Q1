@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter, NavLink, Switch, Route, useParams } from 'react-router-dom';
+import { HashRouter, Route, Switch, useParams } from 'react-router-dom';
+
 import { CardsField } from 'components/cards-field/cards-field';
-import { categoriesDTOValidator } from 'types/category-dto';
+import { Categories, CategoriesProps } from 'components/categories/categories';
+import { Header } from 'components/header/header';
+import { Sidebar } from 'components/sidebar/sidebar';
 import { useFetch } from 'services/fetch-hook';
 import { fixLinks } from 'services/fix-links';
-import { Categories, CategoriesProps } from 'components/categories/categories';
-import { Sidebar } from 'components/sidebar/sidebar';
-import { Header } from 'components/header/header';
+import { categoriesDTOValidator } from 'types/category-dto';
 
 const Cards = ({ data }: CategoriesProps) => {
   const { slug } = useParams<{ slug: string }>();
