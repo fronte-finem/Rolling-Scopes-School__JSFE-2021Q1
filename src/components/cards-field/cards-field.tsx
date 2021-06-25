@@ -1,7 +1,7 @@
 import { Card } from 'components/card/card';
 import React from 'react';
 import styled from 'styled-components';
-import { CardDTO } from 'types/dto';
+import { CardDTO } from 'types/card-dto';
 
 const StyledCardsField = styled.div`
   display: flex;

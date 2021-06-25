@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { CardsField } from 'components/cards-field/cards-field';
-import { categoriesDTOValidator } from 'types/dto';
+import { categoriesDTOValidator } from 'types/category-dto';
 import { useFetch } from 'services/fetch-hook';
 import { fixLinks } from 'services/fix-links';
 

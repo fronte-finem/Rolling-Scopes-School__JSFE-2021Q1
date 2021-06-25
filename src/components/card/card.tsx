@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardDTO } from 'types/dto';
+import { CardDTO } from 'types/card-dto';
 import { CardBackSide, CardFrontSide } from './side';
 import { CardContainer, StyledCard } from './style';
 
