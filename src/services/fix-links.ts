@@ -1,4 +1,5 @@
-import { CardDTO, CategoryDTO } from 'types/dto';
+import { CardDTO } from 'types/card-dto';
+import { CategoryDTO } from 'types/category-dto';
 
 export function fixLinks(data: CategoryDTO[]): CategoryDTO[] {
   return data.map(({ image, cards, ...rest }) => ({

@@ -1,3 +1,10 @@
+const fs = require('fs');
+
+const folders = fs
+  .readdirSync('src', { withFileTypes: true })
+  .filter((dirent) => dirent.isDirectory())
+  .map((dirent) => dirent.name);
+
 module.exports = {
   env: {
     browser: true,
@@ -8,9 +15,10 @@ module.exports = {
     'airbnb-typescript',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
     'plugin:prettier/recommended',
     'prettier',
-    'prettier/@typescript-eslint',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -22,8 +30,9 @@ module.exports = {
   ignorePatterns: ['.eslintrc.js', 'webpack-config/**/*'],
   settings: {
     'import/resolver': 'typescript',
+    'import/parsers': { '@typescript-eslint/parser': ['.ts', '.tsx'] },
   },
-  plugins: ['@typescript-eslint', '@babel', 'prettier', 'simple-import-sort'],
+  plugins: ['@typescript-eslint', '@babel', 'prettier', 'import', 'simple-import-sort'],
   rules: {
     'import/prefer-default-export': 'off',
     'no-param-reassign': ['error', { props: false }],
@@ -34,7 +43,6 @@ module.exports = {
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['error', { functions: false }],
     '@typescript-eslint/explicit-member-accessibility': ['error'],
-    'simple-import-sort/imports': 'error',
     '@typescript-eslint/lines-between-class-members': [
       'error',
       'always',
@@ -42,5 +50,21 @@ module.exports = {
     ],
     'no-underscore-dangle': ['error', { allowAfterThis: true }],
     'no-await-in-loop': 'warn',
+    'simple-import-sort/imports': [
+      'error',
+      {
+        groups: [
+          // Packages. `react` related packages come first.
+          // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
+          ['^react', '^@?\\w'],
+          // Absolute local imports
+          [`^(${folders.join('|')})(/.*|$)`],
+          // Relative imports.
+          ['^\\.'],
+          // for scss imports.
+          ['^[^.]'],
+        ],
+      },
+    ],
   },
 };

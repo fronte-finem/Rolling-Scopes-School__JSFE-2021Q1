@@ -1,5 +1,7 @@
 import React from 'react';
-import { CardDTO } from 'types/dto';
+
+import { CardDTO } from 'types/card-dto';
+
 import { CardBackSide, CardFrontSide } from './side';
 import { CardContainer, StyledCard } from './style';
 
@@ -8,7 +10,7 @@ export interface CardProps {
   className?: string;
 }
 
-export const Card = ({ className, data }: CardProps) => {
+export const Card = ({ className, data }: CardProps): JSX.Element => {
   const { word, translation, image } = data;
   return (
     <CardContainer className={className}>

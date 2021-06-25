@@ -1,13 +1,16 @@
-import { Card } from 'components/card/card';
 import React from 'react';
 import styled from 'styled-components';
-import { CardDTO } from 'types/dto';
+
+import { Card } from 'components/card/card';
+import { CardDTO } from 'types/card-dto';
 
 const StyledCardsField = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  grid-gap: 20px;
+  gap: 20px;
+  padding: 20px;
+  overflow: hidden;
 `;
 
 const CARD_WIDTH = 300;
@@ -21,7 +24,7 @@ export interface CardsFieldProps {
   cards: Array<CardDTO>;
 }
 
-export const CardsField = ({ cards }: CardsFieldProps) => {
+export const CardsField = ({ cards }: CardsFieldProps): JSX.Element => {
   return (
     <StyledCardsField>
       {cards.map((cardData) => (
