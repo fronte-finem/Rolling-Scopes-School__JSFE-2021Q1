@@ -11,7 +11,7 @@ interface CardSideProps {
 const CardSide = ({ image, word, children }: CardSideProps) => {
   return (
     <>
-      <CardImage src={image} alt={word} />
+      <CardImage src={image} alt={word} draggable={false} />
       <CardWord>
         {word}
         {children}
