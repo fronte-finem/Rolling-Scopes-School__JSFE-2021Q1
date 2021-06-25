@@ -1,16 +1,18 @@
 import React from 'react';
+
 import { StyledProps } from 'types/styled';
+
 import {
-  StyledBtnMenu,
-  StripeTopLeft,
-  StripeTopRight,
-  StripeMiddle,
   StripeBottomLeft,
   StripeBottomRight,
+  StripeMiddle,
+  StripeTopLeft,
+  StripeTopRight,
+  StyledBtnMenu,
   StyledWrapper,
 } from './style';
 
-export const BtnMenu = ({ className }: StyledProps) => {
+export const BtnMenu = ({ className }: StyledProps): JSX.Element => {
   return (
     <StyledBtnMenu className={className}>
       <StyledWrapper>

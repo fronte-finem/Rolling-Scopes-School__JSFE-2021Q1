@@ -1,6 +1,7 @@
-import { Card } from 'components/card/card';
 import React from 'react';
 import styled from 'styled-components';
+
+import { Card } from 'components/card/card';
 import { CardDTO } from 'types/card-dto';
 
 const StyledCardsField = styled.div`
@@ -23,7 +24,7 @@ export interface CardsFieldProps {
   cards: Array<CardDTO>;
 }
 
-export const CardsField = ({ cards }: CardsFieldProps) => {
+export const CardsField = ({ cards }: CardsFieldProps): JSX.Element => {
   return (
     <StyledCardsField>
       {cards.map((cardData) => (

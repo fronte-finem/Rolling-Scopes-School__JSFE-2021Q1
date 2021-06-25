@@ -1,12 +1,14 @@
 import React from 'react';
+
 import { CategoryDTO } from 'types/category-dto';
-import { StyledBar, StyledList, StyledCategoriesItem, StyledLink } from './style';
+
+import { StyledBar, StyledCategoriesItem, StyledLink, StyledList } from './style';
 
 export interface CategoriesProps {
   data: CategoryDTO[];
 }
 
-export const Sidebar = ({ data }: CategoriesProps) => {
+export const Sidebar = ({ data }: CategoriesProps): JSX.Element => {
   return (
     <StyledBar>
       <StyledList>
