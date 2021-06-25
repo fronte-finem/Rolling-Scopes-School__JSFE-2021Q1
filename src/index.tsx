@@ -6,6 +6,8 @@ import { categoriesDTOValidator } from 'types/category-dto';
 import { useFetch } from 'services/fetch-hook';
 import { fixLinks } from 'services/fix-links';
 import { Categories, CategoriesProps } from 'components/categories/categories';
+import { Sidebar } from 'components/sidebar/sidebar';
+import { Header } from 'components/header/header';
 
 const Cards = ({ data }: CategoriesProps) => {
   const { slug } = useParams<{ slug: string }>();
@@ -21,28 +23,19 @@ const App = () => {
 
   return (
     <div>
-      <h1>English for kids!</h1>
+      <Header />
       <HashRouter>
         <div>
-          <nav>
-            <ul>
-              <li>
-                <NavLink to="/">Home</NavLink>
-              </li>
-              <li>
-                <NavLink to="/about">About</NavLink>
-              </li>
-            </ul>
-          </nav>
+          <Sidebar data={data === null ? [] : fixLinks(data)} />
           <Switch>
             <Route exact path="/">
               <Categories data={data === null ? [] : fixLinks(data)} />
             </Route>
-            <Route path="/:slug">
-              <Cards data={data === null ? [] : fixLinks(data)} />
-            </Route>
             <Route path="/about">
               <>ABOUT</>
+            </Route>
+            <Route path="/:slug">
+              <Cards data={data === null ? [] : fixLinks(data)} />
             </Route>
           </Switch>
         </div>
