@@ -10,6 +10,8 @@ export const Wrapper = styled.div`
   --ofsset: 100px;
   position: relative;
   max-width: 1440px;
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
   padding: 0 var(--ofsset);
   display: flex;
