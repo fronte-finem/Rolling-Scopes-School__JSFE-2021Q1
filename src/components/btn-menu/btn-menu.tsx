@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 
 import { StyledProps } from 'types/styled';
 
+import { SidebarContext } from '../../contexts/sidebar-context';
 import {
   StripeBottomLeft,
   StripeBottomRight,
@@ -13,12 +14,15 @@ import {
 } from './style';
 
 export const BtnMenu = ({ className }: StyledProps): JSX.Element => {
-  const [close, setClose] = useState(false);
+  const {
+    sidebarState: { close },
+    dispatch,
+  } = useContext(SidebarContext);
 
-  const btnClassName = `${className || ''} ${close ? 'close' : ''}`;
+  const btnClassName = `${className || ''} ${!close ? 'close' : ''}`;
 
   const handleClick = () => {
-    setClose(!close);
+    dispatch(!close);
   };
 
   return (
