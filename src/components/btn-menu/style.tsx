@@ -5,6 +5,8 @@ export const StyledBtnMenu = styled.button`
   --stripe-s: 5px;
   --stripe-w: calc(50% + var(--stripe-s));
   --stripe-h: calc(2 * var(--stripe-s));
+  --stripe-c: #111;
+
   position: relative;
   width: 50px;
   height: 50px;
@@ -12,11 +14,12 @@ export const StyledBtnMenu = styled.button`
   border: none;
   background: transparent;
 
-  &:hover {
+  &.close {
     --middle: scaleX(0);
     --clockwise: rotate(45deg) scaleX(1.4142);
     --counter-clockwise: rotate(-45deg) scaleX(1.4142);
     --scale-x: scaleX(1);
+    --stripe-c: #eee;
   }
 `;
 
@@ -35,7 +38,7 @@ const Stripe = styled.span`
   position: absolute;
   width: var(--stripe-w);
   height: var(--stripe-h);
-  background: #333;
+  background: var(--stripe-c);
   border-radius: var(--stripe-s);
   transition: all 200ms ease-in-out;
 `;

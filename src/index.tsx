@@ -6,6 +6,7 @@ import { CardsField } from 'components/cards-field/cards-field';
 import { Categories, CategoriesProps } from 'components/categories/categories';
 import { Header } from 'components/header/header';
 import { Sidebar } from 'components/sidebar/sidebar';
+import { initialSidebarState, SidebarContext, sidebarReducer } from 'contexts/sidebar-context';
 import { useFetch } from 'services/fetch-hook';
 import { fixLinks } from 'services/fix-links';
 import { categoriesDTOValidator } from 'types/category-dto';
@@ -18,29 +19,32 @@ const Cards = ({ data }: CategoriesProps) => {
 
 const App = () => {
   const [data, isLoading, error] = useFetch('./data/cards.json', categoriesDTOValidator);
+  const [sidebarState, dispatch] = React.useReducer(sidebarReducer, initialSidebarState);
 
   if (isLoading) return <>Loading...</>;
   if (error) return <>Error...</>;
 
   return (
     <div>
-      <Header />
-      <HashRouter>
-        <div>
-          <Sidebar data={data === null ? [] : fixLinks(data)} />
-          <Switch>
-            <Route exact path="/">
-              <Categories data={data === null ? [] : fixLinks(data)} />
-            </Route>
-            <Route path="/about">
-              <>ABOUT</>
-            </Route>
-            <Route path="/:slug">
-              <Cards data={data === null ? [] : fixLinks(data)} />
-            </Route>
-          </Switch>
-        </div>
-      </HashRouter>
+      <SidebarContext.Provider value={{ sidebarState, dispatch }}>
+        <Header />
+        <HashRouter>
+          <div>
+            <Sidebar data={data === null ? [] : fixLinks(data)} />
+            <Switch>
+              <Route exact path="/">
+                <Categories data={data === null ? [] : fixLinks(data)} />
+              </Route>
+              <Route path="/about">
+                <>ABOUT</>
+              </Route>
+              <Route path="/:slug">
+                <Cards data={data === null ? [] : fixLinks(data)} />
+              </Route>
+            </Switch>
+          </div>
+        </HashRouter>
+      </SidebarContext.Provider>
     </div>
   );
 };

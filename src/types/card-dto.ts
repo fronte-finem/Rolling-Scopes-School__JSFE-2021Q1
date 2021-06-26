@@ -11,10 +11,10 @@ type CardDTOValidator = Validator<CardDTO>;
 
 export const cardDTOValidator: CardDTOValidator = (data: unknown) => {
   if (!(data instanceof Object)) return null;
-  const maybeCardDTO = data as CardDTO;
+  const maybeCardDTO = data as Record<string, unknown>;
   if (typeof maybeCardDTO.word !== 'string') return null;
   if (typeof maybeCardDTO.translation !== 'string') return null;
   if (typeof maybeCardDTO.image !== 'string') return null;
   if (typeof maybeCardDTO.audio !== 'string') return null;
-  return maybeCardDTO;
+  return maybeCardDTO as unknown as CardDTO;
 };

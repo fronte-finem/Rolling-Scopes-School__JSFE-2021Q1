@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { BtnMenu } from 'components/btn-menu/btn-menu';
+import { GameModeSwitch } from 'components/game-mode-switch/game-mode-switch';
 
 export const StyledHeader = styled.header`
   height: 100px;
@@ -10,6 +10,8 @@ export const Wrapper = styled.div`
   --ofsset: 100px;
   position: relative;
   max-width: 1440px;
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
   padding: 0 var(--ofsset);
   display: flex;
@@ -24,11 +26,10 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const StyledBtnMenu = styled(BtnMenu)`
+export const StyledGameModeSwitch = styled(GameModeSwitch)`
   position: absolute;
-  left: var(--ofsset);
-  top: 50%;
-  transform: translateY(-50%);
+  right: 20px;
+  top: 20px;
 `;
 
 export const StyledHeading = styled.h1`
