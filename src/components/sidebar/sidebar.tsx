@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { SidebarContext } from 'contexts/sidebar-context';
 import { CategoryDTO } from 'types/category-dto';
 import { StyledProps } from 'types/styled';
 
+import { useSidebarHook } from './hook';
 import { StyledBar, StyledBtnMenu, StyledCategoriesItem, StyledLink, StyledList } from './style';
 
 export interface CategoriesProps extends StyledProps {
@@ -11,24 +11,24 @@ export interface CategoriesProps extends StyledProps {
 }
 
 export const Sidebar = ({ data, className }: CategoriesProps): JSX.Element => {
-  const {
-    sidebarState: { close },
-  } = useContext(SidebarContext);
+  const { ref, sidebarState, closeSidebar } = useSidebarHook();
 
-  const sidebarClassName = `${className || ''} ${close ? 'close' : ''}`;
+  const handleLinkClick = () => closeSidebar(true);
+
+  const sidebarClassName = `${className || ''} ${sidebarState.isClosed ? 'close' : ''}`;
 
   return (
-    <StyledBar className={sidebarClassName}>
+    <StyledBar className={sidebarClassName} ref={ref}>
       <StyledBtnMenu />
       <StyledList>
         <StyledCategoriesItem key="nome">
-          <StyledLink exact to="/" draggable={false}>
+          <StyledLink exact to="/" draggable={false} onClick={handleLinkClick}>
             Home
           </StyledLink>
         </StyledCategoriesItem>
         {data.map(({ category, path }) => (
           <StyledCategoriesItem key={category}>
-            <StyledLink to={`/${path}`} draggable={false}>
+            <StyledLink to={`/${path}`} draggable={false} onClick={handleLinkClick}>
               {category}
             </StyledLink>
           </StyledCategoriesItem>
