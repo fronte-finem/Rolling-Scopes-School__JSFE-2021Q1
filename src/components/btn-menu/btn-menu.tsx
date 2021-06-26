@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { StyledProps } from 'types/styled';
 
@@ -13,8 +13,16 @@ import {
 } from './style';
 
 export const BtnMenu = ({ className }: StyledProps): JSX.Element => {
+  const [close, setClose] = useState(false);
+
+  const btnClassName = `${className || ''} ${close ? 'close' : ''}`;
+
+  const handleClick = () => {
+    setClose(!close);
+  };
+
   return (
-    <StyledBtnMenu className={className}>
+    <StyledBtnMenu className={btnClassName} onClick={handleClick}>
       <StyledWrapper>
         <StripeTopLeft />
         <StripeTopRight />

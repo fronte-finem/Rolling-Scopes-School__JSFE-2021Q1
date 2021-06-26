@@ -12,7 +12,7 @@ export const StyledBtnMenu = styled.button`
   border: none;
   background: transparent;
 
-  &:hover {
+  &.close {
     --middle: scaleX(0);
     --clockwise: rotate(45deg) scaleX(1.4142);
     --counter-clockwise: rotate(-45deg) scaleX(1.4142);
