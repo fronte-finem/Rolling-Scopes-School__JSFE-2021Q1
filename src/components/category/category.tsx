@@ -2,21 +2,21 @@ import React from 'react';
 
 import { CategoryDTO } from 'types/category-dto';
 
-import { CategoryCardContainer, CategoryImage, CategoryName, StyledCategoryCard } from './style';
+import { CategoryImage, CategoryName, NameWrapper, StyledCategoryLink } from './style';
 
 export interface CategoryProps {
   readonly data: CategoryDTO;
   readonly className?: string;
 }
 
-export const CategoryCard = ({ className, data }: CategoryProps): JSX.Element => {
+export const CategoryLink = ({ className, data }: CategoryProps): JSX.Element => {
   const { category, image } = data;
   return (
-    <CategoryCardContainer className={className}>
-      <StyledCategoryCard>
-        <CategoryImage draggable={false} src={image} alt={category} />
+    <StyledCategoryLink className={className} to={`/${data.path}`} draggable={false}>
+      <CategoryImage draggable={false} src={image} alt={category} />
+      <NameWrapper>
         <CategoryName>{category}</CategoryName>
-      </StyledCategoryCard>
-    </CategoryCardContainer>
+      </NameWrapper>
+    </StyledCategoryLink>
   );
 };
