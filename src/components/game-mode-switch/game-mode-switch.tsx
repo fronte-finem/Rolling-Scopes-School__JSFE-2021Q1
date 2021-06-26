@@ -1,13 +1,23 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
 
 import { StyledProps } from 'types/styled';
 
-const StyledGameModeSwitch = styled.button`
-  width: 100px;
-  height: 100px;
-`;
+import { ModePlay, ModeTrain, StyledGameModeSwitch, Switch } from './style';
 
 export const GameModeSwitch = ({ className }: StyledProps): JSX.Element => {
-  return <StyledGameModeSwitch className={className} />;
+  const [play, setPlay] = useState(false);
+
+  const switchClassName = `${className || ''} ${play ? 'play' : ''}`;
+
+  const handleChangeMode = () => {
+    setPlay(!play);
+  };
+
+  return (
+    <StyledGameModeSwitch className={switchClassName} onClick={handleChangeMode}>
+      <ModeTrain>train</ModeTrain>
+      <ModePlay>play</ModePlay>
+      <Switch />
+    </StyledGameModeSwitch>
+  );
 };
