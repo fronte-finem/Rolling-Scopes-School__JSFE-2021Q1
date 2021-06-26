@@ -19,14 +19,14 @@ const Cards = ({ data }: CategoriesProps) => {
 
 const App = () => {
   const [data, isLoading, error] = useFetch('./data/cards.json', categoriesDTOValidator);
-  const [sidebarState, dispatch] = React.useReducer(sidebarReducer, initialSidebarState);
+  const [sidebarState, closeSidebar] = React.useReducer(sidebarReducer, initialSidebarState);
 
   if (isLoading) return <>Loading...</>;
   if (error) return <>Error...</>;
 
   return (
     <div>
-      <SidebarContext.Provider value={{ sidebarState, dispatch }}>
+      <SidebarContext.Provider value={{ sidebarState, closeSidebar }}>
         <Header />
         <HashRouter>
           <div>
