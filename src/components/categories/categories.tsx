@@ -1,21 +1,22 @@
 import React from 'react';
 
+import { CategoryLink } from 'components/category/category';
 import { CategoryDTO } from 'types/category-dto';
+import { StyledProps } from 'types/styled';
 
-import { CategoryLink } from '../category/category';
 import { StyledCategories, StyledCategoriesItem } from './style';
 
-export interface CategoriesProps {
-  data: CategoryDTO[];
+export interface CategoriesProps extends StyledProps {
+  categories: CategoryDTO[];
 }
 
-export const Categories = ({ data }: CategoriesProps): JSX.Element => {
+export const Categories = ({ className, categories }: CategoriesProps): JSX.Element => {
   return (
-    <nav>
+    <nav className={className}>
       <StyledCategories>
-        {data.map((categoryDTO) => (
+        {categories.map((categoryDTO) => (
           <StyledCategoriesItem key={categoryDTO.category}>
-            <CategoryLink data={categoryDTO} />
+            <CategoryLink categoryDTO={categoryDTO} />
           </StyledCategoriesItem>
         ))}
       </StyledCategories>

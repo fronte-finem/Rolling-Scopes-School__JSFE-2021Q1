@@ -7,10 +7,10 @@ import { useSidebarHook } from './hook';
 import { StyledBar, StyledBtnMenu, StyledCategoriesItem, StyledLink, StyledList } from './style';
 
 export interface CategoriesProps extends StyledProps {
-  data: CategoryDTO[];
+  categories: CategoryDTO[];
 }
 
-export const Sidebar = ({ data, className }: CategoriesProps): JSX.Element => {
+export const Sidebar = ({ categories, className }: CategoriesProps): JSX.Element => {
   const { ref, sidebarState, closeSidebar } = useSidebarHook();
 
   const handleLinkClick = () => closeSidebar(true);
@@ -26,7 +26,7 @@ export const Sidebar = ({ data, className }: CategoriesProps): JSX.Element => {
             Home
           </StyledLink>
         </StyledCategoriesItem>
-        {data.map(({ category, path }) => (
+        {categories.map(({ category, path }) => (
           <StyledCategoriesItem key={category}>
             <StyledLink to={`/${path}`} draggable={false} onClick={handleLinkClick}>
               {category}
