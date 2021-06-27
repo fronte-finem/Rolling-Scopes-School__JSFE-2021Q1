@@ -1,34 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
 
-import { Card } from 'components/card/card';
-import { CardDTO } from 'types/card-dto';
+import { StyledProps } from 'types/styled';
+import { WordDTO } from 'types/word-dto';
 
-const StyledCardsField = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  padding: 20px;
-  overflow: hidden;
-`;
+import { StyledCardsField, StyledCardsFieldItem } from './style';
 
-const CARD_WIDTH = 300;
-
-const StyledCardsFieldItem = styled(Card)`
-  flex: 0 0 ${CARD_WIDTH}px;
-  perspective: ${CARD_WIDTH * 3}px;
-`;
-
-export interface CardsFieldProps {
-  cards: Array<CardDTO>;
+export interface CardsFieldProps extends StyledProps {
+  words: WordDTO[];
 }
 
-export const CardsField = ({ cards }: CardsFieldProps): JSX.Element => {
+export const CardsField = ({ words, className }: CardsFieldProps): JSX.Element => {
   return (
-    <StyledCardsField>
-      {cards.map((cardData) => (
-        <StyledCardsFieldItem key={cardData.word} data={cardData} />
+    <StyledCardsField className={className}>
+      {words.map((wordDTO) => (
+        <StyledCardsFieldItem key={wordDTO.word} wordDTO={wordDTO} />
       ))}
     </StyledCardsField>
   );

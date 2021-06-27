@@ -1,43 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 
+import { CategoryLink } from 'components/category/category';
 import { CategoryDTO } from 'types/category-dto';
+import { StyledProps } from 'types/styled';
 
-import { CategoryCard } from '../category/category';
+import { StyledCategories, StyledCategoriesItem } from './style';
 
-const StyledCategories = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  grid-gap: 20px;
-`;
-
-const CARD_WIDTH = 300;
-
-const StyledCategoriesItem = styled.li`
-  display: block;
-  flex: 0 0 ${CARD_WIDTH}px;
-  perspective: ${CARD_WIDTH * 3}px;
-`;
-
-const StyledLink = styled(Link)`
-  display: block;
-`;
-
-export interface CategoriesProps {
-  data: CategoryDTO[];
+export interface CategoriesProps extends StyledProps {
+  categories: CategoryDTO[];
 }
 
-export const Categories = ({ data }: CategoriesProps): JSX.Element => {
+export const Categories = ({ className, categories }: CategoriesProps): JSX.Element => {
   return (
-    <nav>
+    <nav className={className}>
       <StyledCategories>
-        {data.map((categoryDTO) => (
+        {categories.map((categoryDTO) => (
           <StyledCategoriesItem key={categoryDTO.category}>
-            <StyledLink to={`/${categoryDTO.path}`} draggable={false}>
-              <CategoryCard data={categoryDTO} />
-            </StyledLink>
+            <CategoryLink categoryDTO={categoryDTO} />
           </StyledCategoriesItem>
         ))}
       </StyledCategories>

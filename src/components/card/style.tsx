@@ -2,15 +2,9 @@ import styled from 'styled-components';
 
 export const CardContainer = styled.div`
   --aspect-ratio: 1 / 1;
-  --flip: rotateY(0deg);
   aspect-ratio: var(--aspect-ratio);
-  /* margin: 10px; */
   position: relative;
   user-select: none;
-
-  &:hover {
-    --flip: rotateY(180deg);
-  }
 
   @supports not (aspect-ratio: 1 / 1) {
     &::before {
@@ -27,6 +21,9 @@ export const CardContainer = styled.div`
 `;
 
 export const StyledCard = styled.div`
+  --flip: rotateY(0deg);
+  --pointer-events: all;
+
   position: relative;
   width: 100%;
   height: 100%;
@@ -35,6 +32,14 @@ export const StyledCard = styled.div`
   box-shadow: 0 0 3px 0 #0008;
   transform: var(--flip);
   transition: 500ms;
+  cursor: pointer;
+  pointer-events: var(--pointer-events);
+
+  &.flip {
+    --flip: rotateY(180deg);
+    --pointer-events: none;
+    cursor: default;
+  }
 `;
 
 export const StyledCardSide = styled.div`
@@ -47,6 +52,9 @@ export const StyledCardSide = styled.div`
   overflow: hidden;
   backface-visibility: hidden;
 `;
+
+export const StyledCardFrontSide = styled(StyledCardSide)``;
+
 export const StyledCardBackSide = styled(StyledCardSide)`
   --mirror: scaleX(-1);
   transform: rotateY(180deg);
@@ -68,22 +76,39 @@ export const CardWord = styled.div`
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 20%;
+  height: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #0008;
+  backdrop-filter: blur(2px);
   color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-weight: bold;
+  font-size: 25px;
 `;
 
-export const BtnFlip = styled.button`
+export const StyledBtnFlip = styled.button`
   display: block;
   position: absolute;
   right: 5%;
-  width: 15%;
-  height: 0;
-  padding: 0 0 15%;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  border: unset;
-  box-shadow: 0 2px 5px 2px #0004;
+  border: none;
+  background: transparent;
+  box-shadow: 0 0 5px 2px #0004;
+  pointer-events: var(--pointer-events);
+  transition: all 300ms;
+
+  &:hover {
+    transform: rotate(180deg);
+    box-shadow: 0 0 5px 4px #0004;
+  }
+
+  &:active {
+    transform: rotate(360deg);
+    box-shadow: 0 0 1px 2px #0004;
+  }
 `;

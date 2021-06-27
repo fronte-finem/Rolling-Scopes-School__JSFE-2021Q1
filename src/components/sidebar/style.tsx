@@ -13,9 +13,13 @@ export const StyledBar = styled.nav`
   left: 0;
   width: var(--w);
   height: 100vh;
-  background: #0008;
-  backdrop-filter: blur(5px);
   transition: all 500ms;
+  background: linear-gradient(#777, #999, #777);
+
+  @supports (backdrop-filter: none) {
+    background: #0008;
+    backdrop-filter: blur(5px);
+  }
 
   &.close {
     left: -300px;

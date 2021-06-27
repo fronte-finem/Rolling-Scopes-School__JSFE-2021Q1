@@ -1,28 +1,31 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const CategoryCardContainer = styled.div`
+export const StyledCategoryLink = styled(Link)`
   --aspect-ratio: 1 / 1;
-  user-select: none;
-`;
-
-export const StyledCategoryCard = styled.div`
-  --bump: translateZ(0);
+  --path: inset(0% 0% 0% 0% round 50%);
+  --name-bg: #fff0;
+  --font-bg: #0004;
+  --name-sz: 70px;
 
   &:hover {
-    --bump: translateZ(50px);
+    --path: inset(0% 0% 0% 0% round 25%);
+    --name-bg: #fff2;
+    --font-bg: #0008;
+    --name-sz: 100px;
   }
 
+  display: block;
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
   box-shadow: 0 0 2px 0 #0004;
-  aspect-ratio: var(--aspect-ratio);
-  transform-style: preserve-3d;
-  transform: var(--bump);
-  transition: 500ms;
   cursor: pointer;
-  clip-path: circle(50%);
+  user-select: none;
+  aspect-ratio: var(--aspect-ratio);
+  clip-path: var(--path);
+  transition: 300ms;
 
   @supports not (aspect-ratio: 1 / 1) {
     &::before {
@@ -38,16 +41,6 @@ export const StyledCategoryCard = styled.div`
   }
 `;
 
-export const StyledCardSide = styled.div`
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-  overflow: hidden;
-  backface-visibility: hidden;
-`;
-
 export const CategoryImage = styled.img`
   position: absolute;
   display: block;
@@ -57,14 +50,28 @@ export const CategoryImage = styled.img`
   transform: var(--mirror);
 `;
 
-export const CategoryName = styled.div`
+export const NameWrapper = styled.div`
+  --h: 70px;
   position: absolute;
-  bottom: 0;
+  top: calc(50% - var(--name-sz) / 2);
+  width: 100%;
+  height: var(--name-sz);
+  background-color: var(--font-bg);
+  transition: 300ms;
+`;
+
+export const CategoryName = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 20%;
-  background-color: #0008;
-  color: #fff;
+  background-color: var(--name-bg);
+  background-image: linear-gradient(90deg, #fff8, #fff, #fff8);
+  color: #000;
+  mix-blend-mode: screen;
+  backdrop-filter: blur(2px);
+  font-size: calc(var(--h) / 2);
+  font-weight: bold;
+  transition: 300ms;
 `;

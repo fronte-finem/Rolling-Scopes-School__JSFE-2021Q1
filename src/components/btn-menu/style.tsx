@@ -6,6 +6,7 @@ export const StyledBtnMenu = styled.button`
   --stripe-w: calc(50% + var(--stripe-s));
   --stripe-h: calc(2 * var(--stripe-s));
   --stripe-c: #111;
+  --time: 300ms;
 
   position: relative;
   width: 50px;
@@ -29,7 +30,7 @@ export const StyledWrapper = styled.span`
   left: -50%;
   width: 100%;
   height: 100%;
-  transition: all 200ms ease-in-out;
+  transition: all var(--time) ease-in-out;
   transform: translateX(50%) var(--scale-x);
 `;
 
@@ -40,7 +41,7 @@ const Stripe = styled.span`
   height: var(--stripe-h);
   background: var(--stripe-c);
   border-radius: var(--stripe-s);
-  transition: all 200ms ease-in-out;
+  transition: all var(--time) ease-in-out;
 `;
 
 export const StripeMiddle = styled(Stripe)`
