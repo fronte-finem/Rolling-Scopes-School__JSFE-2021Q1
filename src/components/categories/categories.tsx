@@ -5,7 +5,7 @@ import { CategoryDTO } from 'types/category-dto';
 import { CategoryLink } from '../category/category';
 import { StyledCategories, StyledCategoriesItem } from './style';
 
-interface CategoriesProps {
+export interface CategoriesProps {
   data: CategoryDTO[];
 }
 
