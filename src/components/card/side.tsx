@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BtnFlip, CardImage, CardWord, StyledCardBackSide, StyledCardSide } from './style';
+import { CardImage, CardWord, StyledCardBackSide, StyledCardFrontSide } from './style';
 
 export interface CardSideProps {
   word: string;
@@ -20,13 +20,13 @@ const CardSide = ({ image, word, children }: CardSideProps) => {
   );
 };
 
-export const CardFrontSide = ({ image, word }: CardSideProps): JSX.Element => {
+export const CardFrontSide = ({ image, word, children }: CardSideProps): JSX.Element => {
   return (
-    <StyledCardSide>
+    <StyledCardFrontSide>
       <CardSide image={image} word={word}>
-        <BtnFlip />
+        {children}
       </CardSide>
-    </StyledCardSide>
+    </StyledCardFrontSide>
   );
 };
 
