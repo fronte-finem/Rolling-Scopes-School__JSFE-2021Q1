@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 
-import { CardDTO } from 'types/card-dto';
+import { StyledProps } from 'types/styled';
+import { WordDTO } from 'types/word-dto';
 
 import { BtnFlip } from './btn-flip';
 import { CardBackSide, CardFrontSide } from './side';
 import { CardContainer, StyledCard } from './style';
 
-export interface CardProps {
-  data: CardDTO;
+export interface CardProps extends StyledProps {
+  wordDTO: WordDTO;
   className?: string;
 }
 
-export const Card = ({ className, data }: CardProps): JSX.Element => {
-  const { word, translation, image, audio } = data;
+export const Card = ({ className, wordDTO }: CardProps): JSX.Element => {
+  const { word, translation, image, audio } = wordDTO;
   const audioElement = new Audio(audio);
 
   const [isFlipped, setFlip] = useState(false);
