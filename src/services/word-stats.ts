@@ -1,29 +1,29 @@
 export interface WordStats {
-  wordId: number;
+  word: string;
   clicks: number;
   solved: number;
 }
 
 export function updateWordsStats(
   oldStats: WordStats[],
-  clickedWordId: number,
-  isSolved: boolean
+  testWord: string,
+  isMatch: boolean
 ): WordStats[] {
-  const wordStats = oldStats.find(({ wordId }) => wordId === clickedWordId);
-  if (!wordStats) return [...oldStats, newWordStats(clickedWordId, isSolved)];
-  const newStats = oldStats.filter(({ wordId }) => wordId !== clickedWordId);
-  newStats.push(updateWordStats(wordStats, isSolved));
+  const wordStats = oldStats.find(({ word }) => word === testWord);
+  if (!wordStats) return [...oldStats, newWordStats(testWord, isMatch)];
+  const newStats = oldStats.filter(({ word }) => word !== testWord);
+  newStats.push(updateWordStats(wordStats, isMatch));
   return newStats;
 }
 
-function updateWordStats({ wordId, clicks, solved }: WordStats, isSolved: boolean): WordStats {
+function updateWordStats({ word, clicks, solved }: WordStats, isMatch: boolean): WordStats {
   return {
-    wordId,
+    word,
     clicks: clicks + 1,
-    solved: isSolved ? solved + 1 : solved,
+    solved: isMatch ? solved + 1 : solved,
   };
 }
 
-function newWordStats(clickedWordId: number, isSolved: boolean): WordStats {
-  return { wordId: clickedWordId, clicks: 1, solved: isSolved ? 1 : 0 };
+function newWordStats(word: string, isSolved: boolean): WordStats {
+  return { word, clicks: 1, solved: isSolved ? 1 : 0 };
 }
