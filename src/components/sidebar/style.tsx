@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { BtnMenu } from 'components/btn-menu/btn-menu';
+import { BtnToggle } from 'components/sidebar/btn-toggle';
 
 export const StyledBar = styled.nav`
   --w: 300px;
@@ -27,7 +27,7 @@ export const StyledBar = styled.nav`
   }
 `;
 
-export const StyledBtnMenu = styled(BtnMenu)`
+export const StyledBtnMenu = styled(BtnToggle)`
   position: absolute;
   right: var(--ofsset);
   top: 20px;

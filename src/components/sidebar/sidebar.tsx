@@ -1,25 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
-import { CategoryDTO } from 'types/category-dto';
+import { DataContext, getCategories } from 'services/data-context';
 import { StyledProps } from 'types/styled';
 
-import { useSidebarHook } from './hook';
+import { useSidebarCloseHook } from './hook';
 import { StyledBar, StyledBtnMenu, StyledCategoriesItem, StyledLink, StyledList } from './style';
 
-export interface CategoriesProps extends StyledProps {
-  categories: CategoryDTO[];
-}
+export const Sidebar = ({ className }: StyledProps): JSX.Element => {
+  const { ref, isClosed, setClose } = useSidebarCloseHook();
+  const sidebarClassName = `${className || ''} ${isClosed ? 'close' : ''}`;
 
-export const Sidebar = ({ categories, className }: CategoriesProps): JSX.Element => {
-  const { ref, sidebarState, closeSidebar } = useSidebarHook();
+  const handleToggle = () => setClose(!isClosed);
+  const handleLinkClick = () => setClose(true);
 
-  const handleLinkClick = () => closeSidebar(true);
-
-  const sidebarClassName = `${className || ''} ${sidebarState.isClosed ? 'close' : ''}`;
+  const categoriesContext = useContext(DataContext);
+  const categories = getCategories(categoriesContext);
 
   return (
     <StyledBar className={sidebarClassName} ref={ref}>
-      <StyledBtnMenu />
+      <StyledBtnMenu isClosed={isClosed} onToggle={handleToggle} />
       <StyledList>
         <StyledCategoriesItem key="nome">
           <StyledLink exact to="/" draggable={false} onClick={handleLinkClick}>
