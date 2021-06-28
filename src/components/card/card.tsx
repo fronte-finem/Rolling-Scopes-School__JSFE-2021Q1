@@ -14,7 +14,6 @@ export interface CardProps extends StyledProps {
 
 export const Card = ({ className, wordDTO }: CardProps): JSX.Element => {
   const { word, translation, image, audio } = wordDTO;
-  const audioElement = new Audio(audio);
 
   const [isFlipped, setFlip] = useState(false);
   const cardClassName = `${isFlipped ? 'flip' : ''}`;
@@ -22,8 +21,7 @@ export const Card = ({ className, wordDTO }: CardProps): JSX.Element => {
 
   const handlePlay = (ev: React.MouseEvent<HTMLDivElement>) => {
     if (ref.current?.contains(ev.target as Node)) return;
-    audioElement.currentTime = 0;
-    void audioElement.play();
+    void new Audio(audio).play();
   };
 
   return (

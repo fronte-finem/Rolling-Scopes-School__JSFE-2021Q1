@@ -1,25 +1,22 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { SidebarContext, SidebarState } from 'contexts/sidebar-context';
-
-interface SidebarHookResult {
+interface SidebarCloseHookType {
   ref: React.RefObject<HTMLElement>;
-  sidebarState: SidebarState;
-  closeSidebar: React.Dispatch<boolean>;
+  isClosed: boolean;
+  setClose: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function useSidebarHook(): SidebarHookResult {
+export function useSidebarCloseHook(): SidebarCloseHookType {
   const ref = React.createRef<HTMLElement>();
-
-  const { sidebarState, closeSidebar } = useContext(SidebarContext);
+  const [isClosed, setClose] = useState(true);
 
   const handleOuterClick = (ev: MouseEvent) => {
-    if (sidebarState.isClosed || ref.current?.contains(ev.target as Node)) return;
-    closeSidebar(true);
+    if (isClosed || ref.current?.contains(ev.target as Node)) return;
+    setClose(true);
   };
 
   const handleGlobalKeyDown = (event: KeyboardEvent) => {
-    if (event.code === 'Escape') closeSidebar(true);
+    if (event.code === 'Escape') setClose(true);
   };
 
   useEffect(() => {
@@ -31,5 +28,5 @@ export function useSidebarHook(): SidebarHookResult {
     };
   }, [ref]);
 
-  return { ref, sidebarState, closeSidebar };
+  return { ref, isClosed, setClose };
 }

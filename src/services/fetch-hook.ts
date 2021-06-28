@@ -1,31 +1,85 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer } from 'react';
 
 import { Maybe, Validator } from 'types/abstract';
 
-type FetchResult<T> = [data: Maybe<T>, isLoading: boolean, error: Maybe<Error>];
+export enum FetchStatus {
+  INIT = 'init',
+  LOADING = 'loading',
+  ERROR = 'error',
+  SUCCESS = 'success',
+}
 
-export function useFetch<T>(url: string, validator: Validator<T>): FetchResult<T> {
-  const [data, setData] = useState<Maybe<T>>(null);
-  const [isLoading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Maybe<Error>>(null);
+export interface FetchState<T> {
+  status: FetchStatus;
+  error: string;
+  data: Maybe<T>;
+}
+
+function getInitState<T>(): FetchState<T> {
+  return {
+    status: FetchStatus.INIT,
+    error: '',
+    data: null as Maybe<T>,
+  };
+}
+
+enum ActionType {
+  REQUEST = 'request',
+  FAILURE = 'failure',
+  SUCCESS = 'success',
+}
+
+type Action<T> =
+  | { type: ActionType.REQUEST }
+  | { type: ActionType.SUCCESS; payload: T }
+  | { type: ActionType.FAILURE; payload: string };
+
+function fetchReducer<T>(state: FetchState<T>, action: Action<T>): FetchState<T> {
+  switch (action.type) {
+    case ActionType.REQUEST:
+      return { ...getInitState(), status: FetchStatus.LOADING };
+    case ActionType.SUCCESS:
+      return { ...getInitState(), status: FetchStatus.SUCCESS, data: action.payload };
+    case ActionType.FAILURE:
+      return { ...getInitState(), status: FetchStatus.ERROR, error: action.payload };
+    default:
+      return state;
+  }
+}
+
+export function useFetch<T = unknown>(url: string, validator: Validator<T>): FetchState<T> {
+  const [state, dispatch] = useReducer(fetchReducer, getInitState<T>());
 
   useEffect(() => {
     (async () => {
+      dispatch({ type: ActionType.REQUEST });
       try {
         const response = await fetch(url);
         if (!response.ok) throw new Error(`${response.status}: ${response.statusText}`);
         const maybeData = validator(await response.json());
         if (maybeData === null) throw new Error('Data not valid');
-        setData(maybeData);
-      } catch (maybeError) {
-        if (typeof maybeError === 'string') setError(new Error(maybeError));
-        else if (maybeError instanceof Error) setError(maybeError);
-        else setError(new Error(String(maybeError)));
-      } finally {
-        setLoading(false);
+        dispatch({ type: ActionType.SUCCESS, payload: maybeData });
+      } catch (error) {
+        dispatch({
+          type: ActionType.FAILURE,
+          payload: error instanceof Error ? error.message : String(error),
+        });
       }
     })();
   }, []);
 
-  return [data, isLoading, error];
+  return state as FetchState<T>;
+}
+
+export function getMessage<T>(state: FetchState<T>, dataName: string): string | null {
+  switch (state.status) {
+    case FetchStatus.INIT:
+      return `Init Loading ${dataName}`;
+    case FetchStatus.LOADING:
+      return `Loading ${dataName}...`;
+    case FetchStatus.ERROR:
+      return `{dataName} Load Error: ${state.error}`;
+    default:
+      return null;
+  }
 }
