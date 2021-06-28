@@ -47,7 +47,9 @@ export function useCategoriesData(): string | CategoryDTO[] {
   return getMessage(categoriesState, 'Categories') || getCategories(context);
 }
 
-export function useWordsData(categoryPath: string): string | WordDTO[] {
+export function useWordsData(
+  categoryPath: string
+): string | [category: CategoryDTO, words: WordDTO[]] {
   const context = useContext(DataContext);
   if (!context) return CONTEXT_NOT_EXIST;
   const { categoriesState, wordsState } = context;
@@ -59,5 +61,6 @@ export function useWordsData(categoryPath: string): string | WordDTO[] {
 
   const [categories, words] = getData(context);
   const category = categories.find((dto) => dto.path === categoryPath);
-  return words.filter((dto) => dto.categoryId === category?.id);
+  if (!category) return `Category "${categoryPath}" not found!`;
+  return [category, words.filter((dto) => dto.categoryId === category?.id)];
 }
