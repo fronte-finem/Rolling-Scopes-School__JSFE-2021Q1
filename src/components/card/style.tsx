@@ -23,6 +23,10 @@ export const CardContainer = styled.div`
 export const StyledCard = styled.div`
   --flip: rotateY(0deg);
   --pointer-events: all;
+  --word-pos: 0%;
+  --word-h: 70px;
+  --cursor: pointer;
+  --solved: 0;
 
   position: relative;
   width: 100%;
@@ -31,14 +35,30 @@ export const StyledCard = styled.div`
   border-radius: 20px;
   box-shadow: 0 0 3px 0 #0008;
   transform: var(--flip);
-  transition: 500ms;
-  cursor: pointer;
+  cursor: var(--cursor);
   pointer-events: var(--pointer-events);
+  transition: 500ms;
 
   &.flip {
     --flip: rotateY(180deg);
     --pointer-events: none;
-    cursor: default;
+    --cursor: default;
+  }
+  &.game {
+    --word-pos: calc(-1 * var(--word-h));
+  }
+  &.game-ready {
+    --cursor: default;
+  }
+  &.game-play {
+    --cursor: pointer;
+  }
+  &.waiting {
+    --cursor: wait;
+  }
+  &.solved {
+    --cursor: default;
+    --solved: 1;
   }
 `;
 
@@ -51,6 +71,19 @@ export const StyledCardSide = styled.div`
   border-radius: inherit;
   overflow: hidden;
   backface-visibility: hidden;
+`;
+
+export const CardSolvedLayer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: #ff04;
+  backdrop-filter: blur(5px);
+  opacity: var(--solved);
+  pointer-events: none;
 `;
 
 export const StyledCardFrontSide = styled(StyledCardSide)``;
@@ -74,9 +107,9 @@ export const CardImage = styled.img`
 export const CardWord = styled.div`
   position: absolute;
   left: 0;
-  bottom: 0;
+  bottom: var(--word-pos);
   width: 100%;
-  height: 70px;
+  height: var(--word-h);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -87,6 +120,7 @@ export const CardWord = styled.div`
   letter-spacing: 4px;
   font-weight: bold;
   font-size: 25px;
+  transition: 300ms;
 `;
 
 export const StyledBtnFlip = styled.button`
