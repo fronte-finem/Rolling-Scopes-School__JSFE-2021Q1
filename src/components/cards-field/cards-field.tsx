@@ -1,51 +1,55 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useWordsData } from 'services/data-context';
-import { GameActionType, GameContext, GameDispatch, GameState, GameStatus } from 'services/game';
+import { GameActionType } from 'services/game/game-action';
+import { useGameContext } from 'services/game/game-context';
+import {
+  isGameMode,
+  isGamePlay,
+  isGameReady,
+  isWaiting,
+  isWordSolved,
+} from 'services/game/game-state';
 import { StyledProps } from 'types/styled';
+import { WordDTO } from 'types/word-dto';
 
 import { StyledCardsField, StyledCardsFieldItem } from './style';
-
-function useGameEnd(categoryPath: string, gameState: GameState, dispatch: GameDispatch) {
-  useEffect(() => {
-    if (
-      gameState.status !== GameStatus.INITIAL &&
-      gameState.activeCategory &&
-      gameState.activeCategory.path !== categoryPath
-    ) {
-      dispatch({ type: GameActionType.END });
-    }
-  }, [categoryPath]);
-}
 
 export const CardsField = ({ className }: StyledProps): JSX.Element => {
   const { categoryPath } = useParams<{ categoryPath: string }>();
   const result = useWordsData(categoryPath);
-  const { gameState, dispatch } = useContext(GameContext);
-  useGameEnd(categoryPath, gameState, dispatch);
+  const { gameState, dispatch } = useGameContext();
 
   if (typeof result === 'string') return <h2>{result}</h2>;
-  const [category, words] = result;
+  const [, words] = result;
 
-  const handleStartGame = () => {
-    if (gameState.status === GameStatus.INITIAL) {
-      dispatch({ type: GameActionType.START, payload: { category, words: [...words] } });
-    } else {
-      dispatch({ type: GameActionType.VOCALIZE });
-    }
+  const handleMathWord = (word: WordDTO) => {
+    if (!isGamePlay(gameState)) return;
+    if (isWordSolved(gameState, word.id)) return;
+    dispatch({ type: GameActionType.MATCH_WORD, payload: { word } });
   };
+
+  const [isGame, isReady, isPlay, isWait] = [isGameMode, isGameReady, isGamePlay, isWaiting].map(
+    (func) => func(gameState)
+  );
 
   return (
     <div className={className}>
       <StyledCardsField>
         {words.map((dto) => (
-          <StyledCardsFieldItem key={dto.word} wordDTO={dto} />
+          <StyledCardsFieldItem
+            key={dto.word}
+            wordDTO={dto}
+            matchWord={handleMathWord}
+            isGameMode={isGame}
+            isGameReady={isReady}
+            isGamePlay={isPlay}
+            isSolved={isWordSolved(gameState, dto.id)}
+            isWaiting={isWait}
+          />
         ))}
       </StyledCardsField>
-      <button type="button" onClick={handleStartGame}>
-        {gameState.status === GameStatus.INITIAL ? 'START GAME' : 'REPEAT WORD'}
-      </button>
     </div>
   );
 };
