@@ -7,20 +7,18 @@ import { Footer } from 'components/footer/footer';
 import { Header } from 'components/header/header';
 import { Sidebar } from 'components/sidebar/sidebar';
 import { DataContext, fetchData } from 'services/data-context';
-import { GameContext, useGameCycle } from 'services/game';
+import { GameContextProvider } from 'services/game/game-context';
 
 import { Main, StyledApp } from './style';
 
 export const App = (): JSX.Element => {
-  const [gameState, dispatch] = useGameCycle();
-
   return (
-    <DataContext.Provider value={fetchData()}>
-      <GameContext.Provider value={{ gameState, dispatch }}>
-        <StyledApp>
-          <Header />
-          <Main>
-            <HashRouter>
+    <HashRouter>
+      <DataContext.Provider value={fetchData()}>
+        <GameContextProvider>
+          <StyledApp>
+            <Header />
+            <Main>
               <Sidebar />
               <Switch>
                 <Route exact path="/">
@@ -33,11 +31,11 @@ export const App = (): JSX.Element => {
                   <CardsField />
                 </Route>
               </Switch>
-            </HashRouter>
-          </Main>
-          <Footer />
-        </StyledApp>
-      </GameContext.Provider>
-    </DataContext.Provider>
+            </Main>
+            <Footer />
+          </StyledApp>
+        </GameContextProvider>
+      </DataContext.Provider>
+    </HashRouter>
   );
 };

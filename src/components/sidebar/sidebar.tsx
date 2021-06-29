@@ -8,13 +8,12 @@ import { StyledBar, StyledBtnMenu, StyledCategoriesItem, StyledLink, StyledList 
 
 export const Sidebar = ({ className }: StyledProps): JSX.Element => {
   const { ref, isClosed, setClose } = useSidebarCloseHook();
+  const categoriesContext = useContext(DataContext);
+  const categories = getCategories(categoriesContext);
   const sidebarClassName = `${className || ''} ${isClosed ? 'close' : ''}`;
 
   const handleToggle = () => setClose(!isClosed);
   const handleLinkClick = () => setClose(true);
-
-  const categoriesContext = useContext(DataContext);
-  const categories = getCategories(categoriesContext);
 
   return (
     <StyledBar className={sidebarClassName} ref={ref}>
