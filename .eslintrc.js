@@ -35,6 +35,7 @@ module.exports = {
   plugins: ['@typescript-eslint', '@babel', 'prettier', 'import', 'simple-import-sort'],
   rules: {
     'import/prefer-default-export': 'off',
+    'react/prop-types': 'off',
     'no-param-reassign': ['error', { props: false }],
     'no-bitwise': ['error', { int32Hint: true }],
     '@typescript-eslint/no-misused-promises': ['error', { checksVoidReturn: false }],
