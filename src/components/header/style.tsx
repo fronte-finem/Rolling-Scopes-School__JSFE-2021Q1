@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
   margin: 0 auto;
   padding: 0 var(--ofsset);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 
   @media (max-width: 800px) {
@@ -33,7 +33,6 @@ export const StyledGameModeSwitch = styled(GameModeSwitch)`
 `;
 
 export const StyledHeading = styled.h1`
-  flex: 1;
   text-align: center;
 
   @media (max-width: 800px) {
