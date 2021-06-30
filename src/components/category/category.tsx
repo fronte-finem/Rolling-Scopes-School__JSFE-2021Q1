@@ -10,9 +10,9 @@ export interface CategoryProps extends StyledProps {
 }
 
 export const CategoryLink = ({ className, categoryDTO }: CategoryProps): JSX.Element => {
-  const { category, path, image } = categoryDTO;
+  const { category, image } = categoryDTO;
   return (
-    <StyledCategoryLink className={className} to={`/${path}`}>
+    <StyledCategoryLink className={className} name={category}>
       <CategoryImage src={image} alt={category} />
       <NameWrapper>
         <CategoryName>{category}</CategoryName>

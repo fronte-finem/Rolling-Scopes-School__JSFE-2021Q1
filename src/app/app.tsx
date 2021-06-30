@@ -27,8 +27,11 @@ export const App = (): JSX.Element => {
                 <Route path="/about">
                   <>ABOUT</>
                 </Route>
-                <Route path="/:categoryPath">
+                <Route path="/category/:category">
                   <CardsField />
+                </Route>
+                <Route path="*">
+                  <h2>Error 404: Page Not found</h2>
                 </Route>
               </Switch>
             </Main>

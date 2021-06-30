@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const StyledCategoryLink = styled(Link).attrs({ draggable: false })`
+import { CategoryLink } from './category-link';
+
+export const StyledCategoryLink = styled(CategoryLink).attrs({ draggable: false })`
   --aspect-ratio: 1 / 1;
   --path: inset(0% 0% 0% 0% round 50%);
   --name-bg: #fff0;

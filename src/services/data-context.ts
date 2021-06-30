@@ -32,9 +32,9 @@ export function getWords(context: Maybe<DataContextInterface>): WordDTO[] {
   return fixWordsLinks(context.wordsState.data || []);
 }
 
-type Data = [categories: CategoryDTO[], words: WordDTO[]];
+type FullData = [categories: CategoryDTO[], words: WordDTO[]];
 
-export function getData(context: Maybe<DataContextInterface>): Data {
+export function getData(context: Maybe<DataContextInterface>): FullData {
   return [getCategories(context), getWords(context)];
 }
 
@@ -47,9 +47,9 @@ export function useCategoriesData(): string | CategoryDTO[] {
   return getMessage(categoriesState, 'Categories') || getCategories(context);
 }
 
-export function useWordsData(
-  categoryPath: string
-): string | [category: CategoryDTO, words: WordDTO[]] {
+type CategoryData = [category: CategoryDTO, words: WordDTO[]];
+
+export function useWordsData(categoryName: string): string | CategoryData {
   const context = useContext(DataContext);
   if (!context) return CONTEXT_NOT_EXIST;
   const { categoriesState, wordsState } = context;
@@ -60,7 +60,7 @@ export function useWordsData(
   if (message) return message;
 
   const [categories, words] = getData(context);
-  const category = categories.find((dto) => dto.path === categoryPath);
-  if (!category) return `Category "${categoryPath}" not found!`;
+  const category = categories.find((dto) => dto.category === categoryName);
+  if (!category) return `Category "${categoryName}" not found!`;
   return [category, words.filter((dto) => dto.categoryId === category?.id)];
 }

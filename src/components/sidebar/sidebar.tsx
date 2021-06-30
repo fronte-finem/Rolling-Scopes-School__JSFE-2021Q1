@@ -8,7 +8,8 @@ import {
   StyledBar,
   StyledBtnMenu,
   StyledCategoriesItem,
-  StyledLink,
+  StyledCategoryLink,
+  StyledHomeLink,
   StyledList,
 } from './sidebar-style';
 
@@ -26,15 +27,15 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
       <StyledBtnMenu isClosed={isClosed} onToggle={handleToggle} />
       <StyledList>
         <StyledCategoriesItem key="nome">
-          <StyledLink exact to="/" draggable={false} onClick={handleLinkClick}>
+          <StyledHomeLink exact to="/" draggable={false} onClick={handleLinkClick}>
             Home
-          </StyledLink>
+          </StyledHomeLink>
         </StyledCategoriesItem>
-        {categories.map(({ category, path }) => (
+        {categories.map(({ category }) => (
           <StyledCategoriesItem key={category}>
-            <StyledLink to={`/${path}`} draggable={false} onClick={handleLinkClick}>
+            <StyledCategoryLink name={category} onClick={handleLinkClick}>
               {category}
-            </StyledLink>
+            </StyledCategoryLink>
           </StyledCategoriesItem>
         ))}
       </StyledList>

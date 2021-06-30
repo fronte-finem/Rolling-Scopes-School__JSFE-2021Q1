@@ -18,8 +18,8 @@ import { WordDTO } from 'types/word-dto';
 import { StyledCardsField, StyledCardsFieldItem } from './cards-field-style';
 
 export const CardsField = ({ className }: StyledProps): JSX.Element => {
-  const { categoryPath } = useParams<{ categoryPath: string }>();
-  const result = useWordsData(categoryPath);
+  const { category } = useParams<{ category: string }>();
+  const result = useWordsData(category);
   const { gameState, dispatch } = useGameContext();
 
   if (typeof result === 'string') return <h2>{result}</h2>;
