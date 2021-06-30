@@ -21,11 +21,10 @@ const getClassName = (
   isFlipped: boolean,
   { isGameMode, isGameReady, isGamePlay, isSolved, isWaiting }: CardProps
 ): string => {
-  let className = '';
+  let className = isGameMode ? 'game' : 'train';
   if (isFlipped) className += ' flip';
-  if (isGameMode) className += ' game ';
   if (isGameReady) className += ' game-ready';
-  if (isGamePlay) className += ' game-play';
+  if (isGamePlay && !isSolved) className += ' game-play';
   if (isSolved) className += ' solved';
   if (isWaiting) className += ' waiting';
   return className;

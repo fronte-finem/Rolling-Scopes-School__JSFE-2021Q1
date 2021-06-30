@@ -39,8 +39,13 @@ export const StyledCard = styled.div`
   transform: var(--flip);
   cursor: var(--cursor);
   pointer-events: var(--pointer-events);
-  transition: 500ms;
+  transition: box-shadow 200ms, all 500ms;
 
+  &.train {
+    &:hover {
+      box-shadow: 0 0 10px 5px #0004;
+    }
+  }
   &.flip {
     --flip: rotateY(180deg);
     --pointer-events: none;
@@ -54,13 +59,18 @@ export const StyledCard = styled.div`
   }
   &.game-play {
     --cursor: pointer;
+    &:hover {
+      box-shadow: 0 0 10px 5px #0004;
+      transform: translateZ(20px);
+    }
   }
   &.waiting {
     --cursor: wait;
   }
   &.solved {
     --cursor: default;
-    --solved: 1;
+    //--solved: 1;
+    opacity: 0.2;
   }
 `;
 
