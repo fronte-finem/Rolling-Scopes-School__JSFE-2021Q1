@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
+import { CategoryLink } from 'components/category/category-link';
 import { BtnToggle } from 'components/sidebar/btn-toggle';
 
 export const StyledBar = styled.nav`
@@ -45,7 +46,7 @@ export const StyledCategoriesItem = styled.li`
   display: block;
 `;
 
-export const StyledLink = styled(NavLink)`
+const SidebarLinkStyle = css`
   display: block;
   padding: 10px 20px;
   background: #fff;
@@ -63,4 +64,12 @@ export const StyledLink = styled(NavLink)`
     color: #fff;
     pointer-events: none;
   }
+`;
+
+export const StyledHomeLink = styled(NavLink)`
+  ${SidebarLinkStyle}
+`;
+
+export const StyledCategoryLink = styled(CategoryLink)`
+  ${SidebarLinkStyle}
 `;

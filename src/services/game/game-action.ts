@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { CategoryDTO } from 'types/category-dto';
-import { WordDTO } from 'types/word-dto';
+import { CategoryDTO } from 'services/data/dto-category';
+import { WordDTO } from 'services/data/dto-word';
 import { randomItem } from 'utils/random';
 
 import { GameState, GameStatus, getInitialGameState } from './game-state';
@@ -10,29 +10,34 @@ export enum GameActionType {
   ENABLE = 'enable',
   DISABLE = 'disable',
   START = 'start',
-  NEXT_WORD = 'next word',
+  TO_NEXT_WORD = 'to next word',
   VOCALIZE = 'vocalize',
   TO_MATCHING = 'to matching',
   MATCH_WORD = 'match word',
-  END = 'end',
+  TO_RESULT_PAGE = 'to result page',
+  TO_MAIN_PAGE = 'to main page',
+  RESET = 'reset',
 }
 
 type StartPayload = { words: WordDTO[]; category: CategoryDTO };
+type MatchWordPayload = { word: WordDTO };
+type ResultPayload = { win: boolean };
 
 export type GameAction =
   | { type: GameActionType.ENABLE }
   | { type: GameActionType.DISABLE }
   | { type: GameActionType.START; payload: StartPayload }
-  | { type: GameActionType.NEXT_WORD }
+  | { type: GameActionType.TO_NEXT_WORD }
   | { type: GameActionType.VOCALIZE }
   | { type: GameActionType.TO_MATCHING }
-  | { type: GameActionType.MATCH_WORD; payload: { word: WordDTO } }
-  | { type: GameActionType.END };
+  | { type: GameActionType.MATCH_WORD; payload: MatchWordPayload }
+  | { type: GameActionType.TO_RESULT_PAGE; payload: ResultPayload }
+  | { type: GameActionType.TO_MAIN_PAGE }
+  | { type: GameActionType.RESET };
 
 export type GameDispatch = React.Dispatch<GameAction>;
 
 export const gameReducer = (state: GameState, action: GameAction): GameState => {
-  console.log(state, action);
   switch (action.type) {
     case GameActionType.ENABLE:
       return { ...getInitialGameState(), status: GameStatus.READY };
@@ -40,15 +45,19 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
       return getInitialGameState();
     case GameActionType.START:
       return startGame(action.payload);
-    case GameActionType.NEXT_WORD:
+    case GameActionType.TO_NEXT_WORD:
       return { ...state, status: GameStatus.VOCALIZE, activeWord: randomItem(state.words) };
     case GameActionType.VOCALIZE:
       return { ...state, status: GameStatus.VOCALIZE };
     case GameActionType.TO_MATCHING:
       return { ...state, status: GameStatus.MATCHING };
     case GameActionType.MATCH_WORD:
-      return matchWord(state, action.payload.word);
-    case GameActionType.END:
+      return matchWord(state, action.payload);
+    case GameActionType.TO_RESULT_PAGE:
+      return toResult(state, action.payload);
+    case GameActionType.TO_MAIN_PAGE:
+      return { ...state, status: GameStatus.END };
+    case GameActionType.RESET:
       return { ...state, status: GameStatus.READY };
     default:
       return state;
@@ -64,17 +73,22 @@ function startGame({ words, category }: StartPayload): GameState {
   };
 }
 
-function matchWord(state: GameState, word: WordDTO): GameState {
-  const { activeWord, mistakes } = state;
-  const isMatch = word.id === activeWord?.id;
-  const status = isMatch ? GameStatus.HIT : GameStatus.MISS;
-  const words = isMatch ? state.words.filter((dto) => dto.id !== word.id) : state.words;
-
+function toResult(state: GameState, payload: ResultPayload): GameState {
   return {
     ...state,
+    status: payload.win ? GameStatus.WIN : GameStatus.FAIL,
+  };
+}
+
+function matchWord(state: GameState, { word }: MatchWordPayload): GameState {
+  const { activeWord, mistakes } = state;
+  const isMatch = word.id === activeWord?.id;
+  const words = isMatch ? state.words.filter((dto) => dto.id !== word.id) : state.words;
+  return {
+    ...state,
+    status: isMatch ? GameStatus.HIT : GameStatus.MISS,
     activeWord: isMatch ? null : activeWord,
     mistakes: isMatch ? mistakes : mistakes + 1,
     words,
-    status,
   };
 }

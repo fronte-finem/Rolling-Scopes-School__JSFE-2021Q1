@@ -1,15 +1,21 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { DataContext, getCategories } from 'services/data-context';
+import { useCategoriesData } from 'services/data/data-context';
 import { StyledProps } from 'types/styled';
 
 import { useSidebarCloseHook } from './hook';
-import { StyledBar, StyledBtnMenu, StyledCategoriesItem, StyledLink, StyledList } from './style';
+import {
+  StyledBar,
+  StyledBtnMenu,
+  StyledCategoriesItem,
+  StyledCategoryLink,
+  StyledHomeLink,
+  StyledList,
+} from './sidebar-style';
 
 export const Sidebar = ({ className }: StyledProps): JSX.Element => {
   const { ref, isClosed, setClose } = useSidebarCloseHook();
-  const categoriesContext = useContext(DataContext);
-  const categories = getCategories(categoriesContext);
+  const categories = useCategoriesData();
   const sidebarClassName = `${className || ''} ${isClosed ? 'close' : ''}`;
 
   const handleToggle = () => setClose(!isClosed);
@@ -20,17 +26,18 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
       <StyledBtnMenu isClosed={isClosed} onToggle={handleToggle} />
       <StyledList>
         <StyledCategoriesItem key="nome">
-          <StyledLink exact to="/" draggable={false} onClick={handleLinkClick}>
+          <StyledHomeLink exact to="/" draggable={false} onClick={handleLinkClick}>
             Home
-          </StyledLink>
+          </StyledHomeLink>
         </StyledCategoriesItem>
-        {categories.map(({ category, path }) => (
-          <StyledCategoriesItem key={category}>
-            <StyledLink to={`/${path}`} draggable={false} onClick={handleLinkClick}>
-              {category}
-            </StyledLink>
-          </StyledCategoriesItem>
-        ))}
+        {Array.isArray(categories) &&
+          categories.map(({ category }) => (
+            <StyledCategoriesItem key={category}>
+              <StyledCategoryLink name={category} onClick={handleLinkClick}>
+                {category}
+              </StyledCategoryLink>
+            </StyledCategoriesItem>
+          ))}
       </StyledList>
     </StyledBar>
   );

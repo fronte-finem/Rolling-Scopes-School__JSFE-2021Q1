@@ -1,11 +1,10 @@
 import React, { useRef, useState } from 'react';
 
+import { WordDTO } from 'services/data/dto-word';
 import { StyledProps } from 'types/styled';
-import { WordDTO } from 'types/word-dto';
 
-import { BtnFlip } from './btn-flip';
+import { CardContainer, CardSolvedLayer, StyledBtnFlip, StyledCard } from './card-style';
 import { CardBackSide, CardFrontSide } from './side';
-import { CardContainer, CardSolvedLayer, StyledCard } from './style';
 
 export interface CardProps extends StyledProps {
   wordDTO: WordDTO;
@@ -22,11 +21,10 @@ const getClassName = (
   isFlipped: boolean,
   { isGameMode, isGameReady, isGamePlay, isSolved, isWaiting }: CardProps
 ): string => {
-  let className = '';
+  let className = isGameMode ? 'game' : 'train';
   if (isFlipped) className += ' flip';
-  if (isGameMode) className += ' game ';
   if (isGameReady) className += ' game-ready';
-  if (isGamePlay) className += ' game-play';
+  if (isGamePlay && !isSolved) className += ' game-play';
   if (isSolved) className += ' solved';
   if (isWaiting) className += ' waiting';
   return className;
@@ -52,7 +50,7 @@ export const Card = (props: CardProps): JSX.Element => {
     <CardContainer className={className} onMouseLeave={() => setFlip(false)}>
       <StyledCard className={cardClassName} onClick={handlePlay}>
         <CardFrontSide word={word} image={image}>
-          <BtnFlip onClick={() => setFlip(true)} ref={ref} />
+          <StyledBtnFlip onFlip={() => setFlip(true)} ref={ref} />
         </CardFrontSide>
         <CardBackSide word={translation} image={image} />
         <CardSolvedLayer />

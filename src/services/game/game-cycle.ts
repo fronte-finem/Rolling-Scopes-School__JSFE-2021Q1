@@ -16,7 +16,7 @@ export function useGameCycle(): readonly [GameState, React.Dispatch<GameAction>]
     (async () => {
       switch (gameState.status) {
         case GameStatus.START:
-          dispatch({ type: GameActionType.NEXT_WORD });
+          dispatch({ type: GameActionType.TO_NEXT_WORD });
           break;
         case GameStatus.VOCALIZE:
           await handleVocalize(gameState, dispatch);
@@ -49,12 +49,11 @@ async function handleMiss(dispatch: GameDispatch) {
 async function handleHit(gameState: GameState, dispatch: GameDispatch) {
   await playAudio(SOUND_YES);
   if (gameState.words.length > 0) {
-    dispatch({ type: GameActionType.NEXT_WORD });
-  } else if (gameState.mistakes > 0) {
-    await playAudio(SOUND_FAIL);
-    dispatch({ type: GameActionType.END });
+    dispatch({ type: GameActionType.TO_NEXT_WORD });
   } else {
-    await playAudio(SOUND_WIN);
-    dispatch({ type: GameActionType.END });
+    const isWin = gameState.mistakes === 0;
+    dispatch({ type: GameActionType.TO_RESULT_PAGE, payload: { win: isWin } });
+    await playAudio(isWin ? SOUND_WIN : SOUND_FAIL);
+    dispatch({ type: GameActionType.TO_MAIN_PAGE });
   }
 }

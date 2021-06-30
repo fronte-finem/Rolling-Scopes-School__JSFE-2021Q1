@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CardImage, CardWord, StyledCardBackSide, StyledCardFrontSide } from './style';
+import { CardImage, CardWord, StyledCardBackSide, StyledCardFrontSide } from './side-style';
 
 export interface CardSideProps {
   word: string;
@@ -8,10 +8,10 @@ export interface CardSideProps {
   children?: JSX.Element;
 }
 
-const CardSide = ({ image, word, children }: CardSideProps) => {
+const Side = ({ image, word, children }: CardSideProps) => {
   return (
     <>
-      <CardImage src={image} alt={word} draggable={false} />
+      <CardImage src={image} alt={word} />
       <CardWord>
         {word}
         {children}
@@ -23,9 +23,9 @@ const CardSide = ({ image, word, children }: CardSideProps) => {
 export const CardFrontSide = ({ image, word, children }: CardSideProps): JSX.Element => {
   return (
     <StyledCardFrontSide>
-      <CardSide image={image} word={word}>
+      <Side image={image} word={word}>
         {children}
-      </CardSide>
+      </Side>
     </StyledCardFrontSide>
   );
 };
@@ -33,7 +33,7 @@ export const CardFrontSide = ({ image, word, children }: CardSideProps): JSX.Ele
 export const CardBackSide = ({ image, word }: CardSideProps): JSX.Element => {
   return (
     <StyledCardBackSide>
-      <CardSide image={image} word={word} />
+      <Side image={image} word={word} />
     </StyledCardBackSide>
   );
 };

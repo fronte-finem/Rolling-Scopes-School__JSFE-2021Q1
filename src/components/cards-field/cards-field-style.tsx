@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-import { Card } from 'components/card/card';
+const CARD_WIDTH = 300;
 
-export const StyledCardsField = styled.div`
+export const StyledCardsField = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -11,9 +11,7 @@ export const StyledCardsField = styled.div`
   overflow: hidden;
 `;
 
-const CARD_WIDTH = 300;
-
-export const StyledCardsFieldItem = styled(Card)`
+export const StyledCardsFieldItem = styled.li`
   flex: 0 0 ${CARD_WIDTH}px;
   perspective: ${CARD_WIDTH * 3}px;
 `;

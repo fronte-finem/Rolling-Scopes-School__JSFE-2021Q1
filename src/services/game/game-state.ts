@@ -1,17 +1,18 @@
+import { CategoryDTO } from 'services/data/dto-category';
+import { WordDTO } from 'services/data/dto-word';
 import { Maybe } from 'types/abstract';
-import { CategoryDTO } from 'types/category-dto';
-import { WordDTO } from 'types/word-dto';
 
 export enum GameStatus {
   INITIAL = 'initial',
   READY = 'ready',
   START = 'start',
-  NEXT_WORD = 'next word',
   VOCALIZE = 'vocalize',
+  MATCHING = 'matching',
   HIT = 'hit',
   MISS = 'miss',
-  MATCHING = 'matching',
-  SOLVED = 'solved',
+  WIN = 'win',
+  FAIL = 'fail',
+  END = 'end',
 }
 
 export interface GameState {
@@ -41,6 +42,12 @@ export const isGameMode: GameCheck = ({ status }) => status !== GameStatus.INITI
 export const isGameReady: GameCheck = ({ status }) => status === GameStatus.READY;
 
 export const isGamePlay: GameCheck = ({ status }) => status === GameStatus.MATCHING;
+
+export const isWin: GameCheck = ({ status }) => status === GameStatus.WIN;
+
+export const isFail: GameCheck = ({ status }) => status === GameStatus.FAIL;
+
+export const isEnd: GameCheck = ({ status }) => status === GameStatus.END;
 
 export const isWaiting: GameCheck = ({ status }) =>
   status === GameStatus.VOCALIZE || status === GameStatus.HIT || status === GameStatus.MISS;

@@ -1,22 +1,32 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-import { CategoryDTO } from 'types/category-dto';
+import { CategoryDTO } from 'services/data/dto-category';
 import { StyledProps } from 'types/styled';
 
-import { CategoryImage, CategoryName, NameWrapper, StyledCategoryLink } from './style';
+import {
+  CategoryBase,
+  CategoryImage,
+  CategoryName,
+  NameWrapper,
+  StyledCategoryLink,
+} from './category-style';
 
 export interface CategoryProps extends StyledProps {
   readonly categoryDTO: CategoryDTO;
+  readonly isGameMode: boolean;
 }
 
-export const CategoryLink = ({ className, categoryDTO }: CategoryProps): JSX.Element => {
-  const { category, path, image } = categoryDTO;
+export const CategoryLink: FC<CategoryProps> = ({ className, isGameMode, categoryDTO }) => {
+  const { category, image } = categoryDTO;
+
   return (
-    <StyledCategoryLink className={className} to={`/${path}`} draggable={false}>
-      <CategoryImage draggable={false} src={image} alt={category} />
-      <NameWrapper>
-        <CategoryName>{category}</CategoryName>
-      </NameWrapper>
-    </StyledCategoryLink>
+    <CategoryBase className={className}>
+      <StyledCategoryLink className={isGameMode ? 'game' : ''} name={category}>
+        <CategoryImage src={image} alt={category} />
+        <NameWrapper>
+          <CategoryName>{category}</CategoryName>
+        </NameWrapper>
+      </StyledCategoryLink>
+    </CategoryBase>
   );
 };

@@ -1,7 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useWordsData } from 'services/data-context';
+import { Card } from 'components/card/card';
+import { useWordsData } from 'services/data/data-context';
+import { WordDTO } from 'services/data/dto-word';
 import { GameActionType } from 'services/game/game-action';
 import { useGameContext } from 'services/game/game-context';
 import {
@@ -12,13 +14,12 @@ import {
   isWordSolved,
 } from 'services/game/game-state';
 import { StyledProps } from 'types/styled';
-import { WordDTO } from 'types/word-dto';
 
-import { StyledCardsField, StyledCardsFieldItem } from './style';
+import { StyledCardsField, StyledCardsFieldItem } from './cards-field-style';
 
 export const CardsField = ({ className }: StyledProps): JSX.Element => {
-  const { categoryPath } = useParams<{ categoryPath: string }>();
-  const result = useWordsData(categoryPath);
+  const { category } = useParams<{ category: string }>();
+  const result = useWordsData(category);
   const { gameState, dispatch } = useGameContext();
 
   if (typeof result === 'string') return <h2>{result}</h2>;
@@ -38,16 +39,17 @@ export const CardsField = ({ className }: StyledProps): JSX.Element => {
     <div className={className}>
       <StyledCardsField>
         {words.map((dto) => (
-          <StyledCardsFieldItem
-            key={dto.word}
-            wordDTO={dto}
-            matchWord={handleMathWord}
-            isGameMode={isGame}
-            isGameReady={isReady}
-            isGamePlay={isPlay}
-            isSolved={isWordSolved(gameState, dto.id)}
-            isWaiting={isWait}
-          />
+          <StyledCardsFieldItem key={dto.word}>
+            <Card
+              wordDTO={dto}
+              matchWord={handleMathWord}
+              isGameMode={isGame}
+              isGameReady={isReady}
+              isGamePlay={isPlay}
+              isSolved={isWordSolved(gameState, dto.id)}
+              isWaiting={isWait}
+            />
+          </StyledCardsFieldItem>
         ))}
       </StyledCardsField>
     </div>

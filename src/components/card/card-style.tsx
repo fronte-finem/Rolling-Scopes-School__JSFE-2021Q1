@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { BtnFlip } from './btn-flip';
+
 export const CardContainer = styled.div`
   --aspect-ratio: 1 / 1;
   aspect-ratio: var(--aspect-ratio);
@@ -37,8 +39,13 @@ export const StyledCard = styled.div`
   transform: var(--flip);
   cursor: var(--cursor);
   pointer-events: var(--pointer-events);
-  transition: 500ms;
+  transition: box-shadow 200ms, all 500ms;
 
+  &.train {
+    &:hover {
+      box-shadow: 0 0 10px 5px #0004;
+    }
+  }
   &.flip {
     --flip: rotateY(180deg);
     --pointer-events: none;
@@ -52,25 +59,19 @@ export const StyledCard = styled.div`
   }
   &.game-play {
     --cursor: pointer;
+    &:hover {
+      box-shadow: 0 0 10px 5px #0004;
+      transform: translateZ(20px);
+    }
   }
   &.waiting {
     --cursor: wait;
   }
   &.solved {
     --cursor: default;
-    --solved: 1;
+    //--solved: 1;
+    opacity: 0.2;
   }
-`;
-
-export const StyledCardSide = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-  overflow: hidden;
-  backface-visibility: hidden;
 `;
 
 export const CardSolvedLayer = styled.div`
@@ -86,63 +87,7 @@ export const CardSolvedLayer = styled.div`
   pointer-events: none;
 `;
 
-export const StyledCardFrontSide = styled(StyledCardSide)``;
-
-export const StyledCardBackSide = styled(StyledCardSide)`
-  --mirror: scaleX(-1);
-  transform: rotateY(180deg);
-`;
-
-export const CardImage = styled.img`
-  position: absolute;
-  display: block;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: var(--mirror);
-`;
-
-export const CardWord = styled.div`
-  position: absolute;
-  left: 0;
-  bottom: var(--word-pos);
-  width: 100%;
-  height: var(--word-h);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #0008;
-  backdrop-filter: blur(2px);
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  font-weight: bold;
-  font-size: 25px;
-  transition: 300ms;
-`;
-
-export const StyledBtnFlip = styled.button`
-  display: block;
+export const StyledBtnFlip = styled(BtnFlip)`
   position: absolute;
   right: 5%;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: none;
-  background: transparent;
-  box-shadow: 0 0 5px 2px #0004;
-  pointer-events: var(--pointer-events);
-  transition: all 300ms;
-
-  &:hover {
-    transform: rotate(180deg);
-    box-shadow: 0 0 5px 4px #0004;
-  }
-
-  &:active {
-    transform: rotate(360deg);
-    box-shadow: 0 0 1px 2px #0004;
-  }
 `;
