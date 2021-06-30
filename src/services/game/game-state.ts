@@ -12,6 +12,7 @@ export enum GameStatus {
   MISS = 'miss',
   WIN = 'win',
   FAIL = 'fail',
+  END = 'end',
 }
 
 export interface GameState {
@@ -45,6 +46,8 @@ export const isGamePlay: GameCheck = ({ status }) => status === GameStatus.MATCH
 export const isWin: GameCheck = ({ status }) => status === GameStatus.WIN;
 
 export const isFail: GameCheck = ({ status }) => status === GameStatus.FAIL;
+
+export const isEnd: GameCheck = ({ status }) => status === GameStatus.END;
 
 export const isWaiting: GameCheck = ({ status }) =>
   status === GameStatus.VOCALIZE || status === GameStatus.HIT || status === GameStatus.MISS;
