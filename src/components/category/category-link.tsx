@@ -10,7 +10,7 @@ interface Props extends StyledProps {
 
 export const CategoryLink: FC<Props> = ({ name, className, onClick, children }) => {
   return (
-    <NavLink className={className} to={`/category/${name}`} onClick={onClick}>
+    <NavLink className={className} to={`/category/${name}`} onClick={onClick} draggable={false}>
       {children}
     </NavLink>
   );
