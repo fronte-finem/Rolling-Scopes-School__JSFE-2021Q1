@@ -4,7 +4,13 @@ import { DataContext, getCategories } from 'services/data-context';
 import { StyledProps } from 'types/styled';
 
 import { useSidebarCloseHook } from './hook';
-import { StyledBar, StyledBtnMenu, StyledCategoriesItem, StyledLink, StyledList } from './style';
+import {
+  StyledBar,
+  StyledBtnMenu,
+  StyledCategoriesItem,
+  StyledLink,
+  StyledList,
+} from './sidebar-style';
 
 export const Sidebar = ({ className }: StyledProps): JSX.Element => {
   const { ref, isClosed, setClose } = useSidebarCloseHook();

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const StyledCategoryLink = styled(Link)`
+export const StyledCategoryLink = styled(Link).attrs({ draggable: false })`
   --aspect-ratio: 1 / 1;
   --path: inset(0% 0% 0% 0% round 50%);
   --name-bg: #fff0;
@@ -41,7 +41,7 @@ export const StyledCategoryLink = styled(Link)`
   }
 `;
 
-export const CategoryImage = styled.img`
+export const CategoryImage = styled.img.attrs({ draggable: false })`
   position: absolute;
   display: block;
   width: 100%;

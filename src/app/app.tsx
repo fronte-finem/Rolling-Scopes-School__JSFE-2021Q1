@@ -9,7 +9,7 @@ import { Sidebar } from 'components/sidebar/sidebar';
 import { DataContext, fetchData } from 'services/data-context';
 import { GameContextProvider } from 'services/game/game-context';
 
-import { Main, StyledApp } from './style';
+import { Main, StyledApp } from './app-style';
 
 export const App = (): JSX.Element => {
   return (

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { StyledProps } from 'types/styled';
 
-import { StyledFooter, StyledHeading, Wrapper } from './style';
+import { StyledFooter, StyledHeading, Wrapper } from './footer-style';
 
 export const Footer = ({ className }: StyledProps): JSX.Element => {
   return (
