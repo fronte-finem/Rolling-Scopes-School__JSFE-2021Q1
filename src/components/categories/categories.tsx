@@ -5,7 +5,7 @@ import { useCategoriesData } from 'services/data-context';
 import { CategoryDTO } from 'types/category-dto';
 import { StyledProps } from 'types/styled';
 
-import { StyledCategories, StyledCategoriesItem } from './style';
+import { StyledCategories, StyledCategoriesItem } from './categories-style';
 
 export const Categories = ({ className }: StyledProps): JSX.Element => {
   const categories: string | CategoryDTO[] = useCategoriesData();

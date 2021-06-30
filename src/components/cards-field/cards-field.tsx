@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
+import { Card } from 'components/card/card';
 import { useWordsData } from 'services/data-context';
 import { GameActionType } from 'services/game/game-action';
 import { useGameContext } from 'services/game/game-context';
@@ -14,7 +15,7 @@ import {
 import { StyledProps } from 'types/styled';
 import { WordDTO } from 'types/word-dto';
 
-import { StyledCardsField, StyledCardsFieldItem } from './style';
+import { StyledCardsField, StyledCardsFieldItem } from './cards-field-style';
 
 export const CardsField = ({ className }: StyledProps): JSX.Element => {
   const { categoryPath } = useParams<{ categoryPath: string }>();
@@ -38,16 +39,17 @@ export const CardsField = ({ className }: StyledProps): JSX.Element => {
     <div className={className}>
       <StyledCardsField>
         {words.map((dto) => (
-          <StyledCardsFieldItem
-            key={dto.word}
-            wordDTO={dto}
-            matchWord={handleMathWord}
-            isGameMode={isGame}
-            isGameReady={isReady}
-            isGamePlay={isPlay}
-            isSolved={isWordSolved(gameState, dto.id)}
-            isWaiting={isWait}
-          />
+          <StyledCardsFieldItem key={dto.word}>
+            <Card
+              wordDTO={dto}
+              matchWord={handleMathWord}
+              isGameMode={isGame}
+              isGameReady={isReady}
+              isGamePlay={isPlay}
+              isSolved={isWordSolved(gameState, dto.id)}
+              isWaiting={isWait}
+            />
+          </StyledCardsFieldItem>
         ))}
       </StyledCardsField>
     </div>
