@@ -1,25 +1,20 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import { StyledProps } from 'types/styled';
 
-import { StyledBtnFlip } from './style';
+import { StyledBtnFlip, StyledSvg } from './btn-flip-style';
 
-const StyledSvg = styled.svg`
-  width: 100%;
-  height: 100%;
-  fill: #fff;
-`;
+const FLIP_ICON = './svg/sprite.svg#icon-rotate';
 
 export interface BtnFlipProps extends StyledProps {
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onFlip: () => void;
 }
 
 export const BtnFlip = React.forwardRef<HTMLButtonElement, BtnFlipProps>(
-  ({ className = '', onClick }: BtnFlipProps, ref) => (
-    <StyledBtnFlip className={className} onClick={onClick} ref={ref}>
+  ({ className = '', onFlip }: BtnFlipProps, ref) => (
+    <StyledBtnFlip className={className} onClick={onFlip} ref={ref}>
       <StyledSvg>
-        <use href="./svg/sprite.svg#icon-rotate" />
+        <use href={FLIP_ICON} />
       </StyledSvg>
     </StyledBtnFlip>
   )

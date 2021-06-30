@@ -3,9 +3,8 @@ import React, { useRef, useState } from 'react';
 import { StyledProps } from 'types/styled';
 import { WordDTO } from 'types/word-dto';
 
-import { BtnFlip } from './btn-flip';
+import { CardContainer, CardSolvedLayer, StyledBtnFlip, StyledCard } from './card-style';
 import { CardBackSide, CardFrontSide } from './side';
-import { CardContainer, CardSolvedLayer, StyledCard } from './style';
 
 export interface CardProps extends StyledProps {
   wordDTO: WordDTO;
@@ -52,7 +51,7 @@ export const Card = (props: CardProps): JSX.Element => {
     <CardContainer className={className} onMouseLeave={() => setFlip(false)}>
       <StyledCard className={cardClassName} onClick={handlePlay}>
         <CardFrontSide word={word} image={image}>
-          <BtnFlip onClick={() => setFlip(true)} ref={ref} />
+          <StyledBtnFlip onFlip={() => setFlip(true)} ref={ref} />
         </CardFrontSide>
         <CardBackSide word={translation} image={image} />
         <CardSolvedLayer />
