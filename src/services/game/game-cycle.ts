@@ -50,11 +50,10 @@ async function handleHit(gameState: GameState, dispatch: GameDispatch) {
   await playAudio(SOUND_YES);
   if (gameState.words.length > 0) {
     dispatch({ type: GameActionType.NEXT_WORD });
-  } else if (gameState.mistakes > 0) {
-    await playAudio(SOUND_FAIL);
-    dispatch({ type: GameActionType.END });
   } else {
-    await playAudio(SOUND_WIN);
-    dispatch({ type: GameActionType.END });
+    const isWin = gameState.mistakes === 0;
+    dispatch({ type: GameActionType.END, payload: { win: isWin } });
+    await playAudio(isWin ? SOUND_WIN : SOUND_FAIL);
+    dispatch({ type: GameActionType.END, payload: null });
   }
 }

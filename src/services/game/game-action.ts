@@ -4,6 +4,7 @@ import { CategoryDTO } from 'types/category-dto';
 import { WordDTO } from 'types/word-dto';
 import { randomItem } from 'utils/random';
 
+import { Maybe } from '../../types/abstract';
 import { GameState, GameStatus, getInitialGameState } from './game-state';
 
 export enum GameActionType {
@@ -18,6 +19,8 @@ export enum GameActionType {
 }
 
 type StartPayload = { words: WordDTO[]; category: CategoryDTO };
+type EndPayload = Maybe<{ win: boolean }>;
+type MatchWordPayload = { word: WordDTO };
 
 export type GameAction =
   | { type: GameActionType.ENABLE }
@@ -26,8 +29,8 @@ export type GameAction =
   | { type: GameActionType.NEXT_WORD }
   | { type: GameActionType.VOCALIZE }
   | { type: GameActionType.TO_MATCHING }
-  | { type: GameActionType.MATCH_WORD; payload: { word: WordDTO } }
-  | { type: GameActionType.END };
+  | { type: GameActionType.MATCH_WORD; payload: MatchWordPayload }
+  | { type: GameActionType.END; payload: EndPayload };
 
 export type GameDispatch = React.Dispatch<GameAction>;
 
@@ -47,9 +50,9 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
     case GameActionType.TO_MATCHING:
       return { ...state, status: GameStatus.MATCHING };
     case GameActionType.MATCH_WORD:
-      return matchWord(state, action.payload.word);
+      return matchWord(state, action.payload);
     case GameActionType.END:
-      return { ...state, status: GameStatus.READY };
+      return endGame(state, action.payload);
     default:
       return state;
   }
@@ -64,7 +67,15 @@ function startGame({ words, category }: StartPayload): GameState {
   };
 }
 
-function matchWord(state: GameState, word: WordDTO): GameState {
+function endGame(state: GameState, payload: EndPayload): GameState {
+  if (payload === null) return { ...state, status: GameStatus.READY };
+  return {
+    ...state,
+    status: payload.win ? GameStatus.WIN : GameStatus.FAIL,
+  };
+}
+
+function matchWord(state: GameState, { word }: MatchWordPayload): GameState {
   const { activeWord, mistakes } = state;
   const isMatch = word.id === activeWord?.id;
   const status = isMatch ? GameStatus.HIT : GameStatus.MISS;
