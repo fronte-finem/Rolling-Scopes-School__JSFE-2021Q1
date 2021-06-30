@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledGameModeSwitch = styled.button`
+export const StyledModeSwitch = styled.button`
   --size: 30px;
   --pos: 5%;
   --left: -110%;
@@ -14,7 +14,7 @@ export const StyledGameModeSwitch = styled.button`
   background: transparent;
   overflow: hidden;
 
-  &.play {
+  &.second {
     --pos: calc(95% - var(--size));
     --left: 10%;
     --right: -110%;
@@ -43,10 +43,10 @@ const Mode = styled.div`
   transition: 300ms;
 `;
 
-export const ModeTrain = styled(Mode)`
+export const ModeFirst = styled(Mode)`
   right: var(--right);
 `;
 
-export const ModePlay = styled(Mode)`
+export const ModeSecond = styled(Mode)`
   left: var(--left);
 `;

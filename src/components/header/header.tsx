@@ -7,7 +7,7 @@ import { useGameContext } from 'services/game/game-context';
 import { isGameMode, isGameReady, isGameStarted, isOtherCategory } from 'services/game/game-state';
 import { StyledProps } from 'types/styled';
 
-import { StyledGameModeSwitch, StyledHeader, StyledHeading, Wrapper } from './style';
+import { StyledHeader, StyledHeading, StyledModeSwitch, Wrapper } from './header-style';
 
 const HeaderWithoutRouter = ({
   className,
@@ -20,9 +20,13 @@ const HeaderWithoutRouter = ({
 
   useEffect(() => {
     if (isGameStarted(gameState) && isOtherCategory(gameState, categoryPath)) {
-      dispatch({ type: GameActionType.END });
+      dispatch({ type: GameActionType.END, payload: null });
     }
   }, [categoryPath]);
+
+  const handleChangeMode = (isSecond: boolean) => {
+    dispatch({ type: isSecond ? GameActionType.DISABLE : GameActionType.ENABLE });
+  };
 
   const handleStartGame = () => {
     if (typeof result !== 'string') {
@@ -38,6 +42,7 @@ const HeaderWithoutRouter = ({
   return (
     <StyledHeader className={className}>
       <Wrapper>
+        <StyledModeSwitch firstName="train" secondName="play" changeMode={handleChangeMode} />
         {isCategory && isGameMode(gameState) ? (
           <button type="button" onClick={handleStartGame}>
             {isGameStarted(gameState) ? 'REPEAT WORD' : 'START GAME'}
@@ -45,7 +50,6 @@ const HeaderWithoutRouter = ({
         ) : (
           <StyledHeading>English for kids</StyledHeading>
         )}
-        <StyledGameModeSwitch />
       </Wrapper>
     </StyledHeader>
   );

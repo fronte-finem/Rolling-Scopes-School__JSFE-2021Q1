@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { GameModeSwitch } from 'components/game-mode-switch/game-mode-switch';
+import { ModeSwitch } from './mode-switch';
 
 export const StyledHeader = styled.header`
   height: 100px;
@@ -26,7 +26,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const StyledGameModeSwitch = styled(GameModeSwitch)`
+export const StyledModeSwitch = styled(ModeSwitch)`
   position: absolute;
   right: 20px;
   top: 20px;
