@@ -7,7 +7,7 @@ import { useGameContext } from 'services/game/game-context';
 import { isGameMode, isGameReady, isGameStarted } from 'services/game/game-state';
 import { StyledProps } from 'types/styled';
 
-import { StyledHeader, StyledHeading, StyledModeSwitch, Wrapper } from './header-style';
+import { BtnStart, StyledHeader, StyledHeading, StyledModeSwitch, Wrapper } from './header-style';
 
 export const Header = ({ className }: StyledProps): JSX.Element => {
   const categoryName = useCategoryLocation();
@@ -33,14 +33,13 @@ export const Header = ({ className }: StyledProps): JSX.Element => {
   return (
     <StyledHeader className={className}>
       <Wrapper>
-        <StyledModeSwitch firstName="train" secondName="play" changeMode={handleChangeMode} />
-        {isCategory && isGameMode(gameState) ? (
-          <button type="button" onClick={handleStartGame}>
+        <StyledHeading>English for kids</StyledHeading>
+        {isCategory && isGameMode(gameState) && (
+          <BtnStart onClick={handleStartGame}>
             {isGameStarted(gameState) ? 'REPEAT WORD' : 'START GAME'}
-          </button>
-        ) : (
-          <StyledHeading>English for kids</StyledHeading>
+          </BtnStart>
         )}
+        <StyledModeSwitch firstName="train" secondName="play" changeMode={handleChangeMode} />
       </Wrapper>
     </StyledHeader>
   );
