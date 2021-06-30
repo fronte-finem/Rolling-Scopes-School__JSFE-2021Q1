@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { CategoryDTO } from 'types/category-dto';
-import { WordDTO } from 'types/word-dto';
+import { CategoryDTO } from 'services/data/dto-category';
+import { WordDTO } from 'services/data/dto-word';
 import { randomItem } from 'utils/random';
 
 import { Maybe } from '../../types/abstract';

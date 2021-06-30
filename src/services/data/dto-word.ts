@@ -1,4 +1,4 @@
-import { Validator } from './abstract';
+import { Validator } from 'types/abstract';
 
 export interface WordDTO {
   readonly id: number;

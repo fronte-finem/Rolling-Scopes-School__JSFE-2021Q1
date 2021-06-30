@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 
+import { WordDTO } from 'services/data/dto-word';
 import { StyledProps } from 'types/styled';
-import { WordDTO } from 'types/word-dto';
 
 import { CardContainer, CardSolvedLayer, StyledBtnFlip, StyledCard } from './card-style';
 import { CardBackSide, CardFrontSide } from './side';

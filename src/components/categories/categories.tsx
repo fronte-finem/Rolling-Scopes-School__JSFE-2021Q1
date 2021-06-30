@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { CategoryLink } from 'components/category/category';
-import { useCategoriesData } from 'services/data-context';
-import { CategoryDTO } from 'types/category-dto';
+import { useCategoriesData } from 'services/data/data-context';
+import { CategoryDTO } from 'services/data/dto-category';
 import { StyledProps } from 'types/styled';
 
 import { StyledCategories, StyledCategoriesItem } from './categories-style';

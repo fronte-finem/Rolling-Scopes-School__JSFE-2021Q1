@@ -1,6 +1,7 @@
 import { Maybe } from 'types/abstract';
-import { CategoryDTO } from 'types/category-dto';
-import { WordDTO } from 'types/word-dto';
+
+import { CategoryDTO } from './dto-category';
+import { WordDTO } from './dto-word';
 
 export function fixCategoriesLinks(data: Maybe<CategoryDTO[]>): CategoryDTO[] {
   return (data || []).map(({ image, ...rest }) => ({

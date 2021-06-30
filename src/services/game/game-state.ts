@@ -1,6 +1,6 @@
+import { CategoryDTO } from 'services/data/dto-category';
+import { WordDTO } from 'services/data/dto-word';
 import { Maybe } from 'types/abstract';
-import { CategoryDTO } from 'types/category-dto';
-import { WordDTO } from 'types/word-dto';
 
 export enum GameStatus {
   INITIAL = 'initial',

@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { DataContext, getCategories } from 'services/data-context';
+import { useCategoriesData } from 'services/data/data-context';
 import { StyledProps } from 'types/styled';
 
 import { useSidebarCloseHook } from './hook';
@@ -15,8 +15,7 @@ import {
 
 export const Sidebar = ({ className }: StyledProps): JSX.Element => {
   const { ref, isClosed, setClose } = useSidebarCloseHook();
-  const categoriesContext = useContext(DataContext);
-  const categories = getCategories(categoriesContext);
+  const categories = useCategoriesData();
   const sidebarClassName = `${className || ''} ${isClosed ? 'close' : ''}`;
 
   const handleToggle = () => setClose(!isClosed);
@@ -31,13 +30,14 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
             Home
           </StyledHomeLink>
         </StyledCategoriesItem>
-        {categories.map(({ category }) => (
-          <StyledCategoriesItem key={category}>
-            <StyledCategoryLink name={category} onClick={handleLinkClick}>
-              {category}
-            </StyledCategoryLink>
-          </StyledCategoriesItem>
-        ))}
+        {Array.isArray(categories) &&
+          categories.map(({ category }) => (
+            <StyledCategoriesItem key={category}>
+              <StyledCategoryLink name={category} onClick={handleLinkClick}>
+                {category}
+              </StyledCategoryLink>
+            </StyledCategoriesItem>
+          ))}
       </StyledList>
     </StyledBar>
   );

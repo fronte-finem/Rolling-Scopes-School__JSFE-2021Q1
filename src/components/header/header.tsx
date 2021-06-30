@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-import { useWordsData } from 'services/data-context';
+import { useWordsData } from 'services/data/data-context';
 import { GameActionType } from 'services/game/game-action';
 import { useGameContext } from 'services/game/game-context';
 import { isGameMode, isGameReady, isGameStarted, isOtherCategory } from 'services/game/game-state';
