@@ -47,7 +47,7 @@ export const StyledCard = styled.div`
     }
   }
   &.flip {
-    --flip: rotateY(180deg);
+    --flip: rotate3d(-1, 1, 0, 180deg);
     --pointer-events: none;
     --cursor: default;
   }

@@ -15,7 +15,7 @@ export const StyledCardFrontSide = styled(StyledCardSide)``;
 
 export const StyledCardBackSide = styled(StyledCardSide)`
   --mirror: scaleX(-1);
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) rotateZ(-90deg);
 `;
 
 export const CardImage = styled.img.attrs({ draggable: false })`
