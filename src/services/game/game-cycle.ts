@@ -9,7 +9,9 @@ const SOUND_NO = './sfx/no.mp3';
 const SOUND_WIN = './sfx/win.mp3';
 const SOUND_FAIL = './sfx/fail.mp3';
 
-export function useGameCycle(): readonly [GameState, React.Dispatch<GameAction>] {
+type GameCycleResult = readonly [GameState, React.Dispatch<GameAction>];
+
+export function useGameCycle(): GameCycleResult {
   const [gameState, dispatch] = useReducer(gameReducer, getInitialGameState());
 
   useEffect(() => {

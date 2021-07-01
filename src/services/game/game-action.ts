@@ -50,6 +50,7 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
     case GameActionType.VOCALIZE:
       return { ...state, status: GameStatus.VOCALIZE };
     case GameActionType.TO_MATCHING:
+      if (state.status === GameStatus.INITIAL) return state;
       return { ...state, status: GameStatus.MATCHING };
     case GameActionType.MATCH_WORD:
       return matchWord(state, action.payload);
