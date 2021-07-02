@@ -1,8 +1,9 @@
 import React, { useEffect, useReducer } from 'react';
 
-import { playAudioCancelable } from '../audio';
+import { playAudio, playAudioAsyncCancelable } from 'services/audio';
+
 import { GameAction, GameActionType, GameDispatch, gameReducer } from './game-action';
-import { GameState, GameStatus, getInitialGameState } from './game-state';
+import { GameState, GameStatus, getInitialGameState, isGameEnd, isWin } from './game-state';
 
 const SOUND_YES = './sfx/yes.mp3';
 const SOUND_NO = './sfx/no.mp3';
@@ -21,13 +22,16 @@ export function useGameCycle(): GameCycleResult {
           dispatch({ type: GameActionType.TO_NEXT_WORD });
           break;
         case GameStatus.VOCALIZE:
-          await handleVocalize(gameState, dispatch);
+          handleVocalize(gameState, dispatch);
           break;
         case GameStatus.HIT:
-          await handleHit(gameState, dispatch);
+          handleHit(gameState, dispatch);
           break;
         case GameStatus.MISS:
-          await handleMiss(dispatch);
+          handleMiss(dispatch);
+          break;
+        case GameStatus.SHOW_RESULT:
+          await handleShowResult(gameState, dispatch);
           break;
         default:
           break;
@@ -38,29 +42,31 @@ export function useGameCycle(): GameCycleResult {
   return [gameState, dispatch] as const;
 }
 
-function playAudioAsync(audioSrc: string | null, dispatch: GameDispatch): Promise<void> {
-  const [playPromise, playCancel] = playAudioCancelable(audioSrc);
-  dispatch({ type: GameActionType.ASYNC_OPERATION, payload: { cancel: playCancel } });
-  return playPromise;
-}
-
-async function handleVocalize(gameState: GameState, dispatch: GameDispatch): Promise<void> {
-  await playAudioAsync(gameState.activeWord?.audio || null, dispatch);
+function handleVocalize(gameState: GameState, dispatch: GameDispatch): void {
+  playAudio(gameState.activeWord?.audio || null);
   dispatch({ type: GameActionType.TO_MATCHING });
 }
 
-async function handleMiss(dispatch: GameDispatch): Promise<void> {
-  await playAudioAsync(SOUND_NO, dispatch);
+function handleMiss(dispatch: GameDispatch): void {
+  playAudio(SOUND_NO);
   dispatch({ type: GameActionType.TO_MATCHING });
 }
 
-async function handleHit(gameState: GameState, dispatch: GameDispatch): Promise<void> {
-  if (gameState.words.length > 0) {
-    await playAudioAsync(SOUND_YES, dispatch);
+function handleHit(gameState: GameState, dispatch: GameDispatch): void {
+  if (!isGameEnd(gameState)) {
+    void playAudio(SOUND_YES);
     dispatch({ type: GameActionType.TO_NEXT_WORD });
   } else {
-    const isWin = gameState.mistakes === 0;
-    await playAudioAsync(isWin ? SOUND_WIN : SOUND_FAIL, dispatch);
-    dispatch({ type: GameActionType.TO_MAIN_PAGE });
+    const soundSrc = isWin(gameState) ? SOUND_WIN : SOUND_FAIL;
+    const [promise, cancel] = playAudioAsyncCancelable(soundSrc);
+    dispatch({ type: GameActionType.TO_RESULT_PAGE, payload: { promise, cancel } });
   }
+}
+
+async function handleShowResult(
+  { asyncOperation }: GameState,
+  dispatch: GameDispatch
+): Promise<void> {
+  await asyncOperation;
+  dispatch({ type: GameActionType.TO_MAIN_PAGE });
 }

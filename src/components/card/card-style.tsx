@@ -2,6 +2,29 @@ import styled from 'styled-components';
 
 import { BtnFlip } from './btn-flip';
 
+interface CardStates {
+  isFlipped: boolean;
+  isGameMode: boolean;
+  isGameReady: boolean;
+  isGamePlay: boolean;
+  isSolved: boolean;
+}
+
+export const getCardClassName = ({
+  isFlipped,
+  isGameMode,
+  isGameReady,
+  isGamePlay,
+  isSolved,
+}: CardStates): string => {
+  let className = isGameMode ? 'game' : 'train';
+  if (!isGamePlay && isFlipped) className += ' flip';
+  if (isGameReady) className += ' game-ready';
+  if (isGamePlay && !isSolved) className += ' game-play';
+  if (isGameMode && isSolved) className += ' solved';
+  return className;
+};
+
 export const CardContainer = styled.div`
   --aspect-ratio: 1 / 1;
   aspect-ratio: var(--aspect-ratio);
@@ -28,7 +51,6 @@ export const StyledCard = styled.div`
   --word-pos: 0%;
   --word-h: 70px;
   --cursor: pointer;
-  --solved: 0;
 
   position: relative;
   width: 100%;
@@ -64,27 +86,10 @@ export const StyledCard = styled.div`
       transform: translateZ(20px);
     }
   }
-  &.waiting {
-    --cursor: wait;
-  }
   &.solved {
     --cursor: default;
-    //--solved: 1;
     opacity: 0.2;
   }
-`;
-
-export const CardSolvedLayer = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-  background: #ff04;
-  backdrop-filter: blur(5px);
-  opacity: var(--solved);
-  pointer-events: none;
 `;
 
 export const StyledBtnFlip = styled(BtnFlip)`

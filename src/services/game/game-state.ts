@@ -6,11 +6,11 @@ export enum GameStatus {
   INITIAL = 'initial',
   READY = 'ready',
   START = 'start',
-  ASYNC_OPERATION = 'async operation',
   VOCALIZE = 'vocalize',
   MATCHING = 'matching',
   HIT = 'hit',
   MISS = 'miss',
+  SHOW_RESULT = 'show result',
   END = 'end',
 }
 
@@ -20,7 +20,8 @@ export interface GameState {
   activeWord: Maybe<WordDTO>;
   words: WordDTO[];
   mistakes: number;
-  cancelAsync: null | (() => void);
+  asyncOperation: null | Promise<void>;
+  cancelAsyncOperation: null | (() => void);
 }
 
 export const getInitialGameState = (): GameState => {
@@ -30,7 +31,8 @@ export const getInitialGameState = (): GameState => {
     activeWord: null,
     words: [],
     mistakes: 0,
-    cancelAsync: null,
+    asyncOperation: null,
+    cancelAsyncOperation: null,
   };
 };
 
@@ -54,7 +56,7 @@ export const isFail: GameCheck = (state) => isGameEnd(state) && state.mistakes >
 
 export const isEnd: GameCheck = ({ status }) => status === GameStatus.END;
 
-export const isWaiting: GameCheck = ({ status }) => status === GameStatus.ASYNC_OPERATION;
+export const isWaiting: GameCheck = ({ status }) => status === GameStatus.SHOW_RESULT;
 
 export const isWordSolved: WordCheck = (state, wordId) =>
   isGameStarted(state) && state.words.every((dto) => dto.id !== wordId);

@@ -9,29 +9,29 @@ import { GameState, GameStatus, getInitialGameState, isGameMode } from './game-s
 export enum GameActionType {
   ENABLE = 'enable',
   DISABLE = 'disable',
-  ASYNC_OPERATION = 'async operation',
   START = 'start',
   TO_NEXT_WORD = 'to next word',
   VOCALIZE = 'vocalize',
   TO_MATCHING = 'to matching',
   MATCH_WORD = 'match word',
+  TO_RESULT_PAGE = 'to result page',
   TO_MAIN_PAGE = 'to main page',
   RESET = 'reset',
 }
 
-type AsyncOperationPayload = { cancel: () => void };
+type AsyncOperationPayload = { promise: Promise<void>; cancel: () => void };
 type StartPayload = { words: WordDTO[]; category: CategoryDTO };
 type MatchWordPayload = { word: WordDTO };
 
 export type GameAction =
   | { type: GameActionType.ENABLE }
   | { type: GameActionType.DISABLE }
-  | { type: GameActionType.ASYNC_OPERATION; payload: AsyncOperationPayload }
   | { type: GameActionType.START; payload: StartPayload }
   | { type: GameActionType.TO_NEXT_WORD }
   | { type: GameActionType.VOCALIZE }
   | { type: GameActionType.TO_MATCHING }
   | { type: GameActionType.MATCH_WORD; payload: MatchWordPayload }
+  | { type: GameActionType.TO_RESULT_PAGE; payload: AsyncOperationPayload }
   | { type: GameActionType.TO_MAIN_PAGE }
   | { type: GameActionType.RESET };
 
@@ -43,8 +43,6 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
       return { ...getInitialGameState(), status: GameStatus.READY };
     case GameActionType.DISABLE:
       return disable(state);
-    case GameActionType.ASYNC_OPERATION:
-      return { ...state, status: GameStatus.ASYNC_OPERATION, cancelAsync: action.payload.cancel };
     case GameActionType.START:
       return startGame(action.payload);
     case GameActionType.TO_NEXT_WORD:
@@ -55,6 +53,8 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
       return toMatching(state);
     case GameActionType.MATCH_WORD:
       return matchWord(state, action.payload);
+    case GameActionType.TO_RESULT_PAGE:
+      return asyncOperation(state, action.payload);
     case GameActionType.TO_MAIN_PAGE:
       return toMainPage(state);
     case GameActionType.RESET:
@@ -64,8 +64,17 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
   }
 };
 
+function asyncOperation(state: GameState, { promise, cancel }: AsyncOperationPayload): GameState {
+  return {
+    ...state,
+    status: GameStatus.SHOW_RESULT,
+    asyncOperation: promise,
+    cancelAsyncOperation: cancel,
+  };
+}
+
 function disable(state: GameState): GameState {
-  state.cancelAsync?.();
+  state.cancelAsyncOperation?.();
   return getInitialGameState();
 }
 
@@ -87,7 +96,6 @@ function startGame({ words, category }: StartPayload): GameState {
 }
 
 function matchWord(state: GameState, { word }: MatchWordPayload): GameState {
-  state.cancelAsync?.();
   const { activeWord, mistakes } = state;
   const isMatch = word.id === activeWord?.id;
   const words = isMatch ? state.words.filter((dto) => dto.id !== word.id) : state.words;
