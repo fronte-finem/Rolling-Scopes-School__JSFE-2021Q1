@@ -9,18 +9,6 @@ interface CardStates {
   isSolved: boolean;
 }
 
-export const getCardClassName = (
-  isFlipped: boolean,
-  { isGameMode, isGameReady, isGamePlay, isSolved }: CardStates
-): string => {
-  let className = isGameMode ? 'game' : 'train';
-  if (!isGameMode) className += isFlipped ? ' flip' : ' flip-not';
-  if (isGameReady) className += ' game-ready';
-  if (isGamePlay && !isSolved) className += ' game-play';
-  if (isGameMode && isSolved) className += ' solved';
-  return className;
-};
-
 export const CardContainer = styled.div`
   --aspect-ratio: 1 / 1;
   aspect-ratio: var(--aspect-ratio);
@@ -40,6 +28,51 @@ export const CardContainer = styled.div`
     }
   }
 `;
+
+export const MarkContainer = styled.ul<{ isGameMode: boolean }>`
+  position: absolute;
+  bottom: 10px;
+  left: 5%;
+  width: 90%;
+  height: 50px;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: 10px;
+  padding: 0 5px;
+
+  background: #0004;
+  border-radius: 25px;
+  opacity: ${({ isGameMode }) => (isGameMode ? '1' : '0')};
+  pointer-events: none;
+`;
+
+export const MarkItem = styled.li`
+  --size: 40px;
+  flex: 0 0 var(--size);
+  width: var(--size);
+  height: var(--size);
+`;
+
+export const Emo = styled.svg`
+  display: block;
+  width: 100%;
+  height: 100%;
+`;
+
+export const getCardClassName = (
+  isFlipped: boolean,
+  { isGameMode, isGameReady, isGamePlay, isSolved }: CardStates
+): string => {
+  let className = isGameMode ? 'game' : 'train';
+  if (!isGameMode) className += isFlipped ? ' flip' : ' flip-not';
+  if (isGameReady) className += ' game-ready';
+  if (isGamePlay && !isSolved) className += ' game-play';
+  if (isGameMode && isSolved) className += ' solved';
+  return className;
+};
 
 export const StyledCard = styled.div`
   --time: 500ms;
