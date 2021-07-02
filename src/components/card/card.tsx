@@ -22,7 +22,7 @@ export const Card = (props: CardProps): JSX.Element => {
   const [isFlipped, setFlip] = useState(false);
   const { className, wordDTO, isGameMode, matchWord } = props;
   const { word, translation, image, audio } = wordDTO;
-  const cardClassName = getCardClassName({ isFlipped, ...props });
+  const cardClassName = getCardClassName(isFlipped, props);
 
   const handlePlay = (ev: React.MouseEvent<HTMLDivElement>) => {
     if (isGameMode) {
@@ -33,8 +33,8 @@ export const Card = (props: CardProps): JSX.Element => {
     playAudio(audio);
   };
 
-  const handleMouseLeave = () => setFlip(false);
-  const handleFlip = () => setFlip(true);
+  const handleMouseLeave = () => setFlip(() => false);
+  const handleFlip = () => setFlip(() => true);
 
   return (
     <CardContainer className={className} onMouseLeave={handleMouseLeave}>

@@ -3,22 +3,18 @@ import styled from 'styled-components';
 import { BtnFlip } from './btn-flip';
 
 interface CardStates {
-  isFlipped: boolean;
   isGameMode: boolean;
   isGameReady: boolean;
   isGamePlay: boolean;
   isSolved: boolean;
 }
 
-export const getCardClassName = ({
-  isFlipped,
-  isGameMode,
-  isGameReady,
-  isGamePlay,
-  isSolved,
-}: CardStates): string => {
+export const getCardClassName = (
+  isFlipped: boolean,
+  { isGameMode, isGameReady, isGamePlay, isSolved }: CardStates
+): string => {
   let className = isGameMode ? 'game' : 'train';
-  if (!isGamePlay && isFlipped) className += ' flip';
+  if (!isGameMode) className += isFlipped ? ' flip' : ' flip-not';
   if (isGameReady) className += ' game-ready';
   if (isGamePlay && !isSolved) className += ' game-play';
   if (isGameMode && isSolved) className += ' solved';
@@ -46,7 +42,9 @@ export const CardContainer = styled.div`
 `;
 
 export const StyledCard = styled.div`
-  --flip: rotateY(0deg);
+  --time: 500ms;
+  --ease-out-back: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --flip: 0deg;
   --pointer-events: all;
   --word-pos: 0%;
   --word-h: 70px;
@@ -58,10 +56,11 @@ export const StyledCard = styled.div`
   transform-style: preserve-3d;
   border-radius: 30px 0;
   box-shadow: 0 0 3px 0 #0008;
-  transform: var(--flip);
+  transform: rotate3d(-1, 1, 0, var(--flip));
   cursor: var(--cursor);
   pointer-events: var(--pointer-events);
-  transition: box-shadow 200ms, all 500ms;
+  transition: box-shadow 200ms, all 500ms, transform 1s;
+  transition-timing-function: linear, linear, var(--ease-out-back);
 
   &.train {
     &:hover {
@@ -69,9 +68,11 @@ export const StyledCard = styled.div`
     }
   }
   &.flip {
-    --flip: rotate3d(-1, 1, 0, 180deg);
+    --flip: 180deg;
     --pointer-events: none;
     --cursor: default;
+  }
+  &.flip-not {
   }
   &.game {
     --word-pos: calc(-1 * var(--word-h));
@@ -81,9 +82,14 @@ export const StyledCard = styled.div`
   }
   &.game-play {
     --cursor: pointer;
+    transition: all 200ms;
     &:hover {
       box-shadow: 0 0 10px 5px #0004;
-      transform: translateZ(20px);
+      transform: translateZ(10px);
+    }
+    &:active {
+      box-shadow: 0 0 5px 5px #0004;
+      transform: translateZ(0px);
     }
   }
   &.solved {
