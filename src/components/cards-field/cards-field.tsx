@@ -6,7 +6,13 @@ import { useWordsData } from 'services/data/data-context';
 import { WordDTO } from 'services/data/dto-word';
 import { GameActionType } from 'services/game/game-action';
 import { useGameContext } from 'services/game/game-context';
-import { isGameMode, isGamePlay, isGameReady, isWordSolved } from 'services/game/game-state';
+import {
+  isGameMode,
+  isGamePlay,
+  isGameReady,
+  isWordMatch,
+  isWordSolved,
+} from 'services/game/game-state';
 import { StyledProps } from 'types/styled';
 
 import { StyledCardsField, StyledCardsFieldItem } from './cards-field-style';
@@ -20,9 +26,10 @@ export const CardsField = ({ className }: StyledProps): JSX.Element => {
   const [, words] = result;
 
   const handleMathWord = (word: WordDTO) => {
-    if (!isGamePlay(gameState)) return;
-    if (isWordSolved(gameState, word.id)) return;
+    if (!isGamePlay(gameState)) return false;
+    if (isWordSolved(gameState, word.id)) return true;
     dispatch({ type: GameActionType.MATCH_WORD, payload: { word } });
+    return isWordMatch(gameState, word.id);
   };
 
   const [isGame, isReady, isPlay] = [isGameMode, isGameReady, isGamePlay].map((func) =>
