@@ -56,7 +56,7 @@ export const StyledCard = styled.div`
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  border-radius: 20px;
+  border-radius: 30px 0;
   box-shadow: 0 0 3px 0 #0008;
   transform: var(--flip);
   cursor: var(--cursor);
