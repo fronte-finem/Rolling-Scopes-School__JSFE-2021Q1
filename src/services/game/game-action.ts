@@ -57,6 +57,7 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
     case GameActionType.TO_RESULT_PAGE:
       return toResult(state, action.payload);
     case GameActionType.TO_MAIN_PAGE:
+      if (state.status === GameStatus.INITIAL) return state;
       return { ...state, status: GameStatus.END };
     case GameActionType.RESET:
       return { ...state, status: GameStatus.READY };
