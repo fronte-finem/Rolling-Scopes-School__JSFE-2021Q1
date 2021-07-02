@@ -7,7 +7,7 @@ export const StyledCardsField = styled.ul`
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  padding: 20px;
+  padding: 50px 20px;
   overflow: hidden;
 `;
 

@@ -7,7 +7,7 @@ export const StyledCategories = styled.ul`
   flex-wrap: wrap;
   justify-content: center;
   grid-gap: 20px;
-  padding: 20px;
+  padding: 50px 20px;
   overflow: hidden;
 `;
 

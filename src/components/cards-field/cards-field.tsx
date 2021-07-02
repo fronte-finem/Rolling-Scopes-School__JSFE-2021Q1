@@ -10,7 +10,7 @@ import {
   isGameMode,
   isGamePlay,
   isGameReady,
-  isWaiting,
+  isWordMatch,
   isWordSolved,
 } from 'services/game/game-state';
 import { StyledProps } from 'types/styled';
@@ -26,13 +26,14 @@ export const CardsField = ({ className }: StyledProps): JSX.Element => {
   const [, words] = result;
 
   const handleMathWord = (word: WordDTO) => {
-    if (!isGamePlay(gameState)) return;
-    if (isWordSolved(gameState, word.id)) return;
+    if (!isGamePlay(gameState)) return false;
+    if (isWordSolved(gameState, word.id)) return true;
     dispatch({ type: GameActionType.MATCH_WORD, payload: { word } });
+    return isWordMatch(gameState, word.id);
   };
 
-  const [isGame, isReady, isPlay, isWait] = [isGameMode, isGameReady, isGamePlay, isWaiting].map(
-    (func) => func(gameState)
+  const [isGame, isReady, isPlay] = [isGameMode, isGameReady, isGamePlay].map((func) =>
+    func(gameState)
   );
 
   return (
@@ -47,7 +48,6 @@ export const CardsField = ({ className }: StyledProps): JSX.Element => {
               isGameReady={isReady}
               isGamePlay={isPlay}
               isSolved={isWordSolved(gameState, dto.id)}
-              isWaiting={isWait}
             />
           </StyledCardsFieldItem>
         ))}

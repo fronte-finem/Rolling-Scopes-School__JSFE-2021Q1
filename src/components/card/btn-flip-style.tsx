@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const StyledBtnFlip = styled.button`
+  --time: 500ms;
+  --ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
   display: block;
   width: 50px;
   height: 50px;
@@ -8,7 +10,8 @@ export const StyledBtnFlip = styled.button`
   border: none;
   background: transparent;
   box-shadow: 0 0 5px 2px #0004;
-  transition: all 300ms;
+  transition: all var(--time), transform var(--time);
+  transition-timing-function: linear, var(--ease-out-back);
 
   &:hover {
     transform: rotate(180deg);

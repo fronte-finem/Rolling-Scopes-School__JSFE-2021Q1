@@ -10,8 +10,7 @@ export enum GameStatus {
   MATCHING = 'matching',
   HIT = 'hit',
   MISS = 'miss',
-  WIN = 'win',
-  FAIL = 'fail',
+  SHOW_RESULT = 'show result',
   END = 'end',
 }
 
@@ -21,6 +20,8 @@ export interface GameState {
   activeWord: Maybe<WordDTO>;
   words: WordDTO[];
   mistakes: number;
+  asyncOperation: null | Promise<void>;
+  cancelAsyncOperation: null | (() => void);
 }
 
 export const getInitialGameState = (): GameState => {
@@ -30,6 +31,8 @@ export const getInitialGameState = (): GameState => {
     activeWord: null,
     words: [],
     mistakes: 0,
+    asyncOperation: null,
+    cancelAsyncOperation: null,
   };
 };
 
@@ -43,17 +46,18 @@ export const isGameReady: GameCheck = ({ status }) => status === GameStatus.READ
 
 export const isGamePlay: GameCheck = ({ status }) => status === GameStatus.MATCHING;
 
-export const isWin: GameCheck = ({ status }) => status === GameStatus.WIN;
+export const isGameStarted: GameCheck = (state) => isGameMode(state) && !isGameReady(state);
 
-export const isFail: GameCheck = ({ status }) => status === GameStatus.FAIL;
+export const isGameEnd: GameCheck = (state) => isGameStarted(state) && state.words.length === 0;
+
+export const isWin: GameCheck = (state) => isGameEnd(state) && state.mistakes === 0;
+
+export const isFail: GameCheck = (state) => isGameEnd(state) && state.mistakes > 0;
 
 export const isEnd: GameCheck = ({ status }) => status === GameStatus.END;
 
-export const isWaiting: GameCheck = ({ status }) =>
-  status === GameStatus.VOCALIZE || status === GameStatus.HIT || status === GameStatus.MISS;
-
-export const isGameStarted: GameCheck = (state) =>
-  isGameMode(state) && state.status !== GameStatus.READY;
+export const isWordMatch: WordCheck = (state, wordId) =>
+  isGameStarted(state) && wordId === state.activeWord?.id;
 
 export const isWordSolved: WordCheck = (state, wordId) =>
   isGameStarted(state) && state.words.every((dto) => dto.id !== wordId);
