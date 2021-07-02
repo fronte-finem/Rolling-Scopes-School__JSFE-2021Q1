@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
 
-import { playAudio } from '../audio';
+import { playAudioCancelable } from '../audio';
 import { GameAction, GameActionType, GameDispatch, gameReducer } from './game-action';
 import { GameState, GameStatus, getInitialGameState } from './game-state';
 
@@ -38,24 +38,29 @@ export function useGameCycle(): GameCycleResult {
   return [gameState, dispatch] as const;
 }
 
-async function handleVocalize(gameState: GameState, dispatch: GameDispatch) {
-  await playAudio(gameState.activeWord?.audio);
+function playAudioAsync(audioSrc: string | null, dispatch: GameDispatch): Promise<void> {
+  const [playPromise, playCancel] = playAudioCancelable(audioSrc);
+  dispatch({ type: GameActionType.ASYNC_OPERATION, payload: { cancel: playCancel } });
+  return playPromise;
+}
+
+async function handleVocalize(gameState: GameState, dispatch: GameDispatch): Promise<void> {
+  await playAudioAsync(gameState.activeWord?.audio || null, dispatch);
   dispatch({ type: GameActionType.TO_MATCHING });
 }
 
-async function handleMiss(dispatch: GameDispatch) {
-  await playAudio(SOUND_NO);
+async function handleMiss(dispatch: GameDispatch): Promise<void> {
+  await playAudioAsync(SOUND_NO, dispatch);
   dispatch({ type: GameActionType.TO_MATCHING });
 }
 
-async function handleHit(gameState: GameState, dispatch: GameDispatch) {
-  await playAudio(SOUND_YES);
+async function handleHit(gameState: GameState, dispatch: GameDispatch): Promise<void> {
   if (gameState.words.length > 0) {
+    await playAudioAsync(SOUND_YES, dispatch);
     dispatch({ type: GameActionType.TO_NEXT_WORD });
   } else {
     const isWin = gameState.mistakes === 0;
-    dispatch({ type: GameActionType.TO_RESULT_PAGE, payload: { win: isWin } });
-    await playAudio(isWin ? SOUND_WIN : SOUND_FAIL);
+    await playAudioAsync(isWin ? SOUND_WIN : SOUND_FAIL, dispatch);
     dispatch({ type: GameActionType.TO_MAIN_PAGE });
   }
 }
