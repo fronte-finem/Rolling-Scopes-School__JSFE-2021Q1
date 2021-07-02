@@ -56,7 +56,8 @@ export const isFail: GameCheck = (state) => isGameEnd(state) && state.mistakes >
 
 export const isEnd: GameCheck = ({ status }) => status === GameStatus.END;
 
-export const isWaiting: GameCheck = ({ status }) => status === GameStatus.SHOW_RESULT;
+export const isWordMatch: WordCheck = (state, wordId) =>
+  isGameStarted(state) && wordId === state.activeWord?.id;
 
 export const isWordSolved: WordCheck = (state, wordId) =>
   isGameStarted(state) && state.words.every((dto) => dto.id !== wordId);
