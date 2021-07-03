@@ -83,3 +83,7 @@ export function getMessage<T>(state: FetchState<T>, dataName: string): string | 
       return null;
   }
 }
+
+export function getArrayData<T>(state: FetchState<T[]>): T[] {
+  return state.status !== FetchStatus.SUCCESS ? [] : state.data || [];
+}

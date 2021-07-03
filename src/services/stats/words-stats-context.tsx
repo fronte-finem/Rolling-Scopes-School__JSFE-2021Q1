@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { useDataContext } from 'services/data/data-context';
-import { FetchStatus } from 'services/data/fetch-hook';
+import { useDataContextWithChecks } from 'services/data/data-context';
 import { useLocalStorage } from 'utils/local-storage-hook';
 
 import {
@@ -41,11 +40,8 @@ const WordsStatsContext = React.createContext<IWordsStatsContext | undefined>(un
 const STORAGE_KEY = 'fronte-finem--efk--words-stats';
 
 export const WordsStatsContextProvider: React.FC = ({ children }) => {
-  const { wordsState } = useDataContext();
-
-  const wordsData = wordsState.status !== FetchStatus.SUCCESS ? [] : wordsState.data;
-  const initialWordsStats = wordsData ? wordsData.map((dto) => getInitialWordStats(dto.id)) : [];
-
+  const [, wordsData] = useDataContextWithChecks();
+  const initialWordsStats = wordsData.map((dto) => getInitialWordStats(dto.id));
   const [wordsStats, setWordsStats] = useLocalStorage<WordStats[]>(STORAGE_KEY, initialWordsStats);
 
   if (wordsStats.length === 0 && initialWordsStats.length > 0) {
