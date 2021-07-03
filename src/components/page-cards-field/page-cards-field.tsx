@@ -15,9 +15,9 @@ import {
 } from 'services/game/game-state';
 import { StyledProps } from 'types/styled';
 
-import { StyledCardsField, StyledCardsFieldItem } from './cards-field-style';
+import { StyledCardsField, StyledCardsFieldItem } from './page-cards-field-style';
 
-export const CardsField = ({ className }: StyledProps): JSX.Element => {
+export const PageCardsField = ({ className }: StyledProps): JSX.Element => {
   const { category } = useParams<{ category: string }>();
   const result = useWordsData(category);
   const { gameState, dispatch } = useGameContext();

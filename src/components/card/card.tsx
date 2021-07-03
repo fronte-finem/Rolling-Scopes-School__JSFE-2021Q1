@@ -1,16 +1,16 @@
 import React, { useRef, useState } from 'react';
 
+import { Marks } from 'components/card/marks';
 import { playAudio } from 'services/audio';
 import { WordDTO } from 'services/data/dto-word';
+import { useWordsStatsContext } from 'services/stats/words-stats-context';
 import { StyledProps } from 'types/styled';
 import { randomItem } from 'utils/random';
 
 import {
   CardContainer,
-  Emo,
   getCardClassName,
-  MarkContainer,
-  MarkItem,
+  MarksWrapper,
   StyledBtnFlip,
   StyledCard,
 } from './card-style';
@@ -28,40 +28,36 @@ export interface CardProps extends StyledProps {
 
 const HAPPY = ['happy-cute', 'happy', 'in-love', 'cute', 'happy-smile'];
 const SAD = ['very-sad', 'confused', 'arrogant', 'sad', 'bored'];
-
-const Mark: React.FC<{ yes: boolean }> = ({ yes }) => {
-  const iconSrc = `./svg/emoji.svg#${randomItem(yes ? HAPPY : SAD)}`;
-  return (
-    <MarkItem>
-      <Emo>
-        <use href={iconSrc} />
-      </Emo>
-    </MarkItem>
-  );
-};
+const CARD_MARKS_LIMIT = -6;
 
 export const Card = (props: CardProps): JSX.Element => {
+  const { className, wordDTO, isGameMode, isGameReady, isGamePlay, isSolved, matchWord } = props;
+  const { id, word, translation, image, audio } = wordDTO;
   const ref = useRef<HTMLButtonElement>(null);
   const [isFlipped, setFlip] = useState(false);
-  const { className, wordDTO, isGameMode, isSolved, matchWord } = props;
-  const { word, translation, image, audio } = wordDTO;
+  const [marks, setMark] = useState<string[]>([]);
+  const { askClick, flipClick, gameClick, matchClick } = useWordsStatsContext();
   const cardClassName = getCardClassName(isFlipped, props);
-  const [marks, setMark] = useState<boolean[]>([]);
 
   const handlePlay = (ev: React.MouseEvent<HTMLDivElement>) => {
-    if (isGameMode) {
-      if (isSolved) return;
-      const yes = matchWord(wordDTO);
-      const size = marks.length;
-      setMark([...marks.slice(size - 11, size), yes]);
+    if (isGameReady || isSolved) return;
+    if (isGamePlay) {
+      const isMatch = matchWord(wordDTO);
+      const emo = randomItem(isMatch ? HAPPY : SAD);
+      setMark([...marks.slice(CARD_MARKS_LIMIT), emo]);
+      isMatch ? matchClick(id) : gameClick(id);
       return;
     }
     if (ref.current?.contains(ev.target as Node)) return;
     playAudio(audio);
+    askClick(id);
   };
 
   const handleMouseLeave = () => setFlip(() => false);
-  const handleFlip = () => setFlip(() => true);
+  const handleFlip = () => {
+    setFlip(() => true);
+    flipClick(id);
+  };
 
   return (
     <CardContainer className={className} onMouseLeave={handleMouseLeave}>
@@ -71,12 +67,9 @@ export const Card = (props: CardProps): JSX.Element => {
         </CardFrontSide>
         <CardBackSide word={translation} image={image} />
       </StyledCard>
-      <MarkContainer isGameMode={isGameMode}>
-        {marks.map((yes, index) => {
-          const key = `${index} ${String(yes)}`;
-          return <Mark key={key} yes={yes} />;
-        })}
-      </MarkContainer>
+      <MarksWrapper>
+        <Marks marks={marks} show={isGameMode} />
+      </MarksWrapper>
     </CardContainer>
   );
 };

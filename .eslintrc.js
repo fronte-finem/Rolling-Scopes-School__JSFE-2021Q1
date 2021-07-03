@@ -42,7 +42,10 @@ module.exports = {
     '@typescript-eslint/no-floating-promises': ['error', { ignoreVoid: true, ignoreIIFE: true }],
     'no-void': ['error', { allowAsStatement: true }],
     'no-use-before-define': 'off',
-    '@typescript-eslint/no-unused-expressions': ['error', { allowShortCircuit: true }],
+    '@typescript-eslint/no-unused-expressions': [
+      'error',
+      { allowShortCircuit: true, allowTernary: true },
+    ],
     '@typescript-eslint/no-use-before-define': ['error', { functions: false }],
     '@typescript-eslint/explicit-member-accessibility': ['error'],
     '@typescript-eslint/lines-between-class-members': [

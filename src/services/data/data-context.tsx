@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 import { categoriesDTOValidator, CategoryDTO } from './dto-category';
 import { WordDTO, wordsDTOValidator } from './dto-word';
-import { FetchState, getMessage, useFetch } from './fetch-hook';
+import { FetchState, getArrayData, getMessage, useFetch } from './fetch-hook';
 import { fixCategoriesLinks, fixWordsLinks } from './fix-links';
 
 const CATEGORIES_URL = './data/categories.json';
@@ -32,6 +32,15 @@ export const useDataContext = (): DataContextInterface => {
     throw Error(CONTEXT_NOT_EXIST);
   }
   return context;
+};
+
+type AllData = [category: CategoryDTO[], words: WordDTO[]];
+
+export const useDataContextWithChecks = (): AllData => {
+  const { categoriesState, wordsState } = useDataContext();
+  const categoriesData = getArrayData(categoriesState);
+  const wordsData = getArrayData(wordsState);
+  return [categoriesData, wordsData];
 };
 
 export function useCategoriesData(): string | CategoryDTO[] {
