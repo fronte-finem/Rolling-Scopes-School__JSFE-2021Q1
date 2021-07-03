@@ -7,9 +7,9 @@ import { useGameContext } from 'services/game/game-context';
 import { isGameMode } from 'services/game/game-state';
 import { StyledProps } from 'types/styled';
 
-import { StyledCategories, StyledCategoriesItem } from './categories-style';
+import { StyledCategories, StyledCategoriesItem } from './page-categories-style';
 
-export const Categories = ({ className }: StyledProps): JSX.Element => {
+export const PageCategories = ({ className }: StyledProps): JSX.Element => {
   const categories: string | CategoryDTO[] = useCategoriesData();
   const { gameState } = useGameContext();
   if (typeof categories === 'string') return <h2>{categories}</h2>;
