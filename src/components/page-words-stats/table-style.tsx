@@ -8,15 +8,13 @@ export const StyledTable = styled.table`
 
 export const Thead = styled.thead`
   border-radius: inherit;
-  color: #fff;
-  text-transform: uppercase;
 
   tr:first-child {
     border-radius: inherit;
-    th:first-child {
+    *:first-child {
       border-top-left-radius: inherit;
     }
-    th:last-child {
+    *:last-child {
       border-top-right-radius: inherit;
     }
   }
@@ -35,7 +33,6 @@ export const Tbody = styled.tbody`
 
   &:hover tr:hover {
     opacity: 1;
-    //outline: 1px solid #0004;
     box-shadow: 0 0 5px 1px #0004;
   }
 
@@ -53,5 +50,3 @@ export const Tbody = styled.tbody`
     }
   }
 `;
-
-export const HeadCell = styled.th``;
