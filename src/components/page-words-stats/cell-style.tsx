@@ -98,19 +98,20 @@ export const StyledHeadCell = styled(Cell)`
   text-transform: uppercase;
 
   &.num {
-    background: #0008;
+    background: #000;
+    color: #fff;
   }
   &.category {
-    background: #0002;
-    color: #0008;
+    background: #222;
+    color: #999;
   }
   &.word {
-    background: #0004;
-    color: #000b;
+    background: #444;
+    color: #bbb;
   }
   &.translation {
-    background: #0002;
-    color: #0008;
+    background: #666;
+    color: #ddd;
   }
 `;
 
@@ -118,19 +119,22 @@ export const BodyCell = styled(Cell)`
   padding: 3px 6px;
 
   &.num {
-    background: #0006;
+    background: #0008;
     color: #fff;
     text-align: center;
     font-family: monospace;
   }
   &.category {
-    background: #fff0;
+    background: #0006;
+    color: #111;
   }
   &.word {
-    background: #fff4;
+    background: #0004;
+    color: #222;
   }
   &.translation {
-    background: #fff0;
+    background: #0002;
+    color: #333;
   }
   &.stats {
     --bg-o: 0.75;
