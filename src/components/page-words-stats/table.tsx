@@ -23,7 +23,7 @@ export const Table: React.FC = () => {
           return (
             <TableRow
               key={wordDTO.id}
-              index={index}
+              index={index + 1}
               category={category}
               word={wordDTO.word}
               translation={wordDTO.translation}
