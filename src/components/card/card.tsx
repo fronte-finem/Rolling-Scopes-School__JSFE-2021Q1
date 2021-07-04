@@ -36,7 +36,7 @@ export const Card = (props: CardProps): JSX.Element => {
   const ref = useRef<HTMLButtonElement>(null);
   const [isFlipped, setFlip] = useState(false);
   const [marks, setMark] = useState<string[]>([]);
-  const { askClick, flipClick, gameClick, matchClick } = useWordsStatsContext();
+  const { askClick, flipClick } = useWordsStatsContext();
   const cardClassName = getCardClassName(isFlipped, props);
 
   const handlePlay = (ev: React.MouseEvent<HTMLDivElement>) => {
@@ -45,7 +45,6 @@ export const Card = (props: CardProps): JSX.Element => {
       const isMatch = matchWord(wordDTO);
       const emo = randomItem(isMatch ? HAPPY : SAD);
       setMark([...marks.slice(CARD_MARKS_LIMIT), emo]);
-      isMatch ? matchClick(id) : gameClick(id);
       return;
     }
     if (ref.current?.contains(ev.target as Node)) return;

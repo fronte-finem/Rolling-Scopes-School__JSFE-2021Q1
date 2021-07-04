@@ -1,57 +1,95 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import {
-  HeadCellAsk,
-  HeadCellAskPercent,
-  HeadCellAskSum,
-  HeadCellCategory,
-  HeadCellError,
-  HeadCellErrorPercent,
-  HeadCellErrorSum,
-  HeadCellFlip,
-  HeadCellFlipPercent,
-  HeadCellFlipSum,
-  HeadCellGame,
-  HeadCellGameAll,
-  HeadCellMatch,
-  HeadCellMatchPercent,
-  HeadCellMatchSum,
-  HeadCellNum,
-  HeadCellTrain,
-  HeadCellTrainAll,
-  HeadCellTranslation,
-  HeadCellWord,
-} from './table-header-style';
+import { HeadCell, HeadOrderCell, Order } from './head-cell';
 import { Thead } from './table-style';
 
-export const TableHeader: React.FC = () => {
+const ORDER_MAP: Readonly<Map<Order, Order>> = new Map([
+  [Order.NONE, Order.ASC],
+  [Order.ASC, Order.DESC],
+  [Order.DESC, Order.NONE],
+]);
+
+export enum OrderField {
+  CATEGORY,
+  WORD,
+  TRANSLATION,
+  TRAIN,
+  ASK_COUNT,
+  ASK_PERCENT,
+  FLIP_COUNT,
+  FLIP_PERCENT,
+  GAME,
+  MATCH_COUNT,
+  MATCH_PERCENT,
+  ERROR_COUNT,
+  ERROR_PERCENT,
+}
+
+const getInitialOrders: () => Record<OrderField, Order> = () => ({
+  [OrderField.CATEGORY]: Order.NONE,
+  [OrderField.WORD]: Order.NONE,
+  [OrderField.TRANSLATION]: Order.NONE,
+  [OrderField.TRAIN]: Order.NONE,
+  [OrderField.ASK_COUNT]: Order.NONE,
+  [OrderField.ASK_PERCENT]: Order.NONE,
+  [OrderField.FLIP_COUNT]: Order.NONE,
+  [OrderField.FLIP_PERCENT]: Order.NONE,
+  [OrderField.GAME]: Order.NONE,
+  [OrderField.MATCH_COUNT]: Order.NONE,
+  [OrderField.MATCH_PERCENT]: Order.NONE,
+  [OrderField.ERROR_COUNT]: Order.NONE,
+  [OrderField.ERROR_PERCENT]: Order.NONE,
+});
+
+interface TableHeaderProps {
+  onOrderChange: (field: OrderField, order: Order) => void;
+}
+
+export const TableHeader: React.FC<TableHeaderProps> = ({ onOrderChange }) => {
+  const [orders, setOrders] = useState(getInitialOrders());
+
+  const handleChangeOrder = (field: OrderField) => () => {
+    const prev = orders[field];
+    const next = ORDER_MAP.get(prev) || Order.NONE;
+    setOrders({ ...getInitialOrders(), [field]: next });
+    onOrderChange(field, next);
+  };
+
+  const getProps = (text: string, className: string, field: OrderField, rowSpan?: number) => ({
+    text,
+    className,
+    order: orders[field],
+    onOrderChange: handleChangeOrder(field),
+    rowSpan,
+  });
+
   return (
     <Thead>
       <tr>
-        <HeadCellNum rowSpan={3}>№</HeadCellNum>
-        <HeadCellCategory rowSpan={3}>Category</HeadCellCategory>
-        <HeadCellWord rowSpan={3}>Word</HeadCellWord>
-        <HeadCellTranslation rowSpan={3}>Translation</HeadCellTranslation>
-        <HeadCellTrain colSpan={5}>Train</HeadCellTrain>
-        <HeadCellGame colSpan={5}>Game</HeadCellGame>
+        <HeadCell rowSpan={3} className="num" text="№" />
+        <HeadOrderCell {...getProps('category', 'category', OrderField.CATEGORY, 3)} />
+        <HeadOrderCell {...getProps('word', 'word', OrderField.WORD, 3)} />
+        <HeadOrderCell {...getProps('translation', 'translation', OrderField.TRANSLATION, 3)} />
+        <HeadCell colSpan={5} className="train" text="train" />
+        <HeadCell colSpan={5} className="game" text="game" />
       </tr>
       <tr>
-        <HeadCellTrainAll rowSpan={2}>all</HeadCellTrainAll>
-        <HeadCellAsk colSpan={2}>ask</HeadCellAsk>
-        <HeadCellFlip colSpan={2}>flip</HeadCellFlip>
-        <HeadCellGameAll rowSpan={2}>all</HeadCellGameAll>
-        <HeadCellMatch colSpan={2}>match</HeadCellMatch>
-        <HeadCellError colSpan={2}>error</HeadCellError>
+        <HeadOrderCell {...getProps('all', 'train', OrderField.TRAIN, 2)} />
+        <HeadCell colSpan={2} className="train-ask-a" text="ask" />
+        <HeadCell colSpan={2} className="train-flip-a" text="flip" />
+        <HeadOrderCell {...getProps('all', 'game', OrderField.GAME, 2)} />
+        <HeadCell colSpan={2} className="game-match-a" text="match" />
+        <HeadCell colSpan={2} className="game-error-a" text="error" />
       </tr>
       <tr>
-        <HeadCellAskSum>sum</HeadCellAskSum>
-        <HeadCellAskPercent>%</HeadCellAskPercent>
-        <HeadCellFlipSum>sum</HeadCellFlipSum>
-        <HeadCellFlipPercent>%</HeadCellFlipPercent>
-        <HeadCellMatchSum>sum</HeadCellMatchSum>
-        <HeadCellMatchPercent>%</HeadCellMatchPercent>
-        <HeadCellErrorSum>sum</HeadCellErrorSum>
-        <HeadCellErrorPercent>%</HeadCellErrorPercent>
+        <HeadOrderCell {...getProps('sum', 'train-ask-a', OrderField.ASK_COUNT)} />
+        <HeadOrderCell {...getProps('%', 'train-ask-b', OrderField.ASK_PERCENT)} />
+        <HeadOrderCell {...getProps('sum', 'train-flip-a', OrderField.FLIP_COUNT)} />
+        <HeadOrderCell {...getProps('%', 'train-flip-b', OrderField.FLIP_PERCENT)} />
+        <HeadOrderCell {...getProps('sum', 'game-match-a', OrderField.MATCH_COUNT)} />
+        <HeadOrderCell {...getProps('%', 'game-match-b', OrderField.MATCH_PERCENT)} />
+        <HeadOrderCell {...getProps('sum', 'game-error-a', OrderField.ERROR_COUNT)} />
+        <HeadOrderCell {...getProps('%', 'game-error-b', OrderField.ERROR_PERCENT)} />
       </tr>
     </Thead>
   );
