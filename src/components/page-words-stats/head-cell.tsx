@@ -1,14 +1,9 @@
 import React from 'react';
 
+import { Order } from 'types/order';
 import { StyledProps } from 'types/styled';
 
 import { StyledHeadCell, StyledOrderCell } from './cell-style';
-
-export enum Order {
-  NONE = 'none',
-  ASC = 'asc',
-  DESC = 'desc',
-}
 
 export interface HeadCellProps extends StyledProps {
   text: string;
