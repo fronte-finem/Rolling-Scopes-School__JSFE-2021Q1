@@ -63,6 +63,7 @@
     "image": "img/jump.jpg",
     "audio": "audio/jump.mp3"
   },
+  
   {
     "id": 9,
     "categoryId": 2,
@@ -127,6 +128,7 @@
     "image": "img/swim.jpg",
     "audio": "audio/swim.mp3"
   },
+  
   {
     "id": 17,
     "categoryId": 3,
@@ -190,7 +192,8 @@
     "translation": "овца",
     "image": "img/sheep.jpg",
     "audio": "audio/sheep.mp3"
-  }, 
+  },
+  
   {
     "id": 25,
     "categoryId": 4,
@@ -255,6 +258,7 @@
     "image": "img/dolphin.jpg",
     "audio": "audio/dolphin.mp3"
   },
+  
   {
     "id": 33,
     "categoryId": 5,
@@ -327,6 +331,7 @@
     "image": "img/sad.jpg",
     "audio": "audio/sad.mp3"
   },
+  
   {
     "id": 42,
     "categoryId": 6,
@@ -382,5 +387,200 @@
     "translation": "смех",
     "image": "img/laugh.jpg",
     "audio": "audio/laugh.mp3"
+  },
+  
+  {
+    "id": 49,
+    "categoryId": 7,
+    "word": "tree",
+    "translation": "дерево",
+    "image": "img/tree.jpg",
+    "audio": "audio/tree.mp3"
+  },
+  {
+    "id": 50,
+    "categoryId": 7,
+    "word": "bush",
+    "translation": "куст",
+    "image": "img/bush.jpg",
+    "audio": "audio/bush.mp3"
+  },
+  {
+    "id": 51,
+    "categoryId": 7,
+    "word": "grass",
+    "translation": "трава",
+    "image": "img/grass.jpg",
+    "audio": "audio/grass.mp3"
+  },
+  {
+    "id": 52,
+    "categoryId": 7,
+    "word": "fir",
+    "translation": "ель",
+    "image": "img/fir.jpg",
+    "audio": "audio/fir.mp3"
+  },
+  {
+    "id": 53,
+    "categoryId": 7,
+    "word": "palm",
+    "translation": "пальма",
+    "image": "img/palm.jpg",
+    "audio": "audio/palm.mp3"
+  },
+  {
+    "id": 54,
+    "categoryId": 7,
+    "word": "moss",
+    "translation": "мох",
+    "image": "img/moss.jpg",
+    "audio": "audio/moss.mp3"
+  },
+  {
+    "id": 55,
+    "categoryId": 7,
+    "word": "seaweed",
+    "translation": "водоросли",
+    "image": "img/seaweed.jpg",
+    "audio": "audio/seaweed.mp3"
+  },
+  {
+    "id": 56,
+    "categoryId": 7,
+    "word": "cactus",
+    "translation": "кактус",
+    "image": "img/cactus.jpg",
+    "audio": "audio/cactus.mp3"
+  },
+  
+  {
+    "id": 57,
+    "categoryId": 8,
+    "word": "tomato",
+    "translation": "помидор",
+    "image": "img/tomato.jpg",
+    "audio": "audio/tomato.mp3"
+  },  
+  {
+    "id": 58,
+    "categoryId": 8,
+    "word": "cucumber",
+    "translation": "огурец",
+    "image": "img/cucumber.jpg",
+    "audio": "audio/cucumber.mp3"
+  },  
+  {
+    "id": 59,
+    "categoryId": 8,
+    "word": "potato",
+    "translation": "картофель",
+    "image": "img/potato.jpg",
+    "audio": "audio/potato.mp3"
+  },  
+  {
+    "id": 60,
+    "categoryId": 8,
+    "word": "cabbage",
+    "translation": "капуста",
+    "image": "img/cabbage.jpg",
+    "audio": "audio/cabbage.mp3"
+  },  
+  {
+    "id": 61,
+    "categoryId": 8,
+    "word": "marrow",
+    "translation": "кабачок",
+    "image": "img/marrow.jpg",
+    "audio": "audio/marrow.mp3"
+  },  
+  {
+    "id": 62,
+    "categoryId": 8,
+    "word": "eggplant",
+    "translation": "баклажан",
+    "image": "img/eggplant.jpg",
+    "audio": "audio/eggplant.mp3"
+  },  
+  {
+    "id": 63,
+    "categoryId": 8,
+    "word": "carrot",
+    "translation": "морковь",
+    "image": "img/carrot.jpg",
+    "audio": "audio/carrot.mp3"
+  },  
+  {
+    "id": 64,
+    "categoryId": 8,
+    "word": "onion",
+    "translation": "лук",
+    "image": "img/onion.jpg",
+    "audio": "audio/onion.mp3"
+  },
+  
+  {
+    "id": 65,
+    "categoryId": 9,
+    "word": "apple",
+    "translation": "яблоко",
+    "image": "img/apple.jpg",
+    "audio": "audio/apple.mp3"
+  },
+  {
+    "id": 66,
+    "categoryId": 9,
+    "word": "pear",
+    "translation": "груша",
+    "image": "img/pear.jpg",
+    "audio": "audio/pear.mp3"
+  },
+  {
+    "id": 67,
+    "categoryId": 9,
+    "word": "plum",
+    "translation": "слива",
+    "image": "img/plum.jpg",
+    "audio": "audio/plum.mp3"
+  },
+  {
+    "id": 68,
+    "categoryId": 9,
+    "word": "apricot",
+    "translation": "абрикос",
+    "image": "img/apricot.jpg",
+    "audio": "audio/apricot.mp3"
+  },
+  {
+    "id": 69,
+    "categoryId": 9,
+    "word": "peach",
+    "translation": "персик",
+    "image": "img/peach.jpg",
+    "audio": "audio/peach.mp3"
+  },
+  {
+    "id": 70,
+    "categoryId": 9,
+    "word": "cherry",
+    "translation": "вишня",
+    "image": "img/cherry.jpg",
+    "audio": "audio/cherry.mp3"
+  },
+  {
+    "id": 71,
+    "categoryId": 9,
+    "word": "orange",
+    "translation": "апельсин",
+    "image": "img/orange.jpg",
+    "audio": "audio/orange.mp3"
+  },
+  {
+    "id": 72,
+    "categoryId": 9,
+    "word": "banana",
+    "translation": "банан",
+    "image": "img/banana.jpg",
+    "audio": "audio/banana.mp3"
   }
 ]

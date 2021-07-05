@@ -2,37 +2,46 @@
   {
     "id": 1,
     "category": "Action (set A)",
-    "path": "action_a",
     "image": "img/jump.jpg"
   },
   {
     "id": 2,
     "category": "Action (set B)",
-    "path": "action_b",
     "image": "img/run.jpg"
   },
   {
     "id": 3,
     "category": "Animal (set A)",
-    "path": "animal_a",
     "image": "img/cat.jpg"
   },
   {
     "id": 4,
     "category": "Animal (set B)",
-    "path": "animal_b",
     "image": "img/bird.jpg"
   },
   {
     "id": 5,
     "category": "Clothes",
-    "image": "img/skirt.jpg",
-    "path": "clothes"
+    "image": "img/skirt.jpg"
   },
   {
     "id": 6,
     "category": "Emotions",
-    "path": "emotions",
     "image": "img/happy.jpg"
+  },
+  {
+    "id": 7,
+    "category": "Plants",
+    "image": "img/tree.jpg"
+  },
+  {
+    "id": 8,
+    "category": "Vegetables",
+    "image": "img/tomato.jpg"
+  },
+  {
+    "id": 9,
+    "category": "Fruits",
+    "image": "img/apple.jpg"
   }
 ]
