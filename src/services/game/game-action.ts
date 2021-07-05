@@ -2,7 +2,6 @@ import React from 'react';
 
 import { CategoryDTO } from 'services/data/dto-category';
 import { WordDTO } from 'services/data/dto-word';
-import { useWordsStatsContext } from 'services/stats/words-stats-context';
 import { randomItem } from 'utils/random';
 
 import { GameState, GameStatus, getInitialGameState, isGameMode } from './game-state';
@@ -97,15 +96,13 @@ function startGame({ words, category }: StartPayload): GameState {
 }
 
 function matchWord(state: GameState, { word }: MatchWordPayload): GameState {
-  const { gameClick, matchClick } = useWordsStatsContext();
   const { activeWord, mistakes } = state;
   const isMatch = word.id === activeWord?.id;
-  activeWord && (isMatch ? matchClick(activeWord.id) : gameClick(activeWord.id));
+
   const words = isMatch ? state.words.filter((dto) => dto.id !== word.id) : state.words;
   return {
     ...state,
     status: isMatch ? GameStatus.HIT : GameStatus.MISS,
-    activeWord: isMatch ? null : activeWord,
     mistakes: isMatch ? mistakes : mistakes + 1,
     words,
   };
