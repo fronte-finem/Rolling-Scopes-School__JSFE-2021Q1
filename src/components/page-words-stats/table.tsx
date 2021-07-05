@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
 import { useDataContextWithChecks } from 'services/data/data-context';
+import { CategoryDTO } from 'services/data/dto-category';
+import { WordDTO } from 'services/data/dto-word';
+import { WordStats } from 'services/stats/word-stats';
 import { useWordsStatsContext } from 'services/stats/words-stats-context';
 
+import { Order } from './head-cell';
 import { OrderField, TableHeader } from './table-header';
 import { getRowProps, Row, RowProps } from './table-row';
 import { StyledTable, Tbody } from './table-style';
-import { WordDTO } from 'services/data/dto-word';
-import { CategoryDTO } from 'services/data/dto-category';
-import { WordStats } from 'services/stats/word-stats';
-import { Order } from 'components/page-words-stats/head-cell';
 
 const getRowsProps = (words: WordDTO[], categories: CategoryDTO[], wordsStats: WordStats[]) => {
   return words
@@ -26,7 +26,7 @@ const getRowsProps = (words: WordDTO[], categories: CategoryDTO[], wordsStats: W
 type Comparator = (a: RowProps, b: RowProps) => number;
 
 function compare(order: Order, key: OrderField): Comparator {
-  return function (a: RowProps, b: RowProps) {
+  return function comparator(a: RowProps, b: RowProps) {
     if (order === Order.NONE) return 0;
     const [propA, propB] = [a.data[key], b.data[key]];
     if (typeof propA === 'string' && typeof propB === 'string')

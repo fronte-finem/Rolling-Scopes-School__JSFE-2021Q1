@@ -1,10 +1,10 @@
 import React from 'react';
 
+import { WordDTO } from 'services/data/dto-word';
 import { WordStats } from 'services/stats/word-stats';
 
 import { BodyCell } from './cell-style';
-import { OrderField } from 'components/page-words-stats/table-header';
-import { WordDTO } from 'services/data/dto-word';
+import { OrderField } from './table-header';
 
 export interface RowProps {
   id: number;

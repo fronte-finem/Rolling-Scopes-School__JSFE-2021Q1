@@ -10,7 +10,7 @@ export enum Order {
   DESC = 'desc',
 }
 
-interface HeadCellProps extends StyledProps {
+export interface HeadCellProps extends StyledProps {
   text: string;
   rowSpan?: number;
   colSpan?: number;
