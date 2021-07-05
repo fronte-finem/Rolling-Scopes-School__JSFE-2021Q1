@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { CategoryDTO } from 'services/data/dto-category';
 import { WordDTO } from 'services/data/dto-word';
 import { randomItem } from 'utils/random';
 
@@ -20,7 +19,7 @@ export enum GameActionType {
 }
 
 type AsyncOperationPayload = { promise: Promise<void>; cancel: () => void };
-type StartPayload = { words: WordDTO[]; category: CategoryDTO };
+type StartPayload = { words: WordDTO[]; routePath: string };
 type MatchWordPayload = { word: WordDTO };
 
 export type GameAction =
@@ -86,11 +85,11 @@ function toMainPage(state: GameState): GameState {
   return isGameMode(state) ? { ...state, status: GameStatus.END } : state;
 }
 
-function startGame({ words, category }: StartPayload): GameState {
+function startGame({ words, routePath }: StartPayload): GameState {
   return {
     ...getInitialGameState(),
     status: GameStatus.START,
-    activeCategory: category,
+    activeRoutePath: routePath,
     words: [...words],
   };
 }

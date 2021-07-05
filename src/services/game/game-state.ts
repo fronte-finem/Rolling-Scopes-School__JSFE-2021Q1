@@ -1,4 +1,3 @@
-import { CategoryDTO } from 'services/data/dto-category';
 import { WordDTO } from 'services/data/dto-word';
 import { Maybe } from 'types/abstract';
 
@@ -16,7 +15,7 @@ export enum GameStatus {
 
 export interface GameState {
   status: GameStatus;
-  activeCategory: Maybe<CategoryDTO>;
+  activeRoutePath: string;
   activeWord: Maybe<WordDTO>;
   words: WordDTO[];
   mistakes: number;
@@ -27,7 +26,7 @@ export interface GameState {
 export const getInitialGameState = (): GameState => {
   return {
     status: GameStatus.INITIAL,
-    activeCategory: null,
+    activeRoutePath: '',
     activeWord: null,
     words: [],
     mistakes: 0,
@@ -38,7 +37,7 @@ export const getInitialGameState = (): GameState => {
 
 type GameCheck = (state: GameState) => boolean;
 type WordCheck = (state: GameState, wordId: number) => boolean;
-type CategoryCheck = (state: GameState, categoryPath: string) => boolean;
+type CategoryCheck = (state: GameState, currentRoutePath: string) => boolean;
 
 export const isGameMode: GameCheck = ({ status }) => status !== GameStatus.INITIAL;
 
@@ -62,5 +61,5 @@ export const isWordMatch: WordCheck = (state, wordId) =>
 export const isWordSolved: WordCheck = (state, wordId) =>
   isGameStarted(state) && state.words.every((dto) => dto.id !== wordId);
 
-export const isOtherCategory: CategoryCheck = (state, categoryPath) =>
-  !!state.activeCategory && state.activeCategory.path !== categoryPath;
+export const isOtherRoutePath: CategoryCheck = (state, currentRoutePath) =>
+  !!state.activeRoutePath && state.activeRoutePath !== currentRoutePath;
