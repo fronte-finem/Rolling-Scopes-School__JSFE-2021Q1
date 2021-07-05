@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Card } from 'components/card/card';
-import { useWordsData } from 'services/data/data-context';
+import { getWords } from 'services/data/data-context';
 import { WordDTO } from 'services/data/dto-word';
 import { GameActionType } from 'services/game/game-action';
 import { useGameContext } from 'services/game/game-context';
@@ -13,17 +13,28 @@ import {
   isWordMatch,
   isWordSolved,
 } from 'services/game/game-state';
+import { useWordsStatsContext } from 'services/stats/words-stats-context';
 import { StyledProps } from 'types/styled';
 
 import { StyledCardsField, StyledCardsFieldItem } from './page-cards-field-style';
 
-export const PageCardsField = ({ className }: StyledProps): JSX.Element => {
+export interface PageCardsFieldProps extends StyledProps {
+  isDifficultWords?: boolean;
+}
+
+export const PageCardsField = ({
+  className,
+  isDifficultWords = false,
+}: PageCardsFieldProps): JSX.Element => {
   const { category } = useParams<{ category: string }>();
-  const result = useWordsData(category);
+  const { wordsData, categoriesData, getDifficultWords } = useWordsStatsContext();
   const { gameState, dispatch } = useGameContext();
 
-  if (typeof result === 'string') return <h2>{result}</h2>;
-  const [, words] = result;
+  const words = isDifficultWords
+    ? React.useRef(getDifficultWords()).current
+    : getWords(category, categoriesData, wordsData);
+  if (words.length === 0)
+    return <h2>{isDifficultWords ? 'No difficult words' : `Category "${category}" not found`}</h2>;
 
   const handleMathWord = (word: WordDTO) => {
     if (!isGamePlay(gameState)) return false;

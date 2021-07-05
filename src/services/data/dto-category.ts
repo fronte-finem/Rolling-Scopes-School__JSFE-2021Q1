@@ -3,7 +3,6 @@ import { Validator } from 'types/abstract';
 export interface CategoryDTO {
   readonly id: number;
   readonly category: string;
-  readonly path: string;
   readonly image: string;
 }
 
@@ -14,7 +13,6 @@ export const categoryDTOValidator: CategoryDTOValidator = (data: unknown) => {
   const maybeCategoryDTO = data as Record<string, unknown>;
   if (typeof maybeCategoryDTO.id !== 'number') return null;
   if (typeof maybeCategoryDTO.category !== 'string') return null;
-  if (typeof maybeCategoryDTO.path !== 'string') return null;
   if (typeof maybeCategoryDTO.image !== 'string') return null;
   return maybeCategoryDTO as unknown as CategoryDTO;
 };

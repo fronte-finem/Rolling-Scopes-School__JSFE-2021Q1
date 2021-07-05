@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { StyledProps } from 'types/styled';
 
@@ -14,11 +14,4 @@ export const CategoryLink: FC<Props> = ({ name, className, onClick, children }) 
       {children}
     </NavLink>
   );
-};
-
-const CATEGORY_REGEX = /^\/category\//;
-
-export const useCategoryLocation = (): string => {
-  const { pathname } = useLocation();
-  return CATEGORY_REGEX.test(pathname) ? pathname.replace(CATEGORY_REGEX, '') : '';
 };

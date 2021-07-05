@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const StyledHeader = styled.header`
   height: 100px;
   border-bottom: 3px solid #111;
+  background: #fff;
 `;
 
 export const Wrapper = styled.div`

@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 
 import { playAudio, playAudioAsyncCancelable } from 'services/audio';
+import { useWordsStatsContext } from 'services/stats/words-stats-context';
 
 import { GameAction, GameActionType, GameDispatch, gameReducer } from './game-action';
 import { GameState, GameStatus, getInitialGameState, isGameEnd, isWin } from './game-state';
@@ -13,6 +14,7 @@ const SOUND_FAIL = './sfx/fail.mp3';
 type GameCycleResult = readonly [GameState, React.Dispatch<GameAction>];
 
 export function useGameCycle(): GameCycleResult {
+  const { gameClick, matchClick } = useWordsStatsContext();
   const [gameState, dispatch] = useReducer(gameReducer, getInitialGameState());
 
   useEffect(() => {
@@ -25,9 +27,11 @@ export function useGameCycle(): GameCycleResult {
           handleVocalize(gameState, dispatch);
           break;
         case GameStatus.HIT:
+          gameState.activeWord && matchClick(gameState.activeWord.id);
           handleHit(gameState, dispatch);
           break;
         case GameStatus.MISS:
+          gameState.activeWord && gameClick(gameState.activeWord.id);
           handleMiss(dispatch);
           break;
         case GameStatus.SHOW_RESULT:

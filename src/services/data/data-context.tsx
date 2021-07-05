@@ -3,7 +3,6 @@ import React, { FC } from 'react';
 import { categoriesDTOValidator, CategoryDTO } from './dto-category';
 import { WordDTO, wordsDTOValidator } from './dto-word';
 import { FetchState, getArrayData, getMessage, useFetch } from './fetch-hook';
-import { fixCategoriesLinks, fixWordsLinks } from './fix-links';
 
 const CATEGORIES_URL = './data/categories.json';
 const WORDS_URL = './data/words.json';
@@ -47,7 +46,7 @@ export function useCategoriesData(): string | CategoryDTO[] {
   const { categoriesState } = useDataContext();
   const message = getMessage(categoriesState, 'Categories');
   if (message) return message;
-  return fixCategoriesLinks(categoriesState.data || []);
+  return categoriesState.data || [];
 }
 
 type CategoryData = [category: CategoryDTO, words: WordDTO[]];
@@ -63,5 +62,15 @@ export function useWordsData(categoryName: string): string | CategoryData {
   const [categories, words] = [categoriesState.data || [], wordsState.data || []];
   const category = categories.find((dto) => dto.category === categoryName);
   if (!category) return `Category "${categoryName}" not found!`;
-  return [category, fixWordsLinks(words.filter((dto) => dto.categoryId === category?.id))];
+  return [category, words.filter((dto) => dto.categoryId === category?.id)];
+}
+
+export function getWords(
+  categoryName: string,
+  categories: CategoryDTO[],
+  words: WordDTO[]
+): WordDTO[] {
+  const category = categories.find((dto) => dto.category === categoryName);
+  if (!category) return [];
+  return words.filter((dto) => dto.categoryId === category?.id);
 }
