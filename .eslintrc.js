@@ -36,7 +36,7 @@ module.exports = {
   rules: {
     'import/prefer-default-export': 'off',
     'react/prop-types': 'off',
-    'react/jsx-props-no-spreading': ['error', { html: 'ignore', custom: 'ignore' }],
+    'react/jsx-props-no-spreading': ['error', { custom: 'ignore' }],
     'no-param-reassign': ['error', { props: false }],
     'no-bitwise': ['error', { int32Hint: true }],
     '@typescript-eslint/no-misused-promises': ['error', { checksVoidReturn: false }],
