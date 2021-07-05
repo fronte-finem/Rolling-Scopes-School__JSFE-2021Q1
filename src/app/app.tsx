@@ -28,9 +28,9 @@ export const App = (): JSX.Element => {
 
   return (
     <StyledApp>
+      <Sidebar />
       <Header />
       <Main>
-        <Sidebar />
         <Switch>
           <Route exact path="/">
             <PageCategories />
