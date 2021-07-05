@@ -1,8 +1,40 @@
 import styled from 'styled-components';
 
+export const Btn = styled.button`
+  width: 300px;
+  height: 50px;
+  border: none;
+  background: #0008;
+  color: #fff;
+  text-transform: capitalize;
+  transition: all 200ms;
+
+  &:hover {
+    background: #000a;
+  }
+  &:active {
+    background: #000d;
+  }
+`;
+
+export const BtnContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 20px;
+  width: 100%;
+  padding: 20px 0;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+    row-gap: 20px;
+  }
+`;
+
 export const Container = styled.div`
   max-width: 1400px;
   width: 100%;
+  height: 100%;
   margin: 0 auto;
   padding: 50px;
 
