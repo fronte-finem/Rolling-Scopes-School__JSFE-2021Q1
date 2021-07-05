@@ -1,12 +1,20 @@
-import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import styled, { css } from 'styled-components';
 
-export const Btn = styled.button`
+const btn = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 300px;
   height: 50px;
+  padding: 0;
   border: none;
   background: #0008;
   color: #fff;
   text-transform: capitalize;
+  text-decoration: none;
+  text-align: center;
+  font-family: monospace;
   transition: all 200ms;
 
   &:hover {
@@ -15,6 +23,14 @@ export const Btn = styled.button`
   &:active {
     background: #000d;
   }
+`;
+
+export const Btn = styled.button`
+  ${btn};
+`;
+
+export const BtnLink = styled(Link)`
+  ${btn};
 `;
 
 export const BtnContainer = styled.div`

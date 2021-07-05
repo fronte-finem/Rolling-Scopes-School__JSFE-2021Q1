@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useWordsStatsContext } from 'services/stats/words-stats-context';
 
-import { Btn, BtnContainer, Container, TableContainer } from './page-words-stats-style';
+import { Btn, BtnContainer, BtnLink, Container, TableContainer } from './page-words-stats-style';
 import { Table } from './table';
 
 export const PageWordsStats: React.FC = () => {
@@ -12,7 +12,7 @@ export const PageWordsStats: React.FC = () => {
     <Container>
       <BtnContainer>
         <Btn onClick={resetStats}>reset statistic data</Btn>
-        <Btn>repeat difficult words</Btn>
+        <BtnLink to="/difficult">repeat difficult words</BtnLink>
       </BtnContainer>
       <TableContainer>
         <Table />
