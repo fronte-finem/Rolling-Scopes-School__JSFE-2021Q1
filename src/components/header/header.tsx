@@ -18,29 +18,39 @@ import {
   Wrapper,
 } from './header-style';
 
-const isCategory = (routePath: string) => routePath.startsWith('/category');
-const isDifficultWords = (routePath: string) => routePath.startsWith('/difficult');
+const isCategoryPath = (routePath: string) => routePath.startsWith('/category');
+const isDifficultWordsPath = (routePath: string) => routePath.startsWith('/difficult');
 
 const getCategoryName = (routePath: string): string => {
-  return isCategory(routePath) ? routePath.replace(/^\/category\//, '') : '';
+  return isCategoryPath(routePath) ? routePath.replace(/^\/category\//, '') : '';
 };
 
 export const Header = ({ className }: StyledProps): JSX.Element => {
   const { wordsData, categoriesData, getDifficultWords } = useWordsStatsContext();
   const { pathname } = useLocation();
   const { gameState, dispatch } = useGameContext();
+  const [hideBtnStart, setHideBtnStart] = React.useState(true);
 
-  const isDifficult = isDifficultWords(pathname);
+  const isCategory = isCategoryPath(pathname);
+  const isDifficultWords = isDifficultWordsPath(pathname);
   const categoryName = getCategoryName(pathname);
+
+  React.useEffect(() => {
+    if (isDifficultWords && getDifficultWords().length === 0) {
+      setHideBtnStart(true);
+      return;
+    }
+    setHideBtnStart(!(isCategory || isDifficultWords) || !isGameMode(gameState));
+  }, [isCategory, isDifficultWords, gameState]);
 
   const handleChangeMode = (isSecond: boolean) => {
     dispatch({ type: isSecond ? GameActionType.DISABLE : GameActionType.ENABLE });
   };
 
   const handleStartGame = () => {
-    if (categoryName || isDifficult) {
+    if (isCategory || isDifficultWords) {
       if (isGameReady(gameState)) {
-        const words = isDifficult
+        const words = isDifficultWords
           ? getDifficultWords()
           : getWords(categoryName, categoriesData, wordsData);
         dispatch({ type: GameActionType.START, payload: { routePath: pathname, words } });
@@ -49,8 +59,6 @@ export const Header = ({ className }: StyledProps): JSX.Element => {
       }
     }
   };
-
-  const hideBtnStart = !isCategory || !isGameMode(gameState);
 
   return (
     <StyledHeader className={className}>
