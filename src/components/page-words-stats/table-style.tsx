@@ -25,7 +25,6 @@ export const Tbody = styled.tbody`
   &:hover tr:hover {
     opacity: 1;
     box-shadow: 0 0 5px 1px #0004, 0 0 0 1px #0008;
-    transform: translateX(1px);
   }
 
   tr:nth-child(2n) {

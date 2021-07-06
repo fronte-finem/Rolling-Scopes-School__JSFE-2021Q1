@@ -1,54 +1,31 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
+import React from 'react';
 
-import { EmoList } from 'components/page-game-end/emo-list';
+import { EMOJI_NEGATIVE, EMOJI_POSITIVE } from 'components/emoji/emoji';
 import { useGameContext } from 'services/game/game-context';
 import { StyledProps } from 'types/styled';
 
-const StyledGameEndPage = styled.div`
-  height: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-  justify-items: center;
-  align-items: center;
-  overflow: hidden;
-`;
+import { EmojiList } from './emoji-list';
+import { FailMessage, FailWrapper, StyledGameEndPage } from './game-end-page-style';
 
-const FailWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const FailMessage = styled.h2`
-  padding: 20px 40px;
-  text-align: center;
-  font-size: 40px;
-`;
-
-const HAPPY = ['happy-cute', 'happy', 'in-love', 'cute', 'happy-smile'];
-const SAD = ['very-sad', 'confused', 'arrogant', 'sad', 'bored'];
-
-export const GameEndPage: FC<StyledProps> = ({ className, children }) => {
+export const GameEndPage: React.FC<StyledProps> = ({ className, children }) => {
   return <StyledGameEndPage className={className}>{children}</StyledGameEndPage>;
 };
 
-export const WinPage: FC<StyledProps> = ({ className }) => {
+export const WinPage: React.FC<StyledProps> = ({ className }) => {
   return (
     <GameEndPage className={className}>
-      <EmoList emos={HAPPY} />
+      <EmojiList emojiNames={EMOJI_POSITIVE} />
     </GameEndPage>
   );
 };
 
-export const FailPage: FC<StyledProps> = ({ className }) => {
+export const FailPage: React.FC<StyledProps> = ({ className }) => {
   const { gameState } = useGameContext();
   return (
     <GameEndPage className={className}>
       <FailWrapper>
         <FailMessage>{gameState.mistakes} mistakes</FailMessage>
-        <EmoList emos={SAD} />
+        <EmojiList emojiNames={EMOJI_NEGATIVE} />
       </FailWrapper>
     </GameEndPage>
   );

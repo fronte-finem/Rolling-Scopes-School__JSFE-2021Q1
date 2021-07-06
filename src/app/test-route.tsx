@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import { FailPage, WinPage } from 'components/page-game-end/page-game-end';
@@ -11,11 +11,11 @@ const TestRoutesMap = new Map<string, JSX.Element>([
   ['test', <TestPage />],
 ]);
 
-const NoTestRoute: FC<{ component: string }> = ({ component }) => {
+const NoTestRoute: React.FC<{ component: string }> = ({ component }) => {
   return <h2>No test for &quot;{component}&quot;</h2>;
 };
 
-export const TestRoute: FC = () => {
+export const TestRoute: React.FC = () => {
   const { component } = useParams<{ component: string }>();
   return TestRoutesMap.get(component) || <NoTestRoute component={component} />;
 };

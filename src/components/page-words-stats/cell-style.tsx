@@ -130,11 +130,11 @@ export const BodyCell = styled(Cell)`
   }
   &.word {
     background: #0004;
-    color: #222;
+    color: #111;
   }
   &.translation {
     background: #0002;
-    color: #333;
+    color: #111;
   }
   &.stats {
     --bg-o: 0.75;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { StyledProps } from 'types/styled';
 
@@ -16,7 +16,7 @@ export const ModeSwitch = ({
   secondName,
   changeMode,
 }: Props): JSX.Element => {
-  const [isSecond, setSecond] = useState(false);
+  const [isSecond, setSecond] = React.useState(false);
 
   const switchClassName = `${className || ''} ${isSecond ? 'second' : ''}`;
 

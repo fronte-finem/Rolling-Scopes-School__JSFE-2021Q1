@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { useDataContextWithChecks } from 'services/data/data-context';
 import { CategoryDTO } from 'services/data/dto-category';
@@ -61,12 +61,12 @@ export const WordsStatsContextProvider: React.FC = ({ children }) => {
   const [categoriesData, wordsData] = useDataContextWithChecks();
   const initialWordsStats = wordsData.map((dto) => getInitialWordStats(dto.id));
   const [wordsStats, setWordsStats] = useLocalStorage<WordStats[]>(STORAGE_KEY, initialWordsStats);
-  const [extendedWordsStats, setExtendedWordsStats] = useState(
+  const [extendedWordsStats, setExtendedWordsStats] = React.useState(
     getExtendedWordsStats(wordsData, categoriesData, wordsStats)
   );
   let getDifficultWords = getGetterDifficultWords(extendedWordsStats, wordsData);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const stats = getExtendedWordsStats(wordsData, categoriesData, wordsStats);
     setExtendedWordsStats(stats);
     getDifficultWords = getGetterDifficultWords(stats, wordsData);

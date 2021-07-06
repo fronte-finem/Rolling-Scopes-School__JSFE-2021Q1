@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { StyledProps } from 'types/styled';
@@ -8,7 +8,7 @@ interface Props extends StyledProps {
   onClick?: () => void;
 }
 
-export const CategoryLink: FC<Props> = ({ name, className, onClick, children }) => {
+export const CategoryLink: React.FC<Props> = ({ name, className, onClick, children }) => {
   return (
     <NavLink className={className} to={`/category/${name}`} onClick={onClick} draggable={false}>
       {children}

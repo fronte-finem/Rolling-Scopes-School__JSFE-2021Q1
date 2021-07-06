@@ -23,9 +23,3 @@ export const MarkItem = styled.li`
   width: var(--size);
   height: var(--size);
 `;
-
-export const Emo = styled.svg`
-  display: block;
-  width: 100%;
-  height: 100%;
-`;

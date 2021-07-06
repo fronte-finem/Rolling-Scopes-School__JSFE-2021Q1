@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 
 import { GameAction } from './game-action';
 import { useGameCycle } from './game-cycle';
@@ -13,7 +13,7 @@ interface GameContextInterface {
 
 const GameContext = React.createContext<GameContextInterface | undefined>(undefined);
 
-export const GameContextProvider: FC = ({ children }) => {
+export const GameContextProvider: React.FC = ({ children }) => {
   const [gameState, dispatch] = useGameCycle();
 
   return <GameContext.Provider value={{ gameState, dispatch }}>{children}</GameContext.Provider>;

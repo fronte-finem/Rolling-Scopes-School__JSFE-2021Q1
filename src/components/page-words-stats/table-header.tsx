@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { StatsField } from 'services/stats/word-stats-extend';
 import { Order, ORDER_MAP } from 'types/order';
@@ -27,7 +27,7 @@ interface TableHeaderProps {
 }
 
 export const TableHeader: React.FC<TableHeaderProps> = ({ onOrderChange }) => {
-  const [orders, setOrders] = useState(getInitialOrders());
+  const [orders, setOrders] = React.useState(getInitialOrders());
 
   const handleChangeOrder = (field: StatsField) => () => {
     const prev = orders[field];

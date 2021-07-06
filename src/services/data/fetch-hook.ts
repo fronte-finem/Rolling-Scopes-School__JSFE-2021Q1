@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import React from 'react';
 
 import { Maybe, Validator } from 'types/abstract';
 
@@ -48,9 +48,9 @@ function fetchReducer<T>(state: FetchState<T>, action: Action<T>): FetchState<T>
 }
 
 export function useFetch<T = unknown>(url: string, validator: Validator<T>): FetchState<T> {
-  const [state, dispatch] = useReducer(fetchReducer, getInitState<T>());
+  const [state, dispatch] = React.useReducer(fetchReducer, getInitState<T>());
 
-  useEffect(() => {
+  React.useEffect(() => {
     (async () => {
       dispatch({ type: ActionType.REQUEST });
       try {
