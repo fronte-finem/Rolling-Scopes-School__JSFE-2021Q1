@@ -1,0 +1,25 @@
+body {
+  --ff-sans: sans-serif;
+  --ff-mono: monospace;
+  --ff-hand: cursive;
+
+  font-family: var(--ff-sans);
+  font-weight: 100;
+  font-size: 20px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 200;
+}
+
+button {
+  font-family: var(--ff-mono);
+  font-weight: 300;
+  font-size: 20px;
+  text-transform: capitalize;
+}
