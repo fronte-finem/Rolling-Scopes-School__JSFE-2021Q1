@@ -1,18 +1,16 @@
 import React from 'react';
 
-import { Emo, MarkItem, MarksList } from 'components/card/marks-style';
+import { MarkItem, MarksList } from 'components/card/marks-style';
+import { Emoji } from 'components/emoji/emoji';
 
 interface MarkProps {
-  emo: string;
+  emojiName: string;
 }
 
-const Mark: React.FC<MarkProps> = ({ emo }) => {
-  const iconSrc = `./svg/emoji.svg#${emo}`;
+const Mark: React.FC<MarkProps> = ({ emojiName }) => {
   return (
     <MarkItem>
-      <Emo>
-        <use href={iconSrc} />
-      </Emo>
+      <Emoji name={emojiName} />
     </MarkItem>
   );
 };
@@ -25,9 +23,9 @@ interface MarksProps {
 export const Marks: React.FC<MarksProps> = ({ marks, show }) => {
   return (
     <MarksList show={show}>
-      {marks.map((emo, index) => {
-        const key = `${index} ${emo}`;
-        return <Mark key={key} emo={emo} />;
+      {marks.map((emojiName, index) => {
+        const key = `${index} ${emojiName}`;
+        return <Mark key={key} emojiName={emojiName} />;
       })}
     </MarksList>
   );

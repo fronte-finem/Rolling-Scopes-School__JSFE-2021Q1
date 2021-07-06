@@ -1,6 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 
 import { Marks } from 'components/card/marks';
+import { EMOJI_NEGATIVE, EMOJI_POSITIVE } from 'components/emoji/emoji';
 import { playAudio } from 'services/audio';
 import { WordDTO } from 'services/data/dto-word';
 import { useWordsStatsContext } from 'services/stats/words-stats-context';
@@ -26,16 +27,14 @@ export interface CardProps extends StyledProps {
   matchWord: (word: WordDTO) => boolean;
 }
 
-const HAPPY = ['happy-cute', 'happy', 'in-love', 'cute', 'happy-smile'];
-const SAD = ['very-sad', 'confused', 'arrogant', 'sad', 'bored'];
 const CARD_MARKS_LIMIT = -6;
 
 export const Card = (props: CardProps): JSX.Element => {
   const { className, wordDTO, isGameMode, isGameReady, isGamePlay, isSolved, matchWord } = props;
   const { id, word, translation, image, audio } = wordDTO;
-  const ref = useRef<HTMLButtonElement>(null);
-  const [isFlipped, setFlip] = useState(false);
-  const [marks, setMark] = useState<string[]>([]);
+  const ref = React.useRef<HTMLButtonElement>(null);
+  const [isFlipped, setFlip] = React.useState(false);
+  const [marks, setMark] = React.useState<string[]>([]);
   const { askClick, flipClick } = useWordsStatsContext();
   const cardClassName = getCardClassName(isFlipped, props);
 
@@ -43,8 +42,8 @@ export const Card = (props: CardProps): JSX.Element => {
     if (isGameReady || isSolved) return;
     if (isGamePlay) {
       const isMatch = matchWord(wordDTO);
-      const emo = randomItem(isMatch ? HAPPY : SAD);
-      setMark([...marks.slice(CARD_MARKS_LIMIT), emo]);
+      const emojiName = randomItem(isMatch ? EMOJI_POSITIVE : EMOJI_NEGATIVE);
+      setMark([...marks.slice(CARD_MARKS_LIMIT), emojiName]);
       return;
     }
     if (ref.current?.contains(ev.target as Node)) return;
