@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React from 'react';
 
 import { playAudio, playAudioAsyncCancelable } from 'services/audio';
 import { useWordsStatsContext } from 'services/stats/words-stats-context';
@@ -15,9 +15,9 @@ type GameCycleResult = readonly [GameState, React.Dispatch<GameAction>];
 
 export function useGameCycle(): GameCycleResult {
   const { gameClick, matchClick } = useWordsStatsContext();
-  const [gameState, dispatch] = useReducer(gameReducer, getInitialGameState());
+  const [gameState, dispatch] = React.useReducer(gameReducer, getInitialGameState());
 
-  useEffect(() => {
+  React.useEffect(() => {
     (async () => {
       switch (gameState.status) {
         case GameStatus.START:

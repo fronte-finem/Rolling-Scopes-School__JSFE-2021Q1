@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 
 import { CategoryDTO } from 'services/data/dto-category';
 import { StyledProps } from 'types/styled';
@@ -16,7 +16,7 @@ export interface CategoryProps extends StyledProps {
   readonly isGameMode: boolean;
 }
 
-export const CategoryLink: FC<CategoryProps> = ({ className, isGameMode, categoryDTO }) => {
+export const CategoryLink: React.FC<CategoryProps> = ({ className, isGameMode, categoryDTO }) => {
   const { category, image } = categoryDTO;
 
   return (
