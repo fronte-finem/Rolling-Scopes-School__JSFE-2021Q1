@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 
 import { Footer } from 'components/footer/footer';
@@ -10,7 +10,7 @@ import { GameActionType } from 'services/game/game-action';
 import { useGameContext } from 'services/game/game-context';
 import { isGameStarted, isOtherRoutePath } from 'services/game/game-state';
 
-import { Main, StyledApp } from './app-style';
+import { AppBackground, AppBackgroundWrapper, Main, StyledApp } from './app-style';
 import { GameRoute } from './game-route';
 import { NotFoundRoute } from './not-found-route';
 import { TestRoute } from './test-route';
@@ -19,7 +19,7 @@ export const App = (): JSX.Element => {
   const { pathname } = useLocation();
   const { gameState, dispatch } = useGameContext();
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (isGameStarted(gameState) && isOtherRoutePath(gameState, pathname)) {
       dispatch({ type: GameActionType.RESET });
     }
@@ -27,6 +27,9 @@ export const App = (): JSX.Element => {
 
   return (
     <StyledApp>
+      <AppBackgroundWrapper>
+        <AppBackground />
+      </AppBackgroundWrapper>
       <Sidebar />
       <Header />
       <Main>
