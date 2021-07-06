@@ -3,16 +3,18 @@ import styled from 'styled-components';
 export const StyledFooter = styled.footer`
   --c1: hsl(30deg, 100%, 50%);
   --c2: hsl(240deg, 100%, 75%);
-  --c3: #fff;
+  --c3: #111;
   --text-color: var(--c1);
   --icon-color: var(--c2);
   --time: 300ms;
 
-  background-image: repeating-linear-gradient(180deg, #fff 0px 3px, #fff0 3px 6px);
+  background-image: repeating-linear-gradient(180deg, var(--c3) 0px 3px, #fff0 3px 10px);
+  background-size: 10px 10px;
+  background-position: center;
 `;
 
 export const Wrapper = styled.div`
-  --h: 100px;
+  --h: 80px;
   --ofsset: 100px;
   position: relative;
   max-width: 1400px;
@@ -27,14 +29,13 @@ export const Wrapper = styled.div`
   column-gap: 30px;
 
   @media (max-width: 1000px) {
-    --h: 150px;
+    --h: 140px;
     --ofsset: 50px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
-  @media (max-width: 640px) {
-    --h: 200px;
+  @media (max-width: 500px) {
     --ofsset: 20px;
   }
 `;
@@ -45,11 +46,6 @@ export const Group = styled.div`
   align-items: center;
   justify-content: center;
   column-gap: 20px;
-
-  @media (max-width: 640px) {
-    flex-direction: column;
-    justify-content: space-evenly;
-  }
 `;
 
 export const LogoLink = styled.a`
@@ -83,11 +79,11 @@ export const LogoLink = styled.a`
   }
 
   &.github {
-    height: 30px;
+    height: 40px;
     align-items: center;
     column-gap: 10px;
     padding: 0 20px 0 0;
-    border-radius: 15px;
+    border-radius: 20px;
   }
 `;
 
@@ -102,8 +98,8 @@ export const LogoSvg = styled.svg`
   }
 
   &.github {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
   }
 `;
 
@@ -123,7 +119,7 @@ export const LogoText = styled.div`
   }
 
   .spoiler {
-    @media (max-width: 300px) {
+    @media (max-width: 600px) {
       display: none;
     }
   }
