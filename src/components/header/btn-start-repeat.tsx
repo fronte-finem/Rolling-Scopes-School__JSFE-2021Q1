@@ -1,6 +1,12 @@
 import React from 'react';
 
-import { Btn, Content, StyledSvg, Word } from 'components/header/btn-start-repeat-style';
+import {
+  Btn,
+  Content,
+  StyledSvg,
+  SvgWrapper,
+  Word,
+} from 'components/header/btn-start-repeat-style';
 
 interface Props {
   onClick: () => void;
@@ -20,9 +26,11 @@ export const BtnStartRepeat: React.FC<Props> = ({ onClick, isStart = false }) =>
     <Btn onClick={onClick} isPrimary={isStart}>
       <Content>
         <Word>{word}</Word>
-        <StyledSvg>
-          <use href={icon} />
-        </StyledSvg>
+        <SvgWrapper>
+          <StyledSvg>
+            <use href={icon} />
+          </StyledSvg>
+        </SvgWrapper>
         <Word>{word}</Word>
       </Content>
     </Btn>
