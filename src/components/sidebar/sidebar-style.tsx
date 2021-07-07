@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 import { CategoryLink } from 'components/category/category-link';
+import { styledScroll } from 'components/style/styled-scroll';
 
 export const SidebarNav = styled.nav`
   --w: 300px;
@@ -15,6 +16,10 @@ export const SidebarNav = styled.nav`
   width: var(--w);
   transition: all 500ms;
   background: linear-gradient(#777, #999, #777);
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
 
   @supports (backdrop-filter: none) {
     background: #0008;
@@ -34,6 +39,13 @@ export const BtnContainer = styled.div`
   transition: all 500ms;
 `;
 
+export const StaticContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 100px 0 0;
+  row-gap: 20px;
+`;
+
 export const Heading = styled.h3`
   color: #fff;
   text-align: center;
@@ -43,13 +55,14 @@ export const Heading = styled.h3`
 export const List = styled.ul`
   display: flex;
   flex-direction: column;
-  padding: 100px 0;
-  row-gap: 20px;
+  padding: 0 0 20px;
+  row-gap: 10px;
+  overflow: auto;
+  ${styledScroll};
 `;
 
 export const ListItem = styled.li`
   position: relative;
-  overflow: hidden;
   display: block;
   user-select: none;
 `;
@@ -85,6 +98,7 @@ export const SidebarCategoryLink = styled(CategoryLink)`
   position: relative;
   background: linear-gradient(90deg, #fff 20%, #fff0 80%);
   font-size: 30px;
+  overflow: hidden;
 
   &:hover {
     background: #00f8;

@@ -14,6 +14,7 @@ import {
   SidebarCategoryLink,
   SidebarLink,
   SidebarNav,
+  StaticContainer,
 } from './sidebar-style';
 
 export const Sidebar = ({ className }: StyledProps): JSX.Element => {
@@ -29,26 +30,22 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
       <BtnContainer>
         <BtnToggle isClosed={isClosed} onToggle={handleToggle} />
       </BtnContainer>
+      <StaticContainer>
+        <SidebarLink exact to="/" onClick={handleLinkClick}>
+          Home
+        </SidebarLink>
+        <SidebarLink exact to="/statistic" onClick={handleLinkClick}>
+          Statistic
+        </SidebarLink>
+      </StaticContainer>
+      <Heading>Categories:</Heading>
       <List>
-        <ListItem key="home">
-          <SidebarLink exact to="/" onClick={handleLinkClick}>
-            Home
-          </SidebarLink>
-        </ListItem>
-        <ListItem key="statistic">
-          <SidebarLink exact to="/statistic" onClick={handleLinkClick}>
-            Statistic
-          </SidebarLink>
-        </ListItem>
-        <ListItem key="heading">
-          <Heading>Categories:</Heading>
-        </ListItem>
         {Array.isArray(categories) &&
           categories.map(({ category, image }) => (
             <ListItem key={category}>
-              <SidebarCategoryImg src={image} alt={category} />
               <SidebarCategoryLink name={category} onClick={handleLinkClick}>
                 {category}
+                <SidebarCategoryImg src={image} alt={category} />
               </SidebarCategoryLink>
             </ListItem>
           ))}

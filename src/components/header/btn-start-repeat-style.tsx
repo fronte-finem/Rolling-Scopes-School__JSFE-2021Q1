@@ -35,7 +35,7 @@ export const Content = styled.div`
   width: var(--btn-width);
   display: grid;
   grid-template-columns: 1fr 50px 1fr;
-  grid-template-rows: 25px;
+  grid-template-rows: 30px;
   align-items: center;
   column-gap: 5px;
   color: var(--color-foreground);
@@ -53,11 +53,21 @@ export const Word = styled.div`
   }
 `;
 
-export const StyledSvg = styled.svg`
-  flex: 0 0 50px;
+export const SvgWrapper = styled.div`
+  position: relative;
   display: block;
   width: 50px;
   height: 50px;
+  overflow: hidden;
+`;
+
+export const StyledSvg = styled.svg`
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   border: 3px solid var(--color-foreground);
   color: var(--color-foreground);

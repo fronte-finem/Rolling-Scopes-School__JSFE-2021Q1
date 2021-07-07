@@ -15,6 +15,7 @@ import {
   ModeSwitchWrapper,
   StyledHeader,
   StyledHeading,
+  StyledLink,
   Wrapper,
 } from './header-style';
 
@@ -63,7 +64,9 @@ export const Header = ({ className }: StyledProps): JSX.Element => {
   return (
     <StyledHeader className={className}>
       <Wrapper>
-        <StyledHeading>English for kids</StyledHeading>
+        <StyledHeading>
+          <StyledLink to="/">English for kids</StyledLink>
+        </StyledHeading>
         <BtnStartRepeatWrapper isHidden={hideBtnStart}>
           <BtnStartRepeat onClick={handleStartGame} isStart={!isGameStarted(gameState)} />
         </BtnStartRepeatWrapper>
