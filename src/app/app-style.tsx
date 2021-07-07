@@ -46,7 +46,10 @@ export const StyledApp = styled.div`
   display: grid;
   grid-template-rows: auto 1fr auto;
   grid-template-columns: 100%;
-  overflow: hidden;
 `;
 
-export const Main = styled.main``;
+export const Main = styled.main`
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+`;
