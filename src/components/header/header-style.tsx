@@ -1,9 +1,11 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const StyledHeader = styled.header`
   height: 100px;
   border-bottom: 3px solid #111;
-  background: #fff;
+  background: #fff8;
+  backdrop-filter: invert(1);
 `;
 
 export const Wrapper = styled.div`
@@ -20,11 +22,28 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 
+  transform-style: preserve-3d;
+  perspective: 300px;
+
   @media (max-width: 800px) {
     --ofsset: 50px;
   }
   @media (max-width: 400px) {
     --ofsset: 20px;
+  }
+`;
+
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  font-weight: bold;
+  color: #111;
+  transition: all 300ms;
+
+  &:hover {
+    color: #00f;
+  }
+  &:active {
+    color: #08f;
   }
 `;
 
@@ -47,9 +66,10 @@ export const BtnStartRepeatWrapper = styled.div<{ isHidden: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: translate(-50%, 50%);
   transition: all 300ms;
-  opacity: ${({ isHidden }) => (isHidden ? '0' : '1')};
+  transform: ${({ isHidden }) =>
+    isHidden ? 'translate(-50%, 50%) rotateX(100deg)' : 'translate(-50%, 50%) rotateX(0deg)'};
+  // opacity: ${({ isHidden }) => (isHidden ? '0' : '1')};
   pointer-events: ${({ isHidden }) => (isHidden ? 'none' : 'all')};
 `;
 
