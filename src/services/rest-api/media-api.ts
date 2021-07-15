@@ -1,8 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { authHeader } from 'services/admin/auth';
+import { authHeader } from 'services/rest-api/auth';
+import { CURRENT_API_URL } from 'services/rest-api/config';
 
-const API_URL = 'http://localhost:5000/api/media/upload';
+const API_URL = `${CURRENT_API_URL}/api/media/upload`;
 
 export async function mediaUpload(media: File): Promise<AxiosResponse<string>> {
   const headers = authHeader();

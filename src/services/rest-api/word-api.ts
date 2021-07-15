@@ -1,9 +1,10 @@
 import { Word, WordClass } from '@server/models/word';
 import axios, { AxiosResponse } from 'axios';
 
-import { authHeader } from 'services/admin/auth';
+import { authHeader } from 'services/rest-api/auth';
+import { CURRENT_API_URL } from 'services/rest-api/config';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = `${CURRENT_API_URL}/api`;
 const API_URL_CATEGORY = `${API_URL}/category`;
 const API_URL_WORDS = `${API_URL}/words`;
 
