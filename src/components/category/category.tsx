@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { CategoryDTO } from 'services/data/dto-category';
+import { useCategoryImageHook } from 'services/data/categories-hook';
+import { CategoryCardData } from 'services/rest-api/category-api';
 import { StyledProps } from 'types/styled';
 
 import {
@@ -12,19 +13,21 @@ import {
 } from './category-style';
 
 export interface CategoryProps extends StyledProps {
-  readonly categoryDTO: CategoryDTO;
+  readonly data: CategoryCardData;
   readonly isGameMode: boolean;
 }
 
-export const CategoryLink: React.FC<CategoryProps> = ({ className, isGameMode, categoryDTO }) => {
-  const { category, image } = categoryDTO;
+export const CategoryLink: React.FC<CategoryProps> = ({ className, isGameMode, data }) => {
+  const { category, words } = data;
+  const image = useCategoryImageHook(category._id);
 
   return (
     <CategoryBase className={className}>
-      <StyledCategoryLink className={isGameMode ? 'game' : ''} name={category}>
-        <CategoryImage src={image} alt={category} />
+      <StyledCategoryLink className={isGameMode ? 'game' : ''} path={category._id}>
+        <CategoryImage src={image} alt={category.name} />
         <NameWrapper>
-          <CategoryName>{category}</CategoryName>
+          <CategoryName>{category.name}</CategoryName>
+          <div>Words: {words}</div>
         </NameWrapper>
       </StyledCategoryLink>
     </CategoryBase>
