@@ -1,9 +1,8 @@
 import React from 'react';
 
-import { WordDTO } from 'services/data/dto-word';
+import { GameState, GameStatus, getInitialGameState, isGameMode } from 'services/game/game-state';
+import { WordDocument } from 'services/rest-api/word-api';
 import { randomItem } from 'utils/random';
-
-import { GameState, GameStatus, getInitialGameState, isGameMode } from './game-state';
 
 export enum GameActionType {
   ENABLE = 'enable',
@@ -19,8 +18,8 @@ export enum GameActionType {
 }
 
 type AsyncOperationPayload = { promise: Promise<void>; cancel: () => void };
-type StartPayload = { words: WordDTO[]; routePath: string };
-type MatchWordPayload = { word: WordDTO };
+type StartPayload = { words: WordDocument[]; routePath: string };
+type MatchWordPayload = { word: WordDocument };
 
 export type GameAction =
   | { type: GameActionType.ENABLE }
@@ -96,9 +95,9 @@ function startGame({ words, routePath }: StartPayload): GameState {
 
 function matchWord(state: GameState, { word }: MatchWordPayload): GameState {
   const { activeWord, mistakes } = state;
-  const isMatch = word.id === activeWord?.id;
+  const isMatch = word._id === activeWord?._id;
 
-  const words = isMatch ? state.words.filter((dto) => dto.id !== word.id) : state.words;
+  const words = isMatch ? state.words.filter((doc) => doc._id !== word._id) : state.words;
   return {
     ...state,
     status: isMatch ? GameStatus.HIT : GameStatus.MISS,

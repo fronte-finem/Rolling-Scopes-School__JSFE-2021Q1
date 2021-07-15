@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { GameAction } from './game-action';
-import { useGameCycle } from './game-cycle';
-import { GameState } from './game-state';
+import { GameAction } from 'services/game/game-action';
+import { useGameCycle } from 'services/game/game-cycle';
+import { GameState } from 'services/game/game-state';
 
 export type GameDispatch = React.Dispatch<GameAction>;
 

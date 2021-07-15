@@ -1,4 +1,4 @@
-import { WordDTO } from 'services/data/dto-word';
+import { WordDocument } from 'services/rest-api/word-api';
 import { Maybe } from 'types/abstract';
 
 export enum GameStatus {
@@ -16,8 +16,8 @@ export enum GameStatus {
 export interface GameState {
   status: GameStatus;
   activeRoutePath: string;
-  activeWord: Maybe<WordDTO>;
-  words: WordDTO[];
+  activeWord: Maybe<WordDocument>;
+  words: WordDocument[];
   mistakes: number;
   asyncOperation: null | Promise<void>;
   cancelAsyncOperation: null | (() => void);
@@ -36,7 +36,7 @@ export const getInitialGameState = (): GameState => {
 };
 
 type GameCheck = (state: GameState) => boolean;
-type WordCheck = (state: GameState, wordId: number) => boolean;
+type WordCheck = (state: GameState, wordId: string) => boolean;
 type CategoryCheck = (state: GameState, currentRoutePath: string) => boolean;
 
 export const isGameMode: GameCheck = ({ status }) => status !== GameStatus.INITIAL;
@@ -56,10 +56,10 @@ export const isFail: GameCheck = (state) => isGameEnd(state) && state.mistakes >
 export const isEnd: GameCheck = ({ status }) => status === GameStatus.END;
 
 export const isWordMatch: WordCheck = (state, wordId) =>
-  isGameStarted(state) && wordId === state.activeWord?.id;
+  isGameStarted(state) && wordId === state.activeWord?._id;
 
 export const isWordSolved: WordCheck = (state, wordId) =>
-  isGameStarted(state) && state.words.every((dto) => dto.id !== wordId);
+  isGameStarted(state) && state.words.every((word) => word._id !== wordId);
 
 export const isOtherRoutePath: CategoryCheck = (state, currentRoutePath) =>
   !!state.activeRoutePath && state.activeRoutePath !== currentRoutePath;

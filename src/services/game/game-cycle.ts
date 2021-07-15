@@ -1,10 +1,15 @@
 import React from 'react';
 
 import { playAudio, playAudioAsyncCancelable } from 'services/audio';
+import { GameAction, GameActionType, GameDispatch, gameReducer } from 'services/game/game-action';
+import {
+  GameState,
+  GameStatus,
+  getInitialGameState,
+  isGameEnd,
+  isWin,
+} from 'services/game/game-state';
 import { useWordsStatsContext } from 'services/stats/words-stats-context';
-
-import { GameAction, GameActionType, GameDispatch, gameReducer } from './game-action';
-import { GameState, GameStatus, getInitialGameState, isGameEnd, isWin } from './game-state';
 
 const SOUND_YES = './sfx/yes.mp3';
 const SOUND_NO = './sfx/no.mp3';
@@ -27,11 +32,11 @@ export function useGameCycle(): GameCycleResult {
           handleVocalize(gameState, dispatch);
           break;
         case GameStatus.HIT:
-          gameState.activeWord && matchClick(gameState.activeWord.id);
+          gameState.activeWord && matchClick(gameState.activeWord._id);
           handleHit(gameState, dispatch);
           break;
         case GameStatus.MISS:
-          gameState.activeWord && gameClick(gameState.activeWord.id);
+          gameState.activeWord && gameClick(gameState.activeWord._id);
           handleMiss(dispatch);
           break;
         case GameStatus.SHOW_RESULT:
