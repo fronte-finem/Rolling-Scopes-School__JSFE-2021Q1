@@ -3,7 +3,7 @@ import React from 'react';
 import { Marks } from 'components/card/marks';
 import { EMOJI_NEGATIVE, EMOJI_POSITIVE } from 'components/emoji/emoji';
 import { playAudio } from 'services/audio';
-import { WordDTO } from 'services/data/dto-word';
+import { WordDocument } from 'services/rest-api/word-api';
 import { useWordsStatsContext } from 'services/stats/words-stats-context';
 import { StyledProps } from 'types/styled';
 import { randomItem } from 'utils/random';
@@ -18,20 +18,20 @@ import {
 import { CardBackSide, CardFrontSide } from './side';
 
 export interface CardProps extends StyledProps {
-  wordDTO: WordDTO;
+  data: WordDocument;
   className?: string;
   isGameMode: boolean;
   isGameReady: boolean;
   isGamePlay: boolean;
   isSolved: boolean;
-  matchWord: (word: WordDTO) => boolean;
+  matchWord: (word: WordDocument) => boolean;
 }
 
 const CARD_MARKS_LIMIT = -6;
 
 export const Card = (props: CardProps): JSX.Element => {
-  const { className, wordDTO, isGameMode, isGameReady, isGamePlay, isSolved, matchWord } = props;
-  const { id, word, translation, image, audio } = wordDTO;
+  const { className, data, isGameMode, isGameReady, isGamePlay, isSolved, matchWord } = props;
+  const { word, translation, image, audio } = data;
   const ref = React.useRef<HTMLButtonElement>(null);
   const [isFlipped, setFlip] = React.useState(false);
   const [marks, setMark] = React.useState<string[]>([]);
@@ -41,20 +41,20 @@ export const Card = (props: CardProps): JSX.Element => {
   const handlePlay = (ev: React.MouseEvent<HTMLDivElement>) => {
     if (isGameReady || isSolved) return;
     if (isGamePlay) {
-      const isMatch = matchWord(wordDTO);
+      const isMatch = matchWord(data);
       const emojiName = randomItem(isMatch ? EMOJI_POSITIVE : EMOJI_NEGATIVE);
       setMark([...marks.slice(CARD_MARKS_LIMIT), emojiName]);
       return;
     }
     if (ref.current?.contains(ev.target as Node)) return;
     playAudio(audio);
-    askClick(id);
+    askClick(data._id);
   };
 
   const handleMouseLeave = () => setFlip(() => false);
   const handleFlip = () => {
     setFlip(() => true);
-    flipClick(id);
+    flipClick(data._id);
   };
 
   return (
