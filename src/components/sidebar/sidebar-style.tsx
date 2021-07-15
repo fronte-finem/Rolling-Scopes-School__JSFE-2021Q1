@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
+import { button } from 'components/button/button-style';
 import { CategoryLink } from 'components/category/category-link';
 import { styledScroll } from 'components/style/styled-scroll';
 
@@ -30,6 +31,23 @@ export const SidebarNav = styled.nav`
     left: -300px;
     --ofsset: -100px;
   }
+`;
+
+export const BtnLoginContainer = styled.div`
+  position: absolute;
+  left: 20px;
+  top: 20px;
+`;
+
+export const BtnLogin = styled.button`
+  ${button};
+  --fg: #fff;
+  --bg: #f80;
+  --fg-hover: #fff;
+  --bg-hover: #fa0;
+  --fg-active: #111;
+  --bg-active: #ff0;
+  padding: 10px 30px;
 `;
 
 export const BtnContainer = styled.div`
@@ -67,7 +85,7 @@ export const ListItem = styled.li`
   user-select: none;
 `;
 
-const SidebarLinkStyle = css`
+const sidebarLinkStyle = css`
   display: block;
   padding: 10px 20px;
   background: #fff;
@@ -90,11 +108,11 @@ const SidebarLinkStyle = css`
 `;
 
 export const SidebarLink = styled(NavLink).attrs({ draggable: false })`
-  ${SidebarLinkStyle};
+  ${sidebarLinkStyle};
 `;
 
-export const SidebarCategoryLink = styled(CategoryLink)`
-  ${SidebarLinkStyle};
+export const StyledSidebarCategoryLink = styled(CategoryLink)`
+  ${sidebarLinkStyle};
   position: relative;
   background: linear-gradient(90deg, #fff 20%, #fff0 80%);
   font-size: 30px;
