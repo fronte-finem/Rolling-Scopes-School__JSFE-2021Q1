@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
+import { PLACEHOLDER } from 'app/config';
 import { CardAddFront } from 'components/admin-card/card-add-front';
 import { Card } from 'components/admin-card/card-style';
 import { WordCardEditor, WordProps } from 'components/admin-card/word-card-editor';
@@ -19,14 +20,13 @@ export const WordAddCard: React.FC<Props> = ({ onCreate }) => {
   const handleCancel = () => setEdit(false);
 
   const handleCreate = async ({ image, audio, ...texts }: WordProps) => {
-    if (!image || !audio) return;
     try {
-      const imageResponse = await mediaUpload(image);
-      const audioResponse = await mediaUpload(audio);
+      const imageUrl = image ? (await mediaUpload(image)).data : PLACEHOLDER;
+      const audioUrl = audio ? (await mediaUpload(audio)).data : PLACEHOLDER;
       const { data } = await wordApiService.create(categoryId, {
         ...texts,
-        image: imageResponse.data,
-        audio: audioResponse.data,
+        image: imageUrl,
+        audio: audioUrl,
       });
       console.log(data);
       setEdit(false);
@@ -41,7 +41,7 @@ export const WordAddCard: React.FC<Props> = ({ onCreate }) => {
   return (
     <Card big>
       {isEdit ? (
-        <WordCardEditor onSubmit={handleCreate} onCancel={handleCancel} isFilesRequired />
+        <WordCardEditor onSubmit={handleCreate} onCancel={handleCancel} />
       ) : (
         <CardAddFront title="Add new Word" onAdd={handleAdd} />
       )}
