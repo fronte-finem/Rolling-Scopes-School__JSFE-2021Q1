@@ -66,8 +66,6 @@ export const WordsStatsContextProvider: React.FC = ({ children }) => {
   );
   let getDifficultWords = getGetterDifficultWords(extendedWordsStats, allWords);
 
-  console.log('WordsStatsContextProvider', categories, allWords);
-
   React.useEffect(() => {
     const stats = getExtendedWordsStats(allWords, categories, wordsStats);
     setExtendedWordsStats(stats);
