@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { Redirect, useHistory } from 'react-router-dom';
 
 import { Main } from 'app/app-style';
@@ -11,11 +12,15 @@ import { useDataContext } from 'services/data/data-context';
 import { authService } from 'services/rest-api/auth';
 import { CategoryCardData, CategoryDocument } from 'services/rest-api/category-api';
 import { updateArray } from 'utils/array';
+import { delay } from 'utils/async';
 
 import { Container } from './admin-page-style';
 
+const SCROLL_PART = 8;
+
 export const AdminPageCategories: React.FC = () => {
   const { categoriesData, setCategoriesData, updateData } = useDataContext();
+  const [categoriesPart, setCategoriesPart] = useState(categoriesData.slice(0, SCROLL_PART));
   const history = useHistory();
   const token = authService.getCurrentToken();
 
@@ -43,8 +48,21 @@ export const AdminPageCategories: React.FC = () => {
     history.push(`/admin/category/${category._id}`);
   };
 
+  const loadMore = async () => {
+    if (categoriesPart.length >= categoriesData.length) return;
+    await delay(500);
+    const { length } = categoriesPart;
+    setCategoriesPart(categoriesData.slice(0, length + SCROLL_PART));
+  };
+
+  useEffect(() => {
+    (async () => {
+      await loadMore();
+    })();
+  }, [categoriesData]);
+
   const cards = [
-    ...categoriesData.map((data) => (
+    ...categoriesPart.map((data) => (
       <CategoryCard
         key={data.category.name}
         data={data}
@@ -63,7 +81,23 @@ export const AdminPageCategories: React.FC = () => {
         <AdminHeader />
       </Header>
       <Main>
-        <Container>{cards}</Container>
+        <Container id="scrollable-categories-list">
+          <InfiniteScroll
+            next={loadMore}
+            dataLength={categoriesPart.length}
+            hasMore={categoriesPart.length < categoriesData.length}
+            loader={<h4>Loading...</h4>}
+            scrollableTarget="scrollable-categories-list"
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              gridGap: '20px',
+            }}
+          >
+            {cards}
+          </InfiniteScroll>
+        </Container>
       </Main>
     </>
   );

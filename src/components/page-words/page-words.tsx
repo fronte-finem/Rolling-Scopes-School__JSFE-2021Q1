@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { Main } from 'app/app-style';
 import { Card } from 'components/card/card';
@@ -18,6 +19,9 @@ import {
 import { WordDocument } from 'services/rest-api/word-api';
 import { useWordsStatsContext } from 'services/stats/words-stats-context';
 import { StyledProps } from 'types/styled';
+import { delay } from 'utils/async';
+
+const SCROLL_PART = 8;
 
 export interface PageCardsFieldProps extends StyledProps {
   isDifficultWords?: boolean;
@@ -32,6 +36,7 @@ export const PageWords = ({
   const { gameState, dispatch } = useGameContext();
 
   const someWords = isDifficultWords ? React.useRef(getDifficultWords()).current : words;
+  const [wordsPart, setWordsPart] = useState(someWords.slice(0, SCROLL_PART));
 
   const handleMathWord = (word: WordDocument) => {
     if (!isGamePlay(gameState)) return false;
@@ -57,7 +62,20 @@ export const PageWords = ({
 
   const showBtnStartRepeat = isGame && someWords.length > 0;
 
-  const cards = someWords.map((data) => (
+  const loadMore = async () => {
+    if (wordsPart.length >= someWords.length) return;
+    await delay(500);
+    const { length } = wordsPart;
+    setWordsPart(someWords.slice(0, length + SCROLL_PART));
+  };
+
+  useEffect(() => {
+    (async () => {
+      await loadMore();
+    })();
+  }, [someWords]);
+
+  const cards = wordsPart.map((data) => (
     <StyledCardsFieldItem key={data.word}>
       <Card
         data={data}
@@ -76,15 +94,29 @@ export const PageWords = ({
       <Header showBtnStartRepeat={showBtnStartRepeat} onStartRepeat={handleStartRepeat} />
       <Main>
         <div className={className}>
-          <StyledCardsField>
-            {someWords.length === 0 ? (
+          <StyledCardsField id="scrollable-words-list">
+            {wordsPart.length === 0 ? (
               <h2>
                 {isDifficultWords
                   ? 'No difficult words'
                   : `Category "${category?.name || ''}" have 0 words`}
               </h2>
             ) : (
-              cards
+              <InfiniteScroll
+                next={loadMore}
+                dataLength={wordsPart.length}
+                hasMore={wordsPart.length < words.length}
+                loader={<h4>Loading...</h4>}
+                scrollableTarget="scrollable-words-list"
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  justifyContent: 'center',
+                  gridGap: '20px',
+                }}
+              >
+                {cards}
+              </InfiniteScroll>
             )}
           </StyledCardsField>
         </div>

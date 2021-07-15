@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 
 import { button } from 'components/button/button-style';
 import { CategoryLink } from 'components/category/category-link';
-import { styledScroll } from 'components/style/styled-scroll';
 
 export const SidebarNav = styled.nav`
   --w: 300px;
@@ -71,13 +70,12 @@ export const Heading = styled.h3`
 `;
 
 export const List = styled.ul`
-  display: flex;
-  flex-direction: column;
   padding: 0 0 20px;
-  row-gap: 10px;
+  height: 300px;
   overflow: auto;
-  ${styledScroll};
 `;
+
+// ${styledScroll};
 
 export const ListItem = styled.li`
   position: relative;

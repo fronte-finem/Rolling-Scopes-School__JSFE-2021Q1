@@ -5,11 +5,14 @@ export const Container = styled.div`
   width: 100%;
   margin: 0 auto;
   padding: 40px;
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 20px;
-  row-gap: 20px;
-  justify-content: center;
+
+  height: 700px;
+  overflow: auto;
+
+  //display: flex;
+  //flex-wrap: wrap;
+  //gap: 20px;
+  //justify-content: center;
 
   @media (max-width: 800px) {
     padding: 40px 25px;

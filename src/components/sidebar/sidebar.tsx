@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { useHistory } from 'react-router-dom';
 
 import { Login } from 'components/login/login';
@@ -7,6 +8,7 @@ import { SidebarCategoryLink } from 'components/sidebar/sidebar-category-link';
 import { useDataContext } from 'services/data/data-context';
 import { authService } from 'services/rest-api/auth';
 import { StyledProps } from 'types/styled';
+import { delay } from 'utils/async';
 
 import { BtnToggle } from './btn-toggle';
 import { useSidebarCloseHook } from './hook';
@@ -22,12 +24,15 @@ import {
   StaticContainer,
 } from './sidebar-style';
 
+const SCROLL_PART = 6;
+
 export const Sidebar = ({ className }: StyledProps): JSX.Element => {
   const token = authService.getCurrentToken();
   const history = useHistory();
   const { setModalShow, setModalContent } = useModalContext();
   const { ref, isClosed, setClose } = useSidebarCloseHook();
   const { categoriesData, getWords } = useDataContext();
+  const [categoriesPart, setCategoriesPart] = useState(categoriesData.slice(0, SCROLL_PART));
   const sidebarClassName = `${className || ''} ${isClosed ? 'close' : ''}`;
 
   const handleToggle = () => setClose(!isClosed);
@@ -41,6 +46,19 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
     await authService.logout();
     history.push('/');
   };
+
+  const loadMore = async () => {
+    if (categoriesPart.length >= categoriesData.length) return;
+    await delay(500);
+    const { length } = categoriesPart;
+    setCategoriesPart(categoriesData.slice(0, length + SCROLL_PART));
+  };
+
+  useEffect(() => {
+    (async () => {
+      await loadMore();
+    })();
+  }, [categoriesData]);
 
   return (
     <SidebarNav className={sidebarClassName} ref={ref}>
@@ -73,17 +91,30 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
         </SidebarLink>
       </StaticContainer>
       <Heading>Categories:</Heading>
-      <List>
-        {categoriesData.map(({ category }) => (
-          <ListItem key={category._id}>
-            <SidebarCategoryLink
-              categoryId={category._id}
-              text={category.name}
-              words={getWords(category._id)}
-              onClick={handleLinkClick}
-            />
-          </ListItem>
-        ))}
+      <List id="scrollable-list">
+        <InfiniteScroll
+          next={loadMore}
+          dataLength={categoriesPart.length}
+          hasMore={categoriesPart.length < categoriesData.length}
+          loader={<h4>Loading...</h4>}
+          scrollableTarget="scrollable-list"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            rowGap: '10px',
+          }}
+        >
+          {categoriesPart.map(({ category }) => (
+            <ListItem key={category._id}>
+              <SidebarCategoryLink
+                categoryId={category._id}
+                text={category.name}
+                words={getWords(category._id)}
+                onClick={handleLinkClick}
+              />
+            </ListItem>
+          ))}
+        </InfiniteScroll>
       </List>
     </SidebarNav>
   );

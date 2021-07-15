@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { Redirect } from 'react-router-dom';
 
 import { Main } from 'app/app-style';
@@ -11,12 +12,16 @@ import { useWordsHook } from 'services/data/words-hook';
 import { authService } from 'services/rest-api/auth';
 import { WordDocument } from 'services/rest-api/word-api';
 import { updateArray } from 'utils/array';
+import { delay } from 'utils/async';
 
 import { Container } from './admin-page-style';
+
+const SCROLL_PART = 8;
 
 export const AdminPageWords: React.FC = () => {
   const token = authService.getCurrentToken();
   const { category, words, setWords } = useWordsHook();
+  const [wordsPart, setWordsPart] = useState(words.slice(0, SCROLL_PART));
 
   const handleCreate = (data: WordDocument) => {
     setWords([...words, data]);
@@ -30,8 +35,21 @@ export const AdminPageWords: React.FC = () => {
     setWords(updateArray(words, data, (x) => (y) => x._id === y._id));
   };
 
+  const loadMore = async () => {
+    if (wordsPart.length >= words.length) return;
+    await delay(500);
+    const { length } = wordsPart;
+    setWordsPart(words.slice(0, length + SCROLL_PART));
+  };
+
+  useEffect(() => {
+    (async () => {
+      await loadMore();
+    })();
+  }, [words]);
+
   const cards = [
-    ...words.map((word) => (
+    ...wordsPart.map((word) => (
       <WordCard
         key={word.word}
         initialWord={word}
@@ -49,7 +67,23 @@ export const AdminPageWords: React.FC = () => {
         <AdminHeader category={category?.name} words={words.length} />
       </Header>
       <Main>
-        <Container>{cards}</Container>
+        <Container id="scrollable-words-list">
+          <InfiniteScroll
+            next={loadMore}
+            dataLength={wordsPart.length}
+            hasMore={wordsPart.length < words.length}
+            loader={<h4>Loading...</h4>}
+            scrollableTarget="scrollable-words-list"
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              gridGap: '20px',
+            }}
+          >
+            {cards}
+          </InfiniteScroll>
+        </Container>
       </Main>
     </>
   );

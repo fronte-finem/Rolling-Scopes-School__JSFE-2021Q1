@@ -3,12 +3,10 @@ import styled from 'styled-components';
 const CARD_WIDTH = 300;
 
 export const StyledCategories = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  grid-gap: 20px;
   padding: 50px 20px;
-  overflow: hidden;
+  //overflow: hidden;
+  height: 700px;
+  overflow: auto;
 `;
 
 export const StyledCategoriesItem = styled.li`
