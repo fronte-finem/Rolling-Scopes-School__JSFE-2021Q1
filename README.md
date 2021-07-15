@@ -23,3 +23,12 @@
 > ### 🏎️ Async-race 🏎️
 > - [x] [📃 task](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/async-race.md)
 > - [x] [🏠 deploy](https://rolling-scopes-school.github.io/fronte-finem-JSFE2021Q1/async-race/)
+---
+> ### 🅰️ English-for-Kids 🅱️ Base
+> - [x] [📃 task](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/rslang/english-for-kids.md)
+> - [x] [🏠 deploy](https://rolling-scopes-school.github.io/fronte-finem-JSFE2021Q1/english-for-kids/)
+---
+> ### 🅰️ English-for-Kids 🅱️ Admin Panel
+> - [x] [📃 task](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/rslang/english-for-kids-admin-panel.md)
+> - [x] [🏠 deploy](https://rolling-scopes-school.github.io/fronte-finem-JSFE2021Q1/english-for-kids/)
+---
