@@ -81,7 +81,7 @@ export const PageWords = ({
               <h2>
                 {isDifficultWords
                   ? 'No difficult words'
-                  : `Category "${category?._id || ''}" have 0 words`}
+                  : `Category "${category?.name || ''}" have 0 words`}
               </h2>
             ) : (
               cards
