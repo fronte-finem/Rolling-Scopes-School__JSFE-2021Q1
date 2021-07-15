@@ -21,7 +21,7 @@ export interface CategoryProps extends StyledProps {
 
 export const CategoryLink: React.FC<CategoryProps> = ({ className, isGameMode, data, words }) => {
   const { category } = data;
-  const image = data.words ? getImageUrl(words[0].image) : getImageUrl(PLACEHOLDER);
+  const image = words.length ? getImageUrl(words[0].image) : getImageUrl(PLACEHOLDER);
 
   return (
     <CategoryBase className={className}>
