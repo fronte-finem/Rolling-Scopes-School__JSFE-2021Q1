@@ -6,10 +6,10 @@ import { AdminPageWords } from 'components/admin-page/words';
 import { Footer } from 'components/footer/footer';
 import { PageCategories } from 'components/page-categories/page-categories';
 import { PageWordsStats } from 'components/page-words-stats/page-words-stats';
-import { authService } from 'services/admin/auth';
 import { GameActionType } from 'services/game/game-action';
 import { useGameContext } from 'services/game/game-context';
 import { isGameStarted, isOtherRoutePath } from 'services/game/game-state';
+import { authService } from 'services/rest-api/auth';
 
 import { AppBackground, AppBackgroundWrapper, StyledApp } from './app-style';
 import { GameRoute } from './game-route';

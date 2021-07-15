@@ -1,13 +1,15 @@
 import { User } from '@server/stores/auth';
 import axios from 'axios';
 
+import { CURRENT_API_URL } from 'services/rest-api/config';
+
 type UserRes = User & {
   accessToken?: string;
 };
 
 export const AUTH_STORAGE_KEY = 'fronte-finem--efk--auth-token';
 
-const API_URL = 'http://localhost:5000/api/auth';
+const API_URL = `${CURRENT_API_URL}/api/auth`;
 
 class AuthService {
   public login = async (user: User): Promise<UserRes> => {
