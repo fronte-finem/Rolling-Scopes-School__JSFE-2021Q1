@@ -37,5 +37,5 @@
 ---
 > # 🅰️ English-for-Kids 🅱️ Admin Panel
 > - [x] [📃 task](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/rslang/english-for-kids-admin-panel.md)
-> - [ ] [🏗️ pull-request](https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/23)
-> - [ ] [🏠 deploy]()
+> - [x] [🏗️ pull-request](https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/23)
+> - [x] [🏠 deploy](https://rolling-scopes-school.github.io/fronte-finem-JSFE2021Q1/english-for-kids/)
