@@ -54,7 +54,7 @@ module.exports = {
       'always',
       { exceptAfterOverload: true, exceptAfterSingleLine: true },
     ],
-    'no-underscore-dangle': ['error', { allowAfterThis: true }],
+    'no-underscore-dangle': 'off',
     'no-await-in-loop': 'warn',
     'simple-import-sort/imports': [
       'error',
@@ -70,6 +70,22 @@ module.exports = {
           // for scss imports.
           ['^[^.]'],
         ],
+      },
+    ],
+    'jsx-a11y/label-has-associated-control': [
+      'error',
+      {
+        required: {
+          some: ['nesting', 'id'],
+        },
+      },
+    ],
+    'jsx-a11y/label-has-for': [
+      'error',
+      {
+        required: {
+          some: ['nesting', 'id'],
+        },
       },
     ],
   },
