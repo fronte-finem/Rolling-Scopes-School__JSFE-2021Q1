@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { getAudioUrl, getImageUrl } from 'app/config';
 import { Marks } from 'components/card/marks';
 import { EMOJI_NEGATIVE, EMOJI_POSITIVE } from 'components/emoji/emoji';
 import { playAudio } from 'services/audio';
@@ -47,7 +48,7 @@ export const Card = (props: CardProps): JSX.Element => {
       return;
     }
     if (ref.current?.contains(ev.target as Node)) return;
-    playAudio(audio);
+    playAudio(getAudioUrl(audio));
     askClick(data._id);
   };
 
@@ -60,10 +61,10 @@ export const Card = (props: CardProps): JSX.Element => {
   return (
     <CardContainer className={className} onMouseLeave={handleMouseLeave}>
       <StyledCard className={cardClassName} onClick={handlePlay}>
-        <CardFrontSide word={word} image={image}>
+        <CardFrontSide word={word} image={getImageUrl(image)}>
           <StyledBtnFlip onFlip={handleFlip} ref={ref} />
         </CardFrontSide>
-        <CardBackSide word={translation} image={image} />
+        <CardBackSide word={translation} image={getImageUrl(image)} />
       </StyledCard>
       <MarksWrapper>
         <Marks marks={marks} show={isGameMode} />

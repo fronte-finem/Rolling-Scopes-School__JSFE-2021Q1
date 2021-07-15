@@ -4,8 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { Login } from 'components/login/login';
 import { useModalContext } from 'components/modal/modal-context';
 import { SidebarCategoryLink } from 'components/sidebar/sidebar-category-link';
-import { authService } from 'services/admin/auth';
 import { useDataContext } from 'services/data/data-context';
+import { authService } from 'services/rest-api/auth';
 import { StyledProps } from 'types/styled';
 
 import { BtnToggle } from './btn-toggle';
@@ -27,7 +27,7 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
   const history = useHistory();
   const { setModalShow, setModalContent } = useModalContext();
   const { ref, isClosed, setClose } = useSidebarCloseHook();
-  const { categoriesData } = useDataContext();
+  const { categoriesData, getWords } = useDataContext();
   const sidebarClassName = `${className || ''} ${isClosed ? 'close' : ''}`;
 
   const handleToggle = () => setClose(!isClosed);
@@ -79,6 +79,7 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
             <SidebarCategoryLink
               categoryId={category._id}
               text={category.name}
+              words={getWords(category._id)}
               onClick={handleLinkClick}
             />
           </ListItem>

@@ -12,7 +12,7 @@ import { StyledProps } from 'types/styled';
 import { StyledCategories, StyledCategoriesItem } from './page-categories-style';
 
 export const PageCategories = ({ className }: StyledProps): JSX.Element => {
-  const { categoriesData } = useDataContext();
+  const { categoriesData, getWords } = useDataContext();
   const { gameState } = useGameContext();
 
   return (
@@ -24,7 +24,11 @@ export const PageCategories = ({ className }: StyledProps): JSX.Element => {
           <StyledCategories>
             {categoriesData.map((data) => (
               <StyledCategoriesItem key={data.category._id}>
-                <CategoryLink data={data} isGameMode={isGameMode(gameState)} />
+                <CategoryLink
+                  data={data}
+                  isGameMode={isGameMode(gameState)}
+                  words={getWords(data.category._id)}
+                />
               </StyledCategoriesItem>
             ))}
           </StyledCategories>
