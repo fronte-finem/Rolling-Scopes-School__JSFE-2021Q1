@@ -36,9 +36,12 @@
 
     /* Module Resolution Options */
     "moduleResolution": "node",
-    "baseUrl": "./src",
-    "paths": {},
-    // "rootDirs": [],
+    "baseUrl": ".",
+    "paths": {
+      "*": ["src/*"],
+      "@server/*": ["server/*"]
+    },
+//     "rootDirs": ["./src", "./server"],
     // "typeRoots": [],
     // "types": [],
     "allowSyntheticDefaultImports": true,
@@ -53,14 +56,14 @@
     // "inlineSources": true,
 
     /* Experimental Options */
-    // "experimentalDecorators": true,
-    // "emitDecoratorMetadata": true,
+     "experimentalDecorators": true,
+     "emitDecoratorMetadata": true,
 
     /* Advanced Options */
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
   },
-  "include": ["src", "types"],
+  "include": ["src", "server", "types"],
   "exclude": ["node_modules"]
 }
