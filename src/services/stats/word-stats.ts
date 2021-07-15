@@ -1,12 +1,12 @@
 export type WordStats = readonly [
-  id: number,
+  id: string,
   ask: number,
   flip: number,
   game: number,
   match: number
 ];
 
-export const getInitialWordStats = (id = 0): WordStats => [id, 0, 0, 0, 0];
+export const getInitialWordStats = (id = ''): WordStats => [id, 0, 0, 0, 0];
 
 type WordStatsUpdater = (wordStats: WordStats) => WordStats;
 
@@ -40,7 +40,7 @@ export const matchClick: WordStatsUpdater = ([id, ask, flip, game, match]: WordS
 ];
 
 type AbstractWordsStatsUpdater = (
-  id: number,
+  id: string,
   words: WordStats[],
   updater: WordStatsUpdater
 ) => WordStats[];
@@ -52,7 +52,7 @@ export const updateWord: AbstractWordsStatsUpdater = (wordId, words, updater) =>
   return filteredWords;
 };
 
-type WordsStatsUpdater = (id: number, words: WordStats[]) => WordStats[];
+type WordsStatsUpdater = (id: string, words: WordStats[]) => WordStats[];
 
 export const addAskClick: WordsStatsUpdater = (id, words) => updateWord(id, words, askClick);
 export const addFlipClick: WordsStatsUpdater = (id, words) => updateWord(id, words, flipClick);

@@ -1,8 +1,7 @@
-import { CategoryDTO } from 'services/data/dto-category';
-import { WordDTO } from 'services/data/dto-word';
+import { CategoryDocument } from 'services/rest-api/category-api';
+import { WordDocument } from 'services/rest-api/word-api';
+import { WordStats } from 'services/stats/word-stats';
 import { Order } from 'types/order';
-
-import { WordStats } from './word-stats';
 
 export enum StatsField {
   CATEGORY,
@@ -21,7 +20,7 @@ export enum StatsField {
 }
 
 export interface WordStatsExtend {
-  id: number;
+  id: string;
   data: Record<StatsField, string | number>;
 }
 
@@ -29,18 +28,18 @@ const calcPercents = (all: number, part: number) => Math.round((part / all) * 10
 
 export function getExtendedWordStats(
   category: string,
-  wordDTO: WordDTO,
+  wordDoc: WordDocument,
   stats: WordStats
 ): WordStatsExtend {
   const [, ask, flip, game, match] = stats;
   const train = ask + flip;
   const error = game - match;
   return {
-    id: wordDTO.id,
+    id: wordDoc._id,
     data: {
       [StatsField.CATEGORY]: category,
-      [StatsField.WORD]: wordDTO.word,
-      [StatsField.TRANSLATION]: wordDTO.translation,
+      [StatsField.WORD]: wordDoc.word,
+      [StatsField.TRANSLATION]: wordDoc.translation,
       [StatsField.TRAIN]: train,
       [StatsField.ASK_COUNT]: ask,
       [StatsField.ASK_PERCENT]: calcPercents(train, ask),
@@ -56,17 +55,17 @@ export function getExtendedWordStats(
 }
 
 export const getExtendedWordsStats = (
-  words: WordDTO[],
-  categories: CategoryDTO[],
+  words: WordDocument[],
+  categories: CategoryDocument[],
   wordsStats: WordStats[]
 ): WordStatsExtend[] => {
   return words
-    .map((wordDTO): null | WordStatsExtend => {
-      const category = categories.find(({ id }) => id === wordDTO.categoryId)?.category;
+    .map((doc): null | WordStatsExtend => {
+      const category = categories.find(({ _id }) => _id === (doc.category as unknown as string));
       if (!category) return null;
-      const stats = wordsStats.find(([id]) => id === wordDTO.id);
+      const stats = wordsStats.find(([id]) => id === doc._id);
       if (!stats) return null;
-      return getExtendedWordStats(category, wordDTO, stats);
+      return getExtendedWordStats(category.name, doc, stats);
     })
     .filter((props) => props !== null) as WordStatsExtend[];
 };
@@ -90,6 +89,6 @@ export const sortExtendedWordsStats = (
   field: StatsField,
   order: Order
 ): WordStatsExtend[] => {
-  if (order === Order.NONE) return [...stats].sort((a, b) => a.id - b.id);
+  if (order === Order.NONE) return [...stats].sort((a, b) => a.id.localeCompare(b.id));
   return [...stats].sort(compare(order, field));
 };
