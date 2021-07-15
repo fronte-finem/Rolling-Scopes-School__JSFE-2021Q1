@@ -8,7 +8,7 @@ import {
   Splitter,
   Wrapper,
 } from 'components/admin-header/header-style';
-import { authService } from 'services/admin/auth';
+import { authService } from 'services/rest-api/auth';
 
 interface Props {
   category?: string;

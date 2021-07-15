@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { Modal } from 'components/modal/modal';
 import { useModalContext } from 'components/modal/modal-context';
-import { authService } from 'services/admin/auth';
+import { authService } from 'services/rest-api/auth';
 import { getErrorMsg } from 'utils/error';
 
 import {

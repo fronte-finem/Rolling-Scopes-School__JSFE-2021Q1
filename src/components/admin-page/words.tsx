@@ -7,8 +7,8 @@ import { WordCard } from 'components/admin-card/word-card';
 import { AdminHeader } from 'components/admin-header/header';
 import { Header } from 'components/header/header';
 import { Sidebar } from 'components/sidebar/sidebar';
-import { authService } from 'services/admin/auth';
 import { useWordsHook } from 'services/data/words-hook';
+import { authService } from 'services/rest-api/auth';
 import { WordDocument } from 'services/rest-api/word-api';
 import { updateArray } from 'utils/array';
 

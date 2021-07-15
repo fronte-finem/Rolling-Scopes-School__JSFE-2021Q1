@@ -7,8 +7,8 @@ import { CategoryCard } from 'components/admin-card/category-card';
 import { AdminHeader } from 'components/admin-header/header';
 import { Header } from 'components/header/header';
 import { Sidebar } from 'components/sidebar/sidebar';
-import { authService } from 'services/admin/auth';
 import { useDataContext } from 'services/data/data-context';
+import { authService } from 'services/rest-api/auth';
 import { CategoryCardData, CategoryDocument } from 'services/rest-api/category-api';
 import { updateArray } from 'utils/array';
 
