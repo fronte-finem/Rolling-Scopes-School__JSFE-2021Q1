@@ -1,27 +1,32 @@
 import React from 'react';
 
-import { categoriesDTOValidator, CategoryDTO } from './dto-category';
-import { WordDTO, wordsDTOValidator } from './dto-word';
-import { FetchState, getArrayData, getMessage, useFetch } from './fetch-hook';
-
-const CATEGORIES_URL = './data/categories.json';
-const WORDS_URL = './data/words.json';
+import { useCategoriesHook } from 'services/data/categories-hook';
+import { useAllWordsHook } from 'services/data/words-hook';
+import { CategoryCardDataArray, CategoryDocument } from 'services/rest-api/category-api';
+import { WordDocument } from 'services/rest-api/word-api';
 
 const CONTEXT_NOT_EXIST = 'DataContext must be used inside of a DataContextProvider';
 
 interface DataContextInterface {
-  categoriesState: FetchState<CategoryDTO[]>;
-  wordsState: FetchState<WordDTO[]>;
+  categoriesData: CategoryCardDataArray;
+  setCategoriesData: React.Dispatch<React.SetStateAction<CategoryCardDataArray>>;
+  allWords: WordDocument[];
+  setAllWords: React.Dispatch<React.SetStateAction<WordDocument[]>>;
+  updateData: () => void;
 }
 
 const DataContext = React.createContext<DataContextInterface | undefined>(undefined);
 
 export const DataContextProvider: React.FC = ({ children }) => {
-  const categoriesState = useFetch(CATEGORIES_URL, categoriesDTOValidator);
-  const wordsState = useFetch(WORDS_URL, wordsDTOValidator);
+  const { categoriesData, setCategoriesData, updateData } = useCategoriesHook();
+  const { allWords, setAllWords } = useAllWordsHook();
 
   return (
-    <DataContext.Provider value={{ categoriesState, wordsState }}>{children}</DataContext.Provider>
+    <DataContext.Provider
+      value={{ categoriesData, setCategoriesData, allWords, setAllWords, updateData }}
+    >
+      {children}
+    </DataContext.Provider>
   );
 };
 
@@ -33,28 +38,12 @@ export const useDataContext = (): DataContextInterface => {
   return context;
 };
 
-type AllData = [category: CategoryDTO[], words: WordDTO[]];
-
-export const useDataContextWithChecks = (): AllData => {
-  const { categoriesState, wordsState } = useDataContext();
-  const categoriesData = getArrayData(categoriesState);
-  const wordsData = getArrayData(wordsState);
-  return [categoriesData, wordsData];
-};
-
-export function useCategoriesData(): string | CategoryDTO[] {
-  const { categoriesState } = useDataContext();
-  const message = getMessage(categoriesState, 'Categories');
-  if (message) return message;
-  return categoriesState.data || [];
-}
-
-export function getWords(
-  categoryName: string,
-  categories: CategoryDTO[],
-  words: WordDTO[]
-): WordDTO[] {
-  const category = categories.find((dto) => dto.category === categoryName);
-  if (!category) return [];
-  return words.filter((dto) => dto.categoryId === category?.id);
+export function getCategoryWords(
+  categoryId: string,
+  categories: CategoryDocument[],
+  words: WordDocument[]
+): WordDocument[] {
+  // const category = categories.find((doc) => doc.name === categoryId);
+  // if (!category) return [];
+  return words.filter((doc) => (doc.category as unknown as string) === categoryId);
 }
