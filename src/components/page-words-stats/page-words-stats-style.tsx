@@ -1,38 +1,21 @@
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
+import { button } from 'components/button/button-style';
 import { styledScroll } from 'components/style/styled-scroll';
 
-const btn = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const longButton = css`
+  ${button};
   width: 300px;
   height: 50px;
-  padding: 0;
-  border: none;
-  background: #0008;
-  color: #fff;
-  text-transform: capitalize;
-  text-decoration: none;
-  text-align: center;
-  font-family: monospace;
-  transition: all 200ms;
-
-  &:hover {
-    background: #000a;
-  }
-  &:active {
-    background: #000d;
-  }
 `;
 
 export const Btn = styled.button`
-  ${btn};
+  ${longButton};
 `;
 
 export const BtnLink = styled(Link)`
-  ${btn};
+  ${longButton};
 `;
 
 export const BtnContainer = styled.div`
