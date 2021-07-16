@@ -124,3 +124,14 @@ export const CategoryName = styled.div`
   font-weight: bold;
   transition: 300ms;
 `;
+
+export const CategoryWordsCount = styled.div`
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  background: #0008;
+  color: #fff;
+  border-radius: 20px;
+`;

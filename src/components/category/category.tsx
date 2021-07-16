@@ -9,6 +9,7 @@ import {
   CategoryBase,
   CategoryImage,
   CategoryName,
+  CategoryWordsCount,
   NameWrapper,
   StyledCategoryLink,
 } from './category-style';
@@ -29,9 +30,9 @@ export const CategoryLink: React.FC<CategoryProps> = ({ className, isGameMode, d
         <CategoryImage src={image} alt={category.name} />
         <NameWrapper>
           <CategoryName>{category.name}</CategoryName>
-          <div>Words: {data.words}</div>
         </NameWrapper>
       </StyledCategoryLink>
+      <CategoryWordsCount>Words: {data.words}</CategoryWordsCount>
     </CategoryBase>
   );
 };
