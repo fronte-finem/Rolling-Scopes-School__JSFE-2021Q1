@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { getAudioUrl, PLACEHOLDER } from 'app/config';
 import { playAudio, playAudioAsyncCancelable } from 'services/audio';
 import { GameAction, GameActionType, GameDispatch, gameReducer } from 'services/game/game-action';
 import {
@@ -52,7 +53,7 @@ export function useGameCycle(): GameCycleResult {
 }
 
 function handleVocalize(gameState: GameState, dispatch: GameDispatch): void {
-  playAudio(gameState.activeWord?.audio || null);
+  playAudio(getAudioUrl(gameState.activeWord?.audio || PLACEHOLDER));
   dispatch({ type: GameActionType.TO_MATCHING });
 }
 
