@@ -3,13 +3,11 @@ import styled from 'styled-components';
 const CARD_WIDTH = 300;
 
 export const StyledCardsField = styled.ul`
-  //display: flex;
-  //flex-wrap: wrap;
-  //justify-content: center;
-  //gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
   padding: 50px 20px;
-  height: 700px;
-  overflow: auto;
 `;
 
 export const StyledCardsFieldItem = styled.li`

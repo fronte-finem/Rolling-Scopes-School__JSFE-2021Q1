@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { Redirect } from 'react-router-dom';
 
 import { Main } from 'app/app-style';
@@ -7,6 +6,7 @@ import { WordAddCard } from 'components/admin-card/word-add-card';
 import { WordCard } from 'components/admin-card/word-card';
 import { AdminHeader } from 'components/admin-header/header';
 import { Header } from 'components/header/header';
+import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
 import { Sidebar } from 'components/sidebar/sidebar';
 import { useWordsHook } from 'services/data/words-hook';
 import { authService } from 'services/rest-api/auth';
@@ -67,23 +67,9 @@ export const AdminPageWords: React.FC = () => {
         <AdminHeader category={category?.name} words={words.length} />
       </Header>
       <Main>
-        <Container id="scrollable-words-list">
-          <InfiniteScroll
-            next={loadMore}
-            dataLength={wordsPart.length}
-            hasMore={wordsPart.length < words.length}
-            loader={<h4>Loading...</h4>}
-            scrollableTarget="scrollable-words-list"
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-              gridGap: '20px',
-            }}
-          >
-            {cards}
-          </InfiniteScroll>
-        </Container>
+        <InfiniteScroller height="60vw" loadMore={loadMore}>
+          <Container id="scrollable-words-list">{cards}</Container>
+        </InfiniteScroller>
       </Main>
     </>
   );

@@ -4,9 +4,10 @@ const CARD_WIDTH = 300;
 
 export const StyledCategories = styled.ul`
   padding: 50px 20px;
-  //overflow: hidden;
-  height: 700px;
-  overflow: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
 `;
 
 export const StyledCategoriesItem = styled.li`

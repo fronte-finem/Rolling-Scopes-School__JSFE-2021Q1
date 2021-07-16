@@ -6,13 +6,10 @@ export const Container = styled.div`
   margin: 0 auto;
   padding: 40px;
 
-  height: 700px;
-  overflow: auto;
-
-  //display: flex;
-  //flex-wrap: wrap;
-  //gap: 20px;
-  //justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 
   @media (max-width: 800px) {
     padding: 40px 25px;

@@ -71,8 +71,9 @@ export const Heading = styled.h3`
 
 export const List = styled.ul`
   padding: 0 0 20px;
-  height: 300px;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 // ${styledScroll};

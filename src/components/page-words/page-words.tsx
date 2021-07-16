@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { Main } from 'app/app-style';
 import { Card } from 'components/card/card';
 import { Header } from 'components/header/header';
+import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
 import { StyledCardsField, StyledCardsFieldItem } from 'components/page-words/page-words-style';
 import { Sidebar } from 'components/sidebar/sidebar';
 import { useWordsHook } from 'services/data/words-hook';
@@ -70,6 +70,10 @@ export const PageWords = ({
   };
 
   useEffect(() => {
+    setWordsPart([]);
+  }, [category]);
+
+  useEffect(() => {
     (async () => {
       await loadMore();
     })();
@@ -94,31 +98,17 @@ export const PageWords = ({
       <Header showBtnStartRepeat={showBtnStartRepeat} onStartRepeat={handleStartRepeat} />
       <Main>
         <div className={className}>
-          <StyledCardsField id="scrollable-words-list">
-            {wordsPart.length === 0 ? (
-              <h2>
-                {isDifficultWords
-                  ? 'No difficult words'
-                  : `Category "${category?.name || ''}" have 0 words`}
-              </h2>
-            ) : (
-              <InfiniteScroll
-                next={loadMore}
-                dataLength={wordsPart.length}
-                hasMore={wordsPart.length < words.length}
-                loader={<h4>Loading...</h4>}
-                scrollableTarget="scrollable-words-list"
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  justifyContent: 'center',
-                  gridGap: '20px',
-                }}
-              >
-                {cards}
-              </InfiniteScroll>
-            )}
-          </StyledCardsField>
+          {wordsPart.length === 0 ? (
+            <h2 style={{ margin: '50px', textAlign: 'center' }}>
+              {isDifficultWords
+                ? 'No difficult words'
+                : `Category "${category?.name || ''}" have 0 words`}
+            </h2>
+          ) : (
+            <InfiniteScroller height="60vw" loadMore={loadMore}>
+              <StyledCardsField>{cards}</StyledCardsField>
+            </InfiniteScroller>
+          )}
         </div>
       </Main>
     </>

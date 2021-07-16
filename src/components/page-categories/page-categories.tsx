@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { Main } from 'app/app-style';
 import { CategoryLink } from 'components/category/category';
 import { Header } from 'components/header/header';
+import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
 import { Sidebar } from 'components/sidebar/sidebar';
 import { useDataContext } from 'services/data/data-context';
 import { useGameContext } from 'services/game/game-context';
@@ -28,6 +28,10 @@ export const PageCategories = ({ className }: StyledProps): JSX.Element => {
   };
 
   useEffect(() => {
+    setCategoriesPart([]);
+  }, []);
+
+  useEffect(() => {
     (async () => {
       await loadMore();
     })();
@@ -39,20 +43,8 @@ export const PageCategories = ({ className }: StyledProps): JSX.Element => {
       <Header />
       <Main>
         <nav className={className}>
-          <StyledCategories id="scrollable-categories-list">
-            <InfiniteScroll
-              next={loadMore}
-              dataLength={categoriesPart.length}
-              hasMore={categoriesPart.length < categoriesData.length}
-              loader={<h4>Loading...</h4>}
-              scrollableTarget="scrollable-categories-list"
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                justifyContent: 'center',
-                gridGap: '20px',
-              }}
-            >
+          <InfiniteScroller height="60vw" loadMore={loadMore}>
+            <StyledCategories>
               {categoriesPart.map((data) => (
                 <StyledCategoriesItem key={data.category._id}>
                   <CategoryLink
@@ -62,8 +54,8 @@ export const PageCategories = ({ className }: StyledProps): JSX.Element => {
                   />
                 </StyledCategoriesItem>
               ))}
-            </InfiniteScroll>
-          </StyledCategories>
+            </StyledCategories>
+          </InfiniteScroller>
         </nav>
       </Main>
     </>

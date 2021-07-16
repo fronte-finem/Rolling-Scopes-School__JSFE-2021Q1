@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { useHistory } from 'react-router-dom';
 
+import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
 import { Login } from 'components/login/login';
 import { useModalContext } from 'components/modal/modal-context';
 import { SidebarCategoryLink } from 'components/sidebar/sidebar-category-link';
@@ -91,19 +91,8 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
         </SidebarLink>
       </StaticContainer>
       <Heading>Categories:</Heading>
-      <List id="scrollable-list">
-        <InfiniteScroll
-          next={loadMore}
-          dataLength={categoriesPart.length}
-          hasMore={categoriesPart.length < categoriesData.length}
-          loader={<h4>Loading...</h4>}
-          scrollableTarget="scrollable-list"
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            rowGap: '10px',
-          }}
-        >
+      <InfiniteScroller height="30vw" loadMore={loadMore}>
+        <List>
           {categoriesPart.map(({ category }) => (
             <ListItem key={category._id}>
               <SidebarCategoryLink
@@ -114,8 +103,8 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
               />
             </ListItem>
           ))}
-        </InfiniteScroll>
-      </List>
+        </List>
+      </InfiniteScroller>
     </SidebarNav>
   );
 };
