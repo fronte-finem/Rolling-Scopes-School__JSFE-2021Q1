@@ -105,7 +105,7 @@ export const PageWords = ({
                 : `Category "${category?.name || ''}" have 0 words`}
             </h2>
           ) : (
-            <InfiniteScroller height="60vw" loadMore={loadMore}>
+            <InfiniteScroller height="80vh" loadMore={loadMore}>
               <StyledCardsField>{cards}</StyledCardsField>
             </InfiniteScroller>
           )}

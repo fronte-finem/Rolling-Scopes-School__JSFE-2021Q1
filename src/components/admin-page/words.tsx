@@ -67,7 +67,7 @@ export const AdminPageWords: React.FC = () => {
         <AdminHeader category={category?.name} words={words.length} />
       </Header>
       <Main>
-        <InfiniteScroller height="60vw" loadMore={loadMore}>
+        <InfiniteScroller height="80vh" loadMore={loadMore}>
           <Container id="scrollable-words-list">{cards}</Container>
         </InfiniteScroller>
       </Main>

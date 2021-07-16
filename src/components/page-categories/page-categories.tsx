@@ -43,7 +43,7 @@ export const PageCategories = ({ className }: StyledProps): JSX.Element => {
       <Header />
       <Main>
         <nav className={className}>
-          <InfiniteScroller height="60vw" loadMore={loadMore}>
+          <InfiniteScroller height="80vh" loadMore={loadMore}>
             <StyledCategories>
               {categoriesPart.map((data) => (
                 <StyledCategoriesItem key={data.category._id}>

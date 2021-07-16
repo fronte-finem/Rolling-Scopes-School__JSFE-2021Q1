@@ -91,7 +91,7 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
         </SidebarLink>
       </StaticContainer>
       <Heading>Categories:</Heading>
-      <InfiniteScroller height="30vw" loadMore={loadMore}>
+      <InfiniteScroller height="50vh" loadMore={loadMore}>
         <List>
           {categoriesPart.map(({ category }) => (
             <ListItem key={category._id}>

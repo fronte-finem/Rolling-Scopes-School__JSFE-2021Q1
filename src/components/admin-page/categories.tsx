@@ -81,7 +81,7 @@ export const AdminPageCategories: React.FC = () => {
         <AdminHeader />
       </Header>
       <Main>
-        <InfiniteScroller height="60vw" loadMore={loadMore}>
+        <InfiniteScroller height="80vh" loadMore={loadMore}>
           <Container>{cards}</Container>
         </InfiniteScroller>
       </Main>
