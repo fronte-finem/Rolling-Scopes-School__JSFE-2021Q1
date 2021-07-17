@@ -14,6 +14,7 @@ interface DataContextInterface {
   setAllWords: React.Dispatch<React.SetStateAction<WordDocument[]>>;
   updateData: () => void;
   getWords: (categoryId: string) => WordDocument[];
+  getCategories: () => CategoryDocument[];
 }
 
 const DataContext = React.createContext<DataContextInterface | undefined>(undefined);
@@ -26,9 +27,21 @@ export const DataContextProvider: React.FC = ({ children }) => {
     return allWords.filter((word) => (word.category as unknown as string) === categoryId);
   };
 
+  const getCategories = () => {
+    return categoriesData.map((data) => data.category);
+  };
+
   return (
     <DataContext.Provider
-      value={{ categoriesData, setCategoriesData, allWords, setAllWords, updateData, getWords }}
+      value={{
+        categoriesData,
+        setCategoriesData,
+        allWords,
+        setAllWords,
+        updateData,
+        getWords,
+        getCategories,
+      }}
     >
       {children}
     </DataContext.Provider>
