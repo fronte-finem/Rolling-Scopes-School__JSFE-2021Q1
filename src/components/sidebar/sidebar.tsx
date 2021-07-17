@@ -5,7 +5,7 @@ import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller
 import { Login } from 'components/login/login';
 import { useModalContext } from 'components/modal/modal-context';
 import { SidebarCategoryLink } from 'components/sidebar/sidebar-category-link';
-import { useDataContext } from 'services/data/data-context';
+import { useDataContext } from 'services/data/context';
 import { authService } from 'services/rest-api/auth';
 import { StyledProps } from 'types/styled';
 import { delay } from 'utils/async';
@@ -31,8 +31,10 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
   const history = useHistory();
   const { setModalShow, setModalContent } = useModalContext();
   const { ref, isClosed, setClose } = useSidebarCloseHook();
-  const { categoriesData, getWords } = useDataContext();
-  const [categoriesPart, setCategoriesPart] = useState(categoriesData.slice(0, SCROLL_PART));
+  const dataService = useDataContext();
+  const [categoriesPart, setCategoriesPart] = useState(
+    dataService.categories.slice(0, SCROLL_PART)
+  );
   const sidebarClassName = `${className || ''} ${isClosed ? 'close' : ''}`;
 
   const handleToggle = () => setClose(!isClosed);
@@ -48,17 +50,17 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
   };
 
   const loadMore = async () => {
-    if (categoriesPart.length >= categoriesData.length) return;
+    if (categoriesPart.length >= dataService.categories.length) return;
     await delay(500);
     const { length } = categoriesPart;
-    setCategoriesPart(categoriesData.slice(0, length + SCROLL_PART));
+    setCategoriesPart(dataService.categories.slice(0, length + SCROLL_PART));
   };
 
   useEffect(() => {
     (async () => {
       await loadMore();
     })();
-  }, [categoriesData]);
+  }, [dataService.categories]);
 
   return (
     <SidebarNav className={sidebarClassName} ref={ref}>
@@ -93,12 +95,12 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
       <Heading>Categories:</Heading>
       <InfiniteScroller height="50vh" loadMore={loadMore}>
         <List>
-          {categoriesPart.map(({ category }) => (
+          {categoriesPart.map((category) => (
             <ListItem key={category._id}>
               <SidebarCategoryLink
                 categoryId={category._id}
                 text={category.name}
-                words={getWords(category._id)}
+                words={dataService.getWordsByCategoryId(category._id)}
                 onClick={handleLinkClick}
               />
             </ListItem>

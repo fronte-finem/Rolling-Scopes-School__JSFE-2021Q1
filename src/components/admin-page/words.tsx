@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
 import { Main } from 'app/app-style';
 import { WordAddCard } from 'components/admin-card/word-add-card';
@@ -8,34 +9,38 @@ import { AdminHeader } from 'components/admin-header/header';
 import { Header } from 'components/header/header';
 import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
 import { Sidebar } from 'components/sidebar/sidebar';
-import { useWordsHook } from 'services/data/words-hook';
+import { useDataContext } from 'services/data/context';
+import { WordProps } from 'services/data/service';
 import { authService } from 'services/rest-api/auth';
 import { WordDocument } from 'services/rest-api/word-api';
-import { updateItem } from 'utils/array';
 import { delay } from 'utils/async';
 
 import { Container } from './admin-page-style';
 
 const SCROLL_PART = 8;
 
-export const AdminPageWords: React.FC = () => {
+export const AdminPageWords: React.FC = observer(() => {
   const token = authService.getCurrentToken();
-  const { category, words, setWords } = useWordsHook();
-  const [wordsPart, setWordsPart] = useState(words.slice(0, SCROLL_PART));
+  const { categoryId } = useParams<{ categoryId: string }>();
+  const dataService = useDataContext();
+  const [wordsPart, setWordsPart] = useState(
+    dataService.getWordsByCategoryId(categoryId).slice(0, SCROLL_PART)
+  );
 
-  const handleCreate = (data: WordDocument) => {
-    setWords([...words, data]);
+  const handleCreate = async (wordProps: WordProps) => {
+    await dataService.createWord(categoryId, wordProps);
   };
 
-  const handleDelete = (wordId: string) => {
-    setWords(words.filter((word) => word._id !== wordId));
+  const handleDelete = async (wordId: string) => {
+    await dataService.deleteWord(categoryId, wordId);
   };
 
-  const handleUpdate = (data: WordDocument) => {
-    setWords(updateItem(words, data, (x) => (y) => x._id === y._id));
+  const handleUpdate = async (word: WordDocument, wordProps: WordProps) => {
+    await dataService.updateWord(categoryId, word, wordProps);
   };
 
   const loadMore = async () => {
+    const words = dataService.getWordsByCategoryId(categoryId);
     if (wordsPart.length >= words.length) return;
     await delay(500);
     const { length } = wordsPart;
@@ -46,17 +51,20 @@ export const AdminPageWords: React.FC = () => {
     (async () => {
       await loadMore();
     })();
-  }, [words]);
+  }, [dataService.words]);
 
   const cards = [
-    ...wordsPart.map((word) => (
-      <WordCard
-        key={word.word}
-        initialWord={word}
-        onUpdate={handleUpdate}
-        onDelete={handleDelete}
-      />
-    )),
+    // ...wordsPart.map((word) => (
+    ...dataService
+      .getWordsByCategoryId(categoryId)
+      .map((word) => (
+        <WordCard
+          key={word._id}
+          initialWord={word}
+          onUpdate={handleUpdate}
+          onDelete={handleDelete}
+        />
+      )),
     <WordAddCard key="add new word" onCreate={handleCreate} />,
   ];
 
@@ -64,7 +72,10 @@ export const AdminPageWords: React.FC = () => {
     <>
       <Sidebar />
       <Header isAdmin>
-        <AdminHeader category={category?.name} words={words.length} />
+        <AdminHeader
+          category={dataService.getCategoryById(categoryId)?.name}
+          words={dataService.getWordsByCategoryId(categoryId).length}
+        />
       </Header>
       <Main>
         <InfiniteScroller height="80vh" loadMore={loadMore}>
@@ -75,4 +86,4 @@ export const AdminPageWords: React.FC = () => {
   );
 
   return token ? page : <Redirect to="/" />;
-};
+});

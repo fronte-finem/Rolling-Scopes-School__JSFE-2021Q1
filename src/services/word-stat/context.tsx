@@ -1,15 +1,16 @@
 import React from 'react';
 import { autorun } from 'mobx';
+import { observer } from 'mobx-react-lite';
 
-import { useDataContext } from 'services/data/data-context';
+import { useDataContext } from 'services/data/context';
 import { STORAGE_KEY, WordsStatsService } from 'services/word-stat/service';
 import { save } from 'utils/local-storage';
 
 const WordsStatsContext = React.createContext<WordsStatsService | undefined>(undefined);
 
-export const WordsStatsContextProvider: React.FC = ({ children }) => {
+export const WordsStatsContextProvider: React.FC = observer(({ children }) => {
+  const dataService = useDataContext();
   const wordsStatsService = new WordsStatsService();
-  const { allWords } = useDataContext();
 
   autorun(() => {
     save(
@@ -19,14 +20,14 @@ export const WordsStatsContextProvider: React.FC = ({ children }) => {
   });
 
   React.useEffect(() => {
-    if (allWords.length === 0) return;
-    wordsStatsService.actualize(allWords);
-  }, [allWords]);
+    if (dataService.words.length === 0) return;
+    wordsStatsService.actualize(dataService.words);
+  }, [dataService.words]);
 
   return (
     <WordsStatsContext.Provider value={wordsStatsService}>{children}</WordsStatsContext.Provider>
   );
-};
+});
 
 export const useWordsStatsService = (): WordsStatsService => {
   const wordsStatsService = React.useContext(WordsStatsContext);

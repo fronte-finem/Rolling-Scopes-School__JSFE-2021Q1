@@ -12,20 +12,23 @@ import {
 } from 'components/admin-card/card-style';
 import { Description } from 'components/admin-card/description';
 import { BtnClose } from 'components/button/button';
-import { CategoryCardData } from 'services/rest-api/category-api';
+import { CategoryDocument } from 'services/rest-api/category-api';
+import { WordDocument } from 'services/rest-api/word-api';
 
 interface Props {
-  data: CategoryCardData;
-  onDelete: () => Promise<void>;
+  category: CategoryDocument;
+  onDelete: () => void;
   onUpdate: () => void;
   onAddWord: () => void;
+  words: WordDocument[];
 }
 
 export const CategoryCardFront: React.FC<Props> = ({
-  data: { category, words },
+  category,
   onAddWord,
   onDelete,
   onUpdate,
+  words,
 }) => (
   <Wrapper isLoading={false}>
     <BtnCloseContainer>
@@ -34,7 +37,7 @@ export const CategoryCardFront: React.FC<Props> = ({
     <CategoryContainer>
       <CategoryName>{category.name}</CategoryName>
       <DescriptionContainer>
-        <Description term="Words" value={words.toString()} />
+        <Description term="Words" value={words.length.toString()} />
       </DescriptionContainer>
     </CategoryContainer>
     <BtnBottomContainer>

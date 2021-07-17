@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { Main } from 'app/app-style';
@@ -7,8 +8,7 @@ import { Header } from 'components/header/header';
 import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
 import { StyledCardsField, StyledCardsFieldItem } from 'components/page-words/page-words-style';
 import { Sidebar } from 'components/sidebar/sidebar';
-import { useDataContext } from 'services/data/data-context';
-import { useWordsHook } from 'services/data/words-hook';
+import { useDataContext } from 'services/data/context';
 import { useGameContext } from 'services/game/context';
 import { WordDocument } from 'services/rest-api/word-api';
 import { useWordsStatsService } from 'services/word-stat/context';
@@ -24,12 +24,14 @@ export interface PageWordsProps extends StyledProps {
 
 export const PageWords: React.FC<PageWordsProps> = observer(
   ({ className, isDifficultWords = false }) => {
-    const { allWords } = useDataContext();
-    const { category, words } = useWordsHook();
+    const { categoryId } = useParams<{ categoryId: string }>();
+    const dataService = useDataContext();
     const wordsStatsService = useWordsStatsService();
     const game = useGameContext();
 
-    const someWords = isDifficultWords ? wordsStatsService.getDifficultWords(allWords) : words;
+    const someWords = isDifficultWords
+      ? wordsStatsService.getDifficultWords(dataService.words)
+      : dataService.getWordsByCategoryId(categoryId);
     const [wordsPart, setWordsPart] = useState(someWords.slice(0, SCROLL_PART));
 
     const handleMathWord = (word: WordDocument) => {
@@ -41,7 +43,7 @@ export const PageWords: React.FC<PageWordsProps> = observer(
 
     const handleStartRepeat = () => {
       if (game.isGameReady) {
-        game.start(someWords, category?._id || '');
+        game.start(someWords, isDifficultWords ? '' : categoryId);
       } else {
         game.vocalize();
       }
@@ -58,13 +60,13 @@ export const PageWords: React.FC<PageWordsProps> = observer(
 
     useEffect(() => {
       setWordsPart([]);
-    }, [category]);
+    }, [categoryId]);
 
     useEffect(() => {
       (async () => {
         await loadMore();
       })();
-    }, [someWords]);
+    }, [dataService.words, someWords]);
 
     const cards = wordsPart.map((wordDoc) => (
       <StyledCardsFieldItem key={wordDoc.word}>
@@ -89,7 +91,9 @@ export const PageWords: React.FC<PageWordsProps> = observer(
               <h2 style={{ margin: '50px', textAlign: 'center' }}>
                 {isDifficultWords
                   ? 'No difficult words'
-                  : `Category "${category?.name || ''}" have 0 words`}
+                  : `Category "${
+                      dataService.getCategoryById(categoryId)?.name || ''
+                    }" have 0 words`}
               </h2>
             ) : (
               <InfiniteScroller height="80vh" loadMore={loadMore}>

@@ -29,18 +29,20 @@ export const CategoryCardEditor: React.FC<Props> = ({ initialName, onCancel, onS
       return;
     }
     setLoading(true);
-    try {
-      await onSubmit(name);
-    } finally {
-      setLoading(false);
-    }
+    await onSubmit(name);
+    setLoading(false);
   };
 
   return (
     <Form onSubmit={handleSubmit} ref={formRef}>
       <Wrapper isLoading={isLoading}>
         <InputsContainer>
-          <InputText label="Category Name" onInput={handleInput} reset={false} />
+          <InputText
+            initialValue={name}
+            label="Category Name"
+            onInput={handleInput}
+            reset={false}
+          />
         </InputsContainer>
         <BtnBottomContainer>
           <BtnCancel type="button" onClick={onCancel}>

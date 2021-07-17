@@ -10,19 +10,8 @@ import {
 } from 'components/admin-card/card-style';
 import { InputFile } from 'components/admin-card/input-file';
 import { InputText } from 'components/admin-card/input-text';
+import { WordProps } from 'services/data/service';
 import { WordDocument } from 'services/rest-api/word-api';
-
-interface WordTexts {
-  word: string;
-  translation: string;
-}
-
-interface WordFiles {
-  image: File | null;
-  audio: File | null;
-}
-
-export type WordProps = WordTexts & WordFiles;
 
 interface Props {
   initialWord?: WordDocument;
@@ -40,14 +29,11 @@ export const WordCardEditor: React.FC<Props> = ({
   const formRef = React.useRef<HTMLFormElement>(null);
   const [reset, setReset] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-
-  const [texts, setTexts] = React.useState<WordTexts>({
+  const [wordProps, setWordProps] = React.useState<WordProps>({
     word: initialWord?.word || '',
     translation: initialWord?.translation || '',
-  });
-  const [files, setFiles] = React.useState<WordFiles>({
-    image: null,
-    audio: null,
+    image: undefined,
+    audio: undefined,
   });
 
   const handleCancel = () => {
@@ -55,15 +41,12 @@ export const WordCardEditor: React.FC<Props> = ({
     onCancel();
   };
 
-  const handleTextInput = (key: keyof WordTexts) => (value: string) => {
-    setReset(false);
-    setTexts({ ...texts, [key]: value });
-  };
-
-  const handleFileInput = (key: keyof WordFiles) => (value: File) => {
-    setReset(false);
-    setFiles({ ...files, [key]: value });
-  };
+  function handleInput<K extends keyof WordProps>(key: K) {
+    return (value: WordProps[K]) => {
+      setReset(false);
+      setWordProps({ ...wordProps, [key]: value });
+    };
+  }
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     if (!formRef.current || !formRef.current.reportValidity()) {
@@ -71,11 +54,8 @@ export const WordCardEditor: React.FC<Props> = ({
       return;
     }
     setLoading(true);
-    try {
-      await onSubmit({ ...texts, ...files });
-    } finally {
-      setLoading(false);
-    }
+    await onSubmit({ ...wordProps });
+    // setLoading(false);
   };
 
   return (
@@ -84,27 +64,27 @@ export const WordCardEditor: React.FC<Props> = ({
         <InputsContainer>
           <InputText
             label="word"
-            onInput={handleTextInput('word')}
+            onInput={handleInput('word')}
             reset={reset}
-            initialValue={texts.word}
+            initialValue={wordProps.word}
           />
           <InputText
             label="translation"
-            onInput={handleTextInput('translation')}
+            onInput={handleInput('translation')}
             reset={reset}
-            initialValue={texts.translation}
+            initialValue={wordProps.translation}
           />
           <InputFile
             label="audio"
             accept="audio/*"
-            onInput={handleFileInput('audio')}
+            onInput={handleInput('audio')}
             reset={reset}
             required={isFilesRequired}
           />
           <InputFile
             label="image"
             accept="image/*"
-            onInput={handleFileInput('image')}
+            onInput={handleInput('image')}
             reset={reset}
             required={isFilesRequired}
           />

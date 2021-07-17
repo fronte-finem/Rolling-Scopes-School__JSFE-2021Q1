@@ -2,69 +2,51 @@ import React from 'react';
 
 import { CategoryCardEditor } from 'components/admin-card/category-card-editor';
 import { CategoryCardFront } from 'components/admin-card/category-card-front';
-import {
-  categoryApiService,
-  CategoryCardData,
-  CategoryDocument,
-} from 'services/rest-api/category-api';
+import { CategoryDocument } from 'services/rest-api/category-api';
+import { WordDocument } from 'services/rest-api/word-api';
 
 import { Card } from './card-style';
 
 interface Props {
-  data: CategoryCardData;
-  onUpdate: (data: CategoryCardData) => void;
-  onDelete: (category: CategoryDocument) => void;
+  category: CategoryDocument;
+  onUpdate: (category: CategoryDocument, name: string) => Promise<void>;
+  onDelete: (category: CategoryDocument) => Promise<void>;
   onGoToWords: (category: CategoryDocument) => void;
+  words: WordDocument[];
 }
 
-export const CategoryCard: React.FC<Props> = ({ data, onUpdate, onDelete, onGoToWords }) => {
+export const CategoryCard: React.FC<Props> = ({
+  category,
+  onUpdate,
+  onDelete,
+  onGoToWords,
+  words,
+}) => {
   const [isEdit, setEdit] = React.useState(false);
 
   const handleEdit = () => setEdit(true);
   const handleCancel = () => setEdit(false);
 
-  const handleAddWord = () => onGoToWords(data.category);
+  const handleAddWord = () => onGoToWords(category);
 
-  const handleUpdate = async (name: string) => {
-    try {
-      const response = await categoryApiService.update({ ...data.category, name });
-      console.log(response);
-      handleCancel();
-      const { category, words } = data;
-      onUpdate({ words, category: { ...category, ...response.data } });
-    } catch (e) {
-      console.log(e);
-    } finally {
-      console.log('end of category update request');
-    }
-  };
-
-  const handleDelete = async () => {
-    try {
-      const response = await categoryApiService.remove(data.category);
-      console.log(response);
-      onDelete(data.category);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      console.log('end of category delete request');
-    }
-  };
+  const handleUpdate = (name: string) => onUpdate(category, name);
+  const handleDelete = () => onDelete(category);
 
   return (
     <Card>
       {isEdit ? (
         <CategoryCardEditor
-          initialName={data.category.name}
+          initialName={category.name}
           onCancel={handleCancel}
           onSubmit={handleUpdate}
         />
       ) : (
         <CategoryCardFront
-          data={data}
+          category={category}
           onDelete={handleDelete}
           onUpdate={handleEdit}
           onAddWord={handleAddWord}
+          words={words}
         />
       )}
     </Card>

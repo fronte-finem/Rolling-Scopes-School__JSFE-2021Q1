@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { getImageUrl, PLACEHOLDER } from 'app/config';
-import { CategoryCardData } from 'services/rest-api/category-api';
+import { CategoryDocument } from 'services/rest-api/category-api';
 import { WordDocument } from 'services/rest-api/word-api';
 import { StyledProps } from 'types/styled';
 
@@ -15,13 +15,17 @@ import {
 } from './category-style';
 
 export interface CategoryProps extends StyledProps {
-  readonly data: CategoryCardData;
+  readonly category: CategoryDocument;
   readonly isGameMode: boolean;
   readonly words: WordDocument[];
 }
 
-export const CategoryLink: React.FC<CategoryProps> = ({ className, isGameMode, data, words }) => {
-  const { category } = data;
+export const CategoryLink: React.FC<CategoryProps> = ({
+  className,
+  isGameMode,
+  category,
+  words,
+}) => {
   const image = words.length ? getImageUrl(words[0].image) : getImageUrl(PLACEHOLDER);
 
   return (
@@ -32,7 +36,7 @@ export const CategoryLink: React.FC<CategoryProps> = ({ className, isGameMode, d
           <CategoryName>{category.name}</CategoryName>
         </NameWrapper>
       </StyledCategoryLink>
-      <CategoryWordsCount>Words: {data.words}</CategoryWordsCount>
+      <CategoryWordsCount>Words: {words.length}</CategoryWordsCount>
     </CategoryBase>
   );
 };

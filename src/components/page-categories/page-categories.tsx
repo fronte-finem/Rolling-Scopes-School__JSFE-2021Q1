@@ -6,7 +6,7 @@ import { CategoryLink } from 'components/category/category';
 import { Header } from 'components/header/header';
 import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
 import { Sidebar } from 'components/sidebar/sidebar';
-import { useDataContext } from 'services/data/data-context';
+import { useDataContext } from 'services/data/context';
 import { useGameContext } from 'services/game/context';
 import { StyledProps } from 'types/styled';
 import { delay } from 'utils/async';
@@ -16,15 +16,17 @@ import { StyledCategories, StyledCategoriesItem } from './page-categories-style'
 const SCROLL_PART = 8;
 
 export const PageCategories: React.FC<StyledProps> = observer(({ className }) => {
-  const { categoriesData, getWords } = useDataContext();
-  const [categoriesPart, setCategoriesPart] = useState(categoriesData.slice(0, SCROLL_PART));
+  const dataService = useDataContext();
+  const [categoriesPart, setCategoriesPart] = useState(
+    dataService.categories.slice(0, SCROLL_PART)
+  );
   const game = useGameContext();
 
   const loadMore = async () => {
-    if (categoriesPart.length >= categoriesData.length) return;
+    if (categoriesPart.length >= dataService.categories.length) return;
     await delay(500);
     const { length } = categoriesPart;
-    setCategoriesPart(categoriesData.slice(0, length + SCROLL_PART));
+    setCategoriesPart(dataService.categories.slice(0, length + SCROLL_PART));
   };
 
   useEffect(() => {
@@ -35,7 +37,7 @@ export const PageCategories: React.FC<StyledProps> = observer(({ className }) =>
     (async () => {
       await loadMore();
     })();
-  }, [categoriesData]);
+  }, [dataService.categories]);
 
   return (
     <>
@@ -45,12 +47,12 @@ export const PageCategories: React.FC<StyledProps> = observer(({ className }) =>
         <nav className={className}>
           <InfiniteScroller height="80vh" loadMore={loadMore}>
             <StyledCategories>
-              {categoriesPart.map((data) => (
-                <StyledCategoriesItem key={data.category._id}>
+              {categoriesPart.map((category) => (
+                <StyledCategoriesItem key={category._id}>
                   <CategoryLink
-                    data={data}
+                    category={category}
                     isGameMode={game.isGameMode}
-                    words={getWords(data.category._id)}
+                    words={dataService.getWordsByCategoryId(category._id)}
                   />
                 </StyledCategoriesItem>
               ))}
