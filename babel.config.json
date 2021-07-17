@@ -1,4 +1,8 @@
 {
   "targets": "last 1 chrome version, last 1 firefox version",
-  "presets": ["@babel/preset-env", "@babel/preset-react", "@babel/preset-typescript"]
+  "presets": ["@babel/preset-env", "@babel/preset-react", "@babel/preset-typescript"],
+  "plugins": [
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties", { "loose": false }]
+  ]
 }
