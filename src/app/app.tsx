@@ -1,14 +1,13 @@
 import React from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
 import { AdminPageCategories } from 'components/admin-page/categories';
 import { AdminPageWords } from 'components/admin-page/words';
 import { Footer } from 'components/footer/footer';
 import { PageCategories } from 'components/page-categories/page-categories';
 import { PageWordsStats } from 'components/page-words-stats/page-words-stats';
-import { GameActionType } from 'services/game/game-action';
-import { useGameContext } from 'services/game/game-context';
-import { isGameStarted, isOtherRoutePath } from 'services/game/game-state';
+import { useGameContext } from 'services/game/context';
 import { authService } from 'services/rest-api/auth';
 
 import { AppBackground, AppBackgroundWrapper, StyledApp } from './app-style';
@@ -16,9 +15,9 @@ import { GameRoute } from './game-route';
 import { NotFoundRoute } from './not-found-route';
 import { TestRoute } from './test-route';
 
-export const App = (): JSX.Element => {
+export const App = observer(() => {
   const { pathname } = useLocation();
-  const { gameState, dispatch } = useGameContext();
+  const game = useGameContext();
 
   React.useEffect(() => {
     (async () => {
@@ -27,8 +26,8 @@ export const App = (): JSX.Element => {
   }, []);
 
   React.useEffect(() => {
-    if (isGameStarted(gameState) && isOtherRoutePath(gameState, pathname)) {
-      dispatch({ type: GameActionType.RESET });
+    if (game.isStarted && game.isOtherRoutePath(pathname)) {
+      game.ready();
     }
   }, [pathname]);
 
@@ -43,10 +42,10 @@ export const App = (): JSX.Element => {
           <PageCategories />
         </Route>
         <Route path="/category/:categoryId">
-          <GameRoute state={gameState} />
+          <GameRoute />
         </Route>
         <Route path="/difficult">
-          <GameRoute state={gameState} isDifficultWords />
+          <GameRoute isDifficultWords />
         </Route>
         <Route path="/statistic">
           <PageWordsStats />
@@ -67,4 +66,4 @@ export const App = (): JSX.Element => {
       <Footer />
     </StyledApp>
   );
-};
+});

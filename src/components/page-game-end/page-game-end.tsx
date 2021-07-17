@@ -1,10 +1,11 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
 import { Main } from 'app/app-style';
 import { EMOJI_NEGATIVE, EMOJI_POSITIVE } from 'components/emoji/emoji';
 import { Header } from 'components/header/header';
 import { Sidebar } from 'components/sidebar/sidebar';
-import { useGameContext } from 'services/game/game-context';
+import { useGameContext } from 'services/game/context';
 import { StyledProps } from 'types/styled';
 
 import { EmojiList } from './emoji-list';
@@ -28,8 +29,8 @@ export const WinPage: React.FC<StyledProps> = ({ className }) => {
   );
 };
 
-export const FailPage: React.FC<StyledProps> = ({ className }) => {
-  const { gameState } = useGameContext();
+export const FailPage: React.FC<StyledProps> = observer(({ className }) => {
+  const game = useGameContext();
   return (
     <>
       <Sidebar />
@@ -37,11 +38,11 @@ export const FailPage: React.FC<StyledProps> = ({ className }) => {
       <Main>
         <GameEndPage className={className}>
           <FailWrapper>
-            <FailMessage>{gameState.mistakes} mistakes</FailMessage>
+            <FailMessage>{game.mistakes} mistakes</FailMessage>
             <EmojiList emojiNames={EMOJI_NEGATIVE} />
           </FailWrapper>
         </GameEndPage>
       </Main>
     </>
   );
-};
+});

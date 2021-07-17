@@ -1,19 +1,17 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
-import { GameActionType } from 'services/game/game-action';
-import { useGameContext } from 'services/game/game-context';
-import { isGameMode } from 'services/game/game-state';
+import { useGameContext } from 'services/game/context';
 
 import { ModeFirst, ModeSecond, StyledModeSwitch, Switch } from './mode-switch-style';
 
-export const ModeSwitch = (): JSX.Element => {
-  const { gameState, dispatch } = useGameContext();
-  const isGame = isGameMode(gameState);
+export const ModeSwitch: React.FC = observer(() => {
+  const game = useGameContext();
 
-  const switchClassName = isGame ? 'second' : '';
+  const switchClassName = game.isGameMode ? 'second' : '';
 
   const handleChangeMode = () => {
-    dispatch({ type: isGame ? GameActionType.DISABLE : GameActionType.ENABLE });
+    game.isGameMode ? game.disable() : game.enable();
   };
 
   return (
@@ -23,4 +21,4 @@ export const ModeSwitch = (): JSX.Element => {
       <Switch />
     </StyledModeSwitch>
   );
-};
+});

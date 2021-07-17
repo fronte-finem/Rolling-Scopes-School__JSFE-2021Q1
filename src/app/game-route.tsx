@@ -1,18 +1,19 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
 import { FailPage, WinPage } from 'components/page-game-end/page-game-end';
 import { PageWords } from 'components/page-words/page-words';
-import { GameState, isEnd, isFail, isWin } from 'services/game/game-state';
+import { useGameContext } from 'services/game/context';
 
 interface GameRouteProps {
-  state: GameState;
   isDifficultWords?: boolean;
 }
 
-export const GameRoute: React.FC<GameRouteProps> = ({ state, isDifficultWords }) => {
-  if (isEnd(state)) return <Redirect to="/" />;
-  if (isWin(state)) return <WinPage />;
-  if (isFail(state)) return <FailPage />;
+export const GameRoute = observer(({ isDifficultWords }: GameRouteProps) => {
+  const game = useGameContext();
+  if (game.isEnd) return <Redirect to="/" />;
+  if (game.isWin) return <WinPage />;
+  if (game.isFail) return <FailPage />;
   return <PageWords isDifficultWords={isDifficultWords} />;
-};
+});

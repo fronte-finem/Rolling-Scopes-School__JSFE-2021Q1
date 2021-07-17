@@ -1,11 +1,12 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
 import { getAudioUrl, getImageUrl } from 'app/config';
 import { Marks } from 'components/card/marks';
 import { EMOJI_NEGATIVE, EMOJI_POSITIVE } from 'components/emoji/emoji';
 import { playAudio } from 'services/audio';
 import { WordDocument } from 'services/rest-api/word-api';
-import { useWordsStatsService } from 'services/word-stat/service';
+import { useWordsStatsService } from 'services/word-stat/context';
 import { StyledProps } from 'types/styled';
 import { randomItem } from 'utils/random';
 
@@ -30,7 +31,7 @@ export interface CardProps extends StyledProps {
 
 const CARD_MARKS_LIMIT = -6;
 
-export const Card = (props: CardProps): JSX.Element => {
+export const Card: React.FC<CardProps> = observer((props) => {
   const { className, data, isGameMode, isGameReady, isGamePlay, isSolved, matchWord } = props;
   const { word, translation, image, audio } = data;
   const ref = React.useRef<HTMLButtonElement>(null);
@@ -71,4 +72,4 @@ export const Card = (props: CardProps): JSX.Element => {
       </MarksWrapper>
     </CardContainer>
   );
-};
+});

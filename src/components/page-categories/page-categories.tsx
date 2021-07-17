@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { observer } from 'mobx-react-lite';
 
 import { Main } from 'app/app-style';
 import { CategoryLink } from 'components/category/category';
@@ -6,8 +7,7 @@ import { Header } from 'components/header/header';
 import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
 import { Sidebar } from 'components/sidebar/sidebar';
 import { useDataContext } from 'services/data/data-context';
-import { useGameContext } from 'services/game/game-context';
-import { isGameMode } from 'services/game/game-state';
+import { useGameContext } from 'services/game/context';
 import { StyledProps } from 'types/styled';
 import { delay } from 'utils/async';
 
@@ -15,10 +15,10 @@ import { StyledCategories, StyledCategoriesItem } from './page-categories-style'
 
 const SCROLL_PART = 8;
 
-export const PageCategories = ({ className }: StyledProps): JSX.Element => {
+export const PageCategories: React.FC<StyledProps> = observer(({ className }) => {
   const { categoriesData, getWords } = useDataContext();
   const [categoriesPart, setCategoriesPart] = useState(categoriesData.slice(0, SCROLL_PART));
-  const { gameState } = useGameContext();
+  const game = useGameContext();
 
   const loadMore = async () => {
     if (categoriesPart.length >= categoriesData.length) return;
@@ -49,7 +49,7 @@ export const PageCategories = ({ className }: StyledProps): JSX.Element => {
                 <StyledCategoriesItem key={data.category._id}>
                   <CategoryLink
                     data={data}
-                    isGameMode={isGameMode(gameState)}
+                    isGameMode={game.isGameMode}
                     words={getWords(data.category._id)}
                   />
                 </StyledCategoriesItem>
@@ -60,4 +60,4 @@ export const PageCategories = ({ className }: StyledProps): JSX.Element => {
       </Main>
     </>
   );
-};
+});
