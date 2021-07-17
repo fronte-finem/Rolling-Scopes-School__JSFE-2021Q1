@@ -62,4 +62,4 @@ export const isWordSolved: WordCheck = (state, wordId) =>
   isGameStarted(state) && state.words.every((word) => word._id !== wordId);
 
 export const isOtherRoutePath: CategoryCheck = (state, currentRoutePath) =>
-  !!state.activeRoutePath && state.activeRoutePath !== currentRoutePath;
+  state.activeRoutePath !== currentRoutePath;
