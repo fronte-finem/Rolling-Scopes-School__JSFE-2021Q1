@@ -2,8 +2,8 @@
 
 export const PLACEHOLDER = 'placeholder';
 
-const PLACEHOLDER_IMAGE = './placeholder/image.svg';
-const PLACEHOLDER_AUDIO = './placeholder/audio.mp3';
+const PLACEHOLDER_IMAGE = './placeholder/placeholder.svg';
+const PLACEHOLDER_AUDIO = './placeholder/placeholder.mp3';
 
 const getUrl = (placeholderUrl: string) => (url: string) =>
   url === PLACEHOLDER ? placeholderUrl : url;
