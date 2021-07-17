@@ -9,25 +9,19 @@ const API_URL = `${CURRENT_API_URL}/api/category`;
 export type CategoryDocument = CategoryClass & { _id: string };
 export type CategoryResponse = AxiosResponse<CategoryDocument>;
 
-export interface CategoryCardData {
-  category: CategoryDocument;
-  words: number;
-}
-export type CategoryCardDataArray = Array<CategoryCardData>;
-
 class CategoryApiService {
   public getAllCancelable = () => {
     const cancelSource = axios.CancelToken.source();
     return {
       cancel: () => cancelSource.cancel('get categories canceled'),
-      getCategories: (): Promise<AxiosResponse<CategoryCardDataArray>> => {
-        return axios.get<CategoryCardDataArray>(API_URL, { cancelToken: cancelSource.token });
+      getCategories: (): Promise<AxiosResponse<CategoryDocument[]>> => {
+        return axios.get<CategoryDocument[]>(API_URL, { cancelToken: cancelSource.token });
       },
     };
   };
 
-  public getAll = (): Promise<AxiosResponse<CategoryCardDataArray>> => {
-    return axios.get<CategoryCardDataArray>(API_URL);
+  public getAll = (): Promise<AxiosResponse<CategoryDocument[]>> => {
+    return axios.get<CategoryDocument[]>(API_URL);
   };
 
   public getOne = (categoryId: string): Promise<CategoryResponse> => {
