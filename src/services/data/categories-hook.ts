@@ -22,7 +22,6 @@ export const useCategoriesHook = (): CategoriesDataHook => {
       try {
         const response = await categoryApiService.getAll();
         setCategoriesData(response.data);
-        console.log(response.data);
       } catch (error) {
         console.log(error);
       }

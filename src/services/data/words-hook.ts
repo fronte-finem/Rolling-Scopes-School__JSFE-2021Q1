@@ -21,12 +21,10 @@ export const useWordsHook = (): WordsHook => {
       try {
         const categoryResponse = await categoryApiService.getOne(categoryId);
         const wordsResponse = await wordApiService.getAll(categoryId);
-        console.log('categoryApiService.getOne', categoryResponse.data);
         setCategory(categoryResponse.data);
-        console.log('wordApiService.getAll', wordsResponse.data);
         setWords(wordsResponse.data);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     })();
   }, [categoryId]);
