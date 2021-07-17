@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import mongoose from 'mongoose';
 
 import { Category, CategoryModel } from '../models/category';
 import { WordModel } from '../models/word';
@@ -7,15 +6,7 @@ import { WordModel } from '../models/word';
 export async function getCategories(request: Request, response: Response): Promise<Response> {
   try {
     const categories = await CategoryModel.find().lean();
-    const words = await WordModel.find().lean();
-    const arr = categories.map((category) => {
-      const id = category._id as mongoose.Types.ObjectId;
-      return {
-        category,
-        words: words.filter((word) => word.category?.toString() === id.toString()).length,
-      };
-    });
-    return response.status(200).json(arr);
+    return response.status(200).json(categories);
   } catch (error) {
     return response.status(500).send(error);
   }
