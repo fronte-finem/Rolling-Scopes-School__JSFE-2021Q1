@@ -37,9 +37,8 @@ export const PageWords = ({
   const { category, words } = useWordsHook();
   const wordsStatsService = useWordsStatsService();
   const { gameState, dispatch } = useGameContext();
-  const difficultWords = React.useRef(wordsStatsService.getDifficultWords(allWords)).current;
 
-  const someWords = isDifficultWords ? difficultWords : words;
+  const someWords = isDifficultWords ? wordsStatsService.getDifficultWords(allWords) : words;
   const [wordsPart, setWordsPart] = useState(someWords.slice(0, SCROLL_PART));
 
   const handleMathWord = (word: WordDocument) => {
