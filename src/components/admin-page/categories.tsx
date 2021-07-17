@@ -11,7 +11,7 @@ import { Sidebar } from 'components/sidebar/sidebar';
 import { useDataContext } from 'services/data/data-context';
 import { authService } from 'services/rest-api/auth';
 import { CategoryCardData, CategoryDocument } from 'services/rest-api/category-api';
-import { updateArray } from 'utils/array';
+import { updateItem } from 'utils/array';
 import { delay } from 'utils/async';
 
 import { Container } from './admin-page-style';
@@ -47,7 +47,7 @@ export const AdminPageCategories: React.FC = () => {
 
   const handleUpdate = (data: CategoryCardData) => {
     setCategoriesData(
-      updateArray(categoriesData, data, (x) => (y) => x.category._id === y.category._id)
+      updateItem(categoriesData, data, (x) => (y) => x.category._id === y.category._id)
     );
   };
 

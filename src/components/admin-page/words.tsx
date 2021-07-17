@@ -11,7 +11,7 @@ import { Sidebar } from 'components/sidebar/sidebar';
 import { useWordsHook } from 'services/data/words-hook';
 import { authService } from 'services/rest-api/auth';
 import { WordDocument } from 'services/rest-api/word-api';
-import { updateArray } from 'utils/array';
+import { updateItem } from 'utils/array';
 import { delay } from 'utils/async';
 
 import { Container } from './admin-page-style';
@@ -32,7 +32,7 @@ export const AdminPageWords: React.FC = () => {
   };
 
   const handleUpdate = (data: WordDocument) => {
-    setWords(updateArray(words, data, (x) => (y) => x._id === y._id));
+    setWords(updateItem(words, data, (x) => (y) => x._id === y._id));
   };
 
   const loadMore = async () => {

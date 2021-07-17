@@ -6,7 +6,7 @@ import { App } from 'app/app';
 import { ModalContextProvider } from 'components/modal/modal-context';
 import { DataContextProvider } from 'services/data/data-context';
 import { GameContextProvider } from 'services/game/game-context';
-import { WordsStatsContextProvider } from 'services/stats/words-stats-context';
+import { WordsStatsContextProvider } from 'services/word-stat/service';
 
 ReactDOM.render(
   <React.StrictMode>

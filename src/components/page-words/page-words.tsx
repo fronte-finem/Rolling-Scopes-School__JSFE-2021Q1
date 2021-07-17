@@ -6,6 +6,7 @@ import { Header } from 'components/header/header';
 import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
 import { StyledCardsField, StyledCardsFieldItem } from 'components/page-words/page-words-style';
 import { Sidebar } from 'components/sidebar/sidebar';
+import { useDataContext } from 'services/data/data-context';
 import { useWordsHook } from 'services/data/words-hook';
 import { GameActionType } from 'services/game/game-action';
 import { useGameContext } from 'services/game/game-context';
@@ -17,7 +18,7 @@ import {
   isWordSolved,
 } from 'services/game/game-state';
 import { WordDocument } from 'services/rest-api/word-api';
-import { useWordsStatsContext } from 'services/stats/words-stats-context';
+import { useWordsStatsService } from 'services/word-stat/service';
 import { StyledProps } from 'types/styled';
 import { delay } from 'utils/async';
 
@@ -25,17 +26,20 @@ const SCROLL_PART = 8;
 
 export interface PageCardsFieldProps extends StyledProps {
   isDifficultWords?: boolean;
+  words?: WordDocument[];
 }
 
 export const PageWords = ({
   className,
   isDifficultWords = false,
 }: PageCardsFieldProps): JSX.Element => {
+  const { allWords } = useDataContext();
   const { category, words } = useWordsHook();
-  const { getDifficultWords } = useWordsStatsContext();
+  const wordsStatsService = useWordsStatsService();
   const { gameState, dispatch } = useGameContext();
+  const difficultWords = React.useRef(wordsStatsService.getDifficultWords(allWords)).current;
 
-  const someWords = isDifficultWords ? React.useRef(getDifficultWords()).current : words;
+  const someWords = isDifficultWords ? difficultWords : words;
   const [wordsPart, setWordsPart] = useState(someWords.slice(0, SCROLL_PART));
 
   const handleMathWord = (word: WordDocument) => {

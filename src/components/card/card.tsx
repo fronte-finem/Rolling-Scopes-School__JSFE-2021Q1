@@ -5,7 +5,7 @@ import { Marks } from 'components/card/marks';
 import { EMOJI_NEGATIVE, EMOJI_POSITIVE } from 'components/emoji/emoji';
 import { playAudio } from 'services/audio';
 import { WordDocument } from 'services/rest-api/word-api';
-import { useWordsStatsContext } from 'services/stats/words-stats-context';
+import { useWordsStatsService } from 'services/word-stat/service';
 import { StyledProps } from 'types/styled';
 import { randomItem } from 'utils/random';
 
@@ -36,7 +36,7 @@ export const Card = (props: CardProps): JSX.Element => {
   const ref = React.useRef<HTMLButtonElement>(null);
   const [isFlipped, setFlip] = React.useState(false);
   const [marks, setMark] = React.useState<string[]>([]);
-  const { askClick, flipClick } = useWordsStatsContext();
+  const wordsStatsService = useWordsStatsService();
   const cardClassName = getCardClassName(isFlipped, props);
 
   const handlePlay = (ev: React.MouseEvent<HTMLDivElement>) => {
@@ -49,13 +49,13 @@ export const Card = (props: CardProps): JSX.Element => {
     }
     if (ref.current?.contains(ev.target as Node)) return;
     playAudio(getAudioUrl(audio));
-    askClick(data._id);
+    wordsStatsService.listenInc(data._id);
   };
 
   const handleMouseLeave = () => setFlip(() => false);
   const handleFlip = () => {
     setFlip(() => true);
-    flipClick(data._id);
+    wordsStatsService.translateInc(data._id);
   };
 
   return (

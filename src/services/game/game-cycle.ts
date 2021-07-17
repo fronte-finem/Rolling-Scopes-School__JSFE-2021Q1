@@ -10,7 +10,7 @@ import {
   isGameEnd,
   isWin,
 } from 'services/game/game-state';
-import { useWordsStatsContext } from 'services/stats/words-stats-context';
+import { useWordsStatsService } from 'services/word-stat/service';
 
 const SOUND_YES = './sfx/yes.mp3';
 const SOUND_NO = './sfx/no.mp3';
@@ -20,7 +20,7 @@ const SOUND_FAIL = './sfx/fail.mp3';
 type GameCycleResult = readonly [GameState, React.Dispatch<GameAction>];
 
 export function useGameCycle(): GameCycleResult {
-  const { gameClick, matchClick } = useWordsStatsContext();
+  const wordsStatsService = useWordsStatsService();
   const [gameState, dispatch] = React.useReducer(gameReducer, getInitialGameState());
 
   React.useEffect(() => {
@@ -33,11 +33,11 @@ export function useGameCycle(): GameCycleResult {
           handleVocalize(gameState, dispatch);
           break;
         case GameStatus.HIT:
-          gameState.activeWord && matchClick(gameState.activeWord._id);
+          gameState.activeWord && wordsStatsService.matchInc(gameState.activeWord._id);
           handleHit(gameState, dispatch);
           break;
         case GameStatus.MISS:
-          gameState.activeWord && gameClick(gameState.activeWord._id);
+          gameState.activeWord && wordsStatsService.errorInc(gameState.activeWord._id);
           handleMiss(dispatch);
           break;
         case GameStatus.SHOW_RESULT:
