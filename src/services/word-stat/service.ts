@@ -1,6 +1,5 @@
-import { action, autorun, makeAutoObservable, observable, runInAction } from 'mobx';
+import { action, makeAutoObservable, observable, runInAction } from 'mobx';
 
-import { load, save } from 'services/local-storage/local-storage';
 import { CategoryDocument } from 'services/rest-api/category-api';
 import { WordDocument } from 'services/rest-api/word-api';
 import {
@@ -13,15 +12,14 @@ import {
 } from 'services/word-stat/model';
 import { Order } from 'types/order';
 import { sort, updateItemById } from 'utils/array';
-import React from 'react';
-import { useDataContext } from 'services/data/data-context';
+import { load } from 'utils/local-storage';
 
-const STORAGE_KEY = 'fronte-finem--efk--words-stats-v2';
+export const STORAGE_KEY = 'fronte-finem--efk--words-stats-v2';
 const DEFAULT_MAX_COUNT_DIFFICULT_WORDS = 8;
 
 type Update<State> = (state: State) => State;
 
-class WordsStatsService {
+export class WordsStatsService {
   @observable public stats: WordStat[] = load<WordStatTuple[]>(STORAGE_KEY, []).map((data) =>
     WordStat.deserialize(data)
   );
@@ -65,38 +63,10 @@ class WordsStatsService {
     words: WordDocument[],
     count = DEFAULT_MAX_COUNT_DIFFICULT_WORDS
   ): WordDocument[] => {
-    const difficultWordsStats = this.stats.filter((stat) => stat.errorPercent > 0).slice(0, count);
+    const difficultWordsStats = this.stats.filter((stat) => stat.errorPercent > 0);
     return sort(Order.DESC, difficultWordsStats, 'errorPercent')
+      .slice(0, count)
       .map((stat) => words.find((wordDoc) => wordDoc._id === stat.id))
       .filter((word) => word !== undefined) as WordDocument[];
   };
 }
-
-const WordsStatsContext = React.createContext<WordsStatsService | undefined>(undefined);
-
-export const WordsStatsContextProvider: React.FC = ({ children }) => {
-  const wordsStatsService = new WordsStatsService();
-  const { allWords } = useDataContext();
-
-  autorun(() => {
-    save(
-      STORAGE_KEY,
-      wordsStatsService.stats.map((stat) => stat.serialize())
-    );
-  });
-
-  React.useEffect(() => {
-    if (allWords.length === 0) return;
-    wordsStatsService.actualize(allWords);
-  }, [allWords]);
-
-  return (
-    <WordsStatsContext.Provider value={wordsStatsService}>{children}</WordsStatsContext.Provider>
-  );
-};
-
-export const useWordsStatsService = (): WordsStatsService => {
-  const wordsStatsService = React.useContext(WordsStatsContext);
-  if (!wordsStatsService) throw new Error('WordsStatsService undefined!');
-  return wordsStatsService;
-};
