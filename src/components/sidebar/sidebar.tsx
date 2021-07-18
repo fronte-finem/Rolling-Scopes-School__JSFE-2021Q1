@@ -19,12 +19,14 @@ import {
   Heading,
   List,
   ListItem,
+  SidebarExternalLink,
   SidebarLink,
   SidebarNav,
   StaticContainer,
 } from './sidebar-style';
 
 const SCROLL_PART = 6;
+const SWAGGER_LINK = 'https://app.swaggerhub.com/apis-docs/fronte_finem/english-for-kids/1';
 
 export const Sidebar = ({ className }: StyledProps): JSX.Element => {
   const token = authService.getCurrentToken();
@@ -81,9 +83,14 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
       <StaticContainer>
         {token && <Heading>Hello, admin! 🙃</Heading>}
         {token && (
-          <SidebarLink to="/admin" onClick={handleLinkClick}>
-            Admin page
-          </SidebarLink>
+          <>
+            <SidebarLink to="/admin" onClick={handleLinkClick}>
+              Admin page
+            </SidebarLink>
+            <SidebarExternalLink href={SWAGGER_LINK} target="_blank" onClick={handleLinkClick}>
+              SwaggerHub
+            </SidebarExternalLink>
+          </>
         )}
         <SidebarLink exact to="/" onClick={handleLinkClick}>
           Home

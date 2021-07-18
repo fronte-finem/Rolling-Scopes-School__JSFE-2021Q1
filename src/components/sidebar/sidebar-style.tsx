@@ -106,6 +106,20 @@ const sidebarLinkStyle = css`
   }
 `;
 
+export const SidebarExternalLink = styled.a.attrs({ draggable: false })`
+  ${sidebarLinkStyle};
+  background: #38b832;
+  color: #fff;
+  &:hover {
+    background: #298e35;
+    color: #040a0d;
+  }
+  &:active {
+    background: #89bf04;
+    color: #040a0d;
+  }
+`;
+
 export const SidebarLink = styled(NavLink).attrs({ draggable: false })`
   ${sidebarLinkStyle};
 `;
