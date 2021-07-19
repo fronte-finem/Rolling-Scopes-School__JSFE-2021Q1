@@ -65,12 +65,12 @@ export const Login: React.FC = () => {
     event.preventDefault();
     if (!username || !password) return;
     setLoginRequest(true);
-    const { data, error } = await authService.login({ username, password });
-    if (data) {
+    const result = await authService.login({ username, password });
+    if (result.data) {
       setErrorMsg('');
       onLogin();
-    } else if (error) {
-      setErrorMsg(error);
+    } else if (result.errorData) {
+      setErrorMsg(JSON.stringify(result.errorData));
     }
     setLoginRequest(false);
   };
