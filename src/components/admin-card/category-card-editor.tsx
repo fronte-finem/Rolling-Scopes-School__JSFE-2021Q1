@@ -17,9 +17,18 @@ interface Props {
 }
 
 export const CategoryCardEditor: React.FC<Props> = ({ initialName, onCancel, onSubmit }) => {
+  const isMounted = React.useRef(false);
   const formRef = React.useRef<HTMLFormElement>(null);
   const [isLoading, setLoading] = React.useState(false);
   const [name, setName] = React.useState(initialName);
+
+  React.useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      setLoading(false);
+      isMounted.current = false;
+    };
+  }, []);
 
   const handleInput = (value: string) => setName(value);
 
@@ -30,7 +39,7 @@ export const CategoryCardEditor: React.FC<Props> = ({ initialName, onCancel, onS
     }
     setLoading(true);
     await onSubmit(name);
-    setLoading(false);
+    isMounted.current && setLoading(false);
   };
 
   return (

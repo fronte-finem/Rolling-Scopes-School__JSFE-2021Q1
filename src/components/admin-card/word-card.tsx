@@ -13,8 +13,17 @@ interface Props {
 }
 
 export const WordCard: React.FC<Props> = ({ initialWord, onUpdate, onDelete }) => {
+  const isMounted = React.useRef(false);
   const wordId = initialWord._id;
   const [isEdit, setEdit] = React.useState(false);
+
+  React.useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      setEdit(false);
+      isMounted.current = false;
+    };
+  }, []);
 
   const handleEdit = () => setEdit(true);
   const handleCancel = () => setEdit(false);
@@ -23,7 +32,7 @@ export const WordCard: React.FC<Props> = ({ initialWord, onUpdate, onDelete }) =
 
   const handleUpdate = async (wordProps: WordProps) => {
     await onUpdate(initialWord, wordProps);
-    setEdit(false);
+    isMounted.current && setEdit(false);
   };
 
   return (

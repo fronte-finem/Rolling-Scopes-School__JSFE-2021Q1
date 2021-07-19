@@ -26,6 +26,7 @@ export const WordCardEditor: React.FC<Props> = ({
   onCancel,
   isFilesRequired = false,
 }) => {
+  const isMounted = React.useRef(false);
   const formRef = React.useRef<HTMLFormElement>(null);
   const [reset, setReset] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -35,6 +36,14 @@ export const WordCardEditor: React.FC<Props> = ({
     image: undefined,
     audio: undefined,
   });
+
+  React.useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      setLoading(false);
+      isMounted.current = false;
+    };
+  }, []);
 
   const handleCancel = () => {
     setReset(true);
@@ -55,7 +64,7 @@ export const WordCardEditor: React.FC<Props> = ({
     }
     setLoading(true);
     await onSubmit({ ...wordProps });
-    // setLoading(false);
+    isMounted.current && setLoading(false);
   };
 
   return (
