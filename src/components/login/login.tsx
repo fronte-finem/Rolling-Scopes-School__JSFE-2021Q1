@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { Modal } from 'components/modal/modal';
 import { useModalContext } from 'components/modal/modal-context';
 import { authService } from 'services/rest-api/auth';
-import { getErrorMsg } from 'utils/error';
 
 import {
   BtnCancel,
@@ -66,17 +65,14 @@ export const Login: React.FC = () => {
     event.preventDefault();
     if (!username || !password) return;
     setLoginRequest(true);
-    try {
-      const data = await authService.login({ username, password });
+    const { data, error } = await authService.login({ username, password });
+    if (data) {
       setErrorMsg('');
-      console.log(data);
       onLogin();
-    } catch (error: unknown) {
-      setErrorMsg(getErrorMsg(error));
-      console.error(error);
-    } finally {
-      setLoginRequest(false);
+    } else if (error) {
+      setErrorMsg(error);
     }
+    setLoginRequest(false);
   };
 
   const usernameId = 'username';
@@ -124,7 +120,7 @@ export const Login: React.FC = () => {
               ref={passwordRef}
             />
           </InputWrapper>
-          <ErrorWrapper>{errorMsg ? <ErrorMsg>{errorMsg}</ErrorMsg> : null}</ErrorWrapper>
+          <ErrorWrapper>{errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}</ErrorWrapper>
         </Wrapper>
       </Form>
     </Modal>
