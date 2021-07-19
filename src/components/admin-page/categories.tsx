@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
@@ -8,7 +8,9 @@ import { CategoryCard } from 'components/admin-card/category-card';
 import { AdminHeader } from 'components/admin-header/header';
 import { Header } from 'components/header/header';
 import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
+import { useAuthTestHook } from 'components/modal/modal-auth';
 import { Sidebar } from 'components/sidebar/sidebar';
+import { HerokuLoading } from 'components/spinner/heroku-loading';
 import { useDataContext } from 'services/data/context';
 import { authService } from 'services/rest-api/auth';
 import { CategoryDocument } from 'services/rest-api/category-api';
@@ -16,59 +18,67 @@ import { delay } from 'utils/async';
 
 import { Container } from './admin-page-style';
 
-const SCROLL_PART = 8;
+const SCROLL_PART = 3;
 
 export const AdminPageCategories: React.FC = observer(() => {
   const dataService = useDataContext();
-  const [categoriesPart, setCategoriesPart] = useState(
-    dataService.categories.slice(0, SCROLL_PART)
-  );
+  const [itemsCount, setItemsCount] = useState(SCROLL_PART);
   const history = useHistory();
   const token = authService.getCurrentToken();
+  const { setRestApiError } = useAuthTestHook();
 
   const loadMore = async () => {
-    if (categoriesPart.length >= dataService.categories.length) return;
-    await delay(500);
-    const { length } = categoriesPart;
-    setCategoriesPart(dataService.categories.slice(0, length + SCROLL_PART));
+    if (itemsCount >= dataService.categories.length) return;
+    await delay(200);
+    setItemsCount(itemsCount + SCROLL_PART);
   };
 
-  useEffect(() => {
-    (async () => {
-      await loadMore();
-    })();
-  }, [dataService.categories]);
-
   const handleCreate = async (name: string) => {
-    await dataService.createCategory(name);
+    const result = await dataService.createCategory(name);
+    if (result.isError) {
+      setRestApiError(result);
+    } else {
+      setItemsCount((count) => count + 1);
+    }
   };
 
   const handleUpdate = async (category: CategoryDocument, name: string) => {
-    await dataService.updateCategory(category, name);
+    const result = await dataService.updateCategory(category, name);
+    result.isError && setRestApiError(result);
   };
 
   const handleDelete = async (category: CategoryDocument) => {
-    await dataService.deleteCategory(category);
+    const result = await dataService.deleteCategory(category);
+    result.isError && setRestApiError(result);
   };
 
   const handleGoToWords = (category: CategoryDocument) => {
     history.push(`/admin/category/${category._id}`);
   };
 
-  const cards = [
-    // ...categoriesPart.map((category) => (
-    ...dataService.categories.map((category) => (
-      <CategoryCard
-        key={category.name}
-        category={category}
-        onUpdate={handleUpdate}
-        onDelete={handleDelete}
-        onGoToWords={handleGoToWords}
-        words={dataService.getWordsByCategoryId(category._id)}
-      />
-    )),
-    <CategoryAddCard key="creator" onCreate={handleCreate} />,
-  ];
+  const spinner = <HerokuLoading />;
+
+  const content = (
+    <InfiniteScroller height="80vh" loadMore={loadMore}>
+      <Container>
+        {[
+          ...dataService.categories
+            .slice(0, itemsCount)
+            .map((category) => (
+              <CategoryCard
+                key={category.name}
+                category={category}
+                onUpdate={handleUpdate}
+                onDelete={handleDelete}
+                onGoToWords={handleGoToWords}
+                words={dataService.getWordsByCategoryId(category._id)}
+              />
+            )),
+          <CategoryAddCard key="creator" onCreate={handleCreate} />,
+        ]}
+      </Container>
+    </InfiniteScroller>
+  );
 
   const page = (
     <>
@@ -76,11 +86,7 @@ export const AdminPageCategories: React.FC = observer(() => {
       <Header isAdmin>
         <AdminHeader />
       </Header>
-      <Main>
-        <InfiniteScroller height="80vh" loadMore={loadMore}>
-          <Container>{cards}</Container>
-        </InfiniteScroller>
-      </Main>
+      <Main>{dataService.isPending ? spinner : content}</Main>
     </>
   );
 
