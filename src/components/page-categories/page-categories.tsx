@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import { Main } from 'app/app-style';
-import { CategoryLink } from 'components/category/category';
+import { CategoryLink } from 'components/card-category/category';
 import { Header } from 'components/header/header';
 import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
 import { Sidebar } from 'components/sidebar/sidebar';

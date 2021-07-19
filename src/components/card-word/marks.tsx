@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MarkItem, MarksList } from 'components/card/marks-style';
+import { MarkItem, MarksList } from 'components/card-word/marks-style';
 import { Emoji } from 'components/emoji/emoji';
 
 interface MarkProps {

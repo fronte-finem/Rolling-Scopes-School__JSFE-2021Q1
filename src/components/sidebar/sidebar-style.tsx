@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 import { button } from 'components/button/button-style';
-import { CategoryLink } from 'components/category/category-link';
+import { CategoryLink } from 'components/card-category/category-link';
 
 export const SidebarNav = styled.nav`
   --w: 300px;

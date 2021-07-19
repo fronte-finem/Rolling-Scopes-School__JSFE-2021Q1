@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { Main } from 'app/app-style';
-import { Card } from 'components/card/card';
+import { Card } from 'components/card-word/card';
 import { Header } from 'components/header/header';
 import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
 import { StyledCardsField, StyledCardsFieldItem } from 'components/page-words/page-words-style';

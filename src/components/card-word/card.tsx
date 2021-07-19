@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 
 import { getAudioUrl, getImageUrl } from 'app/config';
-import { Marks } from 'components/card/marks';
+import { Marks } from 'components/card-word/marks';
 import { EMOJI_NEGATIVE, EMOJI_POSITIVE } from 'components/emoji/emoji';
 import { playAudio } from 'services/audio';
 import { WordDocument } from 'services/rest-api/word-api';
