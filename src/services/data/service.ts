@@ -1,6 +1,7 @@
-import { action, makeObservable, observable, runInAction } from 'mobx';
+import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 
 import { PLACEHOLDER } from 'app/config';
+import { RestApiError, RestApiResponse } from 'services/rest-api/axios-response';
 import { categoryApiService, CategoryDocument } from 'services/rest-api/category-api';
 import { mediaUpload } from 'services/rest-api/media-api';
 import { wordApiService, WordDocument } from 'services/rest-api/word-api';
@@ -18,6 +19,9 @@ export enum DataServiceState {
   DONE = 'done',
   ERROR = 'error',
 }
+
+type MediaUploadResult = Promise<RestApiResponse<{ image?: string; audio?: string }>>;
+type RestApiWordResponse = Promise<RestApiResponse<WordDocument>>;
 
 export class DataService {
   @observable public state = DataServiceState.PENDING;
@@ -50,6 +54,18 @@ export class DataService {
     }
   }
 
+  @computed public get isPending(): boolean {
+    return this.state === DataServiceState.PENDING;
+  }
+
+  @computed public get isDone(): boolean {
+    return this.state === DataServiceState.DONE;
+  }
+
+  @computed public get isError(): boolean {
+    return this.state === DataServiceState.ERROR;
+  }
+
   @action private onCreateCategory(category: CategoryDocument): void {
     this.categories = [...this.categories, category];
   }
@@ -62,37 +78,31 @@ export class DataService {
     this.categories = this.categories.filter((category) => category._id !== categoryId);
   }
 
-  public async createCategory(name: string): Promise<void> {
-    try {
-      const category = (await categoryApiService.create({ name })).data;
-      this.onCreateCategory(category);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      console.log('end of category create request');
+  public async createCategory(name: string): Promise<RestApiResponse<CategoryDocument>> {
+    const result = await categoryApiService.create({ name });
+    if (result.data) {
+      this.onCreateCategory(result.data);
     }
+    return result;
   }
 
-  public async updateCategory(category: CategoryDocument, name: string): Promise<void> {
-    try {
-      const { data } = await categoryApiService.update({ ...category, name });
-      this.onUpdateCategory(data);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      console.log('end of category update request');
+  public async updateCategory(
+    category: CategoryDocument,
+    name: string
+  ): Promise<RestApiResponse<CategoryDocument>> {
+    const result = await categoryApiService.update({ ...category, name });
+    if (result.data) {
+      this.onUpdateCategory(result.data);
     }
+    return result;
   }
 
-  public async deleteCategory(category: CategoryDocument): Promise<void> {
-    try {
-      await categoryApiService.remove(category);
+  public async deleteCategory(category: CategoryDocument): Promise<RestApiResponse<string>> {
+    const result = await categoryApiService.remove(category);
+    if (!result.isError) {
       this.onDeleteCategory(category._id);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      console.log('end of category delete request');
     }
+    return result;
   }
 
   @action private onCreateWord(word: WordDocument): void {
@@ -107,56 +117,57 @@ export class DataService {
     this.words = this.words.filter((word) => word._id !== wordId);
   }
 
-  public async createWord(
-    categoryId: string,
-    { image, audio, ...texts }: WordProps
-  ): Promise<void> {
-    try {
-      const imageUrl = image && (await mediaUpload(image)).data;
-      const audioUrl = audio && (await mediaUpload(audio)).data;
-      const { data } = await wordApiService.create(categoryId, {
-        ...texts,
-        image: imageUrl || PLACEHOLDER,
-        audio: audioUrl || PLACEHOLDER,
-      });
-      this.onCreateWord(data);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      console.log('end of category create request');
+  private uploadMedia = async ({ image, audio }: WordProps): MediaUploadResult => {
+    const resultImage = image && (await mediaUpload(image));
+    if (resultImage?.isError) return resultImage as RestApiError;
+    const resultAudio = audio && (await mediaUpload(audio));
+    if (resultAudio?.isError) return resultAudio as RestApiError;
+    return {
+      data: {
+        image: resultImage?.data,
+        audio: resultAudio?.data,
+      },
+    };
+  };
+
+  public async createWord(categoryId: string, wordProps: WordProps): RestApiWordResponse {
+    const resultUpload = await this.uploadMedia(wordProps);
+    if (resultUpload?.isError) return resultUpload as RestApiError;
+    const result = await wordApiService.create(categoryId, {
+      ...wordProps,
+      image: resultUpload.data?.image || PLACEHOLDER,
+      audio: resultUpload.data?.audio || PLACEHOLDER,
+    });
+    if (result.data) {
+      this.onCreateWord(result.data);
     }
+    return result;
   }
 
   public async updateWord(
     categoryId: string,
     word: WordDocument,
-    { image, audio, ...texts }: WordProps
-  ): Promise<void> {
-    try {
-      const imageUrl = image && (await mediaUpload(image)).data;
-      const audioUrl = audio && (await mediaUpload(audio)).data;
-      const { data } = await wordApiService.update(categoryId, word._id, {
-        ...texts,
-        image: imageUrl || word.image,
-        audio: audioUrl || word.audio,
-      });
-      this.onUpdateWord(data);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      console.log('end of category update request');
+    wordProps: WordProps
+  ): RestApiWordResponse {
+    const resultUpload = await this.uploadMedia(wordProps);
+    if (resultUpload?.isError) return resultUpload as RestApiError;
+    const result = await wordApiService.update(categoryId, word._id, {
+      ...wordProps,
+      image: resultUpload.data?.image || word.image,
+      audio: resultUpload.data?.audio || word.audio,
+    });
+    if (result.data) {
+      this.onUpdateWord(result.data);
     }
+    return result;
   }
 
-  public async deleteWord(categoryId: string, wordId: string): Promise<void> {
-    try {
-      await wordApiService.remove(categoryId, wordId);
+  public async deleteWord(categoryId: string, wordId: string): Promise<RestApiResponse<string>> {
+    const result = await wordApiService.remove(categoryId, wordId);
+    if (!result.isError) {
       this.onDeleteWord(wordId);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      console.log('end of category delete request');
     }
+    return result;
   }
 
   public getWordsByCategoryId = (categoryId: string): WordDocument[] => {
