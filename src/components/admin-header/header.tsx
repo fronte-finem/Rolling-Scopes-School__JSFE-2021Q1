@@ -18,8 +18,8 @@ interface Props {
 export const AdminHeader: React.FC<Props> = ({ category, words }) => {
   const history = useHistory();
 
-  const handleLogout = async () => {
-    await authService.logout();
+  const handleLogout = () => {
+    authService.logout();
     history.push('/');
   };
 
