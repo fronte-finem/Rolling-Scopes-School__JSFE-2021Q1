@@ -1,27 +1,11 @@
 import { LoginProps } from '@server/models/user';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 
-import { BACKEND_API_URL } from 'services/rest-api/config';
-
-export const AUTH_STORAGE_KEY = 'fronte-finem--efk--auth-token';
+import { RestApiResponse } from 'services/rest-api/axios-response';
+import { axiosWrapper } from 'services/rest-api/axios-wrapper';
+import { AUTH_STORAGE_KEY, BACKEND_API_URL } from 'services/rest-api/config';
 
 const API_URL = `${BACKEND_API_URL}/api/auth`;
-
-export interface RestApiResponse<T> {
-  data?: T;
-  error?: string;
-}
-
-async function axiosWrapper<T>(axiosPromise: () => Promise<T>): Promise<RestApiResponse<T>> {
-  try {
-    return { data: await axiosPromise() };
-  } catch (error) {
-    console.log('AxiosError Error:', (error as AxiosError).response);
-    return {
-      error: (error as AxiosError).response?.data as string,
-    };
-  }
-}
 
 class AuthService {
   public login = async (loginProps: LoginProps): Promise<RestApiResponse<string>> => {
