@@ -1,5 +1,5 @@
 import path from 'path';
-import { Configuration as WebpackConfiguration } from 'webpack';
+import { Configuration as WebpackConfiguration, DefinePlugin } from 'webpack';
 import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
@@ -21,6 +21,8 @@ const BUILD_DIST = 'english-for-kids';
 const PROJECT_DIST = path.resolve(__dirname, BUILD_DIST);
 const RAMDISK_DIST = `r:/${BUILD_DIST}`;
 const TARGETS = 'last 1 chrome version, last 1 firefox version';
+const DEV_BACKEND_API = 'http://localhost:5000';
+const PROD_BACKEND_API = 'https://fronte-finem--english-for-kids.herokuapp.com';
 
 function devConfig({ dev, myenv }: Env): Configuration {
   return {
@@ -119,6 +121,9 @@ function devConfig({ dev, myenv }: Env): Configuration {
     },
 
     plugins: [
+      new DefinePlugin({
+        BACKEND_API: JSON.stringify(dev ? DEV_BACKEND_API : PROD_BACKEND_API),
+      }),
       new HtmlWebpackPlugin({
         template: 'src/index.html',
       }),

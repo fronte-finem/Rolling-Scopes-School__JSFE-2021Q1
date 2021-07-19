@@ -1,4 +1,5 @@
-const DEV_API_URL = 'http://localhost:5000';
-const PROD_API_URL = 'https://fronte-finem--english-for-kids.herokuapp.com';
+declare const BACKEND_API: string;
 
-export const CURRENT_API_URL = PROD_API_URL;
+const BACKEND_API_URL: string = BACKEND_API;
+
+export { BACKEND_API_URL };
