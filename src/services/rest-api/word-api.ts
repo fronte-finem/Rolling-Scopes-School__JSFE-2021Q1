@@ -2,6 +2,8 @@ import { Word, WordClass } from '@server/models/word';
 import axios, { AxiosResponse } from 'axios';
 
 import { authHeader } from 'services/rest-api/auth';
+import { RestApiResponse } from 'services/rest-api/axios-response';
+import { axiosWrapper } from 'services/rest-api/axios-wrapper';
 import { BACKEND_API_URL } from 'services/rest-api/config';
 
 const API_URL = `${BACKEND_API_URL}/api`;
@@ -10,6 +12,7 @@ const API_URL_WORDS = `${API_URL}/words`;
 
 export type WordDocument = WordClass & { _id: string };
 export type WordResponse = AxiosResponse<WordDocument>;
+export type RestApiWordResponse = Promise<RestApiResponse<WordDocument>>;
 
 class WordApiService {
   public getAllCancelable = (categoryId: string) => {
@@ -33,22 +36,31 @@ class WordApiService {
     return axios.get<WordDocument>(url);
   };
 
-  public create = (categoryId: string, word: Word): Promise<WordResponse> => {
+  public create = (categoryId: string, word: Word): RestApiWordResponse => {
     const url = `${API_URL_CATEGORY}/${categoryId}/word`;
     const headers = authHeader();
-    return axios.post<WordDocument>(url, word, { headers });
+    return axiosWrapper(async () => {
+      const { data } = await axios.post<WordDocument>(url, word, { headers });
+      return data;
+    });
   };
 
-  public update = (categoryId: string, wordId: string, word: Word): Promise<WordResponse> => {
+  public update = (categoryId: string, wordId: string, word: Word): RestApiWordResponse => {
     const url = `${API_URL_CATEGORY}/${categoryId}/word/${wordId}`;
     const headers = authHeader();
-    return axios.put<WordDocument>(url, word, { headers });
+    return axiosWrapper(async () => {
+      const { data } = await axios.put<WordDocument>(url, word, { headers });
+      return data;
+    });
   };
 
-  public remove = (categoryId: string, wordId: string): Promise<unknown> => {
+  public remove = (categoryId: string, wordId: string): Promise<RestApiResponse<string>> => {
     const url = `${API_URL_CATEGORY}/${categoryId}/word/${wordId}`;
     const headers = authHeader();
-    return axios.delete(url, { headers });
+    return axiosWrapper(async () => {
+      const { data } = await axios.delete<string>(url, { headers });
+      return data;
+    });
   };
 }
 

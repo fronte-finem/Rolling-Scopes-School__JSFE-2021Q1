@@ -2,6 +2,8 @@ import { Category, CategoryClass } from '@server/models/category';
 import axios, { AxiosResponse } from 'axios';
 
 import { authHeader } from 'services/rest-api/auth';
+import { RestApiResponse } from 'services/rest-api/axios-response';
+import { axiosWrapper } from 'services/rest-api/axios-wrapper';
 import { BACKEND_API_URL } from 'services/rest-api/config';
 
 const API_URL = `${BACKEND_API_URL}/api/category`;
@@ -29,21 +31,30 @@ class CategoryApiService {
     return axios.get<CategoryDocument>(url);
   };
 
-  public create = (category: Category): Promise<CategoryResponse> => {
+  public create = (category: Category): Promise<RestApiResponse<CategoryDocument>> => {
     const headers = authHeader();
-    return axios.post<CategoryDocument>(API_URL, category, { headers });
+    return axiosWrapper(async () => {
+      const { data } = await axios.post<CategoryDocument>(API_URL, category, { headers });
+      return data;
+    });
   };
 
-  public update = (category: CategoryDocument): Promise<CategoryResponse> => {
+  public update = (category: CategoryDocument): Promise<RestApiResponse<CategoryDocument>> => {
     const url = `${API_URL}/${category._id}`;
     const headers = authHeader();
-    return axios.put<CategoryDocument>(url, category, { headers });
+    return axiosWrapper(async () => {
+      const { data } = await axios.put<CategoryDocument>(url, category, { headers });
+      return data;
+    });
   };
 
-  public remove = (category: CategoryDocument): Promise<unknown> => {
+  public remove = (category: CategoryDocument): Promise<RestApiResponse<string>> => {
     const url = `${API_URL}/${category._id}`;
     const headers = authHeader();
-    return axios.delete(url, { headers });
+    return axiosWrapper(async () => {
+      const { data } = await axios.delete<string>(url, { headers });
+      return data;
+    });
   };
 }
 
