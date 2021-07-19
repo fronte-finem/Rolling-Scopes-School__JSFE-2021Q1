@@ -8,6 +8,7 @@ import { Header } from 'components/header/header';
 import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
 import { StyledCardsField, StyledCardsFieldItem } from 'components/page-words/page-words-style';
 import { Sidebar } from 'components/sidebar/sidebar';
+import { HerokuLoading } from 'components/spinner/heroku-loading';
 import { useDataContext } from 'services/data/context';
 import { useGameContext } from 'services/game/context';
 import { WordDocument } from 'services/rest-api/word-api';
@@ -22,87 +23,80 @@ export interface PageWordsProps extends StyledProps {
   words?: WordDocument[];
 }
 
-export const PageWords: React.FC<PageWordsProps> = observer(
-  ({ className, isDifficultWords = false }) => {
-    const { categoryId } = useParams<{ categoryId: string }>();
-    const dataService = useDataContext();
-    const wordsStatsService = useWordsStatsService();
-    const game = useGameContext();
+export const PageWords: React.FC<PageWordsProps> = observer(({ isDifficultWords = false }) => {
+  const { categoryId } = useParams<{ categoryId: string }>();
+  const dataService = useDataContext();
+  const [itemsCount, setItemsCount] = useState(SCROLL_PART);
+  const wordsStatsService = useWordsStatsService();
+  const game = useGameContext();
 
-    const someWords = isDifficultWords
-      ? wordsStatsService.getDifficultWords(dataService.words)
-      : dataService.getWordsByCategoryId(categoryId);
-    const [wordsPart, setWordsPart] = useState(someWords.slice(0, SCROLL_PART));
+  const words = isDifficultWords
+    ? wordsStatsService.getDifficultWords(dataService.words)
+    : dataService.getWordsByCategoryId(categoryId);
 
-    const handleMathWord = (word: WordDocument) => {
-      if (!game.isGamePlay) return false;
-      if (game.isWordSolved(word._id)) return true;
-      game.matchWord(word._id);
-      return game.isWordMatch(word._id);
-    };
+  const handleMathWord = (word: WordDocument) => {
+    if (!game.isGamePlay) return false;
+    if (game.isWordSolved(word._id)) return true;
+    game.matchWord(word._id);
+    return game.isWordMatch(word._id);
+  };
 
-    const handleStartRepeat = () => {
-      if (game.isGameReady) {
-        game.start(someWords, isDifficultWords ? '' : categoryId);
-      } else {
-        game.vocalize();
-      }
-    };
+  const handleStartRepeat = () => {
+    if (game.isGameReady) {
+      game.start(words, isDifficultWords ? '' : categoryId);
+    } else {
+      game.vocalize();
+    }
+  };
 
-    const showBtnStartRepeat = game.isGameMode && someWords.length > 0;
+  const showBtnStartRepeat = game.isGameMode && words.length > 0;
 
-    const loadMore = async () => {
-      if (wordsPart.length >= someWords.length) return;
-      await delay(500);
-      const { length } = wordsPart;
-      setWordsPart(someWords.slice(0, length + SCROLL_PART));
-    };
+  const loadMore = async () => {
+    if (itemsCount >= words.length) return;
+    await delay(200);
+    setItemsCount(itemsCount + SCROLL_PART);
+  };
 
-    useEffect(() => {
-      setWordsPart([]);
-    }, [categoryId]);
+  useEffect(() => {
+    setItemsCount(SCROLL_PART);
+  }, [categoryId]);
 
-    useEffect(() => {
-      (async () => {
-        await loadMore();
-      })();
-    }, [dataService.words, someWords]);
+  const spinner = <HerokuLoading />;
 
-    const cards = wordsPart.map((wordDoc) => (
-      <StyledCardsFieldItem key={wordDoc.word}>
-        <Card
-          data={wordDoc}
-          matchWord={handleMathWord}
-          isGameMode={game.isGameMode}
-          isGameReady={game.isGameReady}
-          isGamePlay={game.isGamePlay}
-          isSolved={game.isWordSolved(wordDoc._id)}
-        />
-      </StyledCardsFieldItem>
-    ));
+  const cardsField = (
+    <InfiniteScroller height="80vh" loadMore={loadMore}>
+      <StyledCardsField>
+        {words.slice(0, itemsCount).map((wordDoc) => (
+          <StyledCardsFieldItem key={wordDoc.word}>
+            <Card
+              data={wordDoc}
+              matchWord={handleMathWord}
+              isGameMode={game.isGameMode}
+              isGameReady={game.isGameReady}
+              isGamePlay={game.isGamePlay}
+              isSolved={game.isWordSolved(wordDoc._id)}
+            />
+          </StyledCardsFieldItem>
+        ))}
+      </StyledCardsField>
+    </InfiniteScroller>
+  );
 
-    return (
-      <>
-        <Sidebar />
-        <Header showBtnStartRepeat={showBtnStartRepeat} onStartRepeat={handleStartRepeat} />
-        <Main>
-          <div className={className}>
-            {wordsPart.length === 0 ? (
-              <h2 style={{ margin: '50px', textAlign: 'center' }}>
-                {isDifficultWords
-                  ? 'No difficult words'
-                  : `Category "${
-                      dataService.getCategoryById(categoryId)?.name || ''
-                    }" have 0 words`}
-              </h2>
-            ) : (
-              <InfiniteScroller height="80vh" loadMore={loadMore}>
-                <StyledCardsField>{cards}</StyledCardsField>
-              </InfiniteScroller>
-            )}
-          </div>
-        </Main>
-      </>
-    );
-  }
-);
+  const noWordsMessage = (
+    <h2 style={{ margin: '50px', textAlign: 'center' }}>
+      {isDifficultWords
+        ? 'No difficult words'
+        : `Category "${dataService.getCategoryById(categoryId)?.name || ''}" have 0 words`}
+    </h2>
+  );
+
+  const content = words.length === 0 ? noWordsMessage : cardsField;
+
+  return (
+    <>
+      <Sidebar />
+      <Header showBtnStartRepeat={showBtnStartRepeat} onStartRepeat={handleStartRepeat} />
+      <Main>{dataService.isPending ? spinner : content}</Main>
+    </>
+  );
+});
