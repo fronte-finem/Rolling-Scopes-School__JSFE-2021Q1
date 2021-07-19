@@ -1,31 +1,33 @@
 import React from 'react';
 
 import { MarkItem, MarksList } from 'components/card-word/marks-style';
-import { Emoji } from 'components/emoji/emoji';
+import { SvgIcon } from 'components/svg-icon/svg-icon';
 
 interface MarkProps {
-  emojiName: string;
+  src: string;
+  name: string;
 }
 
-const Mark: React.FC<MarkProps> = ({ emojiName }) => {
+const Mark: React.FC<MarkProps> = ({ src, name }) => {
   return (
     <MarkItem>
-      <Emoji name={emojiName} />
+      <SvgIcon src={src} name={name} />
     </MarkItem>
   );
 };
 
 interface MarksProps {
+  src: string;
   marks: string[];
   show: boolean;
 }
 
-export const Marks: React.FC<MarksProps> = ({ marks, show }) => {
+export const Marks: React.FC<MarksProps> = ({ src, marks, show }) => {
   return (
     <MarksList show={show}>
-      {marks.map((emojiName, index) => {
-        const key = `${index} ${emojiName}`;
-        return <Mark key={key} emojiName={emojiName} />;
+      {marks.map((name, index) => {
+        const key = `${index} ${name}`;
+        return <Mark key={key} src={src} name={name} />;
       })}
     </MarksList>
   );
