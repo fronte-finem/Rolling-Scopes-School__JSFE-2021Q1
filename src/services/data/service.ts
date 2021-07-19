@@ -29,9 +29,11 @@ export class DataService {
   }
 
   public async init(): Promise<void> {
-    this.state = DataServiceState.PENDING;
-    this.categories = [];
-    this.words = [];
+    runInAction(() => {
+      this.state = DataServiceState.PENDING;
+      this.categories = [];
+      this.words = [];
+    });
     try {
       const categories = (await categoryApiService.getAll()).data;
       const words = (await wordApiService.getAll()).data;
