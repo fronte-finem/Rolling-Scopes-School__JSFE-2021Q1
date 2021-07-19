@@ -13,6 +13,8 @@ if (!MONGO_URI) throw new Error('Env variable MONGO_URI unset');
 const mongodbOptions: mongoose.ConnectOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
 };
 
 mongoose
