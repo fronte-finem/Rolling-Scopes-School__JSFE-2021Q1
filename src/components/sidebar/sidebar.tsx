@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
@@ -25,7 +25,7 @@ import {
   StaticContainer,
 } from './sidebar-style';
 
-const SCROLL_PART = 6;
+const SCROLL_PART = 5;
 const SWAGGER_LINK = 'https://app.swaggerhub.com/apis-docs/fronte_finem/english-for-kids/1';
 
 export const Sidebar = ({ className }: StyledProps): JSX.Element => {
@@ -34,9 +34,7 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
   const { setModalShow, setModalContent } = useModalContext();
   const { ref, isClosed, setClose } = useSidebarCloseHook();
   const dataService = useDataContext();
-  const [categoriesPart, setCategoriesPart] = useState(
-    dataService.categories.slice(0, SCROLL_PART)
-  );
+  const [itemsCount, setItemsCount] = useState(SCROLL_PART);
   const sidebarClassName = `${className || ''} ${isClosed ? 'close' : ''}`;
 
   const handleToggle = () => setClose(!isClosed);
@@ -46,63 +44,46 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
     setModalContent(<Login />);
     setModalShow(true);
   };
-  const handleLogoutClick = async () => {
-    await authService.logout();
+  const handleLogoutClick = () => {
+    authService.logout();
     history.push('/');
   };
 
   const loadMore = async () => {
-    if (categoriesPart.length >= dataService.categories.length) return;
-    await delay(500);
-    const { length } = categoriesPart;
-    setCategoriesPart(dataService.categories.slice(0, length + SCROLL_PART));
+    if (itemsCount >= dataService.categories.length) return;
+    await delay(200);
+    setItemsCount(itemsCount + SCROLL_PART);
   };
 
-  useEffect(() => {
-    (async () => {
-      await loadMore();
-    })();
-  }, [dataService.categories]);
+  const adminElements = (
+    <>
+      <Heading>Hello, admin! 🙃</Heading>
+      <SidebarLink to="/admin" onClick={handleLinkClick}>
+        Admin page
+      </SidebarLink>
+      <SidebarExternalLink href={SWAGGER_LINK} target="_blank" onClick={handleLinkClick}>
+        SwaggerHub
+      </SidebarExternalLink>
+    </>
+  );
 
-  return (
-    <SidebarNav className={sidebarClassName} ref={ref}>
-      <BtnLoginContainer>
-        {token ? (
-          <BtnLogin type="button" onClick={handleLogoutClick}>
-            Logout
-          </BtnLogin>
-        ) : (
-          <BtnLogin type="button" onClick={handleLoginClick}>
-            Login
-          </BtnLogin>
-        )}
-      </BtnLoginContainer>
-      <BtnContainer>
-        <BtnToggle isClosed={isClosed} onToggle={handleToggle} />
-      </BtnContainer>
-      <StaticContainer>
-        {token && <Heading>Hello, admin! 🙃</Heading>}
-        {token && (
-          <>
-            <SidebarLink to="/admin" onClick={handleLinkClick}>
-              Admin page
-            </SidebarLink>
-            <SidebarExternalLink href={SWAGGER_LINK} target="_blank" onClick={handleLinkClick}>
-              SwaggerHub
-            </SidebarExternalLink>
-          </>
-        )}
-        <SidebarLink exact to="/" onClick={handleLinkClick}>
-          Home
-        </SidebarLink>
-        <SidebarLink exact to="/statistic" onClick={handleLinkClick}>
-          Statistic
-        </SidebarLink>
-      </StaticContainer>
+  const commonLinks = (
+    <>
+      <SidebarLink exact to="/" onClick={handleLinkClick}>
+        Home
+      </SidebarLink>
+      <SidebarLink exact to="/statistic" onClick={handleLinkClick}>
+        Statistic
+      </SidebarLink>
+    </>
+  );
+
+  const categories = (
+    <>
       <Heading>Categories:</Heading>
-      <InfiniteScroller height="50vh" loadMore={loadMore}>
+      <InfiniteScroller height="30vh" loadMore={loadMore}>
         <List>
-          {categoriesPart.map((category) => (
+          {dataService.categories.slice(0, itemsCount).map((category) => (
             <ListItem key={category._id}>
               <SidebarCategoryLink
                 categoryId={category._id}
@@ -114,6 +95,24 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
           ))}
         </List>
       </InfiniteScroller>
+    </>
+  );
+
+  return (
+    <SidebarNav className={sidebarClassName} ref={ref}>
+      <BtnLoginContainer>
+        <BtnLogin type="button" onClick={token ? handleLogoutClick : handleLoginClick}>
+          {token ? 'Logout' : 'Login'}
+        </BtnLogin>
+      </BtnLoginContainer>
+      <BtnContainer>
+        <BtnToggle isClosed={isClosed} onToggle={handleToggle} />
+      </BtnContainer>
+      <StaticContainer>
+        {token && adminElements}
+        {commonLinks}
+      </StaticContainer>
+      {categories}
     </SidebarNav>
   );
 };
