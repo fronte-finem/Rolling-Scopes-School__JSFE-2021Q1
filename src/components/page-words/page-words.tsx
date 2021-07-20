@@ -11,7 +11,7 @@ import { Sidebar } from 'components/sidebar/sidebar';
 import { HerokuLoading } from 'components/spinner/heroku-loading';
 import { useDataContext } from 'services/data/context';
 import { useGameContext } from 'services/game/context';
-import { WordDocument } from 'services/rest-api/word-api';
+import { WordDocument } from 'services/rest-api/config';
 import { useWordsStatsService } from 'services/word-stat/context';
 import { StyledProps } from 'types/styled';
 import { delay } from 'utils/async';

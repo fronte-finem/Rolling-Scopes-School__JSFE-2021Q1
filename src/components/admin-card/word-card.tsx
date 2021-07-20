@@ -4,7 +4,7 @@ import { Card } from 'components/admin-card/card-style';
 import { WordCardEditor } from 'components/admin-card/word-card-editor';
 import { WordCardFront } from 'components/admin-card/word-card-front';
 import { WordProps } from 'services/data/service';
-import { WordDocument } from 'services/rest-api/word-api';
+import { WordDocument } from 'services/rest-api/config';
 
 interface Props {
   initialWord: WordDocument;

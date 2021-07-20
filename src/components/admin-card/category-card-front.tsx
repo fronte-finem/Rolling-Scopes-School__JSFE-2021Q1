@@ -12,8 +12,7 @@ import {
 } from 'components/admin-card/card-style';
 import { Description } from 'components/admin-card/description';
 import { BtnClose } from 'components/button/button';
-import { CategoryDocument } from 'services/rest-api/category-api';
-import { WordDocument } from 'services/rest-api/word-api';
+import { CategoryDocument, WordDocument } from 'services/rest-api/config';
 
 interface Props {
   category: CategoryDocument;

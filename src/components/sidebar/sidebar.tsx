@@ -7,6 +7,7 @@ import { useModalContext } from 'components/modal/modal-context';
 import { SidebarCategoryLink } from 'components/sidebar/sidebar-category-link';
 import { useDataContext } from 'services/data/context';
 import { authService } from 'services/rest-api/auth';
+import { AuthTokenStore } from 'services/rest-api/config';
 import { StyledProps } from 'types/styled';
 import { delay } from 'utils/async';
 
@@ -29,7 +30,7 @@ const SCROLL_PART = 5;
 const SWAGGER_LINK = 'https://app.swaggerhub.com/apis-docs/fronte_finem/english-for-kids/1';
 
 export const Sidebar = ({ className }: StyledProps): JSX.Element => {
-  const token = authService.getCurrentToken();
+  const token = AuthTokenStore.get();
   const history = useHistory();
   const { setModalShow, setModalContent } = useModalContext();
   const { ref, isClosed, setClose } = useSidebarCloseHook();

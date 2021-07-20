@@ -9,7 +9,7 @@ import {
   EMOJI_SVG_SPRITE,
 } from 'components/page-game-end/page-game-end';
 import { playAudio } from 'services/audio';
-import { WordDocument } from 'services/rest-api/word-api';
+import { WordDocument } from 'services/rest-api/config';
 import { useWordsStatsService } from 'services/word-stat/context';
 import { StyledProps } from 'types/styled';
 import { randomItem } from 'utils/random';

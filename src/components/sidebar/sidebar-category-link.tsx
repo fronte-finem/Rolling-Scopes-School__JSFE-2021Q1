@@ -2,7 +2,7 @@ import React from 'react';
 
 import { getImageUrl, PLACEHOLDER } from 'app/config';
 import { SidebarCategoryImg, StyledSidebarCategoryLink } from 'components/sidebar/sidebar-style';
-import { WordDocument } from 'services/rest-api/word-api';
+import { WordDocument } from 'services/rest-api/config';
 
 interface Props {
   categoryId: string;

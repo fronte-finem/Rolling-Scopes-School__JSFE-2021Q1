@@ -11,7 +11,7 @@ import {
 import { InputFile } from 'components/admin-card/input-file';
 import { InputText } from 'components/admin-card/input-text';
 import { WordProps } from 'services/data/service';
-import { WordDocument } from 'services/rest-api/word-api';
+import { WordDocument } from 'services/rest-api/config';
 
 interface Props {
   initialWord?: WordDocument;

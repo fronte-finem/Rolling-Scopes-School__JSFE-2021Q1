@@ -2,8 +2,7 @@ import React from 'react';
 
 import { CategoryCardEditor } from 'components/admin-card/category-card-editor';
 import { CategoryCardFront } from 'components/admin-card/category-card-front';
-import { CategoryDocument } from 'services/rest-api/category-api';
-import { WordDocument } from 'services/rest-api/word-api';
+import { CategoryDocument, WordDocument } from 'services/rest-api/config';
 
 import { Card } from './card-style';
 
@@ -29,7 +28,10 @@ export const CategoryCard: React.FC<Props> = ({
 
   const handleAddWord = () => onGoToWords(category);
 
-  const handleUpdate = (name: string) => onUpdate(category, name);
+  const handleUpdate = async (name: string) => {
+    await onUpdate(category, name);
+    setEdit(false);
+  };
   const handleDelete = () => onDelete(category);
 
   return (

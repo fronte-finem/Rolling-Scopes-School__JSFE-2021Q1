@@ -12,7 +12,7 @@ import {
 } from 'components/admin-card/card-style';
 import { CardAudio, Description } from 'components/admin-card/description';
 import { BtnClose } from 'components/button/button';
-import { WordDocument } from 'services/rest-api/word-api';
+import { WordDocument } from 'services/rest-api/config';
 
 interface Props {
   initialWord: WordDocument;
