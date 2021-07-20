@@ -44,7 +44,7 @@ export const CategoryCardFront: React.FC<Props> = ({
         Edit
       </BtnUpdate>
       <BtnAddWord type="submit" onClick={onAddWord}>
-        Edit words
+        Words
       </BtnAddWord>
     </BtnBottomContainer>
   </Wrapper>
