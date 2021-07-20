@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 import { button } from 'components/button/button-style';
-import { styledScroll } from 'components/style/styled-scroll';
+import { scrollbar } from 'components/scrollbar/scrollbar';
 
 const longButton = css`
   ${button};
@@ -53,5 +53,5 @@ export const Container = styled.div`
 export const TableContainer = styled.div`
   overflow-x: auto;
   height: 70vh;
-  ${styledScroll};
+  ${scrollbar};
 `;

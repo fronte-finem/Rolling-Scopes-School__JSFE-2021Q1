@@ -1,6 +1,6 @@
 import { css } from 'styled-components';
 
-export const styledScroll = css`
+export const scrollbar = css`
   &::-webkit-scrollbar {
     width: 16px;
     height: 16px;

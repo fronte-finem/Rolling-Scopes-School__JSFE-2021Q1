@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 
-import { styledScroll } from 'components/style/styled-scroll';
+import { scrollbar } from 'components/scrollbar/scrollbar';
 
 export const Container = styled.div<{ height: string }>`
   position: relative;
@@ -9,7 +9,7 @@ export const Container = styled.div<{ height: string }>`
   background: #0004;
   margin: 15px 0;
   box-shadow: inset 0 0 10px 5px #0004;
-  ${styledScroll}
+  ${scrollbar}
 `;
 
 export const WrapperLayer = styled.div`
