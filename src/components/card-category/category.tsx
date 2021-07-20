@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { getImageUrl, PLACEHOLDER } from 'app/config';
 import { CategoryDocument, WordDocument } from 'services/rest-api/config';
+import { getImageUrl, PLACEHOLDER } from 'services/rest-api/media-api';
 import { StyledProps } from 'types/styled';
 
 import {

@@ -1,9 +1,9 @@
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 
-import { getAudioUrl, PLACEHOLDER } from 'app/config';
 import { playAudio, playAudioAsyncCancelable } from 'services/audio';
 import { GameSoundEffect, GameStatus } from 'services/game/config';
 import { WordDocument } from 'services/rest-api/config';
+import { getAudioUrl, PLACEHOLDER } from 'services/rest-api/media-api';
 import { WordsStatsService } from 'services/word-stat/service';
 import { randomItem } from 'utils/random';
 

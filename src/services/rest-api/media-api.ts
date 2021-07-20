@@ -9,3 +9,14 @@ export async function mediaUpload(media: File): Promise<RestApiResponse<string>>
   formData.append('media', media, media.name);
   return axiosAuth({ url: API_URL, method: 'POST', data: formData });
 }
+
+export const PLACEHOLDER = 'placeholder';
+
+const PLACEHOLDER_IMAGE = './placeholder/placeholder.svg';
+const PLACEHOLDER_AUDIO = './placeholder/placeholder.mp3';
+
+const getUrl = (placeholderUrl: string) => (url: string) =>
+  url === PLACEHOLDER ? placeholderUrl : url;
+
+export const getImageUrl = getUrl(PLACEHOLDER_IMAGE);
+export const getAudioUrl = getUrl(PLACEHOLDER_AUDIO);

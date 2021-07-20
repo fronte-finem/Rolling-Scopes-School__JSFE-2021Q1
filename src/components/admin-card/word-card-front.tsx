@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { getAudioUrl, getImageUrl } from 'app/config';
 import {
   BtnBottomContainer,
   BtnCloseContainer,
@@ -13,6 +12,7 @@ import {
 import { CardAudio, Description } from 'components/admin-card/description';
 import { BtnClose } from 'components/button/button';
 import { WordDocument } from 'services/rest-api/config';
+import { getAudioUrl, getImageUrl } from 'services/rest-api/media-api';
 
 interface Props {
   initialWord: WordDocument;

@@ -1,7 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 
-import { getAudioUrl, getImageUrl } from 'app/config';
 import { Marks } from 'components/card-word/marks';
 import {
   EMOJI_NEGATIVE,
@@ -10,6 +9,7 @@ import {
 } from 'components/page-game-end/page-game-end';
 import { playAudio } from 'services/audio';
 import { WordDocument } from 'services/rest-api/config';
+import { getAudioUrl, getImageUrl } from 'services/rest-api/media-api';
 import { useWordsStatsService } from 'services/word-stat/context';
 import { StyledProps } from 'types/styled';
 import { randomItem } from 'utils/random';

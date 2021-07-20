@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { getImageUrl, PLACEHOLDER } from 'app/config';
 import { SidebarCategoryImg, StyledSidebarCategoryLink } from 'components/sidebar/sidebar-style';
 import { WordDocument } from 'services/rest-api/config';
+import { getImageUrl, PLACEHOLDER } from 'services/rest-api/media-api';
 
 interface Props {
   categoryId: string;
