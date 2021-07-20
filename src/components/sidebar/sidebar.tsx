@@ -81,7 +81,11 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
   const categories = (
     <>
       <Heading>Categories:</Heading>
-      <InfiniteScroller height="30vh" loadMore={loadMore}>
+      <InfiniteScroller
+        height="30vh"
+        loadMore={loadMore}
+        haveMore={itemsCount < dataService.categories.length}
+      >
         <List>
           {dataService.categories.slice(0, itemsCount).map((category) => (
             <ListItem key={category._id}>

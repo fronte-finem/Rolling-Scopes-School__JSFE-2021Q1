@@ -59,14 +59,18 @@ export const AdminPageCategories: React.FC = observer(() => {
   const spinner = <HerokuLoading />;
 
   const content = (
-    <InfiniteScroller height="80vh" loadMore={loadMore}>
+    <InfiniteScroller
+      height="80vh"
+      loadMore={loadMore}
+      haveMore={itemsCount < dataService.categories.length}
+    >
       <Container>
         {[
           ...dataService.categories
             .slice(0, itemsCount)
             .map((category) => (
               <CategoryCard
-                key={category.name}
+                key={category._id}
                 category={category}
                 onUpdate={handleUpdate}
                 onDelete={handleDelete}

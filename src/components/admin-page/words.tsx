@@ -58,7 +58,7 @@ export const AdminPageWords: React.FC = observer(() => {
   const spinner = <HerokuLoading />;
 
   const content = (
-    <InfiniteScroller height="80vh" loadMore={loadMore}>
+    <InfiniteScroller height="80vh" loadMore={loadMore} haveMore={itemsCount < words.length}>
       <Container>
         {[
           ...words

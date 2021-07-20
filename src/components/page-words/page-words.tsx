@@ -64,10 +64,10 @@ export const PageWords: React.FC<PageWordsProps> = observer(({ isDifficultWords 
   const spinner = <HerokuLoading />;
 
   const cardsField = (
-    <InfiniteScroller height="80vh" loadMore={loadMore}>
+    <InfiniteScroller height="80vh" loadMore={loadMore} haveMore={itemsCount < words.length}>
       <StyledCardsField>
         {words.slice(0, itemsCount).map((wordDoc) => (
-          <StyledCardsFieldItem key={wordDoc.word}>
+          <StyledCardsFieldItem key={wordDoc._id}>
             <Card
               data={wordDoc}
               matchWord={handleMathWord}

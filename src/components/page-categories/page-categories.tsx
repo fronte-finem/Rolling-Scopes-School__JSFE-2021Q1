@@ -35,7 +35,11 @@ export const PageCategories: React.FC<StyledProps> = observer(({ className }) =>
 
   const nav = (
     <nav className={className}>
-      <InfiniteScroller height="80vh" loadMore={loadMore}>
+      <InfiniteScroller
+        height="80vh"
+        loadMore={loadMore}
+        haveMore={itemsCount < dataService.categories.length}
+      >
         <StyledCategories>
           {dataService.categories.slice(0, itemsCount).map((category) => (
             <StyledCategoriesItem key={category._id}>
