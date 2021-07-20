@@ -2,13 +2,12 @@ import React from 'react';
 
 import { CardImage, CardWord, StyledCardBackSide, StyledCardFrontSide } from './side-style';
 
-export interface CardSideProps {
+interface Props {
   word: string;
   image: string;
-  children?: JSX.Element;
 }
 
-const Side = ({ image, word, children }: CardSideProps) => {
+const Side: React.FC<Props> = ({ image, word, children }) => {
   return (
     <>
       <CardImage src={image} alt={word} />
@@ -20,7 +19,7 @@ const Side = ({ image, word, children }: CardSideProps) => {
   );
 };
 
-export const CardFrontSide = ({ image, word, children }: CardSideProps): JSX.Element => {
+export const CardFrontSide: React.FC<Props> = ({ image, word, children }) => {
   return (
     <StyledCardFrontSide>
       <Side image={image} word={word}>
@@ -30,7 +29,7 @@ export const CardFrontSide = ({ image, word, children }: CardSideProps): JSX.Ele
   );
 };
 
-export const CardBackSide = ({ image, word }: CardSideProps): JSX.Element => {
+export const CardBackSide: React.FC<Props> = ({ image, word }) => {
   return (
     <StyledCardBackSide>
       <Side image={image} word={word} />

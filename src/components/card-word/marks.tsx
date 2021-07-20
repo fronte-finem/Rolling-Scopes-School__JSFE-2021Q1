@@ -3,12 +3,12 @@ import React from 'react';
 import { MarkItem, MarksList } from 'components/card-word/marks-style';
 import { SvgIcon } from 'components/svg-icon/svg-icon';
 
-interface MarkProps {
+interface Props {
   src: string;
   name: string;
 }
 
-const Mark: React.FC<MarkProps> = ({ src, name }) => {
+const Mark: React.FC<Props> = ({ src, name }) => {
   return (
     <MarkItem>
       <SvgIcon src={src} name={name} />
