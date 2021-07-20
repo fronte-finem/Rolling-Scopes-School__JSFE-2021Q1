@@ -5,6 +5,7 @@ import { WordCardEditor } from 'components/admin-card/word-card-editor';
 import { WordCardFront } from 'components/admin-card/word-card-front';
 import { WordProps } from 'services/data/service';
 import { WordDocument } from 'services/rest-api/config';
+import { useMountedState } from 'utils/is-mounted-hook';
 
 interface Props {
   initialWord: WordDocument;
@@ -13,17 +14,9 @@ interface Props {
 }
 
 export const WordCard: React.FC<Props> = ({ initialWord, onUpdate, onDelete }) => {
-  const isMounted = React.useRef(false);
   const wordId = initialWord._id;
   const [isEdit, setEdit] = React.useState(false);
-
-  React.useEffect(() => {
-    isMounted.current = true;
-    return () => {
-      setEdit(false);
-      isMounted.current = false;
-    };
-  }, []);
+  const isMounted = useMountedState(() => setEdit(false));
 
   const handleEdit = () => setEdit(true);
   const handleCancel = () => setEdit(false);
@@ -32,7 +25,7 @@ export const WordCard: React.FC<Props> = ({ initialWord, onUpdate, onDelete }) =
 
   const handleUpdate = async (wordProps: WordProps) => {
     await onUpdate(initialWord, wordProps);
-    isMounted.current && setEdit(false);
+    isMounted && setEdit(false);
   };
 
   return (

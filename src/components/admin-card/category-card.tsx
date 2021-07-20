@@ -3,6 +3,7 @@ import React from 'react';
 import { CategoryCardEditor } from 'components/admin-card/category-card-editor';
 import { CategoryCardFront } from 'components/admin-card/category-card-front';
 import { CategoryDocument, WordDocument } from 'services/rest-api/config';
+import { useMountedState } from 'utils/is-mounted-hook';
 
 import { Card } from './card-style';
 
@@ -22,6 +23,7 @@ export const CategoryCard: React.FC<Props> = ({
   words,
 }) => {
   const [isEdit, setEdit] = React.useState(false);
+  const isMounted = useMountedState(() => setEdit(false));
 
   const handleEdit = () => setEdit(true);
   const handleCancel = () => setEdit(false);
@@ -30,7 +32,7 @@ export const CategoryCard: React.FC<Props> = ({
 
   const handleUpdate = async (name: string) => {
     await onUpdate(category, name);
-    setEdit(false);
+    isMounted && setEdit(false);
   };
   const handleDelete = () => onDelete(category);
 

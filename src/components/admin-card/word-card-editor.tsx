@@ -12,6 +12,7 @@ import { InputFile } from 'components/admin-card/input-file';
 import { InputText } from 'components/admin-card/input-text';
 import { WordProps } from 'services/data/service';
 import { WordDocument } from 'services/rest-api/config';
+import { useMountedState } from 'utils/is-mounted-hook';
 
 interface Props {
   initialWord?: WordDocument;
@@ -26,24 +27,16 @@ export const WordCardEditor: React.FC<Props> = ({
   onCancel,
   isFilesRequired = false,
 }) => {
-  const isMounted = React.useRef(false);
   const formRef = React.useRef<HTMLFormElement>(null);
   const [reset, setReset] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const isMounted = useMountedState(() => setLoading(false));
   const [wordProps, setWordProps] = React.useState<WordProps>({
     word: initialWord?.word || '',
     translation: initialWord?.translation || '',
     image: undefined,
     audio: undefined,
   });
-
-  React.useEffect(() => {
-    isMounted.current = true;
-    return () => {
-      setLoading(false);
-      isMounted.current = false;
-    };
-  }, []);
 
   const handleCancel = () => {
     setReset(true);
@@ -64,7 +57,7 @@ export const WordCardEditor: React.FC<Props> = ({
     }
     setLoading(true);
     await onSubmit({ ...wordProps });
-    isMounted.current && setLoading(false);
+    isMounted && setLoading(false);
   };
 
   return (

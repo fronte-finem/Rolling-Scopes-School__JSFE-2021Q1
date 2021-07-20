@@ -9,6 +9,7 @@ import {
   Wrapper,
 } from 'components/admin-card/card-style';
 import { InputText } from 'components/admin-card/input-text';
+import { useMountedState } from 'utils/is-mounted-hook';
 
 interface Props {
   initialName: string;
@@ -17,18 +18,10 @@ interface Props {
 }
 
 export const CategoryCardEditor: React.FC<Props> = ({ initialName, onCancel, onSubmit }) => {
-  const isMounted = React.useRef(false);
   const formRef = React.useRef<HTMLFormElement>(null);
   const [isLoading, setLoading] = React.useState(false);
+  const isMounted = useMountedState(() => setLoading(false));
   const [name, setName] = React.useState(initialName);
-
-  React.useEffect(() => {
-    isMounted.current = true;
-    return () => {
-      setLoading(false);
-      isMounted.current = false;
-    };
-  }, []);
 
   const handleInput = (value: string) => setName(value);
 
@@ -39,7 +32,7 @@ export const CategoryCardEditor: React.FC<Props> = ({ initialName, onCancel, onS
     }
     setLoading(true);
     await onSubmit(name);
-    isMounted.current && setLoading(false);
+    isMounted && setLoading(false);
   };
 
   return (
