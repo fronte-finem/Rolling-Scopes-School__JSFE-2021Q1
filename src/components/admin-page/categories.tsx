@@ -12,8 +12,7 @@ import { useAuthTestHook } from 'components/modal/modal-auth';
 import { Sidebar } from 'components/sidebar/sidebar';
 import { HerokuLoading } from 'components/spinner/heroku-loading';
 import { useDataContext } from 'services/data/context';
-import { authService } from 'services/rest-api/auth';
-import { CategoryDocument } from 'services/rest-api/category-api';
+import { AuthTokenStore, CategoryDocument } from 'services/rest-api/config';
 import { delay } from 'utils/async';
 
 import { Container } from './admin-page-style';
@@ -24,7 +23,6 @@ export const AdminPageCategories: React.FC = observer(() => {
   const dataService = useDataContext();
   const [itemsCount, setItemsCount] = useState(SCROLL_PART);
   const history = useHistory();
-  const token = authService.getCurrentToken();
   const { setRestApiError } = useAuthTestHook();
 
   const loadMore = async () => {
@@ -94,5 +92,5 @@ export const AdminPageCategories: React.FC = observer(() => {
     </>
   );
 
-  return token ? page : <Redirect to="/" />;
+  return AuthTokenStore.get() ? page : <Redirect to="/" />;
 });

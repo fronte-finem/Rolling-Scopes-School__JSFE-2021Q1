@@ -13,8 +13,7 @@ import { Sidebar } from 'components/sidebar/sidebar';
 import { HerokuLoading } from 'components/spinner/heroku-loading';
 import { useDataContext } from 'services/data/context';
 import { WordProps } from 'services/data/service';
-import { authService } from 'services/rest-api/auth';
-import { WordDocument } from 'services/rest-api/word-api';
+import { AuthTokenStore, WordDocument } from 'services/rest-api/config';
 import { delay } from 'utils/async';
 
 import { Container } from './admin-page-style';
@@ -22,7 +21,6 @@ import { Container } from './admin-page-style';
 const SCROLL_PART = 3;
 
 export const AdminPageWords: React.FC = observer(() => {
-  const token = authService.getCurrentToken();
   const { categoryId } = useParams<{ categoryId: string }>();
   const dataService = useDataContext();
   const [itemsCount, setItemsCount] = useState(SCROLL_PART);
@@ -90,5 +88,5 @@ export const AdminPageWords: React.FC = observer(() => {
     </>
   );
 
-  return token ? page : <Redirect to="/" />;
+  return AuthTokenStore.get() ? page : <Redirect to="/" />;
 });
