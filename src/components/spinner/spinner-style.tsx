@@ -55,7 +55,7 @@ export const List = styled.ul.attrs((props: Props) => ({
   --container-size: calc(2 * var(--radius) + var(--emoji-size));
   --animation-emoji: 12s ${rotate} linear infinite;
   --animation-spinner: 9s ${rotate} steps(9, end) infinite;
-  --animation-emoji-icon: var(--animation) reverse;
+  --animation-emoji-icon: var(--animation-emoji) reverse;
   --animation-spinner-icon: 500ms ${rotate} steps(9, end) infinite;
 
   position: relative;

@@ -5,7 +5,12 @@ import { Main } from 'app/app-style';
 import { Header } from 'components/header/header';
 import { Sidebar } from 'components/sidebar/sidebar';
 import { Spinner } from 'components/spinner/spinner';
-import { SpinnerContainer, SpinnerMessage, SpinnerWrapper } from 'components/spinner/spinner-style';
+import {
+  SpinnerAnimationStyle,
+  SpinnerContainer,
+  SpinnerMessage,
+  SpinnerWrapper,
+} from 'components/spinner/spinner-style';
 import { useGameContext } from 'services/game/context';
 
 export const EMOJI_SVG_SPRITE = './svg/emoji.svg';
@@ -19,7 +24,11 @@ export const WinPage: React.FC = () => {
       <Header />
       <Main>
         <SpinnerContainer>
-          <Spinner svgSpriteSrc={EMOJI_SVG_SPRITE} svgIcons={EMOJI_POSITIVE} />
+          <Spinner
+            svgSpriteSrc={EMOJI_SVG_SPRITE}
+            svgIcons={EMOJI_POSITIVE}
+            animationStyle={SpinnerAnimationStyle.EMOJI}
+          />
         </SpinnerContainer>
       </Main>
     </>
@@ -36,7 +45,11 @@ export const FailPage: React.FC = observer(() => {
         <SpinnerContainer>
           <SpinnerWrapper>
             <SpinnerMessage>{game.mistakes} mistakes</SpinnerMessage>
-            <Spinner svgSpriteSrc={EMOJI_SVG_SPRITE} svgIcons={EMOJI_NEGATIVE} />
+            <Spinner
+              svgSpriteSrc={EMOJI_SVG_SPRITE}
+              svgIcons={EMOJI_NEGATIVE}
+              animationStyle={SpinnerAnimationStyle.EMOJI}
+            />
           </SpinnerWrapper>
         </SpinnerContainer>
       </Main>
