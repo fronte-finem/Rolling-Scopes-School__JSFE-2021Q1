@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 
 import { Main } from 'app/app-style';
 import { CategoryLink } from 'components/card-category/category';
 import { Header } from 'components/header/header';
 import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
+import { useInfiniteScroller } from 'components/infinite-scroller/use-infinite-scroller';
 import { Sidebar } from 'components/sidebar/sidebar';
 import { HerokuLoading } from 'components/spinner/heroku-loading';
 import { useDataContext } from 'services/data/context';
 import { useGameContext } from 'services/game/context';
 import { StyledProps } from 'types/styled';
-import { delay } from 'utils/async';
 
 import { StyledCategories, StyledCategoriesItem } from './page-categories-style';
 
@@ -18,18 +18,12 @@ const SCROLL_PART = 8;
 
 export const PageCategories: React.FC<StyledProps> = observer(({ className }) => {
   const dataService = useDataContext();
-  const [itemsCount, setItemsCount] = useState(SCROLL_PART);
   const game = useGameContext();
 
-  const loadMore = async () => {
-    if (itemsCount >= dataService.categories.length) return;
-    await delay(200);
-    setItemsCount(itemsCount + SCROLL_PART);
-  };
-
-  useEffect(() => {
-    setItemsCount(SCROLL_PART);
-  }, []);
+  const { loadMore, itemsCount } = useInfiniteScroller({
+    minCount: SCROLL_PART,
+    getSize: () => dataService.categories.length,
+  });
 
   const spinner = <HerokuLoading />;
 

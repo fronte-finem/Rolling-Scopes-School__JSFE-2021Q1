@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
@@ -6,6 +6,7 @@ import { Main } from 'app/app-style';
 import { Card } from 'components/card-word/card';
 import { Header } from 'components/header/header';
 import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
+import { useInfiniteScroller } from 'components/infinite-scroller/use-infinite-scroller';
 import { StyledCardsField, StyledCardsFieldItem } from 'components/page-words/page-words-style';
 import { Sidebar } from 'components/sidebar/sidebar';
 import { HerokuLoading } from 'components/spinner/heroku-loading';
@@ -14,7 +15,6 @@ import { useGameContext } from 'services/game/context';
 import { WordDocument } from 'services/rest-api/config';
 import { useWordsStatsService } from 'services/word-stat/context';
 import { StyledProps } from 'types/styled';
-import { delay } from 'utils/async';
 
 const SCROLL_PART = 8;
 
@@ -26,13 +26,17 @@ export interface PageWordsProps extends StyledProps {
 export const PageWords: React.FC<PageWordsProps> = observer(({ isDifficultWords = false }) => {
   const { categoryId } = useParams<{ categoryId: string }>();
   const dataService = useDataContext();
-  const [itemsCount, setItemsCount] = useState(SCROLL_PART);
   const wordsStatsService = useWordsStatsService();
   const game = useGameContext();
 
   const words = isDifficultWords
     ? wordsStatsService.getDifficultWords(dataService.words)
     : dataService.getWordsByCategoryId(categoryId);
+
+  const { loadMore, itemsCount } = useInfiniteScroller({
+    minCount: SCROLL_PART,
+    getSize: () => words.length,
+  });
 
   const handleMathWord = (word: WordDocument) => {
     if (!game.isGamePlay) return false;
@@ -50,16 +54,6 @@ export const PageWords: React.FC<PageWordsProps> = observer(({ isDifficultWords 
   };
 
   const showBtnStartRepeat = game.isGameMode && words.length > 0;
-
-  const loadMore = async () => {
-    if (itemsCount >= words.length) return;
-    await delay(200);
-    setItemsCount(itemsCount + SCROLL_PART);
-  };
-
-  useEffect(() => {
-    setItemsCount(SCROLL_PART);
-  }, [categoryId]);
 
   const spinner = <HerokuLoading />;
 

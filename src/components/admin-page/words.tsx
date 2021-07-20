@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
@@ -8,13 +8,13 @@ import { WordCard } from 'components/admin-card/word-card';
 import { AdminHeader } from 'components/admin-header/header';
 import { Header } from 'components/header/header';
 import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
+import { useInfiniteScroller } from 'components/infinite-scroller/use-infinite-scroller';
 import { useAuthTestHook } from 'components/modal/modal-auth';
 import { Sidebar } from 'components/sidebar/sidebar';
 import { HerokuLoading } from 'components/spinner/heroku-loading';
 import { useDataContext } from 'services/data/context';
 import { WordProps } from 'services/data/service';
 import { AuthTokenStore, WordDocument } from 'services/rest-api/config';
-import { delay } from 'utils/async';
 
 import { Container } from './admin-page-style';
 
@@ -23,10 +23,14 @@ const SCROLL_PART = 3;
 export const AdminPageWords: React.FC = observer(() => {
   const { categoryId } = useParams<{ categoryId: string }>();
   const dataService = useDataContext();
-  const [itemsCount, setItemsCount] = useState(SCROLL_PART);
   const { setRestApiError } = useAuthTestHook();
 
   const words = dataService.getWordsByCategoryId(categoryId);
+
+  const { loadMore, itemsCount, setItemsCount } = useInfiniteScroller({
+    minCount: SCROLL_PART,
+    getSize: () => words.length,
+  });
 
   const handleCreate = async (wordProps: WordProps) => {
     const result = await dataService.createWord(categoryId, wordProps);
@@ -45,12 +49,6 @@ export const AdminPageWords: React.FC = observer(() => {
   const handleDelete = async (wordId: string) => {
     const result = await dataService.deleteWord(categoryId, wordId);
     result.isError && setRestApiError(result);
-  };
-
-  const loadMore = async () => {
-    if (itemsCount >= words.length) return;
-    await delay(100);
-    setItemsCount(itemsCount + SCROLL_PART);
   };
 
   const spinner = <HerokuLoading />;

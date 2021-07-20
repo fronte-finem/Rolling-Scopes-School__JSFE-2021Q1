@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
@@ -8,12 +8,12 @@ import { CategoryCard } from 'components/admin-card/category-card';
 import { AdminHeader } from 'components/admin-header/header';
 import { Header } from 'components/header/header';
 import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
+import { useInfiniteScroller } from 'components/infinite-scroller/use-infinite-scroller';
 import { useAuthTestHook } from 'components/modal/modal-auth';
 import { Sidebar } from 'components/sidebar/sidebar';
 import { HerokuLoading } from 'components/spinner/heroku-loading';
 import { useDataContext } from 'services/data/context';
 import { AuthTokenStore, CategoryDocument } from 'services/rest-api/config';
-import { delay } from 'utils/async';
 
 import { Container } from './admin-page-style';
 
@@ -21,15 +21,13 @@ const SCROLL_PART = 3;
 
 export const AdminPageCategories: React.FC = observer(() => {
   const dataService = useDataContext();
-  const [itemsCount, setItemsCount] = useState(SCROLL_PART);
   const history = useHistory();
   const { setRestApiError } = useAuthTestHook();
 
-  const loadMore = async () => {
-    if (itemsCount >= dataService.categories.length) return;
-    await delay(200);
-    setItemsCount(itemsCount + SCROLL_PART);
-  };
+  const { loadMore, itemsCount, setItemsCount } = useInfiniteScroller({
+    minCount: SCROLL_PART,
+    getSize: () => dataService.categories.length,
+  });
 
   const handleCreate = async (name: string) => {
     const result = await dataService.createCategory(name);

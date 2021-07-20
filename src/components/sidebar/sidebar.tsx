@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
+import { useInfiniteScroller } from 'components/infinite-scroller/use-infinite-scroller';
 import { Login } from 'components/login/login';
 import { useModalContext } from 'components/modal/modal-context';
 import { SidebarCategoryLink } from 'components/sidebar/sidebar-category-link';
@@ -9,7 +10,6 @@ import { useDataContext } from 'services/data/context';
 import { authService } from 'services/rest-api/auth';
 import { AuthTokenStore } from 'services/rest-api/config';
 import { StyledProps } from 'types/styled';
-import { delay } from 'utils/async';
 
 import { BtnToggle } from './btn-toggle';
 import { useSidebarCloseHook } from './hook';
@@ -35,8 +35,12 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
   const { setModalShow, setModalContent } = useModalContext();
   const { ref, isClosed, setClose } = useSidebarCloseHook();
   const dataService = useDataContext();
-  const [itemsCount, setItemsCount] = useState(SCROLL_PART);
   const sidebarClassName = `${className || ''} ${isClosed ? 'close' : ''}`;
+
+  const { loadMore, itemsCount } = useInfiniteScroller({
+    minCount: SCROLL_PART,
+    getSize: () => dataService.categories.length,
+  });
 
   const handleToggle = () => setClose(!isClosed);
   const handleLinkClick = () => setClose(true);
@@ -48,12 +52,6 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
   const handleLogoutClick = () => {
     authService.logout();
     history.push('/');
-  };
-
-  const loadMore = async () => {
-    if (itemsCount >= dataService.categories.length) return;
-    await delay(200);
-    setItemsCount(itemsCount + SCROLL_PART);
   };
 
   const adminElements = (
