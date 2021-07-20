@@ -2,47 +2,32 @@ import { LoginProps } from '@server/models/user';
 import axios from 'axios';
 
 import { RestApiResponse } from 'services/rest-api/axios-response';
-import { axiosWrapper } from 'services/rest-api/axios-wrapper';
-import { AUTH_STORAGE_KEY, BACKEND_API_URL } from 'services/rest-api/config';
+import { axiosAuth, axiosWrapper } from 'services/rest-api/axios-wrapper';
+import { AuthTokenStore, BACKEND_API_URL } from 'services/rest-api/config';
 
 const API_URL = `${BACKEND_API_URL}/api/auth`;
 
 class AuthService {
   public login = async (loginProps: LoginProps): Promise<RestApiResponse<string>> => {
-    return axiosWrapper(async () => {
-      const { data } = await axios.post<string>(`${API_URL}/login`, loginProps);
-      if (data) {
-        localStorage.setItem(AUTH_STORAGE_KEY, data);
-      }
-      return data;
-    });
+    const response = await axiosWrapper(axios.post<string>(`${API_URL}/login`, loginProps));
+    if (response.data) {
+      AuthTokenStore.set(response.data);
+    }
+    return response;
   };
 
   public logout = (): void => {
-    localStorage.removeItem(AUTH_STORAGE_KEY);
+    AuthTokenStore.delete();
   };
 
   public checkToken = async (): Promise<boolean> => {
-    try {
-      await axios.get(`${API_URL}/check-token`, { headers: authHeader() });
-      return true;
-    } catch (error) {
-      console.log(error);
-      localStorage.removeItem(AUTH_STORAGE_KEY);
-      return false;
+    const result = await axiosAuth({ url: `${API_URL}/check-token`, method: 'GET' });
+    if (result.isError) {
+      console.log(result.errorData);
+      AuthTokenStore.delete();
     }
+    return !result.isError;
   };
-
-  public getCurrentToken = (): string | null => localStorage.getItem(AUTH_STORAGE_KEY);
 }
 
 export const authService = new AuthService();
-
-interface AuthHeader {
-  'x-access-token'?: string;
-}
-
-export function authHeader(): AuthHeader {
-  const token = authService.getCurrentToken();
-  return token ? { 'x-access-token': token } : {};
-}
