@@ -87,7 +87,7 @@ export const LogoLink = styled.a`
   }
 `;
 
-export const LogoSvg = styled.svg`
+export const Logo = styled.div`
   order: -1;
   fill: var(--text-color);
   transition: all var(--time);
@@ -109,7 +109,7 @@ export const LogoText = styled.div`
   &.rss {
     position: absolute;
     left: 138px;
-    top: 43%;
+    top: 37%;
     font-size: 27px;
     font-weight: 900;
   }

@@ -1,38 +1,42 @@
 import React from 'react';
 
+import { SvgIcon } from 'components/svg-icon/svg-icon';
 import { StyledProps } from 'types/styled';
 
-import { Group, LogoLink, LogoSvg, LogoText, StyledFooter, Wrapper } from './footer-style';
+import { Group, Logo, LogoLink, LogoText, StyledFooter, Wrapper } from './footer-style';
 
-const GITHUB_LOGO = './svg/sprite.svg#icon-github';
-const RS_SCHOOL_LOGO = './svg/sprite.svg#icon-rs-school-js';
+const SVG_SPRITE_SRC = './svg/sprite.svg';
+const GITHUB_LOGO = 'icon-github';
+const RS_SCHOOL_LOGO = 'icon-rs-school-js';
 const YEAR = "'21";
 const MENTOR = 'dimonwhite';
 const STUDENT = 'fronte-finem';
+
+const getGithubUrl = (username: string) => `https://github.com/${username}`;
 
 export const Footer = ({ className }: StyledProps): JSX.Element => {
   return (
     <StyledFooter className={className}>
       <Wrapper>
         <LogoLink className="rss" href="https://rs.school/js/">
-          <LogoSvg className="rss">
-            <use href={RS_SCHOOL_LOGO} />
-          </LogoSvg>
+          <Logo className="rss">
+            <SvgIcon src={SVG_SPRITE_SRC} name={RS_SCHOOL_LOGO} />
+          </Logo>
           <LogoText className="rss">{YEAR}</LogoText>
         </LogoLink>
         <Group>
-          <LogoLink className="github" href="https://github.com/dimonwhite">
-            <LogoSvg className="github">
-              <use href={GITHUB_LOGO} />
-            </LogoSvg>
+          <LogoLink className="github" href={getGithubUrl(MENTOR)}>
+            <Logo className="github">
+              <SvgIcon src={SVG_SPRITE_SRC} name={GITHUB_LOGO} />
+            </Logo>
             <LogoText className="github">
               mentor<span className="spoiler">: {MENTOR}</span>
             </LogoText>
           </LogoLink>
-          <LogoLink className="github" href="https://github.com/fronte-finem">
-            <LogoSvg className="github">
-              <use href={GITHUB_LOGO} />
-            </LogoSvg>
+          <LogoLink className="github" href={getGithubUrl(STUDENT)}>
+            <Logo className="github">
+              <SvgIcon src={SVG_SPRITE_SRC} name={GITHUB_LOGO} />
+            </Logo>
             <LogoText className="github">
               student<span className="spoiler">: {STUDENT}</span>
             </LogoText>
