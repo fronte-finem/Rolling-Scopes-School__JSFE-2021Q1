@@ -2,26 +2,10 @@ import { action, computed, makeObservable, observable, runInAction } from 'mobx'
 
 import { getAudioUrl, PLACEHOLDER } from 'app/config';
 import { playAudio, playAudioAsyncCancelable } from 'services/audio';
+import { GameSoundEffect, GameStatus } from 'services/game/config';
 import { WordDocument } from 'services/rest-api/config';
 import { WordsStatsService } from 'services/word-stat/service';
 import { randomItem } from 'utils/random';
-
-const SOUND_YES = './sfx/yes.mp3';
-const SOUND_NO = './sfx/no.mp3';
-const SOUND_WIN = './sfx/win.mp3';
-const SOUND_FAIL = './sfx/fail.mp3';
-
-export enum GameStatus {
-  INITIAL = 'initial',
-  READY = 'ready',
-  START = 'start',
-  END = 'end',
-  VOCALIZE = 'vocalize',
-  MATCHING = 'matching',
-  HIT = 'hit',
-  MISS = 'miss',
-  SHOW_RESULT = 'show result',
-}
 
 export class Game {
   @observable public status: GameStatus = GameStatus.INITIAL;
@@ -88,7 +72,7 @@ export class Game {
     this.words = this.words.filter((word) => word._id !== wordId);
     this.activeWord && this.wordsStatsService.matchInc(this.activeWord._id);
     if (!this.isGameEnd) {
-      playAudio(SOUND_YES);
+      playAudio(GameSoundEffect.YES);
       this.toNextWord();
     } else {
       void this.toShowResult();
@@ -98,13 +82,13 @@ export class Game {
   @action public miss(): void {
     this.mistakes += 1;
     this.activeWord && this.wordsStatsService.errorInc(this.activeWord._id);
-    playAudio(SOUND_NO);
+    playAudio(GameSoundEffect.NO);
     this.toMatching();
   }
 
   public async toShowResult(): Promise<void> {
     this.status = GameStatus.SHOW_RESULT;
-    const soundSrc = this.isWin ? SOUND_WIN : SOUND_FAIL;
+    const soundSrc = this.isWin ? GameSoundEffect.WIN : GameSoundEffect.FAIL;
     const [promise, cancel] = playAudioAsyncCancelable(soundSrc);
     this.asyncOperation = promise;
     this.cancelAsyncOperation = cancel;
