@@ -1,66 +1,43 @@
-import { Word, WordClass } from '@server/models/word';
+import { Word } from '@server/models/word';
 import axios, { AxiosResponse } from 'axios';
 
-import { authHeader } from 'services/rest-api/auth';
 import { RestApiResponse } from 'services/rest-api/axios-response';
-import { axiosWrapper } from 'services/rest-api/axios-wrapper';
-import { BACKEND_API_URL } from 'services/rest-api/config';
+import { axiosAuth, axiosCancelWrapper, CancelableRequest } from 'services/rest-api/axios-wrapper';
+import { BACKEND_API_URL, WordDocument } from 'services/rest-api/config';
 
 const API_URL = `${BACKEND_API_URL}/api`;
 const API_URL_CATEGORY = `${API_URL}/category`;
 const API_URL_WORDS = `${API_URL}/words`;
+const WORD = 'word';
 
-export type WordDocument = WordClass & { _id: string };
-export type WordResponse = AxiosResponse<WordDocument>;
-export type RestApiWordResponse = Promise<RestApiResponse<WordDocument>>;
+const getUrl = (categoryId: string, wordId?: string) => {
+  return `${API_URL_CATEGORY}/${categoryId}/${WORD}${wordId ? `/${wordId}` : ''}`;
+};
+
+type AxiosWordsResponse = Promise<AxiosResponse<WordDocument[]>>;
+type RestApiWordResponse = Promise<RestApiResponse<WordDocument>>;
+type RestApiStringResponse = Promise<RestApiResponse<string>>;
 
 class WordApiService {
-  public getAllCancelable = (categoryId: string) => {
-    const cancelSource = axios.CancelToken.source();
-    return {
-      cancel: () => cancelSource.cancel('get words canceled'),
-      getWords: (): Promise<AxiosResponse<WordDocument[]>> => {
-        const url = `${API_URL}/${categoryId}/word`;
-        return axios.get<WordDocument[]>(url, { cancelToken: cancelSource.token });
-      },
-    };
+  public getAllCancelable = (categoryId?: string): CancelableRequest<WordDocument[]> => {
+    const url = categoryId ? getUrl(categoryId) : API_URL_WORDS;
+    return axiosCancelWrapper({ url, method: 'GET' });
   };
 
-  public getAll = (categoryId?: string): Promise<AxiosResponse<WordDocument[]>> => {
-    const url = categoryId ? `${API_URL_CATEGORY}/${categoryId}/word` : API_URL_WORDS;
-    return axios.get<WordDocument[]>(url);
-  };
-
-  public getOne = (categoryId: string): Promise<AxiosResponse<WordDocument>> => {
-    const url = `${API_URL_CATEGORY}/${categoryId}/word/one`;
-    return axios.get<WordDocument>(url);
+  public getAll = (categoryId?: string): AxiosWordsResponse => {
+    return axios.get(categoryId ? getUrl(categoryId) : API_URL_WORDS);
   };
 
   public create = (categoryId: string, word: Word): RestApiWordResponse => {
-    const url = `${API_URL_CATEGORY}/${categoryId}/word`;
-    const headers = authHeader();
-    return axiosWrapper(async () => {
-      const { data } = await axios.post<WordDocument>(url, word, { headers });
-      return data;
-    });
+    return axiosAuth({ url: getUrl(categoryId), method: 'POST', data: word });
   };
 
   public update = (categoryId: string, wordId: string, word: Word): RestApiWordResponse => {
-    const url = `${API_URL_CATEGORY}/${categoryId}/word/${wordId}`;
-    const headers = authHeader();
-    return axiosWrapper(async () => {
-      const { data } = await axios.put<WordDocument>(url, word, { headers });
-      return data;
-    });
+    return axiosAuth({ url: getUrl(categoryId, wordId), method: 'PUT', data: word });
   };
 
-  public remove = (categoryId: string, wordId: string): Promise<RestApiResponse<string>> => {
-    const url = `${API_URL_CATEGORY}/${categoryId}/word/${wordId}`;
-    const headers = authHeader();
-    return axiosWrapper(async () => {
-      const { data } = await axios.delete<string>(url, { headers });
-      return data;
-    });
+  public remove = (categoryId: string, wordId: string): RestApiStringResponse => {
+    return axiosAuth({ url: getUrl(categoryId, wordId), method: 'DELETE' });
   };
 }
 
