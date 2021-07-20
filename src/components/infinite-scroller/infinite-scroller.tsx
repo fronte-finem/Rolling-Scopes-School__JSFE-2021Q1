@@ -1,14 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { Container, Loading } from 'components/infinite-scroller/infinite-scroller-style';
+import {
+  Container,
+  HaveMore,
+  Loading,
+  ShadowLayer,
+  WrapperLayer,
+} from 'components/infinite-scroller/infinite-scroller-style';
+import { SvgIcon } from 'components/svg-icon/svg-icon';
 
 interface InfiniteScrollerProps {
   height: string;
+  haveMore: boolean;
   loadMore: () => Promise<void>;
 }
 
 export const InfiniteScroller: React.FC<InfiniteScrollerProps> = ({
   height,
+  haveMore,
   loadMore,
   children,
 }) => {
@@ -35,6 +44,20 @@ export const InfiniteScroller: React.FC<InfiniteScrollerProps> = ({
 
   return (
     <Container height={height}>
+      <WrapperLayer>
+        <ShadowLayer height={height}>
+          {haveMore && (
+            <>
+              <HaveMore isLeft>
+                <SvgIcon src="./svg/sprite.svg" name="icon-arrow-down" />
+              </HaveMore>
+              <HaveMore isRight>
+                <SvgIcon src="./svg/sprite.svg" name="icon-arrow-down" />
+              </HaveMore>
+            </>
+          )}
+        </ShadowLayer>
+      </WrapperLayer>
       {children}
       <Loading ref={loadingRef} isLoading={isLoading}>
         <span>Loading...</span>
