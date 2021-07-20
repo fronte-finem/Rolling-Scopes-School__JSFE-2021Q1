@@ -1,5 +1,4 @@
-import { CategoryDocument } from 'services/rest-api/category-api';
-import { WordDocument } from 'services/rest-api/word-api';
+import { CategoryDocument, WordDocument } from 'services/rest-api/config';
 import { Order } from 'types/order';
 import { sort } from 'utils/array';
 

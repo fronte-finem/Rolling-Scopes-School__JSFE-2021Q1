@@ -2,9 +2,10 @@ import { action, computed, makeObservable, observable, runInAction } from 'mobx'
 
 import { PLACEHOLDER } from 'app/config';
 import { RestApiError, RestApiResponse } from 'services/rest-api/axios-response';
-import { categoryApiService, CategoryDocument } from 'services/rest-api/category-api';
+import { categoryApiService } from 'services/rest-api/category-api';
+import { CategoryDocument, WordDocument } from 'services/rest-api/config';
 import { mediaUpload } from 'services/rest-api/media-api';
-import { wordApiService, WordDocument } from 'services/rest-api/word-api';
+import { wordApiService } from 'services/rest-api/word-api';
 import { updateItem } from 'utils/array';
 
 export interface WordProps {

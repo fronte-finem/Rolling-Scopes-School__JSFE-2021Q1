@@ -2,7 +2,7 @@ import { action, computed, makeObservable, observable, runInAction } from 'mobx'
 
 import { getAudioUrl, PLACEHOLDER } from 'app/config';
 import { playAudio, playAudioAsyncCancelable } from 'services/audio';
-import { WordDocument } from 'services/rest-api/word-api';
+import { WordDocument } from 'services/rest-api/config';
 import { WordsStatsService } from 'services/word-stat/service';
 import { randomItem } from 'utils/random';
 
