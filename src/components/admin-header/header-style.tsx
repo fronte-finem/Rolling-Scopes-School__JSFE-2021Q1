@@ -27,12 +27,18 @@ export const BtnContainer = styled.div`
   @media (max-width: 800px) {
     right: 50%;
     transform: translateX(50%);
-    top: 90px;
+    top: 70px;
   }
 `;
 
 export const BtnLogout = styled.button`
   ${button};
+  --bg: #fff;
+  --bg-hover: #fff;
+  --bg-active: #111;
+  --fg: #08f;
+  --fg-hover: #0af;
+  --fg-active: #0ff;
   padding: 10px 30px;
 
   @media (max-width: 800px) {
