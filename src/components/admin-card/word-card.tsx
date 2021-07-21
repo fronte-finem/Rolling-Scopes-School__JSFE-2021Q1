@@ -1,8 +1,8 @@
 import React from 'react';
 
+import { CardFrontWord } from 'components/admin-card/card-front';
 import { Card } from 'components/admin-card/card-style';
 import { WordCardEditor } from 'components/admin-card/word-card-editor';
-import { WordCardFront } from 'components/admin-card/word-card-front';
 import { WordProps } from 'services/data/service';
 import { WordDocument } from 'services/rest-api/config';
 import { useMountedState } from 'utils/is-mounted-hook';
@@ -28,13 +28,12 @@ export const WordCard: React.FC<Props> = ({ initialWord, onUpdate, onDelete }) =
     isMounted && setEdit(false);
   };
 
-  return (
-    <Card big>
-      {isEdit ? (
-        <WordCardEditor initialWord={initialWord} onSubmit={handleUpdate} onCancel={handleCancel} />
-      ) : (
-        <WordCardFront initialWord={initialWord} onEdit={handleEdit} onDelete={handleDelete} />
-      )}
-    </Card>
+  const front = (
+    <CardFrontWord initialWord={initialWord} onEdit={handleEdit} onDelete={handleDelete} />
   );
+  const editor = (
+    <WordCardEditor initialWord={initialWord} onSubmit={handleUpdate} onCancel={handleCancel} />
+  );
+
+  return <Card big>{isEdit ? editor : front}</Card>;
 };

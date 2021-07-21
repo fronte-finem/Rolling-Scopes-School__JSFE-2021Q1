@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { CardFrontCategory } from 'components/admin-card/card-front';
 import { CategoryCardEditor } from 'components/admin-card/category-card-editor';
-import { CategoryCardFront } from 'components/admin-card/category-card-front';
 import { CategoryDocument, WordDocument } from 'services/rest-api/config';
 import { useMountedState } from 'utils/is-mounted-hook';
 
@@ -36,23 +36,22 @@ export const CategoryCard: React.FC<Props> = ({
   };
   const handleDelete = () => onDelete(category);
 
-  return (
-    <Card>
-      {isEdit ? (
-        <CategoryCardEditor
-          initialName={category.name}
-          onCancel={handleCancel}
-          onSubmit={handleUpdate}
-        />
-      ) : (
-        <CategoryCardFront
-          category={category}
-          onDelete={handleDelete}
-          onUpdate={handleEdit}
-          onAddWord={handleAddWord}
-          words={words}
-        />
-      )}
-    </Card>
+  const front = (
+    <CardFrontCategory
+      category={category}
+      onDelete={handleDelete}
+      onUpdate={handleEdit}
+      onAddWord={handleAddWord}
+      words={words}
+    />
   );
+  const editor = (
+    <CategoryCardEditor
+      initialName={category.name}
+      onCancel={handleCancel}
+      onSubmit={handleUpdate}
+    />
+  );
+
+  return <Card>{isEdit ? editor : front}</Card>;
 };
