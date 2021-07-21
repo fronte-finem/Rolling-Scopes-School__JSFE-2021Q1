@@ -64,4 +64,8 @@ export const button = css`
     background: var(--bg-active);
     color: var(--fg-active);
   }
+  &:disabled {
+    opacity: 0.25;
+    pointer-events: none;
+  }
 `;
