@@ -36,6 +36,7 @@ module.exports = {
   rules: {
     'import/prefer-default-export': 'off',
     'react/prop-types': 'off',
+    'react/require-default-props': 'off',
     'react/jsx-props-no-spreading': ['error', { custom: 'ignore' }],
     'no-param-reassign': ['error', { props: false }],
     'no-bitwise': ['error', { int32Hint: true }],
