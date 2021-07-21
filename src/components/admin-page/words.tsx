@@ -3,7 +3,7 @@ import { Redirect, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { Main } from 'app/app-style';
-import { WordAddCard } from 'components/admin-card/word-add-card';
+import { CardAddWord } from 'components/admin-card/card-add';
 import { WordCard } from 'components/admin-card/word-card';
 import { AdminHeader } from 'components/admin-header/header';
 import { Header } from 'components/header/header';
@@ -67,7 +67,7 @@ export const AdminPageWords: React.FC = observer(() => {
                 onDelete={handleDelete}
               />
             )),
-          <WordAddCard key="add new word" onCreate={handleCreate} />,
+          <CardAddWord key="add new word" onCreate={handleCreate} />,
         ]}
       </Container>
     </InfiniteScroller>

@@ -3,7 +3,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { Main } from 'app/app-style';
-import { CategoryAddCard } from 'components/admin-card/category-add-card';
+import { CardAddCategory } from 'components/admin-card/card-add';
 import { CategoryCard } from 'components/admin-card/category-card';
 import { AdminHeader } from 'components/admin-header/header';
 import { Header } from 'components/header/header';
@@ -74,7 +74,7 @@ export const AdminPageCategories: React.FC = observer(() => {
                 words={dataService.getWordsByCategoryId(category._id)}
               />
             )),
-          <CategoryAddCard key="creator" onCreate={handleCreate} />,
+          <CardAddCategory key="creator" onCreate={handleCreate} />,
         ]}
       </Container>
     </InfiniteScroller>
