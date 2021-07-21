@@ -14,6 +14,12 @@ import { Description } from 'components/admin-card/description';
 import { BtnClose } from 'components/button/button';
 import { CategoryDocument, WordDocument } from 'services/rest-api/config';
 
+enum ControlName {
+  TERM_WORDS = 'Words',
+  BTN_EDIT = 'Edit',
+  BTN_WORDS = 'Words',
+}
+
 interface Props {
   category: CategoryDocument;
   onDelete: () => void;
@@ -36,15 +42,15 @@ export const CategoryCardFront: React.FC<Props> = ({
     <CategoryContainer>
       <CategoryName>{category.name}</CategoryName>
       <DescriptionContainer>
-        <Description term="Words" value={words.length.toString()} />
+        <Description term={ControlName.TERM_WORDS} value={words.length.toString()} />
       </DescriptionContainer>
     </CategoryContainer>
     <BtnBottomContainer>
       <BtnUpdate type="button" onClick={onUpdate}>
-        Edit
+        {ControlName.BTN_EDIT}
       </BtnUpdate>
       <BtnAddWord type="submit" onClick={onAddWord}>
-        Words
+        {ControlName.BTN_WORDS}
       </BtnAddWord>
     </BtnBottomContainer>
   </Wrapper>

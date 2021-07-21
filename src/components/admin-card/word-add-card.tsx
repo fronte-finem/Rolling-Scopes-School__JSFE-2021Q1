@@ -6,6 +6,10 @@ import { WordCardEditor } from 'components/admin-card/word-card-editor';
 import { WordProps } from 'services/data/service';
 import { useMountedState } from 'utils/is-mounted-hook';
 
+enum ControlName {
+  CARD_TITLE = 'Add new Word',
+}
+
 interface Props {
   onCreate: (wordProps: WordProps) => Promise<void>;
 }
@@ -22,13 +26,8 @@ export const WordAddCard: React.FC<Props> = ({ onCreate }) => {
     isMounted && setEdit(false);
   };
 
-  return (
-    <Card big>
-      {isEdit ? (
-        <WordCardEditor onSubmit={handleCreate} onCancel={handleCancel} />
-      ) : (
-        <CardAddFront title="Add new Word" onAdd={handleAdd} />
-      )}
-    </Card>
-  );
+  const front = <CardAddFront title={ControlName.CARD_TITLE} onAdd={handleAdd} />;
+  const editor = <WordCardEditor onSubmit={handleCreate} onCancel={handleCancel} />;
+
+  return <Card big>{isEdit ? editor : front}</Card>;
 };

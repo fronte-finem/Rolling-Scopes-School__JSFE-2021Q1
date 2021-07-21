@@ -8,6 +8,12 @@ import {
 } from 'components/admin-card/card-style';
 import { playAudio } from 'services/audio';
 
+const CUT_URL_LAST_PART_REGEX = /.*\//;
+
+enum ControlName {
+  AUDIO_TERM = 'Audio 🔉:',
+}
+
 interface Props {
   term: string;
   value: string;
@@ -26,8 +32,8 @@ export const CardAudio: React.FC<{ url: string }> = ({ url }) => {
   const ignore = () => {};
   return (
     <AudioWrapper role="button" tabIndex={0} onClick={() => playAudio(url)} onKeyDown={ignore}>
-      <DescriptionTerm>Audio 🔉:</DescriptionTerm>
-      <DescriptionValue>{url.replace(/.*\//, '')}</DescriptionValue>
+      <DescriptionTerm>{ControlName.AUDIO_TERM}</DescriptionTerm>
+      <DescriptionValue>{url.replace(CUT_URL_LAST_PART_REGEX, '')}</DescriptionValue>
     </AudioWrapper>
   );
 };

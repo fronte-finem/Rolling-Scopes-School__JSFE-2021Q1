@@ -11,6 +11,13 @@ import {
 import { InputText } from 'components/admin-card/input-text';
 import { useMountedState } from 'utils/is-mounted-hook';
 
+enum ControlName {
+  CATEGORY_INPUT_LABEL = 'Category Name',
+  BTN_CREATE = 'Create',
+  BTN_UPDATE = 'Update',
+  BTN_CANCEL = 'Cancel',
+}
+
 interface Props {
   initialName: string;
   onCancel: () => void;
@@ -41,16 +48,18 @@ export const CategoryCardEditor: React.FC<Props> = ({ initialName, onCancel, onS
         <InputsContainer>
           <InputText
             initialValue={name}
-            label="Category Name"
+            label={ControlName.CATEGORY_INPUT_LABEL}
             onInput={handleInput}
             reset={false}
           />
         </InputsContainer>
         <BtnBottomContainer>
           <BtnCancel type="button" onClick={onCancel}>
-            Cancel
+            {ControlName.BTN_CANCEL}
           </BtnCancel>
-          <BtnUpdate type="submit">{initialName ? 'Update' : 'Create'}</BtnUpdate>
+          <BtnUpdate type="submit">
+            {initialName ? ControlName.BTN_UPDATE : ControlName.BTN_CREATE}
+          </BtnUpdate>
         </BtnBottomContainer>
       </Wrapper>
     </Form>

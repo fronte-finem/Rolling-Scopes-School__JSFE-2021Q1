@@ -14,6 +14,21 @@ import { WordProps } from 'services/data/service';
 import { WordDocument } from 'services/rest-api/config';
 import { useMountedState } from 'utils/is-mounted-hook';
 
+enum ControlName {
+  INPUT_LABEL_WORD = 'word',
+  INPUT_LABEL_TRANSLATION = 'translation',
+  INPUT_LABEL_IMAGE = 'image',
+  INPUT_LABEL_AUDIO = 'audio',
+  BTN_CREATE = 'Create',
+  BTN_UPDATE = 'Update',
+  BTN_CANCEL = 'Cancel',
+}
+
+enum MediaType {
+  IMAGE = 'audio/*',
+  AUDIO = 'image/*',
+}
+
 interface Props {
   initialWord?: WordDocument;
   onSubmit: (props: WordProps) => Promise<void>;
@@ -65,27 +80,27 @@ export const WordCardEditor: React.FC<Props> = ({
       <Wrapper isLoading={loading}>
         <InputsContainer>
           <InputText
-            label="word"
+            label={ControlName.INPUT_LABEL_WORD}
             onInput={handleInput('word')}
             reset={reset}
             initialValue={wordProps.word}
           />
           <InputText
-            label="translation"
+            label={ControlName.INPUT_LABEL_TRANSLATION}
             onInput={handleInput('translation')}
             reset={reset}
             initialValue={wordProps.translation}
           />
           <InputFile
-            label="audio"
-            accept="audio/*"
+            label={ControlName.INPUT_LABEL_AUDIO}
+            accept={MediaType.AUDIO}
             onInput={handleInput('audio')}
             reset={reset}
             required={isFilesRequired}
           />
           <InputFile
-            label="image"
-            accept="image/*"
+            label={ControlName.INPUT_LABEL_IMAGE}
+            accept={MediaType.IMAGE}
             onInput={handleInput('image')}
             reset={reset}
             required={isFilesRequired}
@@ -94,9 +109,11 @@ export const WordCardEditor: React.FC<Props> = ({
 
         <BtnBottomContainer>
           <BtnCancel type="button" onClick={handleCancel}>
-            Cancel
+            {ControlName.BTN_CANCEL}
           </BtnCancel>
-          <BtnUpdate type="submit">{initialWord ? 'Update' : 'Create'}</BtnUpdate>
+          <BtnUpdate type="submit">
+            {initialWord ? ControlName.BTN_UPDATE : ControlName.BTN_CREATE}
+          </BtnUpdate>
         </BtnBottomContainer>
       </Wrapper>
     </Form>

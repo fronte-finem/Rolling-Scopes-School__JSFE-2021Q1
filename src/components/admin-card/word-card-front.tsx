@@ -14,6 +14,12 @@ import { BtnClose } from 'components/button/button';
 import { WordDocument } from 'services/rest-api/config';
 import { getAudioUrl, getImageUrl } from 'services/rest-api/media-api';
 
+enum ControlName {
+  TERM_WORD = 'Word',
+  TERM_TRANSLATION = 'Translation',
+  BTN_EDIT = 'Edit',
+}
+
 interface Props {
   initialWord: WordDocument;
   onEdit: () => void;
@@ -30,13 +36,13 @@ export const WordCardFront: React.FC<Props> = ({ initialWord, onEdit, onDelete }
         <BtnClose onClick={onDelete} />
       </BtnCloseContainer>
       <DescriptionContainer>
-        <Description term="Word" value={initialWord.word} />
-        <Description term="Translation" value={initialWord.translation} />
+        <Description term={ControlName.TERM_WORD} value={initialWord.word} />
+        <Description term={ControlName.TERM_TRANSLATION} value={initialWord.translation} />
         <CardAudio url={getAudioUrl(initialWord.audio)} />
       </DescriptionContainer>
       <BtnBottomContainer>
         <BtnUpdate type="button" onClick={onEdit}>
-          Edit
+          {ControlName.BTN_EDIT}
         </BtnUpdate>
       </BtnBottomContainer>
     </Wrapper>

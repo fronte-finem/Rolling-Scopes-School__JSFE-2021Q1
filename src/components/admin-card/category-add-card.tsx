@@ -6,6 +6,10 @@ import { useMountedState } from 'utils/is-mounted-hook';
 
 import { Card } from './card-style';
 
+enum ControlName {
+  CARD_TITLE = 'Add new Category',
+}
+
 interface Props {
   onCreate: (name: string) => Promise<void>;
 }
@@ -16,18 +20,16 @@ export const CategoryAddCard: React.FC<Props> = ({ onCreate }) => {
 
   const handleAdd = () => setEdit(true);
   const handleCancel = () => setEdit(false);
+
   const handleCreate = async (name: string) => {
     await onCreate(name);
     isMounted && setEdit(false);
   };
 
-  return (
-    <Card>
-      {isEdit ? (
-        <CategoryCardEditor initialName="" onCancel={handleCancel} onSubmit={handleCreate} />
-      ) : (
-        <CardAddFront title="Add new Category" onAdd={handleAdd} />
-      )}
-    </Card>
+  const front = <CardAddFront title={ControlName.CARD_TITLE} onAdd={handleAdd} />;
+  const editor = (
+    <CategoryCardEditor initialName="" onCancel={handleCancel} onSubmit={handleCreate} />
   );
+
+  return <Card>{isEdit ? editor : front}</Card>;
 };
