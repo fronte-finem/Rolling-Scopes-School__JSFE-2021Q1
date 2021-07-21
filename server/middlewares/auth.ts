@@ -1,12 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 
 import { verifyAccessToken } from '../services/auth';
+import { HttpStatusCode } from '../shared/http-status';
 
 export function verifyToken(request: Request, response: Response, next: NextFunction): void {
   const token = request.headers['x-access-token'];
 
   if (!token || typeof token !== 'string') {
-    response.status(403).send('Token not provided!');
+    response.status(HttpStatusCode.FORBIDDEN).send('Token not provided!');
     return;
   }
 
@@ -15,6 +16,6 @@ export function verifyToken(request: Request, response: Response, next: NextFunc
     console.log('decoded jwt:', jwtPayload);
     next();
   } catch (error) {
-    response.status(401).send('Token invalid!');
+    response.status(HttpStatusCode.UNAUTHORIZED).send('Token invalid!');
   }
 }
