@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { CardAddFront } from 'components/admin-card/card-add-front';
-import { CategoryCardEditor } from 'components/admin-card/category-card-editor';
-import { WordCardEditor } from 'components/admin-card/word-card-editor';
+import { CardEditorCategory } from 'components/admin-card/card-editor-category';
+import { CardEditorWord } from 'components/admin-card/card-editor-word';
 import { WordProps } from 'services/data/service';
 import { useMountedState } from 'utils/is-mounted-hook';
 
@@ -49,7 +49,7 @@ interface CreateCategoryProps {
 
 export const CardAddCategory: React.FC<CreateCategoryProps> = ({ onCreate }) => {
   const getEditor = ({ onSubmit, onCancel }: EditorProps<string>) => (
-    <CategoryCardEditor onSubmit={onSubmit} onCancel={onCancel} />
+    <CardEditorCategory isCreator onSubmit={onSubmit} onCancel={onCancel} />
   );
   return <CardAdd title={ControlName.ADD_CATEGORY} getEditor={getEditor} onCreate={onCreate} />;
 };
@@ -60,7 +60,7 @@ interface CreateWordProps {
 
 export const CardAddWord: React.FC<CreateWordProps> = ({ onCreate }) => {
   const getEditor = ({ onSubmit, onCancel }: EditorProps<WordProps>) => (
-    <WordCardEditor onSubmit={onSubmit} onCancel={onCancel} />
+    <CardEditorWord isCreator onSubmit={onSubmit} onCancel={onCancel} />
   );
   return <CardAdd title={ControlName.ADD_WORD} getEditor={getEditor} onCreate={onCreate} bigCard />;
 };

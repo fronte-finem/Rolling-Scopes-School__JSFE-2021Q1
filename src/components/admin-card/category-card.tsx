@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { CardEditorCategory } from 'components/admin-card/card-editor-category';
 import { CardFrontCategory } from 'components/admin-card/card-front';
-import { CategoryCardEditor } from 'components/admin-card/category-card-editor';
 import { CategoryDocument, WordDocument } from 'services/rest-api/config';
 import { useMountedState } from 'utils/is-mounted-hook';
 
@@ -46,7 +46,7 @@ export const CategoryCard: React.FC<Props> = ({
     />
   );
   const editor = (
-    <CategoryCardEditor
+    <CardEditorCategory
       initialName={category.name}
       onCancel={handleCancel}
       onSubmit={handleUpdate}
