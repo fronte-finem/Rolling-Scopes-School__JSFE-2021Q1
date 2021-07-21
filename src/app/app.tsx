@@ -15,6 +15,17 @@ import { GameRoute } from './game-route';
 import { NotFoundRoute } from './not-found-route';
 import { TestRoute } from './test-route';
 
+enum AppRoute {
+  BASE = '/',
+  WORDS = '/category/:categoryId',
+  DIFFICULT_WORDS = '/difficult',
+  STATISTIC = '/statistic',
+  ADMIN = '/admin',
+  ADMIN_WORDS = '/admin/category/:categoryId',
+  TEST = '/test/:component',
+  NOT_FOUND = '/:route',
+}
+
 export const App = observer(() => {
   const { pathname } = useLocation();
   const game = useGameContext();
@@ -38,28 +49,28 @@ export const App = observer(() => {
       </AppBackgroundWrapper>
 
       <Switch>
-        <Route exact path="/">
+        <Route exact path={AppRoute.BASE}>
           <PageCategories />
         </Route>
-        <Route path="/category/:categoryId">
+        <Route path={AppRoute.WORDS}>
           <GameRoute />
         </Route>
-        <Route path="/difficult">
+        <Route path={AppRoute.DIFFICULT_WORDS}>
           <GameRoute isDifficultWords />
         </Route>
-        <Route path="/statistic">
+        <Route path={AppRoute.STATISTIC}>
           <PageWordsStats />
         </Route>
-        <Route path="/admin/category/:categoryId">
+        <Route path={AppRoute.ADMIN_WORDS}>
           <AdminPageWords />
         </Route>
-        <Route path="/admin">
+        <Route path={AppRoute.ADMIN}>
           <AdminPageCategories />
         </Route>
-        <Route path="/test/:component">
+        <Route path={AppRoute.TEST}>
           <TestRoute />
         </Route>
-        <Route path="/:route">
+        <Route path={AppRoute.NOT_FOUND}>
           <NotFoundRoute />
         </Route>
       </Switch>
