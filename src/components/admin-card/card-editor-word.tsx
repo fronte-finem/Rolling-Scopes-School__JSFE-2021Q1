@@ -55,7 +55,10 @@ export const CardEditorWord: React.FC<Props> = ({ initialWord, isCreator, onCanc
       canUpdate={
         !!wordProps.word &&
         !!wordProps.translation &&
-        (wordProps.word !== initialWord?.word || wordProps.translation !== initialWord?.translation)
+        (wordProps.word !== initialWord?.word ||
+          wordProps.translation !== initialWord?.translation ||
+          !!wordProps.image ||
+          !!wordProps.audio)
       }
       onCancel={handleCancel}
       onSubmit={handleSubmit}
