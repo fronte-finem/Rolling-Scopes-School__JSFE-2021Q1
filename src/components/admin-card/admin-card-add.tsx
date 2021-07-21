@@ -6,7 +6,7 @@ import { CardEditorWord } from 'components/admin-card/card-editor-word';
 import { WordProps } from 'services/data/service';
 import { useMountedState } from 'utils/is-mounted-hook';
 
-import { Card } from './card-style';
+import { StyledCard } from './card-style';
 
 interface EditorProps<T> {
   onSubmit: (data: T) => Promise<void>;
@@ -35,7 +35,7 @@ export function CardAdd<T>({ title, getEditor, onCreate, bigCard }: Props<T>): J
   const front = <CardAddFront title={title} onAdd={handleAdd} />;
   const editor = getEditor({ onCancel: handleCancel, onSubmit: handleCreate });
 
-  return <Card big={bigCard}>{isEdit ? editor : front}</Card>;
+  return <StyledCard big={bigCard}>{isEdit ? editor : front}</StyledCard>;
 }
 
 enum ControlName {

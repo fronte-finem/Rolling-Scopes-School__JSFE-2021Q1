@@ -3,8 +3,8 @@ import { Redirect, useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { Main } from 'app/app-style';
-import { CardAddCategory } from 'components/admin-card/card-add';
-import { CategoryCard } from 'components/admin-card/category-card';
+import { CardAddCategory } from 'components/admin-card/admin-card-add';
+import { CardCategory } from 'components/admin-card/admin-card-category';
 import { AdminHeader } from 'components/admin-header/header';
 import { Header } from 'components/header/header';
 import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
@@ -65,7 +65,7 @@ export const AdminPageCategories: React.FC = observer(() => {
           ...dataService.categories
             .slice(0, itemsCount)
             .map((category) => (
-              <CategoryCard
+              <CardCategory
                 key={category._id}
                 category={category}
                 onUpdate={handleUpdate}

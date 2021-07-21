@@ -2,7 +2,7 @@ import styled, { css, keyframes } from 'styled-components';
 
 import { button } from 'components/button/button-style';
 
-export const Card = styled.div<{ big?: boolean }>`
+export const StyledCard = styled.div<{ big?: boolean }>`
   position: relative;
   width: 300px;
   height: ${({ big }) => (big ? '400px' : '300px')};

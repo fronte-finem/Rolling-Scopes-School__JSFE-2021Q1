@@ -3,8 +3,8 @@ import { Redirect, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { Main } from 'app/app-style';
-import { CardAddWord } from 'components/admin-card/card-add';
-import { WordCard } from 'components/admin-card/word-card';
+import { CardAddWord } from 'components/admin-card/admin-card-add';
+import { CardWord } from 'components/admin-card/admin-card-word';
 import { AdminHeader } from 'components/admin-header/header';
 import { Header } from 'components/header/header';
 import { InfiniteScroller } from 'components/infinite-scroller/infinite-scroller';
@@ -60,7 +60,7 @@ export const AdminPageWords: React.FC = observer(() => {
           ...words
             .slice(0, itemsCount)
             .map((word) => (
-              <WordCard
+              <CardWord
                 key={word._id}
                 initialWord={word}
                 onUpdate={handleUpdate}
