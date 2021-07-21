@@ -24,13 +24,21 @@ app.use(
   })
 );
 
-app.get('/', (request, response) => {
-  response.json({ message: 'Hello world!!!' });
+enum AppRoute {
+  BASE = '/',
+  AUTH = '/api/auth',
+  CATEGORY = '/api/category',
+  WORDS = '/api/words',
+  MEDIA = '/api/media',
+}
+
+app.get(AppRoute.BASE, (_, response) => {
+  response.send('Hello world!!!');
 });
 
-app.use('/api/media', mediaRouter);
-app.use('/api/category', categoryRouter);
-app.use('/api/words', wordRouter);
-app.use('/api/auth', authRouter);
+app.use(AppRoute.AUTH, authRouter);
+app.use(AppRoute.CATEGORY, categoryRouter);
+app.use(AppRoute.WORDS, wordRouter);
+app.use(AppRoute.MEDIA, mediaRouter);
 
 export { app };

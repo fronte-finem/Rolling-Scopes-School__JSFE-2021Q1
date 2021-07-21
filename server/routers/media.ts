@@ -13,7 +13,6 @@ const cloudinaryConfig = {
   api_secret: process.env.API_SECRET,
 };
 
-console.log(cloudinaryConfig);
 cloudinary.v2.config(cloudinaryConfig);
 
 export interface Data {
@@ -22,8 +21,10 @@ export interface Data {
 
 const mediaRouter = Router();
 
-// mediaRouter.post('/upload', [verifyToken, upload.single('media')], uploadMedia);
+enum MediaRoute {
+  UPLOAD = '/upload',
+}
 
-mediaRouter.post('/upload', [verifyToken], uploadController);
+mediaRouter.post(MediaRoute.UPLOAD, [verifyToken], uploadController);
 
 export { mediaRouter };

@@ -5,8 +5,13 @@ import { verifyToken } from '../middlewares/auth';
 
 const authRouter = Router();
 
-authRouter.post('/login', login);
+enum AuthRoute {
+  LOGIN = '/login',
+  CHECK_TOKEN = '/check-token',
+}
 
-authRouter.get('/check-token', [verifyToken], tokenVerified);
+authRouter.post(AuthRoute.LOGIN, login);
+
+authRouter.get(AuthRoute.CHECK_TOKEN, [verifyToken], tokenVerified);
 
 export { authRouter };
