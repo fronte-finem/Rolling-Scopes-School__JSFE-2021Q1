@@ -1,11 +1,5 @@
 import styled, { css } from 'styled-components';
 
-export const BtnSvg = styled.svg`
-  display: block;
-  width: 100%;
-  height: 100%;
-`;
-
 interface BtnTheme {
   primary?: boolean;
 }
