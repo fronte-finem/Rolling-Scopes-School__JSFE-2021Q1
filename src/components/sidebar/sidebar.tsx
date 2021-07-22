@@ -28,6 +28,19 @@ import {
 
 const SCROLL_PART = 5;
 const SWAGGER_LINK = 'https://app.swaggerhub.com/apis-docs/fronte_finem/english-for-kids/1';
+const ADMIN_MSG = 'Hello, admin! 🙃';
+
+enum LinkTitle {
+  ADMIN_PAGE = 'Admin page',
+  SWAGGER_HUB = 'SwaggerHub',
+  HOME = 'Home',
+  STATISTIC = 'Statistic',
+}
+
+enum BtnTitle {
+  LOGOUT = 'Logout',
+  LOGIN = 'Login',
+}
 
 export const Sidebar = ({ className }: StyledProps): JSX.Element => {
   const token = AuthTokenStore.get();
@@ -56,12 +69,12 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
 
   const adminElements = (
     <>
-      <Heading>Hello, admin! 🙃</Heading>
+      <Heading>{ADMIN_MSG}</Heading>
       <SidebarLink to="/admin" onClick={handleLinkClick}>
-        Admin page
+        {LinkTitle.ADMIN_PAGE}
       </SidebarLink>
       <SidebarExternalLink href={SWAGGER_LINK} target="_blank" onClick={handleLinkClick}>
-        SwaggerHub
+        {LinkTitle.SWAGGER_HUB}
       </SidebarExternalLink>
     </>
   );
@@ -69,10 +82,10 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
   const commonLinks = (
     <>
       <SidebarLink exact to="/" onClick={handleLinkClick}>
-        Home
+        {LinkTitle.HOME}
       </SidebarLink>
       <SidebarLink exact to="/statistic" onClick={handleLinkClick}>
-        Statistic
+        {LinkTitle.STATISTIC}
       </SidebarLink>
     </>
   );
@@ -105,7 +118,7 @@ export const Sidebar = ({ className }: StyledProps): JSX.Element => {
     <SidebarNav className={sidebarClassName} ref={ref}>
       <BtnLoginContainer>
         <BtnLogin type="button" onClick={token ? handleLogoutClick : handleLoginClick}>
-          {token ? 'Logout' : 'Login'}
+          {token ? BtnTitle.LOGOUT : BtnTitle.LOGIN}
         </BtnLogin>
       </BtnLoginContainer>
       <BtnContainer>

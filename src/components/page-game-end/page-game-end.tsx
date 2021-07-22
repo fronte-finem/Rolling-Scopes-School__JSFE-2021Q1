@@ -32,6 +32,8 @@ export const WinPage: React.FC = () => {
   );
 };
 
+const getMistakesMsg = (num: number) => `${num} mistakes`;
+
 export const FailPage: React.FC = observer(() => {
   const game = useGameContext();
   return (
@@ -41,7 +43,7 @@ export const FailPage: React.FC = observer(() => {
       <Main>
         <SpinnerContainer>
           <SpinnerWrapper>
-            <SpinnerMessage>{game.mistakes} mistakes</SpinnerMessage>
+            <SpinnerMessage>{getMistakesMsg(game.mistakes)}</SpinnerMessage>
             <Spinner
               svgSpriteSrc={SVG_SPRITE_EMOJI_SRC}
               svgIcons={EMOJI_NEGATIVE}

@@ -19,6 +19,8 @@ export const BtnSubmit = styled.button`
   height: 30px;
 `;
 
+const TITLE = 'Auth Error';
+
 export const AuthErrorModal: React.FC = () => {
   const { setModalShow } = useModalContext();
   const history = useHistory();
@@ -40,7 +42,7 @@ export const AuthErrorModal: React.FC = () => {
   );
 
   return (
-    <Modal title="Auth Error" footer={footer}>
+    <Modal title={TITLE} footer={footer}>
       <h2>Access token expired or invalid 😔</h2>
       <p>Admin mode closed...</p>
     </Modal>

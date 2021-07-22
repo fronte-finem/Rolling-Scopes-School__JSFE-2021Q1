@@ -18,6 +18,9 @@ import { StyledProps } from 'types/styled';
 
 const SCROLL_PART = 8;
 
+const NO_DIFFICULT_WORDS = 'No difficult words';
+const getNoWordsMsg = (categoryName?: string) => `Category "${categoryName || ''}" have 0 words`;
+
 export interface PageWordsProps extends StyledProps {
   isDifficultWords?: boolean;
   words?: WordDocument[];
@@ -79,8 +82,8 @@ export const PageWords: React.FC<PageWordsProps> = observer(({ isDifficultWords 
   const noWordsMessage = (
     <h2 style={{ margin: '50px', textAlign: 'center' }}>
       {isDifficultWords
-        ? 'No difficult words'
-        : `Category "${dataService.getCategoryById(categoryId)?.name || ''}" have 0 words`}
+        ? NO_DIFFICULT_WORDS
+        : getNoWordsMsg(dataService.getCategoryById(categoryId)?.name)}
     </h2>
   );
 

@@ -5,6 +5,11 @@ import { useGameContext } from 'services/game/context';
 
 import { ModeFirst, ModeSecond, StyledModeSwitch, Switch } from './mode-switch-style';
 
+enum ModeTitle {
+  TRAIN = 'train',
+  PLAY = 'play',
+}
+
 export const ModeSwitch: React.FC = observer(() => {
   const game = useGameContext();
 
@@ -16,8 +21,8 @@ export const ModeSwitch: React.FC = observer(() => {
 
   return (
     <StyledModeSwitch className={switchClassName} onClick={handleChangeMode}>
-      <ModeFirst>train</ModeFirst>
-      <ModeSecond>play</ModeSecond>
+      <ModeFirst>{ModeTitle.TRAIN}</ModeFirst>
+      <ModeSecond>{ModeTitle.PLAY}</ModeSecond>
       <Switch />
     </StyledModeSwitch>
   );

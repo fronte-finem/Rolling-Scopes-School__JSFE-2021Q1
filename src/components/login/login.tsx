@@ -17,6 +17,9 @@ import {
   Wrapper,
 } from './login-style';
 
+const TITLE = 'Login';
+const INPUT_PLACEHOLDER = 'admin';
+
 export const Login: React.FC = () => {
   const { setModalShow } = useModalContext();
   const [isUsernameError, setUsernameError] = useState(false);
@@ -91,7 +94,7 @@ export const Login: React.FC = () => {
   );
 
   return (
-    <Modal title="Login" footer={footer}>
+    <Modal title={TITLE} footer={footer}>
       <Form id={loginFormId} onSubmit={handleLogin} ref={formRef}>
         <Wrapper>
           <InputWrapper>
@@ -100,7 +103,7 @@ export const Login: React.FC = () => {
               onInput={handleUsernameInput}
               type="text"
               value={username}
-              placeholder="admin"
+              placeholder={INPUT_PLACEHOLDER}
               required
               id={usernameId}
               isError={isUsernameError}
@@ -113,7 +116,7 @@ export const Login: React.FC = () => {
               onInput={handlePasswordInput}
               type="password"
               value={password}
-              placeholder="admin"
+              placeholder={INPUT_PLACEHOLDER}
               required
               id={passwordId}
               isError={isPasswordError}

@@ -15,6 +15,8 @@ import {
   Wrapper,
 } from './header-style';
 
+const MAIN_TITLE = 'English for kids';
+
 interface Props extends StyledProps {
   isAdmin?: boolean;
   showBtnStartRepeat?: boolean;
@@ -39,7 +41,7 @@ export const Header: React.FC<Props> = observer(
           ) : (
             <>
               <StyledHeading>
-                <StyledLink to="/">English for kids</StyledLink>
+                <StyledLink to="/">{MAIN_TITLE}</StyledLink>
               </StyledHeading>
               {children}
               <BtnStartRepeatWrapper isHidden={!showBtnStartRepeat}>

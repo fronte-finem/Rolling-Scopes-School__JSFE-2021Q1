@@ -9,16 +9,16 @@ import {
 } from 'components/spinner/spinner-style';
 import { IconName, SVG_SPRITE_ICON_SRC } from 'components/svg-icon/svg-icon';
 
-export const ICONS_LOADING = Array(3).fill(IconName.LOADING);
+const LOADING_MSG = 'Heroku instance loading...';
 
 export const HerokuLoading: React.FC = () => {
   return (
     <SpinnerContainer>
       <SpinnerWrapper>
-        <SpinnerMessage>Heroku instance loading...</SpinnerMessage>
+        <SpinnerMessage>{LOADING_MSG}</SpinnerMessage>
         <Spinner
           svgSpriteSrc={SVG_SPRITE_ICON_SRC}
-          svgIcons={ICONS_LOADING}
+          svgIcons={Array(3).fill(IconName.LOADING)}
           svgFill="#0004"
           animationStyle={SpinnerAnimationStyle.SPINNER}
         />
