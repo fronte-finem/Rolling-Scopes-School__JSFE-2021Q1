@@ -2,11 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 
 import { Marks } from 'components/card-word/marks';
-import {
-  EMOJI_NEGATIVE,
-  EMOJI_POSITIVE,
-  EMOJI_SVG_SPRITE,
-} from 'components/page-game-end/page-game-end';
+import { EMOJI_NEGATIVE, EMOJI_POSITIVE, SVG_SPRITE_EMOJI_SRC } from 'components/svg-icon/svg-icon';
 import { playAudio } from 'services/audio';
 import { WordDocument } from 'services/rest-api/config';
 import { getAudioUrl, getImageUrl } from 'services/rest-api/media-api';
@@ -72,7 +68,7 @@ export const Card: React.FC<CardProps> = observer((props) => {
         <CardBackSide word={translation} image={getImageUrl(image)} />
       </StyledCard>
       <MarksWrapper>
-        <Marks src={EMOJI_SVG_SPRITE} marks={marks} show={isGameMode} />
+        <Marks src={SVG_SPRITE_EMOJI_SRC} marks={marks} show={isGameMode} />
       </MarksWrapper>
     </CardContainer>
   );
