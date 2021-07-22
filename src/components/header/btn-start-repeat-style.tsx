@@ -6,7 +6,6 @@ export const Btn = styled.button<{ isPrimary: boolean }>`
   --color-foreground: #111;
   --icon-rotate: 0deg;
   --btn-width: ${({ isPrimary }) => (isPrimary ? '220px' : '240px')};
-
   --time: 300ms;
 
   display: block;
@@ -42,7 +41,7 @@ export const Content = styled.div`
   transition: all var(--time);
 `;
 
-export const Word = styled.div`
+export const Title = styled.div`
   display: block;
   &:first-child {
     justify-self: flex-end;
@@ -61,8 +60,7 @@ export const SvgWrapper = styled.div`
   overflow: hidden;
 `;
 
-export const StyledSvg = styled.svg`
-  display: block;
+export const SvgContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;

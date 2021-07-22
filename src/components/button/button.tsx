@@ -1,15 +1,10 @@
 import React from 'react';
 
 import { RoundBtn } from 'components/button/button-style';
-import { SVG_SPRITE_ICON_SRC, SvgIcon } from 'components/svg-icon/svg-icon';
+import { IconName, SVG_SPRITE_ICON_SRC, SvgIcon } from 'components/svg-icon/svg-icon';
 
 interface Props {
   onClick: () => void;
-}
-
-enum IconName {
-  CLOSE = 'icon-close',
-  PLUS = 'icon-plus',
 }
 
 const getRoundBtn =

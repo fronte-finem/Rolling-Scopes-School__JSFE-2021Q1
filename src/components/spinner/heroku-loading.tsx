@@ -7,9 +7,9 @@ import {
   SpinnerMessage,
   SpinnerWrapper,
 } from 'components/spinner/spinner-style';
-import { SVG_SPRITE_ICON_SRC } from 'components/svg-icon/svg-icon';
+import { IconName, SVG_SPRITE_ICON_SRC } from 'components/svg-icon/svg-icon';
 
-export const ICONS_LOADING = Array(3).fill('icon-loading');
+export const ICONS_LOADING = Array(3).fill(IconName.LOADING);
 
 export const HerokuLoading: React.FC = () => {
   return (

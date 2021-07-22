@@ -12,6 +12,7 @@ export const StyledBtnFlip = styled.button`
   box-shadow: 0 0 5px 2px #0004;
   transition: all var(--time), transform var(--time);
   transition-timing-function: linear, var(--ease-out-back);
+  fill: #fff;
 
   &:hover {
     transform: rotate(180deg);
@@ -22,10 +23,4 @@ export const StyledBtnFlip = styled.button`
     transform: rotate(360deg);
     box-shadow: 0 0 1px 2px #0004;
   }
-`;
-
-export const StyledSvg = styled.svg`
-  width: 100%;
-  height: 100%;
-  fill: #fff;
 `;

@@ -3,35 +3,35 @@ import React from 'react';
 import {
   Btn,
   Content,
-  StyledSvg,
+  SvgContainer,
   SvgWrapper,
-  Word,
+  Title,
 } from 'components/header/btn-start-repeat-style';
+import { IconName, SVG_SPRITE_ICON_SRC, SvgIcon } from 'components/svg-icon/svg-icon';
 
 interface Props {
   onClick: () => void;
   isStart?: boolean;
 }
 
-const START = 'START';
-const REPEAT = 'REPEAT';
-
-const ICON_START = './svg/sprite.svg#icon-start';
-const ICON_REPEAT = './svg/sprite.svg#icon-repeat';
+enum BtnTitle {
+  START = 'START',
+  REPEAT = 'REPEAT',
+}
 
 export const BtnStartRepeat: React.FC<Props> = ({ onClick, isStart = false }) => {
-  const word = isStart ? START : REPEAT;
-  const icon = isStart ? ICON_START : ICON_REPEAT;
+  const title = isStart ? BtnTitle.START : BtnTitle.REPEAT;
+  const icon = isStart ? IconName.START : IconName.REPEAT;
   return (
     <Btn onClick={onClick} isPrimary={isStart}>
       <Content>
-        <Word>{word}</Word>
+        <Title>{title}</Title>
         <SvgWrapper>
-          <StyledSvg>
-            <use href={icon} />
-          </StyledSvg>
+          <SvgContainer>
+            <SvgIcon src={SVG_SPRITE_ICON_SRC} name={icon} />
+          </SvgContainer>
         </SvgWrapper>
-        <Word>{word}</Word>
+        <Title>{title}</Title>
       </Content>
     </Btn>
   );

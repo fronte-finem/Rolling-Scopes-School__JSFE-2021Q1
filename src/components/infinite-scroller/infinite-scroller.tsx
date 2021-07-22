@@ -7,7 +7,7 @@ import {
   ShadowLayer,
   WrapperLayer,
 } from 'components/infinite-scroller/infinite-scroller-style';
-import { SvgIcon } from 'components/svg-icon/svg-icon';
+import { IconName, SVG_SPRITE_ICON_SRC, SvgIcon } from 'components/svg-icon/svg-icon';
 
 interface InfiniteScrollerProps {
   height: string;
@@ -49,10 +49,10 @@ export const InfiniteScroller: React.FC<InfiniteScrollerProps> = ({
           {haveMore && (
             <>
               <HaveMore isLeft>
-                <SvgIcon src="./svg/sprite.svg" name="icon-arrow-down" />
+                <SvgIcon src={SVG_SPRITE_ICON_SRC} name={IconName.ARROW_DOWN} />
               </HaveMore>
               <HaveMore isRight>
-                <SvgIcon src="./svg/sprite.svg" name="icon-arrow-down" />
+                <SvgIcon src={SVG_SPRITE_ICON_SRC} name={IconName.ARROW_DOWN} />
               </HaveMore>
             </>
           )}
