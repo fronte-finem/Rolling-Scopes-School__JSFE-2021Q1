@@ -1,0 +1,95 @@
+@import "./colors.css";
+
+/*******************************************************************************
+  Layout
+*******************************************************************************/
+
+:root {
+  --w-max: 1440px;
+  --w-min: 320px;
+  --h-head: 780px;
+  --h-foot: 360px;
+  --c-padd: 120px;
+}
+@media (max-width: 1024px) {
+  :root {
+    --c-padd: 60px;
+  }
+}
+@media (max-width: 640px) {
+  :root {
+    --c-padd: 30px;
+  }
+}
+@media (max-width: 480px) {
+  :root {
+    --c-padd: 15px;
+  }
+}
+
+.page {
+  display: grid;
+  grid-template-rows:
+    var(--h-head)
+    minmax(calc(100vh - var(--h-head) - var(--h-foot)), auto)
+    var(--h-foot);
+  grid-template-areas:
+    "head"
+    "main"
+    "foot";
+}
+
+.layout-head { grid-area: head; }
+.layout-main { grid-area: main; }
+.layout-foot { grid-area: foot; }
+
+.layout-wrapper {
+  max-width: var(--w-max);
+  min-width: var(--w-min);
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 var(--c-padd);
+}
+
+.layout-head .layout-wrapper { padding-top: 19px; }
+.layout-head .layout-box { padding-bottom: var(--c-padd); }
+
+.layout-main .layout-wrapper { padding-top: var(--c-padd); }
+.layout-main .layout-box { padding-bottom: calc(2 * var(--c-padd)); }
+
+
+/*******************************************************************************
+  Backgrounds
+*******************************************************************************/
+
+.page {
+  --img-bg-header: url(../img/bg-page-header.jpg);
+  --img-bg-footer: url(../img/bg-page-footer.jpg);
+}
+
+.layout-main {
+  background-color: var(--color-bg-main);
+}
+
+.layout-head {
+  background-color: var(--color-bg-header);
+  background-image:
+    var(--img-bg-header),
+    linear-gradient(to left, var(--color-bg-header), transparent, var(--color-bg-header)),
+    var(--img-bg-header);
+}
+
+.layout-foot {
+  background-color: var(--color-bg-footer);
+  background-image:
+    var(--img-bg-footer),
+    linear-gradient(to left, var(--color-bg-footer), transparent, var(--color-bg-footer)),
+    var(--img-bg-footer);
+}
+
+.layout-bg {
+  background-size: auto 100%, auto, cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
