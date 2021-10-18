@@ -1,0 +1,64 @@
+/*
+  ♻️ LOGO ♻️
+*/
+
+.logo {
+  display: block;
+  text-decoration: none;
+  transition: 100ms;
+
+  color: var(--color-logo-def);
+  fill: var(--color-logo-def);
+
+  &:hover {
+    color: var(--color-logo-hov);
+    fill: var(--color-logo-hov);
+  }
+}
+
+
+.logo__text,
+.logo__svg-icon {
+  display: block;
+  transition: 300ms;
+}
+
+.logo__text {
+  font-family: var(--font-family);
+}
+
+
+.logo--github {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo__text--github {
+  font-size: 16px;
+  line-height: 45px;
+}
+
+.logo--rss {
+  position: relative;
+  width: 111px;
+  height: 32px;
+}
+.svg-logo--rss {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.logo__text--rss {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  letter-spacing: -2px;
+  font-weight: bold;
+  font-size: 21px;
+  line-height: 0.9;
+}
+.logo:hover .logo__text--rss {
+  right: -5px;
+  letter-spacing: 0;
+}

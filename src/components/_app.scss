@@ -1,0 +1,39 @@
+/*
+  ♻️ APP ♻️
+*/
+
+.app {
+  display: flex;
+  justify-content: space-between;
+  row-gap: 40px;
+
+  max-width: var(--page-max-w);
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 10px;
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    padding: 0;
+  }
+}
+
+.app__container--filters {
+  flex: 1 1;
+  max-width: 40%;
+
+  @media (max-width: 1024px) {
+    order: 2;
+    max-width: 100%;
+  }
+}
+
+.app__container--editor {
+  flex: 1 1;
+  max-width: 60%;
+
+  @media (max-width: 1024px) {
+    order: 1;
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,59 @@
+/*
+  ♻️ BUTTON ICON ♻️
+*/
+.btn-icon {
+  --color-btn-icon-def: rgba(255, 255, 255, 0.1);
+  --color-btn-icon-hov: rgba(255, 255, 255, 0.2);
+  --color-btn-icon-act: rgba(255, 255, 255, 0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+
+  transition: 100ms;
+
+  box-shadow: 0 0 3px 0 #0008;
+  background-color: var(--color-btn-icon-def);
+  backdrop-filter: blur(5px);
+  fill: #0006;
+
+  &:hover {
+    background-color: var(--color-btn-icon-hov);
+    fill: #000c;
+    .svg-icon { transform: scale(1.1); }
+  }
+  &:active {
+    box-shadow: 0 0 2px 0 #0008;
+    background-color: var(--color-btn-icon-act);
+  }
+}
+
+.btn-icon--theme {
+  &-to-dark .svg-icon {
+    &--moon { display: block; }
+    &--sun { display: none; }
+  }
+  &-to-light .svg-icon {
+    &--moon { display: none; }
+    &--sun { display: block; }
+  }
+}
+
+.btn-icon--fullscreen .svg-icon {
+  &--maximize { display: block; }
+  &--minimize { display: none; }
+}
+
+@mixin minimize {
+  .btn-icon--fullscreen .svg-icon {
+    &--maximize { display: none; }
+    &--minimize { display: block; }
+  }
+}
+:-webkit-full-screen { @include minimize(); }
+:-moz-full-screen { @include minimize(); }
+:fullscreen { @include minimize(); }

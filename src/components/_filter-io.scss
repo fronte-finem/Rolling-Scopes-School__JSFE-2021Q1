@@ -1,0 +1,100 @@
+/*
+  ♻️ FILTER-IO ♻️
+*/
+
+.filter-io {
+  --color-dots: var(--color-grad-4);
+  --color-filter-def: var(--color-logo-def);
+  --color-filter-hov: var(--color-main-text);
+  --color-filter: var(--color-filter-def);
+  --color-filter-bg-def: var(--color-thumb-def);
+  --color-filter-bg-hov: var(--color-thumb-hov);
+  --color-filter-bg: var(--color-filter-bg-def);
+
+  --filter-scale: scale(1);
+  --filter-max-w: 400px;
+  --filter-min-w: 300px;
+  --filter-trans-time: 300ms;
+
+  @media (max-width: 1024px) {
+    --filter-max-w: 400px;
+    --filter-min-w: 200px;
+  }
+
+  flex: 1;
+  display: flex;
+  column-gap: 10px;
+
+  max-width: var(--filter-max-w);
+  min-width: var(--filter-min-w);
+  height: 50px;
+
+  font-size: 16px;
+  color: var(--color-filter);
+
+  &:hover {
+    --color-filter: var(--color-filter-hov);
+    --color-filter-bg: var(--color-filter-bg-hov);
+    --color-dots: var(--color-grad-6);
+    --filter-scale: scale(1.1);
+  }
+}
+
+.filter-io__label {
+  flex: 1;
+  display: block;
+}
+
+.filter-io__input {
+  display: block;
+  width: 100%;
+  height: 3px;
+  margin-top: 12px;
+
+  appearance: none;
+  outline: none;
+  background-color: transparent;
+
+  background-image: linear-gradient(90deg, var(--color-dots) 0 2px, transparent 2px 6px);
+  background-size: 6px;
+
+  cursor: pointer;
+  transition: var(--filter-trans-time);
+}
+
+.filter-io__input::-webkit-slider-thumb {
+  width: 25px;
+  height: 25px;
+
+  appearance: none;
+  border-radius: 50%;
+  border: 1px solid var(--color-filter);
+  background-color: var(--color-filter-bg);
+  backdrop-filter: blur(1.2px);
+
+  cursor: pointer;
+
+  transition: var(--filter-trans-time);
+  transform: var(--filter-scale);
+}
+
+.filter-io__output {
+  flex: 0 0 60px;
+  align-self: flex-end;
+
+  display: block;
+  width: 100%;
+  height: 30px;
+  padding-left: 10px;
+
+  border-radius: 5px;
+  border: 1px solid var(--color-filter);
+  background-color: var(--color-filter-bg);
+  backdrop-filter: blur(2px);
+
+  text-align: left;
+  line-height: 30px;
+
+  transition: var(--filter-trans-time);
+  transform: var(--filter-scale);
+}

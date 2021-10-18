@@ -1,0 +1,65 @@
+/*
+  ⚜️ DECOR HELPER-CLASSES ⚜️
+*/
+
+.decor-grad-border {
+  border-image-slice: 1;
+  border-image-source:
+      linear-gradient(to left,
+          var(--color-grad-3),
+          var(--color-logo-def),
+          var(--color-grad-3));
+}
+
+.decor-grad-background {
+  --decor-fib-1: 5%;
+  --decor-fib-2: 13%;
+  --decor-fib-3: 26%;
+  --decor-fib-4: 47%;
+  --decor-fib-5: 81%;
+
+  background-image:
+    linear-gradient(var(--decor-grad-angle, 135deg),
+        var(--color-grad-1) 0%                 var(--decor-fib-1),
+        var(--color-grad-2) var(--decor-fib-1) var(--decor-fib-2),
+        var(--color-grad-3) var(--decor-fib-2) var(--decor-fib-3),
+        var(--color-grad-4) var(--decor-fib-3) var(--decor-fib-4),
+        var(--color-grad-5) var(--decor-fib-4) var(--decor-fib-5),
+        var(--color-grad-6) var(--decor-fib-5) 100%
+    );
+
+  animation: 10s linear infinite alternate rotate,
+             10s linear infinite grad-move;
+}
+
+@property --decor-fib-1 { syntax: '<percentage>'; initial-value: 5%; inherits: false; }
+@property --decor-fib-2 { syntax: '<percentage>'; initial-value: 13%; inherits: false; }
+@property --decor-fib-3 { syntax: '<percentage>'; initial-value: 26%; inherits: false; }
+@property --decor-fib-4 { syntax: '<percentage>'; initial-value: 47%; inherits: false; }
+@property --decor-fib-5 { syntax: '<percentage>'; initial-value: 81%; inherits: false; }
+
+@property --decor-grad-angle { syntax: '<angle>'; initial-value: 135deg; inherits: false; }
+
+@keyframes rotate {
+  from { --decor-grad-angle: 125deg; }
+  50% { --decor-grad-angle: 135deg; }
+  to { --decor-grad-angle: 145deg; }
+}
+
+@mixin grad-step($a: 5%, $b: 13%, $c: 26%, $d: 47%, $e: 81%) {
+  --decor-fib-1: #{$a};
+  --decor-fib-2: #{$b};
+  --decor-fib-3: #{$c};
+  --decor-fib-4: #{$d};
+  --decor-fib-5: #{$e};
+}
+
+@keyframes grad-move {
+  0%   { @include grad-step(); }
+  5%   { @include grad-step($a: 9%); }
+  13%  { @include grad-step($b: 19%); }
+  26%  { @include grad-step($c: 36%); }
+  47%  { @include grad-step($d: 64%); }
+  81%  { @include grad-step($e: 100%); }
+  100% { @include grad-step(); }
+}

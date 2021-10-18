@@ -1,0 +1,24 @@
+/*
+  ⚠️ RESET DEFAULT STYLES ⚠️
+*/
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+a:focus {
+  outline: none;
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+}
