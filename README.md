@@ -22,14 +22,14 @@ Task | Pull request | Deploy
 [task EFK]: https://github.com/rolling-scopes-school/tasks/blob/master/tasks/rslang/english-for-kids.md
 [task EFKAP]: https://github.com/rolling-scopes-school/tasks/blob/master/tasks/rslang/english-for-kids-admin-panel.md
 
-[pull WL]: https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/1
-[pull VP]: https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/2
-[pull OZ]: https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/3
-[pull PF]: https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/4
-[pull MMG]: https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/5
-[pull AR]: https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/6
-[pull EFK]: https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/7
-[pull EFKAP]: https://github.com/rolling-scopes-school/fronte-finem-JSFE2021Q1/pull/8
+[pull WL]: https://github.com/fronte-finem/Rolling-Scopes-School__JSFE-2021Q1/pull/1
+[pull VP]: https://github.com/fronte-finem/Rolling-Scopes-School__JSFE-2021Q1/pull/2
+[pull OZ]: https://github.com/fronte-finem/Rolling-Scopes-School__JSFE-2021Q1/pull/3
+[pull PF]: https://github.com/fronte-finem/Rolling-Scopes-School__JSFE-2021Q1/pull/4
+[pull MMG]: https://github.com/fronte-finem/Rolling-Scopes-School__JSFE-2021Q1/pull/5
+[pull AR]: https://github.com/fronte-finem/Rolling-Scopes-School__JSFE-2021Q1/pull/6
+[pull EFK]: https://github.com/fronte-finem/Rolling-Scopes-School__JSFE-2021Q1/pull/7
+[pull EFKAP]: https://github.com/fronte-finem/Rolling-Scopes-School__JSFE-2021Q1/pull/8
 
 [deploy WL]: https://fronte-finem.github.io/Rolling-Scopes-School__JSFE-2021Q1/wildlife/
 [deploy VP]: https://fronte-finem.github.io/Rolling-Scopes-School__JSFE-2021Q1/virtual-piano/
