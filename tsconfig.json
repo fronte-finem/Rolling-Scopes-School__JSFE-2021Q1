@@ -1,0 +1,69 @@
+/* Visit https://aka.ms/tsconfig.json to read more about this file */
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "ESNext.Promise"],
+    "sourceMap": true,
+    // "outFile": "./",
+    // "outDir": "./",
+    // "rootDir": "./",
+    // "composite": true,
+    // "tsBuildInfoFile": "./",
+    // "removeComments": true,
+    "noEmit": true,
+    // "importHelpers": true,
+    "downlevelIteration": true,
+    "isolatedModules": true,
+    "jsx": "react",
+
+    /* Strict Type-Checking Options */
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+
+    /* Additional Checks */
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    // "noImplicitReturns": true,
+    // "noFallthroughCasesInSwitch": true,
+    // "noUncheckedIndexedAccess": true,
+    // "noPropertyAccessFromIndexSignature": true,
+
+    /* Module Resolution Options */
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["src/*"],
+      "@server/*": ["server/*"]
+    },
+//     "rootDirs": ["./src", "./server"],
+    // "typeRoots": [],
+    // "types": [],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    // "preserveSymlinks": true,
+    // "allowUmdGlobalAccess": true,
+
+    /* Source Map Options */
+    // "sourceRoot": "",
+    // "mapRoot": "",
+    // "inlineSourceMap": true,
+    // "inlineSources": true,
+
+    /* Experimental Options */
+     "experimentalDecorators": true,
+     "emitDecoratorMetadata": true,
+
+    /* Advanced Options */
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
+  },
+  "include": ["src", "server", "types"],
+  "exclude": ["node_modules"]
+}
