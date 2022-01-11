@@ -1,0 +1,46 @@
+.root {
+  --back-scroll-time: 240s;
+
+  @media (max-width: 1000px) {
+    --back-scroll-time: 120s;
+  }
+  @media (max-width: 500px) {
+    --back-scroll-time: 30s;
+  }
+
+  min-height: 100vh;
+  margin: 0;
+  padding: 10;
+  background-color: rgb(30, 30, 30);
+  color: #fff;
+
+  &::before {
+    content: '';
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+
+    /* webpackIgnore: true */
+    background-image: url(./images/code.png);
+    background-size: cover;
+    background-repeat: repeat-y;
+    background-position-x: 50%;
+    background-position-y: 0%;
+    opacity: 0.2;
+
+    animation: back-scroll var(--back-scroll-time) linear 0s infinite alternate both;
+  }
+}
+
+@keyframes back-scroll {
+  0% {
+    background-position-y: 100%;
+  }
+  100% {
+    background-position-y: 0%;
+  }
+}

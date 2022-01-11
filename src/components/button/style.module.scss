@@ -1,0 +1,132 @@
+.button {
+  height: 35px;
+  padding: 0 20px;
+  border-radius: 5px;
+  border: none;
+  white-space: nowrap;
+
+  color: #44f;
+  background: #112;
+  backdrop-filter: blur(5px);
+  transition: all 300ms;
+
+  &:hover {
+    color: #ccf;
+    background: #448;
+  }
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.btn-process {
+  min-width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  border: none;
+  font-weight: bold;
+  box-shadow: 0 0 0 1px #0004;
+  transform: translateZ(0px);
+  transition: all 300ms;
+
+  &.start {
+    color: #041;
+    background-color: #0a4;
+    &:disabled {
+      opacity: 0.2;
+    }
+  }
+  &.stop {
+    color: #411;
+    background-color: #f22;
+    &:disabled {
+      opacity: 0.3;
+    }
+  }
+
+  &:disabled {
+    cursor: default;
+    pointer-events: none;
+  }
+  &:hover {
+    color: #000;
+    transform: translateZ(10px);
+    box-shadow: 0 0 0 2px #0008;
+  }
+}
+
+.btn-no-text {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: all 500ms;
+  transform: scale(1) rotate(0deg);
+
+  &:hover {
+    transform: scale(1.2) rotate(180deg);
+  }
+}
+
+.btn-route {
+  max-width: 200px;
+  width: 100%;
+  padding: 0 20px;
+  border-radius: 0;
+  border: none;
+  background-color: #0002;
+  color: #4c8;
+  transition: all 300ms;
+  white-space: nowrap;
+
+  &:hover {
+    color: #4cc;
+    background-color: #111;
+  }
+}
+
+.btn-paginator {
+  --g-line: linear-gradient(#224, #224);
+  --g-head: radial-gradient(circle at var(--g-dir), #224 33%, #fff0 34%);
+  --g-stripe: linear-gradient(0deg, #0008, #fff0 30% 70%, #0008);
+  --g-body: linear-gradient(0deg, #0004, #fff0 30% 70%, #0004);
+
+  width: 90px;
+  height: 40px;
+  border: 2px solid #112;
+  background-color: #448;
+  backdrop-filter: blur(5px);
+  background-image: var(--g-head), var(--g-line), var(--g-body), var(--g-stripe);
+  background-size: 100%, 100% 6px, 100%, 100% 4px;
+  background-position: 0 0, 0 50%, 0 0, 0 50%;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat-y;
+  transition: all 300ms;
+  white-space: nowrap;
+
+  &:disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  &:hover {
+    background-color: #44f;
+  }
+  &:active {
+    background-color: #88f;
+  }
+  &.prev {
+    --g-dir: right;
+    border-radius: 50% 20px 20px 50%;
+    &:hover {
+      border-radius: 50% 20px 20px 50%;
+    }
+  }
+  &.next {
+    --g-dir: left;
+    border-radius: 20px 50% 50% 20px;
+    &:hover {
+      border-radius: 20px 50% 50% 20px;
+    }
+  }
+}

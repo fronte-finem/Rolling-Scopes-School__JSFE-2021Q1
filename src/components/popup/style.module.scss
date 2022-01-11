@@ -1,0 +1,52 @@
+.popup {
+  z-index: 11;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  overflow: hidden;
+  border-radius: 10px;
+  background: #222;
+  pointer-events: all;
+  transition: all 500ms;
+
+  font-family: var(--ff-mono);
+  font-weight: 300;
+  font-size: 30px;
+  text-align: center;
+  white-space: pre-wrap;
+
+  &.hidden {
+    z-index: -10;
+    top: -100%;
+    background: transparent;
+    pointer-events: none;
+  }
+}
+
+.header {
+  height: 40px;
+  background-color: #88f;
+  color: #222;
+  text-transform: capitalize;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 30px 10px 30px;
+}
+
+.btn-close {
+  --g-line: #fff0 40%, #000e 40% 60%, #fff0 60%;
+  --g-cross: linear-gradient(45deg, var(--g-line)), linear-gradient(-45deg, var(--g-line));
+
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: #fff0;
+  background-image: var(--g-cross);
+  box-shadow: none;
+}
