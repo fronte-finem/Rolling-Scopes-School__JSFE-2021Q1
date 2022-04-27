@@ -1,0 +1,105 @@
+.footer {
+  --logo-github: url("../../svg/logo-github.svg");
+  --logo-rss: url("../../svg/logo-rss.svg");
+}
+
+.footer {
+	font-family: var(--font-main);
+}
+
+.footer {
+	border-top: 1px solid;
+	border-image-slice: 1;
+	border-image-source: var(--grad);
+}
+
+.footer-container {
+	padding: 0 15px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	max-width: 1140px;
+	margin: 0 auto;
+}
+
+.footer a {
+  text-decoration: none;
+}
+.footer .logo-mask::before {
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: left center;
+  mask-position: left center;
+}
+.footer .logo-mask.github::before {
+  -webkit-mask-image: var(--logo-github);
+  mask-image: var(--logo-github);
+}
+.footer .logo-mask.rss::before {
+  -webkit-mask-image: var(--logo-rss);
+  mask-image: var(--logo-rss);
+}
+.footer .logo-text {
+	font-weight: bold;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.footer .logo-mask::before,
+.footer .logo-mask .logo-text {
+	transition: var(--transit-time);
+	background-image: var(--grad);
+  filter: saturate(0) contrast(1);
+}
+.footer .logo-mask:hover::before,
+.footer .logo-mask:hover .logo-text {
+  filter: saturate(1) contrast(1);
+}
+
+.footer .github {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+	width: 120px;
+	height: 45px;
+	line-height: 45px;
+}
+.footer .github::before {
+  content: '';
+  width: 35px;
+  height: 35px;
+}
+.footer .github .logo-text {
+  display: flex;
+  align-items: center;
+	height: 45px;
+	font-size: 16px;
+}
+
+.footer .rss {
+  display: flex;
+	align-items: flex-end;
+	height: 32px;
+}
+.footer .rss::before {
+  content: '';
+  display: block;
+	width: 86px;
+	height: 32px;
+}
+.footer .rss .logo-text {
+  display: flex;
+  align-items: flex-end;
+  width: 35px;
+  height: 32px;
+	line-height: 16px;
+	font-size: 21px;
+	letter-spacing: -2px;
+	transition: var(--transit-time);
+}
+.footer .rss:hover .logo-text {
+	letter-spacing: 0;
+}

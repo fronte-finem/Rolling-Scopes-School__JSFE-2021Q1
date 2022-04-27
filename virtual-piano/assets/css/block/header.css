@@ -1,0 +1,61 @@
+.header {
+  --icon-open: url("../../svg/icon-act-open.svg");
+  --icon-exit: url("../../svg/icon-act-exit.svg");
+  --icon-light: url("../../svg/icon-sun.svg");
+  --icon-dark:  url("../../svg/icon-moon.svg");
+}
+
+.header {
+	--txt: center;
+}
+@media (max-width: 420px) {
+	.header  {
+		--txt: left;
+	}
+}
+.header {
+	padding: 0 15px;
+	text-align: var(--txt);
+	width: 100%;
+}
+
+.header {
+	border-bottom: 1px solid;
+	border-image-slice: 1;
+	border-image-source: var(--grad);
+}
+
+.header-title {
+	line-height: 60px;
+	font-weight: 300;
+  color: var(--color-main-text);
+}
+
+
+.header .btn-container {
+	--t: 120px;
+	--r: 40px;
+  --dir: column;
+}
+@media (max-width: 768px) {
+	.header .btn-container  {
+		--t: 10px;
+		--r: 20px;
+    --dir: row-reverse;
+	}
+}
+.header .btn-container {
+	position: fixed;
+	top: var(--t);
+	right: var(--r);
+
+  display: flex;
+  flex-direction: var(--dir);
+  gap: 10px;
+}
+
+.header .btn-fullscreen                      { background-image: var(--icon-open); }
+:-webkit-full-screen .header .btn-fullscreen { background-image: var(--icon-exit); }
+
+.header .btn-theme        { background-image: var(--icon-light); }
+.header .btn-theme--dark  { background-image: var(--icon-dark); }

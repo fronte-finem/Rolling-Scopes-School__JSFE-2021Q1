@@ -1,0 +1,16 @@
+@import url(./init.css);
+
+@import url(./elem/btn.css);
+@import url(./elem/btn-icon.css);
+
+@import url(./block/header.css);
+@import url(./block/footer.css);
+@import url(./block/main.css);
+@import url(./block/piano.css);
+@import url(./block/piano-colors.css);
+
+
+:root {
+  --font-main: "Open Sans", Arial, Helvetica, sans-serif;
+  --transit-time: 300ms;
+}

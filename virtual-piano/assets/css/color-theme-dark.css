@@ -1,0 +1,32 @@
+body {
+  --color-main-bg: #313940;
+  --color-main-text: #fff;
+}
+
+.header,
+.footer {
+  --end: #38495a;
+  --mid: #a2abb3;
+  --grad: linear-gradient(to left, var(--end), var(--mid), var(--end));
+}
+
+.footer .logo-mask {
+  --end: hsl(60, 100%, 35%);
+  --mid: hsl(200, 100%, 35%);
+  --grad: linear-gradient(var(--end), var(--mid), var(--end));
+}
+
+.btn {
+  --color-def: #454c53;
+  --color-hov: #515961;
+  --color-act: #00c9b7;
+  --color-act-def: #00b4a4;
+  --color-act-hov: #00c9b7;
+  --color-act-act: #00fefa;
+}
+
+.btn-icon {
+  --color-def: rgba(255, 255, 255, 0.1);
+  --color-hov: rgba(255, 255, 255, 0.2);
+  --color-act: rgba(255, 255, 255, 0.5);
+}

@@ -1,0 +1,157 @@
+.piano {
+	--w: 560px;
+	--h: 270px;
+  --gap: 4px;
+  --key-move-offset: -10px;
+}
+@media (max-width: 600px) {
+	.piano {
+		--w: 310px;
+		--h: 160px;
+	}
+}
+.piano {
+  list-style: none;
+	position: relative;
+	display: flex;
+  align-items: flex-start;
+  column-gap: var(--gap);
+	width: var(--w);
+	height: var(--h);
+	margin: 0 auto 60px;
+  box-sizing: content-box;
+}
+
+.piano-key-base {
+	--w: 80px;
+	--h: 270px;
+  --h-sharp: 170px;
+  --p-sharp: calc(var(--h) - var(--h-sharp));
+}
+@media (max-width: 600px) {
+	.piano-key-base {
+		--w: 44px;
+		--h: 160px;
+    --h-sharp: 100px;
+	}
+}
+.piano-key-base {
+  display: block;
+	position: relative;
+	width: var(--w);
+	height: var(--h);
+  pointer-events: none;
+}
+.piano-key-base.sharp {
+	width: 0px;
+  padding-bottom: var(--p-sharp);
+}
+
+.piano-key-base:not(.sharp) + .piano-key-base:not(.sharp) {
+  margin-left: var(--gap);
+}
+
+.piano-key {
+  --r: 0 0 12px 12px;
+}
+@media (max-width: 600px) {
+	.piano-key {
+		--r: 0 0 8px 8px;
+	}
+}
+.piano-key {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	border-radius: var(--r);
+	cursor: pointer;
+  pointer-events: auto;
+  overflow: hidden;
+}
+
+.piano-key-face {
+  width: 100%;
+	height: 100%;
+	border-radius: var(--r);
+  transform-origin: top center;
+	transition: var(--transit-time);
+  pointer-events: none;
+}
+.piano-key-base.active       .piano-key .piano-key-face,
+.piano-key-base.active.sharp .piano-key .piano-key-face {
+	transform: translateY(var(--key-move-offset));
+}
+
+
+.sharp .piano-key {
+  --w: 54px;
+  --r: 0 0 9px 9px;
+  --p: 0 var(--gap) var(--gap);
+}
+@media (max-width: 600px) {
+	.sharp .piano-key {
+		--w: 36px;
+		--r: 0 0 6px 6px;
+	}
+}
+.sharp .piano-key {
+	width: var(--w);
+	height: 100%;
+  padding: var(--p);
+	border: 0;
+	border-radius: var(--r);
+	top: 0;
+  left: calc(var(--w) / -2);
+	z-index: 3;
+  backface-visibility: hidden;
+  background-color: var(--color-main-bg);
+}
+
+
+.piano-key-base::before       { content: attr(data-note); }
+.piano-key-base::after        { content: attr(data-letter); }
+
+.piano         .piano-key-base::before { display: block; }
+.piano         .piano-key-base::after  { display: none; }
+.piano.letters .piano-key-base::before { display: none; }
+.piano.letters .piano-key-base::after  { display: block; }
+
+
+.piano-key-base::before,
+.piano-key-base::after {
+  --size: 40px;
+  --font-size: 26px;
+  --offset: calc(-5px - var(--size));
+}
+@media (max-width: 600px) {
+	.piano-key-base::before,
+	.piano-key-base::after {
+		--size: 30px;
+		--font-size: 22px;
+	}
+}
+
+.piano-key-base::before,
+.piano-key-base::after {
+	top: unset;
+  bottom: var(--offset);
+}
+.piano-key-base.sharp::before,
+.piano-key-base.sharp::after {
+	bottom: unset;
+  top: var(--offset);
+}
+
+.piano-key-base::before,
+.piano-key-base::after {
+	position: absolute;
+  z-index: 9;
+	width: var(--size);
+	height: var(--size);
+	font-size: var(--font-size);
+	line-height: var(--size);
+	text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
+	transition: var(--transit-time);
+}
